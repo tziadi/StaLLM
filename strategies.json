@@ -1,0 +1,7 @@
+{
+  "baseline": "You are a software quality analyzer specialized in {language}.\nTask: detect potential issues.\nCode:\n{code}\nReturn STRICT JSON: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+
+  "scanner": "You are a static analyzer like SonarQube.\nTask: detect ALL issues in {language} code.\nCode:\n{code}\nReturn STRICT JSON only: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+
+  "hybrid": "You are BOTH a static analyzer and a careful human auditor.\nTask: detect ALL issues in {language} code (style, maintainability, performance, security).\nCode:\n{code}\nReturn STRICT JSON only: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]"
+}
