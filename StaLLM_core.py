@@ -1,5 +1,5 @@
 # StaLLM_core.py
-import os, re, json, zipfile, tempfile, time, random
+import os, re, json, zipfile, tempfile, time
 from typing import Dict, List, Any, Tuple, Optional
 from pathlib import Path
 
@@ -144,128 +144,46 @@ def load_ground_truth(static_csv: str, allowed_exts: Optional[List[str]] = None)
 
     if allowed_exts:
         allowed = tuple(ext.lower() for ext in allowed_exts)
-        # robust index filtering (mixed types safe)
-        mask = issues.index.to_series().astype(str).str.lower().str.endswith(allowed)
-        issues = issues[mask]
+        issues = issues[issues.index.str.lower().str.endswith(allowed)]
 
     return issues.sort_values("total", ascending=False)
 
 # =========================
-# Metrics (file-level)
+# Metrics
 # =========================
-def _extract_file_from_item(item: Dict[str, Any]) -> Optional[str]:
-    for k in ("file", "filename", "path", "component"):
-        v = item.get(k)
-        if isinstance(v, str) and v.strip():
-            return v.strip()
-    return None
+def _prf(llm_count, gt_count) -> Tuple[float, float, float]:
+    if llm_count == gt_count == 0:
+        return (0, 0, 0)
+    inter = min(llm_count, gt_count)
+    p = inter / llm_count if llm_count > 0 else 0
+    r = inter / gt_count if gt_count > 0 else 0
+    f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0
+    return p, r, f1
 
-def _canonize_path(s: str) -> str:
-    return s.replace("\\", "/")
-
-def _suffix_match(pred: str, pool: set[str]) -> bool:
-    return any(pred.endswith("/"+g) or pred.endswith(g) or g.endswith("/"+pred) or g.endswith(pred) for g in pool)
-
-def compute_metrics_file_level(results: List[dict], issues_top: pd.DataFrame) -> dict:
-    gt_files = {_canonize_path(str(idx)) for idx in issues_top.index}
-
-    pred_files: set[str] = set()
-    for it in results or []:
-        f = _extract_file_from_item(it)
-        if f:
-            pred_files.add(_canonize_path(f))
-
-    TP = {p for p in pred_files if _suffix_match(p, gt_files)}
-    FP = {p for p in pred_files if p not in TP}
-    FN = {g for g in gt_files if not _suffix_match(g, pred_files)}
-
-    tp, fp, fn = len(TP), len(FP), len(FN)
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1        = (2*precision*recall)/(precision+recall) if (precision+recall) > 0 else 0.0
-
-    return {
-        "llm_issues": len(results or []),
-        "gt_issues": int(issues_top["static_count"].sum()),
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
-        "tp_files": tp, "fp_files": fp, "fn_files": fn,
-    }
+def compute_metrics(results: List[Dict[str, Any]], issues: pd.DataFrame) -> Dict[str, Any]:
+    llm_count = len(results)
+    gt_count = int(issues["static_count"].sum())
+    p, r, f1 = _prf(llm_count, gt_count)
+    return {"llm_issues": llm_count, "gt_issues": gt_count, "precision": p, "recall": r, "f1": f1}
 
 # =========================
-# Pricing helpers (fix per-1K vs per-1M)
+# Costs (USD) from tokens
 # =========================
-def _safe_float(x: Optional[str]) -> Optional[float]:
-    try:
-        return float(x) if x is not None and x != "" else None
-    except Exception:
-        return None
-
-def _read_rates_verbose(llm: ChatModel) -> Tuple[float, float, str]:
-    """
-    Returns (in_per_1k, out_per_1k, note).
-    Reads slot-scoped env if available, else global.
-    Accepts *_PER_1K or *_PER_1M (the latter converted /1000).
-    Also auto-normalizes common mistake: values >1 that look like $/1M
-    accidentally put into *_PER_1K.
-    """
-    slot = getattr(llm, "slot_key", None)
-
-    def _pull(prefix: str):
-        _in1k  = _safe_float(os.getenv(f"{prefix}_PRICE_IN_PER_1K"))
-        _out1k = _safe_float(os.getenv(f"{prefix}_PRICE_OUT_PER_1K"))
-        _in1m  = _safe_float(os.getenv(f"{prefix}_PRICE_IN_PER_1M"))
-        _out1m = _safe_float(os.getenv(f"{prefix}_PRICE_OUT_PER_1M"))
-        return _in1k, _out1k, _in1m, _out1m
-
-    in1k = out1k = None
-    note = ""
-
-    if slot:
-        a, b, c, d = _pull(slot)
-        in1k, out1k = a, b
-        if (in1k is None or out1k is None) and (c is not None or d is not None):
-            # use per-1M if provided
-            in1k = in1k if in1k is not None else (c or 0.0) / 1000.0
-            out1k = out1k if out1k is not None else (d or 0.0) / 1000.0
-            note = "normalized from per-1M (slot)"
-    if in1k is None and out1k is None:
-        # global fallback
-        a, b, c, d = _pull("STALLM")
-        in1k, out1k = a, b
-        if (in1k is None or out1k is None) and (c is not None or d is not None):
-            in1k = in1k if in1k is not None else (c or 0.0) / 1000.0
-            out1k = out1k if out1k is not None else (d or 0.0) / 1000.0
-            note = "normalized from per-1M (global)"
-
-    # defaults if still None
-    in1k = float(in1k or 0.0)
-    out1k = float(out1k or 0.0)
-
-    # common mistake: put $/1M into *_PER_1K (e.g., 5 and 15)
-    # heuristics: both in/out > 1 and <= 200 → likely per-1M
-    if note == "" and ((in1k > 1.0 and in1k <= 200.0) or (out1k > 1.0 and out1k <= 200.0)):
-        in1k /= 1000.0
-        out1k /= 1000.0
-        note = "auto-normalized: values looked like per-1M placed in per-1K"
-
-    return in1k, out1k, note
-
 def _read_rates(llm: ChatModel) -> Tuple[float, float]:
-    inp, outp, _ = _read_rates_verbose(llm)
-    return inp, outp
+    slot = getattr(llm, "slot_key", None)
+    if slot:
+        try_in = os.getenv(f"{slot}_PRICE_IN_PER_1K")
+        try_out = os.getenv(f"{slot}_PRICE_OUT_PER_1K")
+        if try_in or try_out:
+            return float(try_in or 0), float(try_out or 0)
+    return float(os.getenv("STALLM_PRICE_IN_PER_1K", 0)), float(os.getenv("STALLM_PRICE_OUT_PER_1K", 0))
 
-def _cost_usd(prompt_tokens: int, completion_tokens: int, llm: ChatModel) -> Tuple[float, float, float, str]:
-    """
-    Returns (cost_usd, price_in_per_1k, price_out_per_1k, note)
-    """
-    in_rate, out_rate, note = _read_rates_verbose(llm)
-    cost = (prompt_tokens / 1000.0) * in_rate + (completion_tokens / 1000.0) * out_rate
-    return cost, in_rate, out_rate, note
+def _cost_usd(prompt_tokens: int, completion_tokens: int, llm: ChatModel) -> float:
+    in_rate, out_rate = _read_rates(llm)
+    return (prompt_tokens / 1000.0) * in_rate + (completion_tokens / 1000.0) * out_rate
 
 # =========================
-# Default LLM
+# Default LLM (from env slots or manual)
 # =========================
 def _default_llm() -> ChatModel:
     slot = default_slot_key()
@@ -288,18 +206,11 @@ def _default_llm() -> ChatModel:
 def run_experiment(
     zip_path: str,
     static_csv: str,
-    mode: str = "baseline",
+    mode="baseline",
     progress=None,
     top_k: int = 5,
-    llm: Optional[ChatModel] = None,
-    neg_files_ratio: float = 1.0,
+    llm: Optional[ChatModel] = None
 ):
-    """
-    Run one prompt strategy on:
-      - top_k "positive" files (from CSV)
-      - plus a sample of "negative" files
-    Metrics: FILE-LEVEL (realistic).
-    """
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
 
@@ -308,6 +219,7 @@ def run_experiment(
     results: List[Dict[str, Any]] = []
     llm = llm or _default_llm()
 
+    # Accumulate tokens
     pt_sum = ct_sum = tt_sum = 0
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -319,67 +231,33 @@ def run_experiment(
                 return any(fname.lower().endswith(e) for e in exts)
             return True
 
-        all_src = [
+        all_files = [
             os.path.join(root, f)
             for root, _, files in os.walk(tmp)
             for f in files
-            if _is_target(f)
+            if _is_target(f) and any(t.endswith(f) for t in top_files)
         ]
 
-        # === positive selection (legacy behaviour, robust to slashes/case) ===
-        def canon(s: str) -> str:
-            return (s or "").replace("\\", "/").lower()
-
-        top_basenames = {os.path.basename(t).lower() for t in top_files}
-        top_suffixes  = [canon(t) for t in top_files]
-
-        pos_files = [p for p in all_src if os.path.basename(p).lower() in top_basenames]
-        if not pos_files:
-            pos_files = [p for p in all_src if any(canon(p).endswith(ts) for ts in top_suffixes)]
-        if not pos_files:
-            pos_files = all_src[:min(top_k, len(all_src))]
-
-        neg_pool = [p for p in all_src if p not in pos_files]
-        n_neg = min(int(len(pos_files) * max(0.0, neg_files_ratio)), len(neg_pool)) if pos_files else 0
-        neg_files = random.sample(neg_pool, n_neg) if n_neg > 0 else []
-
-        all_files = pos_files + neg_files
         total = len(all_files) or 1
-
         for i, file_path in enumerate(all_files, 1):
             if progress:
                 progress.progress(i / total, text=f"🔍 {mode} analyzing {os.path.basename(file_path)} ({i}/{total})")
-            try:
-                with open(file_path, encoding="utf-8", errors="ignore") as f:
-                    code = f.read()
-            except Exception:
-                code = ""
-
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
+                code = f.read()
             smells, usage = analyze_with_llm(code, mode, language, llm)
-
-            for it in (smells or []):
-                it.setdefault("file", os.path.basename(file_path))
-                it.setdefault("path", file_path)
-
-            results.extend(smells or [])
-
+            results.extend(smells)
             pt_sum += usage.get("prompt_tokens", 0)
             ct_sum += usage.get("completion_tokens", 0)
             tt_sum += usage.get("total_tokens", 0)
 
-    cost_usd, price_in_k, price_out_k, price_note = _cost_usd(pt_sum, ct_sum, llm)
     usage_totals = {
         "prompt_tokens": pt_sum,
         "completion_tokens": ct_sum,
         "total_tokens": tt_sum,
-        "usd_cost": cost_usd,
-        # expose pricing to UI (for transparency)
-        "price_in_per_1k": price_in_k,
-        "price_out_per_1k": price_out_k,
-        "pricing_note": price_note,
+        "usd_cost": _cost_usd(pt_sum, ct_sum, llm),
     }
 
-    metrics = compute_metrics_file_level(results, issues.head(top_k))
+    metrics = compute_metrics(results, issues.head(top_k))
     return results, issues.head(top_k), metrics, usage_totals
 
 def run_selected_experiments(
@@ -391,7 +269,6 @@ def run_selected_experiments(
     timer=None,
     top_k=5,
     llm: Optional[ChatModel] = None,
-    neg_files_ratio: float = 1.0,
 ):
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
@@ -408,9 +285,7 @@ def run_selected_experiments(
             status.markdown(f"🔍 Running `{mode}` strategy…")
 
         start = time.time()
-        results, _, metrics, usage_totals = run_experiment(
-            zip_path, static_csv, mode, top_k=top_k, llm=llm, neg_files_ratio=neg_files_ratio
-        )
+        results, _, metrics, usage_totals = run_experiment(zip_path, static_csv, mode, top_k=top_k, llm=llm)
         elapsed = time.time() - start
 
         metrics["strategy"] = mode
@@ -425,6 +300,7 @@ def run_selected_experiments(
 
         samples_dict[mode] = results[:5]
 
+        # Persist
         save_run_result(
             project=os.path.basename(zip_path),
             filename="ALL",
@@ -453,6 +329,18 @@ def run_selected_experiments(
     return issues_top, metrics_df, samples_dict
 
 
+# StaLLM_core.py
+import os, re, json, zipfile, tempfile, time
+from typing import Dict, List, Any, Tuple, Optional
+from pathlib import Path
+
+import pandas as pd
+
+from StaLLM_models import init_db, save_run_result
+from StaLLM_llm import ChatModel, LLMConfig, build_llm_from_slot, default_slot_key
+
+# ... (tout le code existant inchangé au-dessus)
+
 def run_selected_models_experiments(
     zip_path: str,
     static_csv: str,
@@ -462,8 +350,11 @@ def run_selected_models_experiments(
     status=None,
     timer=None,
     top_k: int = 5,
-    neg_files_ratio: float = 1.0,
 ):
+    """
+    Compare plusieurs LLMs en gardant la même stratégie de prompt.
+    Retourne: (issues_top, metrics_df_by_model, samples_by_model)
+    """
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
 
@@ -481,7 +372,7 @@ def run_selected_models_experiments(
 
         start = time.time()
         results, _, metrics, usage_totals = run_experiment(
-            zip_path, static_csv, strategy, top_k=top_k, llm=llm, neg_files_ratio=neg_files_ratio
+            zip_path, static_csv, strategy, top_k=top_k, llm=llm
         )
         elapsed = time.time() - start
 
@@ -497,13 +388,11 @@ def run_selected_models_experiments(
             "completion_tokens": usage_totals.get("completion_tokens", 0),
             "total_tokens": usage_totals.get("total_tokens", 0),
             "usd_cost": usage_totals.get("usd_cost", 0.0),
-            "tp_files": metrics.get("tp_files", 0),
-            "fp_files": metrics.get("fp_files", 0),
-            "fn_files": metrics.get("fn_files", 0),
         }
         all_metrics.append(row)
         samples_dict[label] = results[:5]
 
+        # Persist DB
         save_run_result(
             project=os.path.basename(zip_path),
             filename="ALL",

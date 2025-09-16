@@ -10,12 +10,12 @@ import streamlit as st
 from StaLLM_core import (
     run_experiment,
     run_selected_experiments,
-    run_selected_models_experiments,
+    run_selected_models_experiments,  # <-- NEW
     load_ground_truth,
     detect_language_from_zip,
     load_strategies,
     save_strategies,
-    find_exts_for_language,
+    find_exts_for_language,   # filtre CSV selon la langue
 )
 from StaLLM_models import Session, SmellDetectionResult, init_db, save_run_result
 from StaLLM_llm import (
@@ -63,7 +63,7 @@ _load_dotenv_robust(Path(__file__).with_name(".env"), override=False)
 init_db()
 
 # =========================
-# Styles
+# Styles (UI améliorée)
 # =========================
 st.markdown(
     """
@@ -85,19 +85,17 @@ st.markdown(
       }
     }
     h1, h2, h3 { color: var(--text) !important; font-weight: 800; }
-    .pill{
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.35rem .75rem; border:1px solid #c7d2fe;
-      color:#111827; border-radius:999px;
-      background:linear-gradient(90deg,#ede9fe,#cffafe);
-      margin:.25rem .25rem .75rem 0; font-size:0.85rem;
-    }
+    .pill{ display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .75rem;
+      border:1px solid #c7d2fe; color:#111827; border-radius:999px;
+      background:linear-gradient(90deg,#ede9fe,#cffafe); margin:.25rem .25rem .75rem 0; font-size:0.85rem; }
     .pill b{ color:#0f172a; }
     .metric-card{ background:var(--card-bg); border:1px solid var(--border);
       border-radius:12px; padding:14px 16px; }
     .metric-title{ color:var(--muted); font-size:.85rem; margin-bottom:.35rem;}
     .metric-value{ font-size:1.55rem; font-weight:800; letter-spacing:.2px;}
     .muted{ color:var(--muted); }
+    .section-card{ background:var(--card-bg); border:1px solid var(--border);
+      border-radius:14px; padding:14px 16px; margin:6px 0 14px; }
     .stButton > button {
       background: linear-gradient(90deg, var(--accent), var(--accent2)) !important;
       color: white !important; border-radius: 10px; font-size: 16px; font-weight: 700;
@@ -143,6 +141,7 @@ def build_llm(sidebar_prefix: str = "") -> ChatModel:
         st.markdown(f"<span class='pill'>🧠 <b>Model</b> {llm_obj.model_label()}</span>", unsafe_allow_html=True)
         return llm_obj
 
+    # Fallback manuel
     st.sidebar.markdown("**Advanced manual configuration (no .env slots detected)**")
     prov = st.sidebar.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0)
     mdl_list = available_models(prov)
@@ -153,13 +152,13 @@ def build_llm(sidebar_prefix: str = "") -> ChatModel:
         dep_default  = os.getenv("OPENAI_DEPLOYMENT_NAME", "")
 
         with st.sidebar.expander(f"{sidebar_prefix}Advanced Azure settings", expanded=False):
-            api_base    = st.text_input("Azure Resource endpoint", value=base_default, help="e.g., https://<resource>.openai.azure.com/")
+            api_base    = st.text_input("Azure Resource endpoint", value=base_default, help="ex: https://<resource>.openai.azure.com/")
             api_version = st.text_input("API version", value=ver_default)
-        deployment = st.sidebar.text_input("Azure deployment name", value=dep_default, help="Exact name in Azure OpenAI Studio.")
+        deployment = st.sidebar.text_input("Azure deployment name", value=dep_default, help="Nom exact dans Azure OpenAI Studio.")
 
         api_key_env = os.getenv("AZURE_OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
         if not api_key_env:
-            api_key_env = st.sidebar.text_input("Azure API Key (paste if .env missing)", value="", type="password")
+            api_key_env = st.sidebar.text_input("Azure API Key (.env absent ? colle-la ici)", value="", type="password")
             if api_key_env:
                 os.environ["AZURE_OPENAI_API_KEY"] = api_key_env
 
@@ -177,7 +176,7 @@ def build_llm(sidebar_prefix: str = "") -> ChatModel:
         model = st.sidebar.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
         api_key_env = os.getenv("OPENAI_API_KEY") or ""
         if not api_key_env:
-            api_key_env = st.sidebar.text_input("OpenAI API Key (paste if .env missing)", value="", type="password")
+            api_key_env = st.sidebar.text_input("OpenAI API Key (.env absent ? colle-la ici)", value="", type="password")
             if api_key_env:
                 os.environ["OPENAI_API_KEY"] = api_key_env
         base_url    = os.getenv("OPENAI_BASE_URL") or None
@@ -211,6 +210,7 @@ def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
             st.markdown(pills, unsafe_allow_html=True)
         return llms
 
+    # Fallback manuel (sans slots) : même provider, multi-modèles
     prov = st.sidebar.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0, key="cmp_prov")
     mdl_list = available_models(prov)
     picked_models = st.sidebar.multiselect("Models to compare", mdl_list, default=mdl_list[:2] if len(mdl_list) >= 2 else mdl_list)
@@ -264,49 +264,51 @@ with tabs[0]:
     st.sidebar.header("⚙️ Settings")
     mode_run = st.sidebar.radio(
         "Execution mode",
-        ["Single prompt", "Compare selected prompts", "Compare LLM models"],
+        ["Single prompt", "Compare selected prompts", "Compare LLM models"],  # <-- NEW
         index=0
     )
     top_k = st.sidebar.slider("Top-K files to analyze", min_value=3, max_value=20, value=5)
 
     strategies = load_strategies()
 
+    # --- Prompt selection depends on mode ---
     if mode_run == "Single prompt":
         if not strategies:
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             st.stop()
-        prompt_mode = st.sidebar.selectbox("🧩 Select prompt strategy", list(strategies.keys()))
+        prompt_mode = st.sidebar.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
     elif mode_run == "Compare selected prompts":
         selected_modes = st.sidebar.multiselect(
-            "🧩 Select prompt strategies to compare",
+            "🧩 Select Prompt Strategies to Compare",
             list(strategies.keys()),
             default=[k for k in ["baseline", "scanner", "hybrid"] if k in strategies],
         )
-    else:
+    else:  # Compare LLM models
         if not strategies:
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             st.stop()
-        prompt_mode = st.sidebar.selectbox("🧩 Fixed prompt strategy (for model comparison)", list(strategies.keys()))
+        prompt_mode = st.sidebar.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
 
+    # Build LLM (single) for Single/Compare Prompts; for Model Comparison we build many
     if mode_run in ("Single prompt", "Compare selected prompts"):
         llm = build_llm()
     else:
         llms_to_compare = build_llms_for_comparison()
         if not llms_to_compare:
-            st.warning("Please select at least one LLM to compare.")
+            st.warning("Select at least one LLM to compare.")
             st.stop()
 
-    st.markdown("### 📂 Upload required files")
+    st.markdown("### 📂 Upload Required Files")
     with st.container():
         colu1, colu2 = st.columns([1,1])
         with colu1:
-            uploaded_zip = st.file_uploader("📦 Project archive (ZIP)", type="zip")
+            uploaded_zip = st.file_uploader("📦 Upload Project (ZIP)", type="zip")
         with colu2:
-            uploaded_static = st.file_uploader("📑 Static analyzer results (CSV)", type="csv")
+            uploaded_static = st.file_uploader("📑 Upload Static Analyzer Results (CSV)", type="csv")
 
-    if st.button("🚀 Run analysis"):
+    if st.button("🚀 Run Analysis"):
         if not (uploaded_zip and uploaded_static):
-            st.warning("Please upload both files (ZIP + CSV).")
+            st.warning("📥 Please upload both files (ZIP + Static Analyzer CSV).")
             st.stop()
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -319,29 +321,30 @@ with tabs[0]:
 
             language = detect_language_from_zip(paths["zip"])
             exts = find_exts_for_language(language)
-            st.markdown(f"### 🌐 Detected language: **{language}**")
-            st.caption("The CSV will be filtered by the detected language extensions.")
+            st.markdown(f"### 🌐 Detected Language: **{language}**")
+            st.caption("The CSV is filtered to match the detected language extensions.")
 
             try:
                 static_results = load_ground_truth(paths["static"], allowed_exts=exts)
             except Exception as e:
-                st.error(f"Error reading static analyzer CSV: {e}")
+                st.error(f"⚠️ Error reading Static Analyzer CSV: {e}")
                 st.stop()
 
-            st.markdown("## 📊 Static analyzer summary")
-            st.info("External static analyzer data (e.g., SonarQube, SpotBugs, ESLint...).")
+            st.markdown("## 📊 Static Analysis Results")
+            st.info("Results from an external static analyzer (e.g., SonarQube, SpotBugs, ESLint...).")
             st.dataframe(static_results.head(top_k), use_container_width=True)
 
+            # ----- Single prompt -----
             if mode_run == "Single prompt":
-                st.markdown(f"### 🤖 Running LLM analysis with `{prompt_mode}`…")
+                st.markdown(f"### 🤖 Running LLM analysis with `{prompt_mode}` strategy…")
                 start = time.time()
                 try:
-                    with st.spinner(f"Running `{prompt_mode}`…"):
+                    with st.spinner(f"⏳ Running `{prompt_mode}`…"):
                         results_llm, issues_top, metrics, usage_totals = run_experiment(
                             paths["zip"], paths["static"], prompt_mode, top_k=top_k, llm=llm
                         )
                 except Exception as e:
-                    st.error(f"LLM call failed: {e}\nIf you use Azure, check the deployment name and resource endpoint.")
+                    st.error(f"LLM call failed: {e}\nIf you use Azure, double-check the **deployment name** and **resource endpoint**.")
                     st.stop()
 
                 elapsed = time.time() - start
@@ -349,6 +352,7 @@ with tabs[0]:
                 metrics["time_s"] = round(elapsed, 2)
                 metrics["language"] = language
 
+                # --- Persist in DB (Single prompt) ---
                 try:
                     save_run_result(
                         project=os.path.basename(paths["zip"]),
@@ -370,24 +374,17 @@ with tabs[0]:
                     )
                     st.success("✅ Run saved to database.")
                 except Exception as e:
-                    st.warning(f"Could not save to DB: {e}")
+                    st.warning(f"⚠️ Could not save to DB: {e}")
 
-                st.markdown("### 📁 Files considered")
+                st.markdown("### 📁 Files Considered")
                 st.dataframe(static_results.head(top_k), use_container_width=True)
 
-                st.markdown("### 📐 Metrics")
+                st.markdown("### 📐 Metrics (cards)")
                 c1, c2, c3, c4 = st.columns(4)
                 with c1: metric_card("Precision", pct(metrics.get("precision", 0.0)))
                 with c2: metric_card("Recall",    pct(metrics.get("recall", 0.0)))
-                with c3: metric_card("F1 score",  pct(metrics.get("f1", 0.0)))
+                with c3: metric_card("F1 Score",  pct(metrics.get("f1", 0.0)))
                 with c4: metric_card("Elapsed",   f"{metrics.get('time_s', 0.0):.2f}s")
-
-                # Confusion (file-level)
-                with st.expander("🔎 Confusion (file-level)"):
-                    c1, c2, c3 = st.columns(3)
-                    with c1: metric_card("TP files", str(metrics.get("tp_files", 0)))
-                    with c2: metric_card("FP files", str(metrics.get("fp_files", 0)))
-                    with c3: metric_card("FN files", str(metrics.get("fn_files", 0)))
 
                 st.markdown("### 📈 Precision / Recall / F1")
                 metrics_df_single = pd.DataFrame(
@@ -398,35 +395,27 @@ with tabs[0]:
                 )
                 st.bar_chart(metrics_df_single[["precision", "recall", "f1"]])
 
-                st.markdown("### 💰 Tokens & cost")
+                st.markdown("### 💰 Tokens & Cost")
                 t1, t2, t3, t4 = st.columns(4)
                 with t1: metric_card("Prompt tokens", f"{usage_totals['prompt_tokens']:,}")
                 with t2: metric_card("Completion tokens", f"{usage_totals['completion_tokens']:,}")
                 with t3: metric_card("Total tokens", f"{usage_totals['total_tokens']:,}")
                 with t4: metric_card("USD cost", f"${usage_totals['usd_cost']:.6f}")
 
-                # show the effective pricing used ($/1K)
-                with st.expander("🔎 Pricing details"):
-                    p1, p2 = st.columns(2)
-                    with p1: metric_card("Input $/1K", f"${usage_totals.get('price_in_per_1k', 0.0):.6f}")
-                    with p2: metric_card("Output $/1K", f"${usage_totals.get('price_out_per_1k', 0.0):.6f}")
-                    note = usage_totals.get("pricing_note", "")
-                    if note:
-                        st.caption(f"Note: {note}. Prices are interpreted as USD per 1,000 tokens.")
-
-                with st.expander("Metrics details (table)"):
+                with st.expander("🔎 Détails des métriques (tableau)"):
                     st.dataframe(pd.DataFrame([metrics]).T.rename(columns={0: "value"}), use_container_width=True)
-                with st.expander("Tokens & cost (table)"):
+                with st.expander("🔎 Tokens & Coût (tableau)"):
                     st.dataframe(pd.DataFrame([usage_totals]).T.rename(columns={0: "value"}), use_container_width=True)
 
                 st.caption(f"⏱️ Completed in {elapsed:.1f}s • Model: {llm.model_label()}")
 
+            # ----- Multi prompt -----
             elif mode_run == "Compare selected prompts":
                 if not selected_modes:
-                    st.warning("Please select at least one strategy.")
+                    st.warning("⚠️ Please select at least one prompt strategy.")
                     st.stop()
 
-                st.markdown("### 🔄 Running multiple prompt strategies")
+                st.markdown("### 🔄 Running Multiple Prompt Strategies")
                 progress = st.progress(0); status_text = st.empty(); timer_text = st.empty()
 
                 start = time.time()
@@ -436,26 +425,27 @@ with tabs[0]:
                         progress=progress, status=status_text, timer=timer_text, top_k=top_k, llm=llm
                     )
                 except Exception as e:
-                    st.error(f"LLM call failed: {e}\nIf you use Azure, check the deployment name and resource endpoint.")
+                    st.error(f"LLM call failed: {e}\nIf you use Azure, double-check the **deployment name** and **resource endpoint**.")
                     st.stop()
 
-                st.markdown("### 📁 Files considered (Top-K)")
+                st.markdown("### 📁 Files Considered (Top-K)")
                 st.dataframe(issues_top, use_container_width=True)
 
-                st.markdown("### 📐 Comparison metrics (all strategies)")
+                st.markdown("### 📐 Comparison Metrics (All Strategies)")
                 st.dataframe(metrics_df, use_container_width=True)
 
-                st.markdown("### 📈 Precision / Recall / F1 by strategy")
+                st.markdown("### 📈 Precision / Recall / F1 by Strategy")
                 st.bar_chart(metrics_df[["precision", "recall", "f1"]])
 
-                st.markdown("## 🤖 LLM findings per strategy")
+                st.markdown("## 🤖 LLM-based Findings per Strategy")
                 for p, sample in (samples or {}).items():
                     with st.expander(f"🔹 {p} (sample)"):
                         st.json(sample)
 
+            # ----- NEW: Compare LLM models (fixed prompt) -----
             else:
                 if not llms_to_compare:
-                    st.warning("Please select at least one LLM to compare.")
+                    st.warning("⚠️ Please select at least one LLM to compare.")
                     st.stop()
 
                 st.markdown(f"### 🔄 Comparing LLM models (prompt strategy: `{prompt_mode}`)")
@@ -470,20 +460,20 @@ with tabs[0]:
                     st.error(f"LLM call failed: {e}")
                     st.stop()
 
-                st.markdown("### 📁 Files considered (Top-K)")
+                st.markdown("### 📁 Files Considered (Top-K)")
                 st.dataframe(issues_top, use_container_width=True)
 
-                st.markdown("### 📐 Metrics per model")
+                st.markdown("### 📐 Metrics per Model")
                 st.dataframe(metrics_df, use_container_width=True)
 
-                st.markdown("### 📈 Precision / Recall / F1 by model")
+                st.markdown("### 📈 Precision / Recall / F1 by Model")
                 st.bar_chart(metrics_df[["precision", "recall", "f1"]])
 
-                st.markdown("### 💰 Tokens & cost by model")
+                st.markdown("### 💰 Tokens & Cost by Model")
                 st.bar_chart(metrics_df[["prompt_tokens", "completion_tokens", "total_tokens"]])
                 st.bar_chart(metrics_df[["usd_cost"]])
 
-                st.markdown("## 🤖 Samples per model")
+                st.markdown("## 🤖 Samples per Model")
                 for model_label, sample in (samples or {}).items():
                     with st.expander(f"🔹 {model_label} (sample)"):
                         st.json(sample)
@@ -492,7 +482,7 @@ with tabs[0]:
 # Tab 2 : Results DB
 # ==========================================================
 with tabs[1]:
-    st.markdown("## 🗃️ Stored experiment results (database)")
+    st.markdown("## 🗃️ Stored Experiment Results (Database)")
     session = Session()
     try:
         results = session.query(SmellDetectionResult).all()
@@ -501,7 +491,7 @@ with tabs[1]:
         session.close(); st.stop()
 
     if not results:
-        st.info("No results stored yet.")
+        st.info("ℹ️ No results stored in the database.")
         session.close(); st.stop()
 
     df = pd.DataFrame(
@@ -528,6 +518,7 @@ with tabs[1]:
     )
     st.dataframe(df, use_container_width=True)
 
+    # ---------- FIX: éviter MultiIndex pour st.bar_chart ----------
     pivot_df = df.pivot_table(
         index="Project",
         columns=["LLM Used", "Strategy"],
@@ -545,8 +536,9 @@ with tabs[1]:
 
     pivot_df = pivot_df.fillna(0)
 
-    st.markdown("### 📈 Global comparison (F1 across projects • by LLM & strategy)")
+    st.markdown("### 📈 Global Comparison (F1 Score across Projects • by LLM & Strategy)")
     st.bar_chart(pivot_df)
+    # --------------------------------------------------------------
 
     session.close()
 
@@ -554,11 +546,11 @@ with tabs[1]:
 # Tab 3 : Manage Prompts
 # ==========================================================
 with tabs[2]:
-    st.markdown("## 📝 Manage prompt strategies")
+    st.markdown("## 📝 Manage Prompt Strategies")
     strategies = load_strategies()
 
     if strategies:
-        st.markdown("### ✏️ Edit existing strategy")
+        st.markdown("### ✏️ Edit Existing Strategy")
         selected = st.selectbox("Select strategy", list(strategies.keys()))
         new_text = st.text_area("Edit prompt", value=strategies[selected], height=200)
         if st.button("💾 Save changes"):
@@ -568,7 +560,7 @@ with tabs[2]:
             st.experimental_rerun()
 
     st.markdown("---")
-    st.markdown("### ➕ Add new strategy")
+    st.markdown("### ➕ Add New Strategy")
     new_name = st.text_input("Strategy name")
     new_prompt = st.text_area("Prompt template", height=200)
     if st.button("➕ Create strategy"):
@@ -583,10 +575,10 @@ with tabs[2]:
             st.experimental_rerun()
 
 # ==========================================================
-# Tab 4 : Batch Experiments
+# Tab 4 : Batch Experiments (inchangé)
 # ==========================================================
 with tabs[3]:
-    st.markdown("## 🔄 Batch experiments")
+    st.markdown("## 🔄 Batch Experiments")
 
     data_dir = st.text_input("📂 Data folder", "data/apps/")
     output_dir = st.text_input("📂 Output folder", "output/apps/")
@@ -594,7 +586,8 @@ with tabs[3]:
     selected_strategies = st.multiselect("🧩 Select strategies", list(strategies.keys()), default=list(strategies.keys()))
     top_k_values = st.multiselect("Top-K values", [5, 10, 20], default=[5, 10, 20])
 
-    st.markdown("### 🤖 LLM for batch")
+    # Batch LLM picker
+    st.markdown("### 🤖 LLM for Batch")
     registry = load_llm_registry()
     if registry:
         keys = list(registry.keys())
@@ -635,9 +628,9 @@ with tabs[3]:
             host_b  = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
             llm_batch = ChatModel(LLMConfig(provider="ollama", model=mdl_b, api_base=host_b))
 
-    if st.button("🚀 Run batch analysis"):
+    if st.button("🚀 Run Batch Analysis"):
         if not selected_strategies:
-            st.warning("Please select at least one strategy.")
+            st.warning("⚠️ Please select at least one strategy.")
             st.stop()
 
         projects = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
