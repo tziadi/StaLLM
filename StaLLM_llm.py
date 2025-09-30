@@ -11,6 +11,9 @@ __all__ = [
     "load_llm_registry",
     "build_llm_from_slot",
     "default_slot_key",
+    "test_ollama_connectivity",
+    "validate_ollama_config",
+    "debug_ollama_response",
 ]
 
 @dataclass
@@ -86,8 +89,8 @@ class ChatModel:
             )
 
         elif prov == "ollama":
-            if cfg.api_base:
-                os.environ["OLLAMA_HOST"] = cfg.api_base
+            # Store the host for this specific instance instead of setting global env
+            self.ollama_host = cfg.api_base or os.getenv("OLLAMA_HOST", "http://localhost:11434")
             import ollama  # type: ignore
             self.client = ollama
         else:
@@ -101,18 +104,49 @@ class ChatModel:
         pt = ct = tt = 0
         if obj is None:
             return {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+        
+        # Handle OpenAI/Azure format
         if hasattr(obj, "prompt_tokens") or hasattr(obj, "completion_tokens") or hasattr(obj, "total_tokens"):
             pt = getattr(obj, "prompt_tokens", 0)
             ct = getattr(obj, "completion_tokens", 0)
             tt = getattr(obj, "total_tokens", (pt or 0) + (ct or 0))
+        
+        # Handle alternative attribute names
         if hasattr(obj, "input_tokens") or hasattr(obj, "output_tokens"):
             pt = pt or getattr(obj, "input_tokens", 0)
             ct = ct or getattr(obj, "output_tokens", 0)
             tt = tt or (pt + ct)
+        
+        # Handle dictionary format (including Ollama)
         if isinstance(obj, dict):
-            pt = obj.get("prompt_eval_count", obj.get("prompt_tokens", pt))
-            ct = obj.get("eval_count", obj.get("completion_tokens", ct))
+            # Ollama specific fields
+            pt = obj.get("prompt_eval_count", obj.get("prompt_tokens", obj.get("input_tokens", pt)))
+            ct = obj.get("eval_count", obj.get("completion_tokens", obj.get("output_tokens", ct)))
+            
+            # If we still don't have tokens, try to estimate from content
+            if pt == 0 and ct == 0:
+                # Try to get token info from nested structures
+                if "usage" in obj:
+                    usage = obj["usage"]
+                    if isinstance(usage, dict):
+                        pt = usage.get("prompt_tokens", usage.get("prompt_eval_count", 0))
+                        ct = usage.get("completion_tokens", usage.get("eval_count", 0))
+                
+                # If still no tokens, try to estimate from response content
+                if pt == 0 and ct == 0:
+                    # Estimate tokens from message content (rough approximation: 1 token ≈ 4 characters)
+                    message = obj.get("message", {})
+                    if isinstance(message, dict):
+                        content = message.get("content", "")
+                        if content:
+                            # Rough estimation: 1 token ≈ 4 characters for most models
+                            estimated_tokens = max(1, len(content) // 4)
+                            ct = estimated_tokens
+                            # For prompt tokens, we'd need the input, but we can estimate based on response
+                            pt = max(1, estimated_tokens // 2)  # Rough estimate
+            
             tt = obj.get("total_tokens", pt + ct)
+        
         return {
             "prompt_tokens": int(pt or 0),
             "completion_tokens": int(ct or 0),
@@ -155,11 +189,61 @@ class ChatModel:
             return (text, meta) if return_meta else text
 
         elif prov == "ollama":
-            out = self.client.chat(model=self.cfg.model or "llama3", messages=messages)
-            text = (out.get("message", {}) or {}).get("content", "")
-            meta = self._usage_dict(out)
-            meta["model"] = self.model_label()
-            return (text, meta) if return_meta else text
+            # Use the specific host for this instance
+            import os
+            original_host = os.environ.get("OLLAMA_HOST")
+            try:
+                os.environ["OLLAMA_HOST"] = self.ollama_host
+                
+                # Validate model exists before attempting to use it
+                model_name = self.cfg.model or "llama3"
+                try:
+                    # Make the chat request with additional options to get token info
+                    out = self.client.chat(
+                        model=model_name, 
+                        messages=messages,
+                        options={
+                            "temperature": temperature,
+                            "num_predict": max_tokens,
+                        }
+                    )
+                    
+                    text = (out.get("message", {}) or {}).get("content", "")
+                    
+                    # Enhanced token extraction for Ollama
+                    meta = self._usage_dict(out)
+                    
+                    # If we still don't have token info, try to estimate from the full response
+                    if meta["prompt_tokens"] == 0 and meta["completion_tokens"] == 0:
+                        # Estimate completion tokens from response length
+                        if text:
+                            # Rough estimation: 1 token ≈ 4 characters for most models
+                            estimated_completion = max(1, len(text) // 4)
+                            meta["completion_tokens"] = estimated_completion
+                            
+                            # Estimate prompt tokens from input messages
+                            total_input_chars = sum(len(msg.get("content", "")) for msg in messages)
+                            estimated_prompt = max(1, total_input_chars // 4)
+                            meta["prompt_tokens"] = estimated_prompt
+                            
+                            meta["total_tokens"] = estimated_prompt + estimated_completion
+                    
+                    meta["model"] = self.model_label()
+                    return (text, meta) if return_meta else text
+                except Exception as e:
+                    error_msg = str(e)
+                    if "model" in error_msg.lower() and "not found" in error_msg.lower():
+                        raise ValueError(f"Model '{model_name}' not found on Ollama host {self.ollama_host}. Please check if the model is installed.")
+                    elif "connection" in error_msg.lower():
+                        raise ConnectionError(f"Cannot connect to Ollama host {self.ollama_host}. Please check if Ollama is running and accessible.")
+                    else:
+                        raise RuntimeError(f"Ollama error: {error_msg}")
+            finally:
+                # Restore original host setting
+                if original_host is not None:
+                    os.environ["OLLAMA_HOST"] = original_host
+                elif "OLLAMA_HOST" in os.environ:
+                    del os.environ["OLLAMA_HOST"]
 
         raise ValueError("Unsupported provider")
 
@@ -167,6 +251,14 @@ class ChatModel:
         prov = (self.cfg.provider or "azure-openai").lower()
         if prov == "azure-openai":
             return f"azure:{self.cfg.model or 'deployment'}"
+        elif prov == "ollama":
+            # Include host info for Ollama to distinguish deployments
+            host_info = getattr(self, 'ollama_host', 'localhost:11434')
+            if host_info.startswith('http://'):
+                host_info = host_info[7:]
+            elif host_info.startswith('https://'):
+                host_info = host_info[8:]
+            return f"ollama:{self.cfg.model or 'model'}@{host_info}"
         return f"{prov}:{self.cfg.model or 'model'}"
 
 def load_llm_registry():
@@ -222,7 +314,7 @@ def default_slot_key() -> Optional[str]:
             return key
     return None
 
-def available_models(provider: str):
+def available_models(provider: str, host: Optional[str] = None):
     provider = (provider or "azure-openai").lower()
     if provider == "azure-openai":
         env_list = os.getenv("STALLM_MODELS_AZURE_OPENAI", "")
@@ -231,6 +323,122 @@ def available_models(provider: str):
         env_list = os.getenv("STALLM_MODELS_OPENAI", "gpt-4o,gpt-4o-mini")
         return [x.strip() for x in env_list.split(",") if x.strip()]
     elif provider == "ollama":
+        # Try to get models from the specific host if provided
+        if host:
+            try:
+                import ollama
+                original_host = os.environ.get("OLLAMA_HOST")
+                try:
+                    os.environ["OLLAMA_HOST"] = host
+                    models = ollama.list()
+                    return [model["name"] for model in models.get("models", [])]
+                finally:
+                    if original_host is not None:
+                        os.environ["OLLAMA_HOST"] = original_host
+                    elif "OLLAMA_HOST" in os.environ:
+                        del os.environ["OLLAMA_HOST"]
+            except Exception:
+                pass
+        # Fallback to environment variable
         env_list = os.getenv("STALLM_MODELS_OLLAMA", "llama3,phi3")
         return [x.strip() for x in env_list.split(",") if x.strip()]
     return []
+
+def test_ollama_connectivity(host: str) -> Tuple[bool, str]:
+    """
+    Test connectivity to an Ollama host and return (success, message).
+    """
+    try:
+        import requests
+        
+        # Normalize host URL
+        if not host.startswith(('http://', 'https://')):
+            host = f"http://{host}"
+        
+        # Test basic connectivity
+        test_url = f"{host.rstrip('/')}/api/tags"
+        timeout = int(os.getenv("STALLM_OLLAMA_TIMEOUT", "10"))
+        
+        response = requests.get(test_url, timeout=timeout)
+        if response.status_code == 200:
+            try:
+                data = response.json()
+                models = data.get("models", [])
+                model_count = len(models)
+                return True, f"Connected successfully ({model_count} models available)"
+            except Exception:
+                return True, "Connected successfully"
+        else:
+            return False, f"HTTP {response.status_code}: {response.text}"
+    except requests.exceptions.ConnectionError:
+        return False, "Connection refused - is Ollama running on this host?"
+    except requests.exceptions.Timeout:
+        return False, f"Connection timeout (>{timeout}s) - check network connectivity"
+    except requests.exceptions.InvalidURL:
+        return False, "Invalid URL format - use http://host:port or https://host:port"
+    except Exception as e:
+        return False, f"Error: {str(e)}"
+
+def validate_ollama_config(host: str, model: str) -> Tuple[bool, str]:
+    """
+    Validate that a specific model is available on the given Ollama host.
+    """
+    try:
+        import ollama
+        import requests
+        
+        # Normalize host URL
+        if not host.startswith(('http://', 'https://')):
+            host = f"http://{host}"
+        
+        # Test connectivity first
+        success, message = test_ollama_connectivity(host)
+        if not success:
+            return False, f"Host connectivity failed: {message}"
+        
+        # Check if model exists
+        original_host = os.environ.get("OLLAMA_HOST")
+        try:
+            os.environ["OLLAMA_HOST"] = host
+            models = ollama.list()
+            available_models = [m["name"] for m in models.get("models", [])]
+            
+            if model in available_models:
+                return True, f"Model '{model}' is available"
+            else:
+                return False, f"Model '{model}' not found. Available: {', '.join(available_models[:5])}{'...' if len(available_models) > 5 else ''}"
+        finally:
+            if original_host is not None:
+                os.environ["OLLAMA_HOST"] = original_host
+            elif "OLLAMA_HOST" in os.environ:
+                del os.environ["OLLAMA_HOST"]
+    except Exception as e:
+        return False, f"Validation error: {str(e)}"
+
+def debug_ollama_response(response: Any) -> Dict[str, Any]:
+    """
+    Debug function to inspect Ollama response structure for token information.
+    """
+    debug_info = {
+        "response_type": type(response).__name__,
+        "response_keys": [],
+        "has_usage": False,
+        "has_eval_count": False,
+        "has_prompt_eval_count": False,
+        "raw_response": str(response)[:500] + "..." if len(str(response)) > 500 else str(response)
+    }
+    
+    if isinstance(response, dict):
+        debug_info["response_keys"] = list(response.keys())
+        debug_info["has_usage"] = "usage" in response
+        debug_info["has_eval_count"] = "eval_count" in response
+        debug_info["has_prompt_eval_count"] = "prompt_eval_count" in response
+        
+        # Check nested structures
+        if "usage" in response and isinstance(response["usage"], dict):
+            debug_info["usage_keys"] = list(response["usage"].keys())
+        
+        if "message" in response and isinstance(response["message"], dict):
+            debug_info["message_keys"] = list(response["message"].keys())
+    
+    return debug_info

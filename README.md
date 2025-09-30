@@ -4,7 +4,7 @@
 
 ## Key capabilities
 
-- **Provider-agnostic LLM configuration** via `.env` **slots** (Azure OpenAI, OpenAI, or local **Ollama**) — reproducible experiments without code changes.
+- **Provider-agnostic LLM configuration** via `.env` **slots** (Azure OpenAI, OpenAI, or **multiple Ollama deployments**) — reproducible experiments without code changes.
 - **LLM comparison mode** — fix one prompt strategy and **compare multiple LLM models side-by-side** (precision/recall/F1, tokens, cost, time).
 - **Multi-language dataset** (Java, C#, PHP) with paired static analysis reports for quantitative benchmarking.
 - **Unified evaluation pipeline** (file-level precision/recall/F1) + **token and cost accounting**.
@@ -103,9 +103,15 @@ OA1_MODEL=gpt-4o-mini
 
 # --- Ollama slot (local)
 OL1_PROVIDER=ollama
-OL1_LABEL=Ollama llama3
+OL1_LABEL=Ollama llama3 (local)
 OL1_HOST=http://localhost:11434
 OL1_MODEL=llama3
+
+# --- Ollama slot (remote server)
+OL2_PROVIDER=ollama
+OL2_LABEL=Ollama phi3 (server1)
+OL2_HOST=http://192.168.1.100:11434
+OL2_MODEL=phi3
 ```
 
 > If **no slots** are found, the UI falls back to **manual** provider/model inputs.  
@@ -135,7 +141,7 @@ They are normalized internally to **$/1K** for cost calculation.
 
 ### Launch the app
 ```bash
-streamlit run StatLLM_app.py
+streamlit run StaLLM_app.py
 ```
 
 ### Workflow (Run Experiments tab)
@@ -214,12 +220,13 @@ Let `TP`, `FP`, `FN` be the counts defined above.
 
 ## 🧰 Troubleshooting
 
-- **Costs look too high**: set **$/1K** prices (or provide **$/1M**; they’re auto-normalized).  
+- **Costs look too high**: set **$/1K** prices (or provide **$/1M**; they're auto-normalized).  
 - **Missing credentials**: check `.env` slots (e.g., `AZ1_API_KEY`) and Azure deployment/endpoint.  
 - **Azure vs OpenAI**: for Azure, `model` = **deployment name**; for OpenAI, `model` = **model id**.  
 - **No slots shown**: ensure `STALLM_SLOTS` is set and each `<SLOT>_PROVIDER` exists.  
 - **Language filtering**: CSV paths must match detected language extensions.  
 - **Large ZIPs**: raise Streamlit upload limits or split the project.
+- **Ollama connection issues**: see [Ollama Multi-Deployment Guide](OLLAMA_MULTI_DEPLOYMENT.md) for detailed troubleshooting.
 
 ---
 

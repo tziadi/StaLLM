@@ -20,7 +20,7 @@ from StaLLM_core import (
 from StaLLM_models import Session, SmellDetectionResult, init_db, save_run_result
 from StaLLM_llm import (
     ChatModel, LLMConfig, available_models,
-    load_llm_registry, build_llm_from_slot
+    load_llm_registry, build_llm_from_slot, test_ollama_connectivity, debug_ollama_response
 )
 
 # =========================
@@ -184,9 +184,45 @@ def build_llm(sidebar_prefix: str = "") -> ChatModel:
         return ChatModel(LLMConfig(provider="openai", model=model, api_base=base_url, api_key=api_key_env))
 
     else:
-        model = st.sidebar.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
-        host  = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
-        st.markdown(f"<span class='pill'>🧠 <b>Model</b> ollama:{model}</span>", unsafe_allow_html=True)
+        # Enhanced Ollama configuration with connectivity testing
+        st.sidebar.markdown("**Ollama Configuration**")
+        
+        # Host selection
+        default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
+        host = st.sidebar.text_input(
+            f"{sidebar_prefix}Ollama Host", 
+            value=default_host,
+            help="Ollama server URL (e.g., http://localhost:11434, http://192.168.1.100:11434)"
+        )
+        
+        # Test connectivity
+        if st.sidebar.button("🔍 Test Connection", key=f"test_conn_{sidebar_prefix}"):
+            with st.sidebar.spinner("Testing connection..."):
+                success, message = test_ollama_connectivity(host)
+                if success:
+                    st.sidebar.success(f"✅ {message}")
+                else:
+                    st.sidebar.error(f"❌ {message}")
+        
+        # Debug mode for token information
+        debug_tokens = st.sidebar.checkbox("🐛 Debug Token Info", key=f"debug_tokens_{sidebar_prefix}", help="Show detailed token information for debugging")
+        
+        # Get available models for this host
+        try:
+            models_for_host = available_models("ollama", host)
+            if models_for_host:
+                model = st.sidebar.selectbox(f"{sidebar_prefix}Model", models_for_host, index=0)
+            else:
+                # Fallback to default models if host is unreachable
+                model = st.sidebar.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
+                st.sidebar.warning("⚠️ Using default models - host may be unreachable")
+        except Exception as e:
+            model = st.sidebar.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
+            st.sidebar.warning(f"⚠️ Could not fetch models: {str(e)}")
+        
+        # Display model info with host
+        host_display = host.replace("http://", "").replace("https://", "")
+        st.markdown(f"<span class='pill'>🧠 <b>Model</b> ollama:{model}@{host_display}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="ollama", model=model, api_base=host))
 
 # ==========================================================
@@ -238,7 +274,27 @@ def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
         for m in picked_models:
             llms.append(ChatModel(LLMConfig(provider="openai", model=m, api_base=base_url, api_key=api_key_env)))
     else:
-        host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
+        # Enhanced Ollama configuration for comparison
+        st.sidebar.markdown("**Ollama Configuration (Comparison)**")
+        
+        # Host selection for comparison
+        default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
+        host = st.sidebar.text_input(
+            f"{sidebar_prefix}Ollama Host", 
+            value=default_host,
+            help="Ollama server URL for model comparison",
+            key="cmp_ollama_host"
+        )
+        
+        # Test connectivity for comparison
+        if st.sidebar.button("🔍 Test Connection", key="test_conn_cmp"):
+            with st.sidebar.spinner("Testing connection..."):
+                success, message = test_ollama_connectivity(host)
+                if success:
+                    st.sidebar.success(f"✅ {message}")
+                else:
+                    st.sidebar.error(f"❌ {message}")
+        
         for m in picked_models:
             llms.append(ChatModel(LLMConfig(provider="ollama", model=m, api_base=host)))
 
@@ -624,8 +680,28 @@ with tabs[3]:
             base_url_b    = os.getenv("OPENAI_BASE_URL") or None
             llm_batch = ChatModel(LLMConfig(provider="openai", model=mdl_b, api_base=base_url_b, api_key=api_key_env_b))
         else:
+            # Enhanced Ollama configuration for batch
+            st.markdown("**Ollama Configuration (Batch)**")
+            
+            # Host selection for batch
+            default_host_b = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
+            host_b = st.text_input(
+                "Ollama Host (batch)", 
+                value=default_host_b,
+                help="Ollama server URL for batch processing",
+                key="batch_ollama_host"
+            )
+            
+            # Test connectivity for batch
+            if st.button("🔍 Test Connection", key="test_conn_batch"):
+                with st.spinner("Testing connection..."):
+                    success, message = test_ollama_connectivity(host_b)
+                    if success:
+                        st.success(f"✅ {message}")
+                    else:
+                        st.error(f"❌ {message}")
+            
             mdl_b = st.selectbox("Model (batch)", mdl_b_list, index=0, key="mdl_b_ol")
-            host_b  = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
             llm_batch = ChatModel(LLMConfig(provider="ollama", model=mdl_b, api_base=host_b))
 
     if st.button("🚀 Run Batch Analysis"):
