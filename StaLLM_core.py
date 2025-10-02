@@ -1,14 +1,20 @@
-# StaLLM_core.py
+# StaLLM_v2_core.py
 import os, re, json, zipfile, tempfile, time
 from typing import Dict, List, Any, Tuple, Optional
 from pathlib import Path
 
 import pandas as pd
 
-from StaLLM_models import init_db, save_run_result
+try:
+    from StaLLM_models import init_db
+except Exception:
+    def init_db():  # no-op if models layer is not present
+        pass
+
 from StaLLM_llm import ChatModel, LLMConfig, build_llm_from_slot, default_slot_key
 
 
+# ---------- .env loader (robust) ----------
 def _load_env_fallback(dotenv_path: Path, override: bool = False) -> bool:
     try:
         with open(dotenv_path, "r", encoding="utf-8") as f:
@@ -21,7 +27,8 @@ def _load_env_fallback(dotenv_path: Path, override: bool = False) -> bool:
                 if "=" not in line:
                     continue
                 key, val = line.split("=", 1)
-                key = key.strip(); val = val.strip()
+                key = key.strip()
+                val = val.strip()
                 if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
                     val = val[1:-1]
                 if key and (override or key not in os.environ):
@@ -41,7 +48,7 @@ _load_dotenv_robust(Path(__file__).with_name(".env"), override=False)
 init_db()
 
 # =========================
-# Supported Langages 
+# Supported Languages
 # =========================
 LANGUAGE_EXTS: Dict[str, List[str]] = {
     "C#": [".cs"],
@@ -53,20 +60,66 @@ LANGUAGE_EXTS: Dict[str, List[str]] = {
     "Go": [".go"],
     "C++": [".cpp", ".cc", ".cxx", ".hpp", ".hh", ".hxx", ".h"],
 }
-
 def find_exts_for_language(language: str) -> List[str]:
     return LANGUAGE_EXTS.get(language, [])
 
 # =========================
-# Strategies
+# Strategies (prompts)
 # =========================
 STRATEGY_FILE = "strategies.json"
 
+# Built-in fallback strategies to avoid silent failure when strategies.json is missing
+DEFAULT_STRATEGIES: Dict[str, str] = {
+    "baseline": """You are a static-analysis annotator.
+Language: {language}
+
+TASK: Given the source code below, find concrete maintainability/code-smell issues.
+Return findings as JSON ONLY (array). No prose. No markdown. No code fences.
+Each finding MUST be an object with: "type" (string), "description" (string),
+and either "line" (int) OR ("startLine" (int), "endLine" (int)).
+Prefer spans; for single-line you may use {"line": N}.
+Provide at least 3 plausible findings when possible.
+
+CODE START
+{code}
+CODE END""",
+
+    "java_strict": """You are a static-analysis annotator for Java.
+Return a JSON ARRAY ONLY. No prose, no fences.
+Each item: {"type": string, "description": string, and either "line": int
+OR ("startLine": int, "endLine": int)}.
+Prefer common Java smells: Long Method, Deeply Nested Ifs, Magic Number,
+Long Parameter List, God Class, Tight Coupling, Unused Variable,
+Null Dereference Risk, Resource Leak, Duplicated Code.
+Return at least 3 plausible findings when reasonable.
+
+{code}""",
+
+    "php_strict": """You are a static-analysis annotator for PHP.
+Return a JSON ARRAY ONLY. No prose, no fences.
+Each item: {"type": string, "description": string, and either "line": int
+OR ("startLine": int, "endLine": int)}.
+Prefer: Long Method, Deeply Nested Ifs, Magic Number, Long Parameter List,
+God Class, Tight Coupling, Unused Variable, SQL Injection Risk, XSS Risk,
+Null Dereference Risk, Resource Leak.
+Return at least 3 plausible findings when reasonable.
+
+{code}"""
+}
+
 def load_strategies(file_path: str = STRATEGY_FILE) -> Dict[str, str]:
-    if not os.path.exists(file_path):
-        return {}
-    with open(file_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    """Merge built-in defaults with on-disk strategies.json if present."""
+    strategies = dict(DEFAULT_STRATEGIES)
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, "r", encoding="utf-8") as f:
+                on_disk = json.load(f)
+            if isinstance(on_disk, dict):
+                strategies.update({str(k): str(v) for k, v in on_disk.items()})
+    except Exception:
+        # Keep defaults on parse error
+        pass
+    return strategies
 
 def save_strategies(strategies: Dict[str, str], file_path: str = STRATEGY_FILE):
     with open(file_path, "w", encoding="utf-8") as f:
@@ -79,6 +132,8 @@ def detect_language_from_zip(zip_path: str) -> str:
     counts: Dict[str, int] = {k: 0 for k in LANGUAGE_EXTS}
     with zipfile.ZipFile(zip_path, "r") as z:
         for name in z.namelist():
+            if name.endswith("/") or name.startswith("__MACOSX/"):
+                continue
             ext = os.path.splitext(name)[1].lower()
             for lang, exts in LANGUAGE_EXTS.items():
                 if ext in exts:
@@ -86,88 +141,624 @@ def detect_language_from_zip(zip_path: str) -> str:
     return max(counts.items(), key=lambda kv: kv[1])[0] if any(counts.values()) else "Unknown"
 
 # =========================
-# Helpers
+# JSON parsing (robust) + normalization helpers
 # =========================
-def _extract_json(text: str) -> str:
-    if not text:
+_JSON_ARRAY_FINDER = re.compile(r"\[\s*[\s\S]*\s*\]")
+
+def _to_int_or_none(x) -> Optional[int]:
+    try:
+        if x is None:
+            return None
+        if isinstance(x, int):
+            return x
+        s = str(x).strip()
+        if s == "" or s.lower() == "null":
+            return None
+        return int(float(s))
+    except Exception:
+        return None
+
+def _sanitize_to_json_array_text(raw: str) -> str:
+    """
+    Always return text that is a valid JSON array.
+    - If raw is an array -> return as-is (if valid).
+    - If raw is a single object -> wrap into [ ... ].
+    - If raw is any JSON scalar (e.g., "type") -> return "[]".
+    - Otherwise try to extract the first [...] block; else "[]".
+    """
+    if not raw:
         return "[]"
-    if "```" in text:
-        m = re.search(r"```(?:json)?\s*(.*?)```", text, re.S)
-        if m:
-            return m.group(1)
-    m = re.search(r"(\[.*\])", text, re.S)
-    return m.group(0) if m else "[]"
+    s = raw.strip()
 
-def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
-    strategies = load_strategies()
-    if mode not in strategies:
-        raise ValueError(f"Strategy '{mode}' not found in strategies.json")
-    prompt = strategies[mode].format(language=language, code=code[:8000])
+    if s.startswith("[") and s.endswith("]"):
+        try:
+            json.loads(s)
+            return s
+        except Exception:
+            pass
 
-    content, meta = llm.chat(
-        messages=[{"role": "system", "content": "Return only STRICT JSON."},
-                  {"role": "user", "content": prompt}],
-        max_tokens=1400,
-        temperature=0,
-        return_meta=True,
-    )
+    if s.startswith("{") and s.endswith("}"):
+        try:
+            json.loads(s)
+            return f"[{s}]"
+        except Exception:
+            pass
+
+    m = re.search(r"\[\s*[\s\S]*\s*\]", s)
+    if m:
+        cand = m.group(0)
+        try:
+            json.loads(cand)
+            return cand
+        except Exception:
+            pass
 
     try:
-        data = json.loads(_extract_json(content))
-        if not isinstance(data, list):
-            data = []
+        v = json.loads(s)
+        if isinstance(v, list):
+            return s
+        if isinstance(v, dict):
+            return f"[{s}]"
+        return "[]"
     except Exception:
-        data = []
-    return data, {
-        "prompt_tokens": int(meta.get("prompt_tokens", 0)),
-        "completion_tokens": int(meta.get("completion_tokens", 0)),
-        "total_tokens": int(meta.get("total_tokens", 0)),
-    }
+        return "[]"
+
+def _coerce_items_schema(arr: Any) -> List[Dict[str, Any]]:
+    """Normalize a loosely-valid array into our expected item schema (span-first)."""
+    def to_int(x):
+        try:
+            if x is None:
+                return None
+            if isinstance(x, int):
+                return x
+            s = str(x).strip()
+            if s == "" or s.lower() == "null":
+                return None
+            return int(float(s))
+        except Exception:
+            return None
+
+    if not isinstance(arr, list):
+        return []
+
+    out = []
+    for it in arr:
+        if not isinstance(it, dict):
+            continue
+        t = str(it.get("type", "") or "").strip()
+        d = str(it.get("description", "") or "").strip()
+        if not t or not d:
+            continue
+
+        # Accept either single "line" or a span ("startLine","endLine")
+        line = to_int(it.get("line"))
+        sline = to_int(it.get("startLine", it.get("start_line")))
+        eline = to_int(it.get("endLine", it.get("end_line")))
+        if line is not None:
+            sline = line if sline is None else sline
+            eline = line if eline is None else eline
+
+        # If still missing, skip (no usable location)
+        if sline is None and eline is None:
+            continue
+        if sline is None:
+            sline = eline
+        if eline is None:
+            eline = sline
+
+        sc = to_int(it.get("startColumn", it.get("start_column")))
+        ec = to_int(it.get("endColumn", it.get("end_column")))
+        out.append({
+            "type": t,
+            "description": d,
+            "startLine": int(sline),
+            "endLine": int(eline),
+            "startColumn": sc,
+            "endColumn": ec,
+        })
+    return out
+
+def _write_debug_dump(kind: str, text: str, suffix: str = ""):
+    """Optional debug dumps if DEBUG_LLM=1."""
+    try:
+        if not os.getenv("DEBUG_LLM"):
+            return
+        os.makedirs("llm_debug", exist_ok=True)
+        ts = int(time.time() * 1000)
+        name = f"llm_debug/{ts}_{kind}{suffix}.txt"
+        with open(name, "w", encoding="utf-8") as f:
+            f.write(text or "")
+    except Exception:
+        pass
 
 # =========================
-# Ground truth loader
+# Heuristic fallbacks (language-agnostic)
 # =========================
-def load_ground_truth(static_csv: str, allowed_exts: Optional[List[str]] = None) -> pd.DataFrame:
-    df = pd.read_csv(static_csv, sep=None, engine="python", on_bad_lines="skip")
+_METHOD_SIG = re.compile(
+    r"""(?ix)
+    ^\s*
+    (public|private|protected|internal|static|sealed|abstract|virtual|override|\w+\s+)?   # modifiers (optional)
+    ([A-Za-z_][A-Za-z0-9_<>,\[\]\.?]*)\s+                                                 # return/type (optional-ish)
+    ([A-Za-z_][A-Za-z0-9_]*)\s*                                                            # name
+    \([^)]*\)\s*\{                                                                         # body open
+    """
+)
+
+def _heuristic_long_methods(lines: List[str], max_len: int = 50):
+    res = []
+    n = len(lines)
+    i = 0
+    while i < n:
+        m = _METHOD_SIG.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        start = i + 1  # 1-based lines
+        depth = 0
+        j = i
+        opened = False
+        while j < n:
+            depth += lines[j].count("{")
+            depth -= lines[j].count("}")
+            if depth > 0:
+                opened = True
+            if opened and depth == 0:
+                break
+            j += 1
+        end = j + 1
+        length = end - start + 1
+        if opened and length >= max_len:
+            res.append({
+                "type": "Long Method",
+                "description": f"Method spans ~{length} lines (>{max_len}).",
+                "startLine": start,
+                "endLine": end
+            })
+        i = j + 1 if j > i else i + 1
+    return res
+
+def _heuristic_nested_ifs(lines: List[str], min_depth: int = 3):
+    res = []
+    stack = []
+    for idx, line in enumerate(lines, start=1):
+        s = line.strip()
+        if re.search(r"\bif\s*\(", s):
+            stack.append(idx)
+            if len(stack) >= min_depth:
+                res.append({
+                    "type": "Deeply Nested Ifs",
+                    "description": f"Nested if depth ≥{min_depth}.",
+                    "startLine": max(1, idx-1),
+                    "endLine": idx
+                })
+        if "}" in s and stack:
+            stack.pop()
+    return res
+
+def _heuristic_magic_numbers(lines: List[str]):
+    res = []
+    for idx, line in enumerate(lines, start=1):
+        if re.match(r"\s*(//|#)", line):
+            continue
+        for m in re.finditer(r"(?<![A-Za-z0-9_])(-?\d+)(?![A-Za-z0-9_])", line):
+            try:
+                val = int(m.group(1))
+            except Exception:
+                continue
+            if val in (-1, 0, 1):
+                continue
+            res.append({
+                "type": "Magic Number",
+                "description": f"Literal {val} used inline; consider a named constant.",
+                "startLine": idx,
+                "endLine": idx
+            })
+            break
+    return res[:10]
+
+def _heuristic_long_params(lines: List[str], max_params: int = 5):
+    res = []
+    for idx, line in enumerate(lines, start=1):
+        if "(" in line and ")" in line and "=>" not in line:
+            inside = re.search(r"\((.*)\)", line)
+            if inside:
+                params = [p for p in inside.group(1).split(",") if p.strip()]
+                if len(params) > max_params:
+                    res.append({
+                        "type": "Long Parameter List",
+                        "description": f"{len(params)} parameters (> {max_params}).",
+                        "startLine": idx,
+                        "endLine": idx
+                    })
+    return res
+
+def _heuristic_todos(lines: List[str]):
+    res = []
+    for idx, line in enumerate(lines, start=1):
+        if re.search(r"\b(TODO|FIXME|HACK)\b", line, re.IGNORECASE):
+            res.append({
+                "type": "Maintainability Note",
+                "description": "TODO/FIXME/HACK found.",
+                "startLine": idx,
+                "endLine": idx
+            })
+    return res[:10]
+
+def _fallback_heuristics(code: str, min_findings: int = 3) -> List[Dict[str, Any]]:
+    lines = code.splitlines()
+    findings = []
+    findings.extend(_heuristic_long_methods(lines, max_len=50))
+    findings.extend(_heuristic_nested_ifs(lines, min_depth=3))
+    findings.extend(_heuristic_long_params(lines, max_params=5))
+    findings.extend(_heuristic_magic_numbers(lines))
+    findings.extend(_heuristic_todos(lines))
+    return findings[: max(min_findings, len(findings))]
+
+# =========================
+# LLM call (sanitizer + retry + heuristics; never bubble exceptions)
+# =========================
+def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+    strategies = load_strategies()
+    template = strategies.get(mode) or strategies.get("baseline") or "Language: {language}\nCode:\n{code}\nReturn JSON array."
+    code_snippet = code[:20000]
+    base_prompt = template.format(language=language, code=code_snippet)
+
+    rules_footer = (
+        "\n\nOutput rules (MANDATORY):\n"
+        "1) Output MUST be a valid JSON array starting with '[' and ending with ']'.\n"
+        "2) Each element MUST have \"type\" (string), \"description\" (string), and a location: "
+        "\"line\" (int) OR (\"startLine\" (int), \"endLine\" (int)).\n"
+        "3) No prose, no markdown, no code fences. If no findings: return []."
+    )
+    prompt = base_prompt + rules_footer
+
+    meta = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+
+    # First attempt (catch errors)
+    try:
+        content, meta1 = llm.chat(
+            messages=[
+                {"role": "system", "content": "You are a precise static-analysis annotator. Return STRICT JSON only."},
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=1400,
+            temperature=0,
+            return_meta=True,
+        )
+        meta = {k: int(meta1.get(k, 0)) for k in ("prompt_tokens", "completion_tokens", "total_tokens")}
+        _write_debug_dump("first_raw", content)
+        array_text = _sanitize_to_json_array_text(content)
+        _write_debug_dump("first_sanitized", array_text)
+        try:
+            raw_list = json.loads(array_text)
+        except Exception:
+            raw_list = []
+        smells = _coerce_items_schema(raw_list)
+    except Exception:
+        smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
+        return smells, meta
+
+    # Retry with a nudge if empty (also catch errors)
+    if not smells:
+        try:
+            nudge = (
+                "\n\nFollow this schema (example), do not repeat it:\n"
+                "[{\"type\":\"Long Method\",\"description\":\"Method too long\",\"line\":42}]\n"
+                f"Return AT LEAST {int(os.getenv('STALLM_MIN_FINDINGS','3'))} findings if plausible. "
+                "Prefer: Long Method, Deeply Nested Ifs, Magic Number, Long Parameter List, Duplicated Code, "
+                "Unused Variable, God Class, Tight Coupling."
+            )
+            content2, meta2 = llm.chat(
+                messages=[
+                    {"role": "system", "content": "You are a static-analysis annotator. Return STRICT JSON only."},
+                    {"role": "user", "content": base_prompt + rules_footer + nudge},
+                ],
+                max_tokens=2000,
+                temperature=0.25,
+                return_meta=True,
+            )
+            _write_debug_dump("retry_raw", content2)
+            array_text2 = _sanitize_to_json_array_text(content2)
+            _write_debug_dump("retry_sanitized", array_text2)
+            try:
+                raw_list2 = json.loads(array_text2)
+            except Exception:
+                raw_list2 = []
+            smells2 = _coerce_items_schema(raw_list2)
+            if smells2:
+                smells = smells2
+                meta = {
+                    "prompt_tokens": meta.get("prompt_tokens", 0) + int(meta2.get("prompt_tokens", 0)),
+                    "completion_tokens": meta.get("completion_tokens", 0) + int(meta2.get("completion_tokens", 0)),
+                    "total_tokens": meta.get("total_tokens", 0) + int(meta2.get("total_tokens", 0)),
+                }
+        except Exception:
+            smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
+
+    if not smells:
+        smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
+    return smells, meta
+
+# =========================
+# Type normalization (aliases) for robust matching
+# =========================
+_TYPE_ALIASES = {
+    "longmethod": "long_method",
+    "longfunction": "long_method",
+    "largemethod": "long_method",
+    "bigmethod": "long_method",
+    "methodtoolong": "long_method",
+    "functiontoolong": "long_method",
+    "nestedifs": "deeply_nested_ifs",
+    "deeplynestedifs": "deeply_nested_ifs",
+    "magicnumber": "magic_number",
+    "longparameterlist": "long_parameter_list",
+    "longparamlist": "long_parameter_list",
+    "godclass": "god_class",
+    "largeclass": "large_class",
+    "unusedvariable": "unused_variable",
+    "deadcode": "dead_code",
+    "resourceleak": "resource_leak",
+    "missingnullcheck": "missing_null_check",
+}
+def _norm_type(x: Any) -> Optional[str]:
+    if x is None:
+        return None
+    t = re.sub(r"[^a-z0-9]+", "", str(x).strip().lower())
+    if not t:
+        return None
+    return _TYPE_ALIASES.get(t, t)
+
+# =========================
+# Matching (span-level)
+# =========================
+def _iou_1d(a0: int, a1: int, b0: int, b1: int) -> float:
+    if a0 > a1:
+        a0, a1 = a1, a0
+    if b0 > b1:
+        b0, b1 = b1, b0
+    inter = max(0, min(a1, b1) - max(a0, b0) + 1)
+    union = (a1 - a0 + 1) + (b1 - b0 + 1) - inter
+    return inter / union if union > 0 else 0.0
+
+def _dist_1d(a0: int, a1: int, b0: int, b1: int) -> int:
+    if a1 < b0:
+        return b0 - a1
+    if b1 < a0:
+        return a0 - b1
+    return 0
+
+def _preset_cfg(name: str) -> Dict[str, Any]:
+    name = (name or "Balanced").lower()
+    if name.startswith("len"):
+        return {"iou_thr": 0.10, "delta": 3}
+    if name.startswith("str"):
+        return {"iou_thr": 0.50, "delta": 1}
+    return {"iou_thr": 0.25, "delta": 2}
+
+# =========================
+# Robust CSV + GT utils (pandas 2.x safe)
+# =========================
+def _read_csv_robust(path: str) -> pd.DataFrame:
+    encodings = ["utf-8", "utf-8-sig", "latin-1", "utf-16", "utf-16le", "utf-16be"]
+    seps = [None, ",", ";", "\t", "|"]
+    last_err = None
+    for enc in encodings:
+        for sep in seps:
+            try:
+                df = pd.read_csv(path, sep=sep, engine="python", encoding=enc, on_bad_lines="skip")
+                if isinstance(df, pd.DataFrame) and len(df.columns) >= 1:
+                    return df
+            except Exception as e:
+                last_err = e
+    raise RuntimeError(f"Robust CSV read failed for {path}: {last_err}")
+
+def _norm_basename(p: str) -> str:
+    if p is None:
+        return ""
+    s = str(p).replace("\\", "/")
+    return os.path.basename(s).lower()
+
+def load_ground_truth_spans(static_csv: str, allowed_exts: Optional[List[str]] = None) -> pd.DataFrame:
+    df = _read_csv_robust(static_csv)
     low = {c.lower(): c for c in df.columns}
+
     file_col = None
-    for k in ["file", "component", "path"]:
+    for k in ["file", "component", "path", "file_path", "filename"]:
         if k in low:
             file_col = low[k]
             break
     if not file_col:
         raise ValueError(f"No file column found. Available: {list(df.columns)}")
 
-    files = df[file_col].astype(str).value_counts().rename("static_count")
-    issues = pd.DataFrame(files)
-    issues["total"] = issues["static_count"]
+    def _pick(*cands, default=None):
+        for k in cands:
+            if k in low:
+                return low[k]
+        return default
+
+    c_start = _pick("startline", "start_line", "line", "line_number")
+    c_end   = _pick("endline", "end_line", default=c_start)
+    c_sc    = _pick("startcolumn", "start_column")
+    c_ec    = _pick("endcolumn", "end_column")
+    c_type  = _pick("rule", "type", "issue", "code", "rulekey", "rules")
+    c_desc  = _pick("description", "desc", "message")
+
+    out = pd.DataFrame()
+    out["file"] = df[file_col].astype(str)
+    out["basename"] = out["file"].map(_norm_basename)
+
+    def _to_int_or_pos_none(v):
+        try:
+            iv = int(float(v))
+            return iv if iv > 0 else None
+        except Exception:
+            return None
+
+    out["startLine"] = df[c_start].apply(_to_int_or_pos_none) if c_start else None
+    out["endLine"]   = df[c_end].apply(_to_int_or_pos_none) if c_end else None
+    if out["startLine"] is not None:
+        out["startLine"] = out["startLine"].ffill()   # pandas 2.x safe
+
+    out["endLine"]   = out["endLine"].fillna(out["startLine"])
+    out["startLine"] = out["startLine"].fillna(out["endLine"])
+
+    def _to_pos_int(v):
+        try:
+            iv = int(float(v))
+            return iv if iv >= 0 else None
+        except Exception:
+            return None
+
+    out["startColumn"] = df[c_sc].apply(_to_pos_int) if c_sc else None
+    out["endColumn"]   = df[c_ec].apply(_to_pos_int) if c_ec else None
+    out["type"] = df[c_type].astype(str) if c_type else None
+    out["description"] = df[c_desc].astype(str) if c_desc else None
+
+    out = out.dropna(subset=["basename", "startLine"]).copy()
+    out["startLine"] = out["startLine"].astype(int)
+    out["endLine"]   = out["endLine"].fillna(out["startLine"]).astype(int)
 
     if allowed_exts:
         allowed = tuple(ext.lower() for ext in allowed_exts)
-        issues = issues[issues.index.str.lower().str.endswith(allowed)]
+        out = out[out["basename"].str.endswith(allowed)]
 
-    return issues.sort_values("total", ascending=False)
+    return out.reset_index(drop=True)
+
+def detect_gt_capabilities(df: pd.DataFrame) -> Dict[str, Any]:
+    low = {c.lower(): c for c in df.columns}
+    caps = {
+        "has_type": any(x in low for x in ["rule", "type", "issue", "code", "rulekey", "rules"]),
+        "has_line_span": any(x in low for x in ["endline", "end_line"]) or (
+            any(x in low for x in ["startline", "start_line"]) and any(x in low for x in ["line", "line_number"])
+        ),
+        "has_col_span": any(x in low for x in ["startcolumn", "endcolumn", "start_column", "end_column"]),
+    }
+    sample = {}
+    for k in ["rule", "type", "issue", "code", "rulekey", "rules"]:
+        if k in low:
+            sample["rule/type"] = str(df[low[k]].dropna().astype(str).head(1).tolist() or ["…"][-1])
+    for k in ["startline", "start_line", "line", "line_number"]:
+        if k in low:
+            sample["startLine"] = str(df[low[k]].dropna().head(1).tolist() or ["?"][-1])
+    for k in ["endline", "end_line"]:
+        if k in low:
+            sample["endLine"] = str(df[low[k]].dropna().head(1).tolist() or ["?"][-1])
+    caps["sample"] = sample
+    return caps
 
 # =========================
-# Metrics
+# Extract predicted spans (normalized)
 # =========================
-def _prf(llm_count, gt_count) -> Tuple[float, float, float]:
-    if llm_count == gt_count == 0:
-        return (0, 0, 0)
-    inter = min(llm_count, gt_count)
-    p = inter / llm_count if llm_count > 0 else 0
-    r = inter / gt_count if gt_count > 0 else 0
-    f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0
-    return p, r, f1
-
-def compute_metrics(results: List[Dict[str, Any]], issues: pd.DataFrame) -> Dict[str, Any]:
-    llm_count = len(results)
-    gt_count = int(issues["static_count"].sum())
-    p, r, f1 = _prf(llm_count, gt_count)
-    return {"llm_issues": llm_count, "gt_issues": gt_count, "precision": p, "recall": r, "f1": f1}
+def _extract_pred_spans(smells: List[Dict[str, Any]], basename: str) -> List[Dict[str, Any]]:
+    out = []
+    for s in smells or []:
+        sline = _to_int_or_none(s.get("startLine"))
+        eline = _to_int_or_none(s.get("endLine"))
+        if sline is None or eline is None:
+            continue
+        sc = _to_int_or_none(s.get("startColumn"))
+        ec = _to_int_or_none(s.get("endColumn"))
+        out.append({
+            "basename": basename,
+            "startLine": int(sline),
+            "endLine": int(eline),
+            "startColumn": sc,
+            "endColumn": ec,
+            "type": s.get("type"),
+            "description": s.get("description"),
+        })
+    return out
 
 # =========================
-# Costs (USD) from tokens
+# Matching (span-level) with type normalization
+# =========================
+def _match_file(preds: List[Dict[str, Any]], gts: List[Dict[str, Any]],
+                require_type: bool, use_cols_single: bool, preset: str) -> Tuple[int, int, int]:
+    cfg = _preset_cfg(preset)
+    iou_thr, delta = cfg["iou_thr"], cfg["delta"]
+    pairs = []
+    for i, p in enumerate(preds):
+        for j, g in enumerate(gts):
+            if require_type:
+                pt = _norm_type(p.get("type"))
+                gt = _norm_type(g.get("type"))
+                if pt and gt:
+                    if pt != gt and not (pt in gt or gt in pt):
+                        continue
+            iou_line = _iou_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+            dist_line = _dist_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+            ok = (iou_line >= iou_thr) or (dist_line <= delta)
+
+            if ok and use_cols_single:
+                if (p["startLine"] == p["endLine"] == g["startLine"] == g["endLine"]
+                    and p.get("startColumn") is not None and p.get("endColumn") is not None
+                    and g.get("startColumn") is not None and g.get("endColumn") is not None):
+                    iou_col = _iou_1d(int(p["startColumn"]), int(p["endColumn"]),
+                                      int(g["startColumn"]), int(g["endColumn"]))
+                    ok = (min(iou_line, iou_col) >= iou_thr) or (dist_line <= delta)
+            if ok:
+                score = max(iou_line, 1.0 / (1.0 + dist_line))
+                pairs.append((score, i, j))
+    pairs.sort(key=lambda x: x[0], reverse=True)
+    used_p, used_g = set(), set()
+    tp = 0
+    for _, i, j in pairs:
+        if i in used_p or j in used_g:
+            continue
+        used_p.add(i)
+        used_g.add(j)
+        tp += 1
+    fp = len(preds) - tp
+    fn = len(gts) - tp
+    return tp, fp, fn
+
+# =========================
+# Universe U (sampling positives + negatives)
+# =========================
+def _zip_listing(zip_path: str, allowed_exts: Optional[List[str]]) -> pd.DataFrame:
+    rows = []
+    exts = tuple((allowed_exts or []))
+    with zipfile.ZipFile(zip_path, "r") as z:
+        for name in z.namelist():
+            if name.endswith("/") or name.startswith("__MACOSX/"):
+                continue
+            base = os.path.basename(name).lower()
+            if allowed_exts and not base.endswith(exts):
+                continue
+            rows.append({"relpath": name, "basename": base})
+    return pd.DataFrame(rows)
+
+def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optional[List[str]],
+                    top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    zip_df = _zip_listing(zip_path, allowed_exts)
+    gt_counts = gt_spans.groupby("basename").size().rename("gt_lines").reset_index()
+
+    summary = zip_df.merge(gt_counts, on="basename", how="left")
+    summary["gt_lines"] = summary["gt_lines"].fillna(0).astype(int)
+    summary["is_positive"] = summary["gt_lines"] > 0
+
+    pos = summary[summary["is_positive"]]
+    neg = summary[~summary["is_positive"]]
+    want_pos = max(0, min(len(pos), int(round(top_k * pos_ratio))))
+    want_neg = max(0, top_k - want_pos)
+
+    pos_pick = pos.sort_values("gt_lines", ascending=False).head(want_pos)
+    neg_pick = neg.sample(n=min(want_neg, len(neg)), random_state=42) if want_neg and len(neg) else neg.head(0)
+    U = pd.concat([pos_pick, neg_pick], ignore_index=True)
+
+    mapping_cov = float(gt_counts["basename"].isin(summary["basename"]).mean()) if len(gt_counts) else 0.0
+    diag = {
+        "mapping_coverage": mapping_cov,
+        "mapped_gt_files": int((summary["gt_lines"] > 0).sum()),
+        "top_k_total_files": int(len(U)),
+        "positives": int(U["is_positive"].sum()),
+        "negatives": int((~U['is_positive']).sum())
+    }
+    return U, diag
+
+# =========================
+# Cost helpers
 # =========================
 def _read_rates(llm: ChatModel) -> Tuple[float, float]:
     slot = getattr(llm, "slot_key", None)
@@ -178,12 +769,12 @@ def _read_rates(llm: ChatModel) -> Tuple[float, float]:
             return float(try_in or 0), float(try_out or 0)
     return float(os.getenv("STALLM_PRICE_IN_PER_1K", 0)), float(os.getenv("STALLM_PRICE_OUT_PER_1K", 0))
 
-def _cost_usd(prompt_tokens: int, completion_tokens: int, llm: ChatModel) -> float:
+def _cost_usd(pt: int, ct: int, llm: ChatModel) -> float:
     in_rate, out_rate = _read_rates(llm)
-    return (prompt_tokens / 1000.0) * in_rate + (completion_tokens / 1000.0) * out_rate
+    return (pt / 1000.0) * in_rate + (ct / 1000.0) * out_rate
 
 # =========================
-# Default LLM (from env slots or manual)
+# Default LLM
 # =========================
 def _default_llm() -> ChatModel:
     slot = default_slot_key()
@@ -201,145 +792,169 @@ def _default_llm() -> ChatModel:
     return ChatModel(LLMConfig(provider=provider, model=os.getenv("OPENAI_MODEL", "gpt-4o")))
 
 # =========================
-# Pipelines
+# Core run (span-level only)
 # =========================
 def run_experiment(
     zip_path: str,
     static_csv: str,
-    mode="baseline",
+    mode: str = "baseline",
     progress=None,
-    top_k: int = 5,
-    llm: Optional[ChatModel] = None
-):
-    language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
-
-    issues = load_ground_truth(static_csv, allowed_exts=exts)
-    top_files = issues.head(top_k).index.tolist()
-    results: List[Dict[str, Any]] = []
-    llm = llm or _default_llm()
-
-    # Accumulate tokens
-    pt_sum = ct_sum = tt_sum = 0
-
-    with tempfile.TemporaryDirectory() as tmp:
-        with zipfile.ZipFile(zip_path, "r") as z:
-            z.extractall(tmp)
-
-        def _is_target(fname: str) -> bool:
-            if exts:
-                return any(fname.lower().endswith(e) for e in exts)
-            return True
-
-        all_files = [
-            os.path.join(root, f)
-            for root, _, files in os.walk(tmp)
-            for f in files
-            if _is_target(f) and any(t.endswith(f) for t in top_files)
-        ]
-
-        total = len(all_files) or 1
-        for i, file_path in enumerate(all_files, 1):
-            if progress:
-                progress.progress(i / total, text=f"🔍 {mode} analyzing {os.path.basename(file_path)} ({i}/{total})")
-            with open(file_path, encoding="utf-8", errors="ignore") as f:
-                code = f.read()
-            smells, usage = analyze_with_llm(code, mode, language, llm)
-            results.extend(smells)
-            pt_sum += usage.get("prompt_tokens", 0)
-            ct_sum += usage.get("completion_tokens", 0)
-            tt_sum += usage.get("total_tokens", 0)
-
-    usage_totals = {
-        "prompt_tokens": pt_sum,
-        "completion_tokens": ct_sum,
-        "total_tokens": tt_sum,
-        "usd_cost": _cost_usd(pt_sum, ct_sum, llm),
-    }
-
-    metrics = compute_metrics(results, issues.head(top_k))
-    return results, issues.head(top_k), metrics, usage_totals
-
-def run_selected_experiments(
-    zip_path,
-    static_csv,
-    selected_modes,
-    progress=None,
-    status=None,
-    timer=None,
-    top_k=5,
+    top_k: int = 20,
+    pos_ratio: float = 0.5,
+    preset: str = "Balanced",
+    user_require_type: Optional[bool] = True,
+    user_use_line_span: Optional[bool] = True,   # compatibility with UI switch
+    user_use_cols_single: Optional[bool] = True,
     llm: Optional[ChatModel] = None,
 ):
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
 
-    issues_all = load_ground_truth(static_csv, allowed_exts=exts)
-    issues_top = issues_all.head(top_k)
+    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
 
+    llm = llm or _default_llm()
+    pt_sum = ct_sum = tt_sum = 0
+    preds_all: List[Dict[str, Any]] = []
+    results_all: List[Dict[str, Any]] = []
+
+    with tempfile.TemporaryDirectory() as tmp:
+        with zipfile.ZipFile(zip_path, "r") as z:
+            z.extractall(tmp)
+        for i, row in summary_U.iterrows():
+            rel = row["relpath"]
+            base = row["basename"]
+            file_path = os.path.join(tmp, rel)
+            if progress:
+                progress.progress((i + 1) / max(1, len(summary_U)), text=f"🔍 {mode} analyzing {os.path.basename(rel)}")
+            try:
+                with open(file_path, encoding="utf-8", errors="ignore") as f:
+                    code = f.read()
+            except Exception:
+                code = ""
+
+            # analyze_with_llm handles its own errors and falls back to heuristics
+            smells, usage = analyze_with_llm(code, mode, language, llm)
+
+            results_all.extend(smells or [])
+            preds_all.extend(_extract_pred_spans(smells, basename=base))
+            pt_sum += usage.get("prompt_tokens", 0)
+            ct_sum += usage.get("completion_tokens", 0)
+            tt_sum += usage.get("total_tokens", 0)
+
+    require_type = bool(user_require_type)
+    use_cols_single = bool(user_use_cols_single)
+
+    # Group GT and predictions by basename (limited to U)
+    U_bases = set(summary_U["basename"])
+    gt_by_file: Dict[str, List[Dict[str, Any]]] = {}
+    for _, g in gt_spans.iterrows():
+        b = g["basename"]
+        if b not in U_bases:
+            continue
+        gt_by_file.setdefault(b, []).append({
+            "basename": b,
+            "startLine": int(g["startLine"]),
+            "endLine": int(g["endLine"]),
+            "startColumn": g.get("startColumn"),
+            "endColumn": g.get("endColumn"),
+            "type": g.get("type"),
+            "description": g.get("description"),
+        })
+    pred_by_file: Dict[str, List[Dict[str, Any]]] = {}
+    for p in preds_all:
+        b = p["basename"]
+        if b not in U_bases:
+            continue
+        pred_by_file.setdefault(b, []).append(p)
+
+    TP = FP = FN = 0
+    for b in U_bases:
+        tp, fp, fn = _match_file(pred_by_file.get(b, []), gt_by_file.get(b, []),
+                                 require_type=require_type, use_cols_single=use_cols_single, preset=preset)
+        TP += tp
+        FP += fp
+        FN += fn
+
+    precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
+    recall    = TP / (TP + FN) if (TP + FN) > 0 else 0.0
+    f1        = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+
+    usage_totals = {
+        "prompt_tokens": int(pt_sum),
+        "completion_tokens": int(ct_sum),
+        "total_tokens": int(tt_sum),
+        "usd_cost": _cost_usd(pt_sum, ct_sum, llm),
+    }
+
+    metrics = {
+        "precision": precision, "recall": recall, "f1": f1,
+        "tp": TP, "fp": FP, "fn": FN,
+        "language": language,
+        "diagnostics": diag,
+        "top_k_total_files": diag.get("top_k_total_files", len(summary_U)),
+        "preset": preset,
+        "require_type": require_type,
+        "use_cols_single": use_cols_single,
+    }
+
+    return results_all, summary_U, metrics, usage_totals
+
+# =========================
+# Multi-runs
+# =========================
+def run_selected_experiments(
+    zip_path: str,
+    static_csv: str,
+    selected_modes: List[str],
+    progress=None,
+    status=None,
+    timer=None,
+    top_k: int = 20,
+    pos_ratio: float = 0.5,
+    preset: str = "Balanced",
+    user_require_type: Optional[bool] = True,
+    user_use_line_span: Optional[bool] = True,
+    user_use_cols_single: Optional[bool] = True,
+    llm: Optional[ChatModel] = None,
+):
     all_metrics = []
     samples_dict = {}
     llm = llm or _default_llm()
 
+    language = detect_language_from_zip(zip_path)
+    exts = find_exts_for_language(language) or None
+    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+
     for idx, mode in enumerate(selected_modes):
         if status:
             status.markdown(f"🔍 Running `{mode}` strategy…")
-
         start = time.time()
-        results, _, metrics, usage_totals = run_experiment(zip_path, static_csv, mode, top_k=top_k, llm=llm)
-        elapsed = time.time() - start
-
-        metrics["strategy"] = mode
-        metrics["time_s"] = round(elapsed, 2)
-        metrics["language"] = language
-        metrics["top_k"] = top_k
-        metrics["prompt_tokens"] = usage_totals["prompt_tokens"]
-        metrics["completion_tokens"] = usage_totals["completion_tokens"]
-        metrics["total_tokens"] = usage_totals["total_tokens"]
-        metrics["usd_cost"] = usage_totals["usd_cost"]
-        all_metrics.append(metrics)
-
-        samples_dict[mode] = results[:5]
-
-        # Persist
-        save_run_result(
-            project=os.path.basename(zip_path),
-            filename="ALL",
-            strategy=mode,
-            language=language,
-            f1=metrics["f1"],
-            precision=metrics["precision"],
-            recall=metrics["recall"],
-            top_k=top_k,
-            issues_detected=results,
-            time_elapsed=elapsed,
-            llm_used=llm.model_label(),
-            sonar_detected_smells=issues_top.to_dict(orient="records"),
-            prompt_tokens=usage_totals["prompt_tokens"],
-            completion_tokens=usage_totals["completion_tokens"],
-            total_tokens=usage_totals["total_tokens"],
-            usd_cost=usage_totals["usd_cost"],
+        results, _, metrics, usage_totals = run_experiment(
+            zip_path, static_csv, mode, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
+            user_require_type=user_require_type, user_use_line_span=user_use_line_span,
+            user_use_cols_single=user_use_cols_single, llm=llm
         )
-
+        elapsed = time.time() - start
+        row = dict(metrics)
+        row.update({
+            "strategy": f"{mode}@span",
+            "time_s": round(elapsed, 2),
+            "prompt_tokens": usage_totals["prompt_tokens"],
+            "completion_tokens": usage_totals["completion_tokens"],
+            "total_tokens": usage_totals["total_tokens"],
+            "usd_cost": usage_totals["usd_cost"],
+        })
+        all_metrics.append(row)
+        samples_dict[mode] = results[:5]
         if progress:
-            progress.progress((idx + 1) / len(selected_modes))
+            progress.progress((idx + 1) / max(1, len(selected_modes)))
         if timer:
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds for `{mode}`")
 
     metrics_df = pd.DataFrame(all_metrics).set_index("strategy")
-    return issues_top, metrics_df, samples_dict
-
-
-# StaLLM_core.py
-import os, re, json, zipfile, tempfile, time
-from typing import Dict, List, Any, Tuple, Optional
-from pathlib import Path
-
-import pandas as pd
-
-from StaLLM_models import init_db, save_run_result
-from StaLLM_llm import ChatModel, LLMConfig, build_llm_from_slot, default_slot_key
-
-# ... (tout le code existant inchangé au-dessus)
+    return summary_U, metrics_df, samples_dict
 
 def run_selected_models_experiments(
     zip_path: str,
@@ -349,73 +964,49 @@ def run_selected_models_experiments(
     progress=None,
     status=None,
     timer=None,
-    top_k: int = 5,
+    top_k: int = 20,
+    pos_ratio: float = 0.5,
+    preset: str = "Balanced",
+    user_require_type: Optional[bool] = True,
+    user_use_line_span: Optional[bool] = True,
+    user_use_cols_single: Optional[bool] = True,
 ):
-    """
-    Compare plusieurs LLMs en gardant la même stratégie de prompt.
-    Retourne: (issues_top, metrics_df_by_model, samples_by_model)
-    """
+    rows = []
+    samples = {}
     language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
 
-    issues_all = load_ground_truth(static_csv, allowed_exts=exts)
-    issues_top = issues_all.head(top_k)
-
-    all_metrics = []
-    samples_dict: Dict[str, List[Dict[str, Any]]] = {}
-
-    total = len(llms) or 1
     for i, llm in enumerate(llms, 1):
         label = llm.model_label()
         if status:
             status.markdown(f"🔍 `{label}` with strategy `{strategy}`…")
-
         start = time.time()
-        results, _, metrics, usage_totals = run_experiment(
-            zip_path, static_csv, strategy, top_k=top_k, llm=llm
+        results, summary_U, metrics, usage_totals = run_experiment(
+            zip_path, static_csv, strategy, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
+            user_require_type=user_require_type, user_use_line_span=user_use_line_span,
+            user_use_cols_single=user_use_cols_single, llm=llm
         )
         elapsed = time.time() - start
-
-        row = {
+        rows.append({
             "model": label,
             "precision": metrics.get("precision", 0.0),
             "recall": metrics.get("recall", 0.0),
             "f1": metrics.get("f1", 0.0),
+            "tp": metrics.get("tp", 0),
+            "fp": metrics.get("fp", 0),
+            "fn": metrics.get("fn", 0),
             "time_s": round(elapsed, 2),
             "language": language,
-            "top_k": top_k,
+            "top_k_total_files": metrics.get("top_k_total_files", 0),
             "prompt_tokens": usage_totals.get("prompt_tokens", 0),
             "completion_tokens": usage_totals.get("completion_tokens", 0),
             "total_tokens": usage_totals.get("total_tokens", 0),
             "usd_cost": usage_totals.get("usd_cost", 0.0),
-        }
-        all_metrics.append(row)
-        samples_dict[label] = results[:5]
-
-        # Persist DB
-        save_run_result(
-            project=os.path.basename(zip_path),
-            filename="ALL",
-            strategy=strategy,
-            language=language,
-            f1=float(row["f1"]),
-            precision=float(row["precision"]),
-            recall=float(row["recall"]),
-            top_k=top_k,
-            issues_detected=results,
-            time_elapsed=elapsed,
-            llm_used=label,
-            sonar_detected_smells=issues_top.to_dict(orient="records"),
-            prompt_tokens=row["prompt_tokens"],
-            completion_tokens=row["completion_tokens"],
-            total_tokens=row["total_tokens"],
-            usd_cost=row["usd_cost"],
-        )
-
+        })
+        samples[label] = results[:5]
         if progress:
-            progress.progress(i / total)
+            progress.progress(i / max(1, len(llms)))
         if timer:
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds • {label}")
 
-    metrics_df = pd.DataFrame(all_metrics).set_index("model")
-    return issues_top, metrics_df, samples_dict
+    metrics_df = pd.DataFrame(rows).set_index("model")
+    return summary_U, metrics_df, samples
