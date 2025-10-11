@@ -1,4 +1,4 @@
-# StaLLM_v2_core.py
+# StaLLM_core.py
 import os, re, json, zipfile, tempfile, time
 from typing import Dict, List, Any, Tuple, Optional
 from pathlib import Path
@@ -8,7 +8,7 @@ import pandas as pd
 try:
     from StaLLM_models import init_db
 except Exception:
-    def init_db():  # no-op if models layer is not present
+    def init_db():
         pass
 
 from StaLLM_llm import ChatModel, LLMConfig, build_llm_from_slot, default_slot_key
@@ -64,66 +64,30 @@ def find_exts_for_language(language: str) -> List[str]:
     return LANGUAGE_EXTS.get(language, [])
 
 # =========================
-# Strategies (prompts)
+# Strategies (prompts) — only from file
 # =========================
 STRATEGY_FILE = "strategies.json"
 
-# Built-in fallback strategies to avoid silent failure when strategies.json is missing
-DEFAULT_STRATEGIES: Dict[str, str] = {
-    "baseline": """You are a static-analysis annotator.
-Language: {language}
-
-TASK: Given the source code below, find concrete maintainability/code-smell issues.
-Return findings as JSON ONLY (array). No prose. No markdown. No code fences.
-Each finding MUST be an object with: "type" (string), "description" (string),
-and either "line" (int) OR ("startLine" (int), "endLine" (int)).
-Prefer spans; for single-line you may use {"line": N}.
-Provide at least 3 plausible findings when possible.
-
-CODE START
-{code}
-CODE END""",
-
-    "java_strict": """You are a static-analysis annotator for Java.
-Return a JSON ARRAY ONLY. No prose, no fences.
-Each item: {"type": string, "description": string, and either "line": int
-OR ("startLine": int, "endLine": int)}.
-Prefer common Java smells: Long Method, Deeply Nested Ifs, Magic Number,
-Long Parameter List, God Class, Tight Coupling, Unused Variable,
-Null Dereference Risk, Resource Leak, Duplicated Code.
-Return at least 3 plausible findings when reasonable.
-
-{code}""",
-
-    "php_strict": """You are a static-analysis annotator for PHP.
-Return a JSON ARRAY ONLY. No prose, no fences.
-Each item: {"type": string, "description": string, and either "line": int
-OR ("startLine": int, "endLine": int)}.
-Prefer: Long Method, Deeply Nested Ifs, Magic Number, Long Parameter List,
-God Class, Tight Coupling, Unused Variable, SQL Injection Risk, XSS Risk,
-Null Dereference Risk, Resource Leak.
-Return at least 3 plausible findings when reasonable.
-
-{code}"""
-}
-
 def load_strategies(file_path: str = STRATEGY_FILE) -> Dict[str, str]:
-    """Merge built-in defaults with on-disk strategies.json if present."""
-    strategies = dict(DEFAULT_STRATEGIES)
     try:
         if os.path.exists(file_path):
             with open(file_path, "r", encoding="utf-8") as f:
-                on_disk = json.load(f)
-            if isinstance(on_disk, dict):
-                strategies.update({str(k): str(v) for k, v in on_disk.items()})
+                data = json.load(f)
+            if isinstance(data, dict):
+                return {str(k): str(v) for k, v in data.items()}
     except Exception:
-        # Keep defaults on parse error
         pass
-    return strategies
+    return {}
 
 def save_strategies(strategies: Dict[str, str], file_path: str = STRATEGY_FILE):
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(strategies, f, indent=2)
+
+# Safe template filler: only {language} and {code}
+def _fill_prompt_template(tpl: str, language: str, code: str) -> str:
+    if not isinstance(tpl, str):
+        tpl = str(tpl)
+    return tpl.replace("{language}", language).replace("{code}", code)
 
 # =========================
 # Language detection
@@ -143,8 +107,6 @@ def detect_language_from_zip(zip_path: str) -> str:
 # =========================
 # JSON parsing (robust) + normalization helpers
 # =========================
-_JSON_ARRAY_FINDER = re.compile(r"\[\s*[\s\S]*\s*\]")
-
 def _to_int_or_none(x) -> Optional[int]:
     try:
         if x is None:
@@ -159,13 +121,6 @@ def _to_int_or_none(x) -> Optional[int]:
         return None
 
 def _sanitize_to_json_array_text(raw: str) -> str:
-    """
-    Always return text that is a valid JSON array.
-    - If raw is an array -> return as-is (if valid).
-    - If raw is a single object -> wrap into [ ... ].
-    - If raw is any JSON scalar (e.g., "type") -> return "[]".
-    - Otherwise try to extract the first [...] block; else "[]".
-    """
     if not raw:
         return "[]"
     s = raw.strip()
@@ -204,7 +159,6 @@ def _sanitize_to_json_array_text(raw: str) -> str:
         return "[]"
 
 def _coerce_items_schema(arr: Any) -> List[Dict[str, Any]]:
-    """Normalize a loosely-valid array into our expected item schema (span-first)."""
     def to_int(x):
         try:
             if x is None:
@@ -230,7 +184,6 @@ def _coerce_items_schema(arr: Any) -> List[Dict[str, Any]]:
         if not t or not d:
             continue
 
-        # Accept either single "line" or a span ("startLine","endLine")
         line = to_int(it.get("line"))
         sline = to_int(it.get("startLine", it.get("start_line")))
         eline = to_int(it.get("endLine", it.get("end_line")))
@@ -238,7 +191,6 @@ def _coerce_items_schema(arr: Any) -> List[Dict[str, Any]]:
             sline = line if sline is None else sline
             eline = line if eline is None else eline
 
-        # If still missing, skip (no usable location)
         if sline is None and eline is None:
             continue
         if sline is None:
@@ -259,7 +211,6 @@ def _coerce_items_schema(arr: Any) -> List[Dict[str, Any]]:
     return out
 
 def _write_debug_dump(kind: str, text: str, suffix: str = ""):
-    """Optional debug dumps if DEBUG_LLM=1."""
     try:
         if not os.getenv("DEBUG_LLM"):
             return
@@ -272,65 +223,47 @@ def _write_debug_dump(kind: str, text: str, suffix: str = ""):
         pass
 
 # =========================
-# Heuristic fallbacks (language-agnostic)
+# Heuristic fallbacks
 # =========================
 _METHOD_SIG = re.compile(
     r"""(?ix)
     ^\s*
-    (public|private|protected|internal|static|sealed|abstract|virtual|override|\w+\s+)?   # modifiers (optional)
-    ([A-Za-z_][A-Za-z0-9_<>,\[\]\.?]*)\s+                                                 # return/type (optional-ish)
-    ([A-Za-z_][A-Za-z0-9_]*)\s*                                                            # name
-    \([^)]*\)\s*\{                                                                         # body open
+    (public|private|protected|internal|static|sealed|abstract|virtual|override|\w+\s+)? 
+    ([A-Za-z_][A-Za-z0-9_<>,\[\]\.?]*)\s+                                                
+    ([A-Za-z_][A-Za-z0-9_]*)\s*                                                            
+    \([^)]*\)\s*\{                                                                         
     """
 )
 
 def _heuristic_long_methods(lines: List[str], max_len: int = 50):
     res = []
-    n = len(lines)
-    i = 0
+    n = len(lines); i = 0
     while i < n:
         m = _METHOD_SIG.match(lines[i])
         if not m:
-            i += 1
-            continue
-        start = i + 1  # 1-based lines
-        depth = 0
-        j = i
-        opened = False
+            i += 1; continue
+        start = i + 1
+        depth = 0; j = i; opened = False
         while j < n:
-            depth += lines[j].count("{")
-            depth -= lines[j].count("}")
-            if depth > 0:
-                opened = True
-            if opened and depth == 0:
-                break
+            depth += lines[j].count("{"); depth -= lines[j].count("}")
+            if depth > 0: opened = True
+            if opened and depth == 0: break
             j += 1
         end = j + 1
         length = end - start + 1
         if opened and length >= max_len:
-            res.append({
-                "type": "Long Method",
-                "description": f"Method spans ~{length} lines (>{max_len}).",
-                "startLine": start,
-                "endLine": end
-            })
+            res.append({"type":"Long Method","description":f"Method spans ~{length} lines (>{max_len}).","startLine":start,"endLine":end})
         i = j + 1 if j > i else i + 1
     return res
 
 def _heuristic_nested_ifs(lines: List[str], min_depth: int = 3):
-    res = []
-    stack = []
+    res = []; stack = []
     for idx, line in enumerate(lines, start=1):
         s = line.strip()
         if re.search(r"\bif\s*\(", s):
             stack.append(idx)
             if len(stack) >= min_depth:
-                res.append({
-                    "type": "Deeply Nested Ifs",
-                    "description": f"Nested if depth ≥{min_depth}.",
-                    "startLine": max(1, idx-1),
-                    "endLine": idx
-                })
+                res.append({"type":"Deeply Nested Ifs","description":f"Nested if depth ≥{min_depth}.","startLine":max(1, idx-1),"endLine":idx})
         if "}" in s and stack:
             stack.pop()
     return res
@@ -345,14 +278,9 @@ def _heuristic_magic_numbers(lines: List[str]):
                 val = int(m.group(1))
             except Exception:
                 continue
-            if val in (-1, 0, 1):
+            if val in (-1,0,1):
                 continue
-            res.append({
-                "type": "Magic Number",
-                "description": f"Literal {val} used inline; consider a named constant.",
-                "startLine": idx,
-                "endLine": idx
-            })
+            res.append({"type":"Magic Number","description":f"Literal {val} used inline; consider a named constant.","startLine":idx,"endLine":idx})
             break
     return res[:10]
 
@@ -364,24 +292,14 @@ def _heuristic_long_params(lines: List[str], max_params: int = 5):
             if inside:
                 params = [p for p in inside.group(1).split(",") if p.strip()]
                 if len(params) > max_params:
-                    res.append({
-                        "type": "Long Parameter List",
-                        "description": f"{len(params)} parameters (> {max_params}).",
-                        "startLine": idx,
-                        "endLine": idx
-                    })
+                    res.append({"type":"Long Parameter List","description":f"{len(params)} parameters (> {max_params}).","startLine":idx,"endLine":idx})
     return res
 
 def _heuristic_todos(lines: List[str]):
     res = []
     for idx, line in enumerate(lines, start=1):
         if re.search(r"\b(TODO|FIXME|HACK)\b", line, re.IGNORECASE):
-            res.append({
-                "type": "Maintainability Note",
-                "description": "TODO/FIXME/HACK found.",
-                "startLine": idx,
-                "endLine": idx
-            })
+            res.append({"type":"Maintainability Note","description":"TODO/FIXME/HACK found.","startLine":idx,"endLine":idx})
     return res[:10]
 
 def _fallback_heuristics(code: str, min_findings: int = 3) -> List[Dict[str, Any]]:
@@ -395,13 +313,16 @@ def _fallback_heuristics(code: str, min_findings: int = 3) -> List[Dict[str, Any
     return findings[: max(min_findings, len(findings))]
 
 # =========================
-# LLM call (sanitizer + retry + heuristics; never bubble exceptions)
+# LLM call
 # =========================
 def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
     strategies = load_strategies()
-    template = strategies.get(mode) or strategies.get("baseline") or "Language: {language}\nCode:\n{code}\nReturn JSON array."
+    template = strategies.get(mode)
+    if not template:
+        raise RuntimeError(f"Strategy '{mode}' introuvable dans {STRATEGY_FILE}. Ajoute/édite les prompts dans ce fichier.")
+
     code_snippet = code[:20000]
-    base_prompt = template.format(language=language, code=code_snippet)
+    base_prompt = _fill_prompt_template(template, language, code_snippet)
 
     rules_footer = (
         "\n\nOutput rules (MANDATORY):\n"
@@ -414,7 +335,6 @@ def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tup
 
     meta = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
 
-    # First attempt (catch errors)
     try:
         content, meta1 = llm.chat(
             messages=[
@@ -438,7 +358,6 @@ def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tup
         smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
         return smells, meta
 
-    # Retry with a nudge if empty (also catch errors)
     if not smells:
         try:
             nudge = (
@@ -480,7 +399,7 @@ def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tup
     return smells, meta
 
 # =========================
-# Type normalization (aliases) for robust matching
+# Type normalization
 # =========================
 _TYPE_ALIASES = {
     "longmethod": "long_method",
@@ -510,34 +429,28 @@ def _norm_type(x: Any) -> Optional[str]:
     return _TYPE_ALIASES.get(t, t)
 
 # =========================
-# Matching (span-level)
+# Matching utils
 # =========================
 def _iou_1d(a0: int, a1: int, b0: int, b1: int) -> float:
-    if a0 > a1:
-        a0, a1 = a1, a0
-    if b0 > b1:
-        b0, b1 = b1, b0
+    if a0 > a1: a0, a1 = a1, a0
+    if b0 > b1: b0, b1 = b1, b0
     inter = max(0, min(a1, b1) - max(a0, b0) + 1)
     union = (a1 - a0 + 1) + (b1 - b0 + 1) - inter
     return inter / union if union > 0 else 0.0
 
 def _dist_1d(a0: int, a1: int, b0: int, b1: int) -> int:
-    if a1 < b0:
-        return b0 - a1
-    if b1 < a0:
-        return a0 - b1
+    if a1 < b0: return b0 - a1
+    if b1 < a0: return a0 - b1
     return 0
 
 def _preset_cfg(name: str) -> Dict[str, Any]:
     name = (name or "Balanced").lower()
-    if name.startswith("len"):
-        return {"iou_thr": 0.10, "delta": 3}
-    if name.startswith("str"):
-        return {"iou_thr": 0.50, "delta": 1}
+    if name.startswith("len"): return {"iou_thr": 0.10, "delta": 3}
+    if name.startswith("str"): return {"iou_thr": 0.50, "delta": 1}
     return {"iou_thr": 0.25, "delta": 2}
 
 # =========================
-# Robust CSV + GT utils (pandas 2.x safe)
+# Robust CSV + GT utils
 # =========================
 def _read_csv_robust(path: str) -> pd.DataFrame:
     encodings = ["utf-8", "utf-8-sig", "latin-1", "utf-16", "utf-16le", "utf-16be"]
@@ -566,8 +479,7 @@ def load_ground_truth_spans(static_csv: str, allowed_exts: Optional[List[str]] =
     file_col = None
     for k in ["file", "component", "path", "file_path", "filename"]:
         if k in low:
-            file_col = low[k]
-            break
+            file_col = low[k]; break
     if not file_col:
         raise ValueError(f"No file column found. Available: {list(df.columns)}")
 
@@ -598,7 +510,7 @@ def load_ground_truth_spans(static_csv: str, allowed_exts: Optional[List[str]] =
     out["startLine"] = df[c_start].apply(_to_int_or_pos_none) if c_start else None
     out["endLine"]   = df[c_end].apply(_to_int_or_pos_none) if c_end else None
     if out["startLine"] is not None:
-        out["startLine"] = out["startLine"].ffill()   # pandas 2.x safe
+        out["startLine"] = out["startLine"].ffill()
 
     out["endLine"]   = out["endLine"].fillna(out["startLine"])
     out["startLine"] = out["startLine"].fillna(out["endLine"])
@@ -714,7 +626,7 @@ def _match_file(preds: List[Dict[str, Any]], gts: List[Dict[str, Any]],
     return tp, fp, fn
 
 # =========================
-# Universe U (sampling positives + negatives)
+# Universe U
 # =========================
 def _zip_listing(zip_path: str, allowed_exts: Optional[List[str]]) -> pd.DataFrame:
     rows = []
@@ -758,7 +670,7 @@ def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optiona
     return U, diag
 
 # =========================
-# Cost helpers
+# Cost helpers & default LLM
 # =========================
 def _read_rates(llm: ChatModel) -> Tuple[float, float]:
     slot = getattr(llm, "slot_key", None)
@@ -773,9 +685,6 @@ def _cost_usd(pt: int, ct: int, llm: ChatModel) -> float:
     in_rate, out_rate = _read_rates(llm)
     return (pt / 1000.0) * in_rate + (ct / 1000.0) * out_rate
 
-# =========================
-# Default LLM
-# =========================
 def _default_llm() -> ChatModel:
     slot = default_slot_key()
     if slot:
@@ -792,7 +701,7 @@ def _default_llm() -> ChatModel:
     return ChatModel(LLMConfig(provider=provider, model=os.getenv("OPENAI_MODEL", "gpt-4o")))
 
 # =========================
-# Core run (span-level only)
+# Core run
 # =========================
 def run_experiment(
     zip_path: str,
@@ -803,7 +712,7 @@ def run_experiment(
     pos_ratio: float = 0.5,
     preset: str = "Balanced",
     user_require_type: Optional[bool] = True,
-    user_use_line_span: Optional[bool] = True,   # compatibility with UI switch
+    user_use_line_span: Optional[bool] = True,
     user_use_cols_single: Optional[bool] = True,
     llm: Optional[ChatModel] = None,
 ):
@@ -833,7 +742,6 @@ def run_experiment(
             except Exception:
                 code = ""
 
-            # analyze_with_llm handles its own errors and falls back to heuristics
             smells, usage = analyze_with_llm(code, mode, language, llm)
 
             results_all.extend(smells or [])
@@ -845,7 +753,6 @@ def run_experiment(
     require_type = bool(user_require_type)
     use_cols_single = bool(user_use_cols_single)
 
-    # Group GT and predictions by basename (limited to U)
     U_bases = set(summary_U["basename"])
     gt_by_file: Dict[str, List[Dict[str, Any]]] = {}
     for _, g in gt_spans.iterrows():
@@ -872,9 +779,7 @@ def run_experiment(
     for b in U_bases:
         tp, fp, fn = _match_file(pred_by_file.get(b, []), gt_by_file.get(b, []),
                                  require_type=require_type, use_cols_single=use_cols_single, preset=preset)
-        TP += tp
-        FP += fp
-        FN += fn
+        TP += tp; FP += fp; FN += fn
 
     precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
     recall    = TP / (TP + FN) if (TP + FN) > 0 else 0.0

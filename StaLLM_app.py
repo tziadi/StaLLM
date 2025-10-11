@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import altair as alt  # ⬅️ pour des graphs avec labels lisibles
 
 from StaLLM_core import (
     run_experiment,
@@ -27,7 +28,6 @@ from StaLLM_llm import (
     load_llm_registry, build_llm_from_slot,
     test_ollama_connectivity, validate_ollama_config, debug_ollama_response
 )
-
 
 # =========================
 # Minimal .env loader
@@ -65,14 +65,96 @@ def _load_dotenv_robust(path: Path, override: bool = False) -> None:
 # Init
 # =========================
 st.set_page_config(page_title="⚡ StaLLM: Static Analysis meets LLMs", layout="wide")
-_load_dotenv_robust(Path(__file__).with_name(".env"), override=False)
+_load_dotenv_robust(Path(__file__).with_name(".env"), override=False)  # ⬅️ micro-fix __file__
 init_db()
 
 # =========================
 # Styles (UI) — English + Pro look
 # =========================
-st.markdown( """ <style> /* Fonts */ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap'); :root{ --text:#0e1220; --muted:#667085; --border:rgba(14,18,32,.12); --card-bg:rgba(255,255,255,.55); --glass:linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.60)); --accent:#7c3aed; --accent2:#06b6d4; --accent3:#22c55e; --warn:#f59e0b; --danger:#ef4444; --hl: rgba(252, 211, 77, .35); --ring: 0 8px 22px rgba(35, 38, 47, .10), 0 2px 6px rgba(35, 38, 47, .06); } html, body, .stApp { background:#f6f7fb !important; color:var(--text); font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; } .stApp { padding-top: 10px; } @media (prefers-color-scheme: dark){ :root{ --text:#e6e9ef; --muted:#a3afc6; --border:rgba(255,255,255,.09); --card-bg:rgba(20,24,35,.55); --glass:linear-gradient(180deg, rgba(20,24,35,.75), rgba(20,24,35,.55)); --hl: rgba(234, 179, 8, .20); } html, body, .stApp{ background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.16), transparent), radial-gradient(1000px 500px at 110% -20%, rgba(6,182,212,.12), transparent), #0b1220 !important; } } /* HERO */ .hero{ position:relative; border:1px solid var(--border); border-radius:22px; padding:28px 24px; overflow:hidden; margin-bottom:14px; background: radial-gradient(900px 220px at -10% -20%, rgba(124,58,237,.18), transparent 55%), radial-gradient(700px 220px at 110% -10%, rgba(6,182,212,.15), transparent 55%), var(--glass); box-shadow: var(--ring); } .hero h1{ margin:0 0 8px 0; font-weight:800; letter-spacing:.2px; } .hero p{ margin:0; color:var(--muted); font-size:1.0rem; } .badges{ margin-top:8px; } .badge{ display:inline-flex; align-items:center; gap:.45rem; padding:.38rem .70rem; border:1px solid var(--border); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg, rgba(124,58,237,.10), rgba(6,182,212,.10)); margin-right:.45rem; } /* KPI CARDS */ .kpi{ background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px 16px; box-shadow: var(--ring); } .kpi-label{ color:var(--muted); font-size:.85rem; margin-bottom:.25rem;} .kpi-value{ font-size:1.6rem; font-weight:800; letter-spacing:.2px;} .kpi-ok{ box-shadow:0 0 0 1px rgba(34,197,94,.28) inset; } .kpi-warn{ box-shadow:0 0 0 1px rgba(245,158,11,.28) inset; } .kpi-bad{ box-shadow:0 0 0 1px rgba(239,68,68,.28) inset; } /* CODE BOX with line numbers + highlight */ .codebox{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; border:1px solid var(--border); border-radius:14px; overflow:hidden; background: var(--glass); box-shadow: var(--ring); } .codebox table{ border-collapse: collapse; width:100%; } .codebox td{ vertical-align: top; padding: 0; } .codebox .gutter{ width: 3.2em; background: rgba(2,6,23,.05); color: var(--muted); text-align: right; user-select:none; } .codebox .code{ white-space: pre; } .codebox .line{ padding: 2px 10px; border-bottom: 1px solid rgba(2,6,23,.06); } .codebox .ln{ padding: 2px 8px; border-bottom: 1px solid rgba(2,6,23,.08); } .codebox .hl{ background: var(--hl); } /* SECTION CARD */ .section{ background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:18px 18px; margin:10px 0 16px; box-shadow: var(--ring); } /* BUTTONS */ .stButton > button { background: linear-gradient(90deg, var(--accent), var(--accent2)) !important; color: white !important; border-radius: 12px; font-size: 16px; font-weight: 800; padding: 0.70em 1.25em; border: none; letter-spacing:.2px; box-shadow: 0 10px 18px rgba(124,58,237,.20), 0 6px 14px rgba(6,182,212,.12); } .stButton > button:focus { outline: none; box-shadow: 0 0 0 2px rgba(124,58,237,.45); } /* TABLE polish */ .stDataFrame thead tr th { background:#eef2ff !important; color:#0f172a !important; font-weight:700; text-align:center; } .stDataFrame tbody tr:nth-child(even) { background-color: rgba(2, 6, 23, .03); } .muted{ color:var(--muted); } .pill{ display:inline-flex; align-items:center; gap:.45rem; padding:.32rem .65rem; border:1px solid var(--border); color:var(--text); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg,#ede9fe,#cffafe); margin:.20rem .35rem .55rem 0; } .footnote{ color:var(--muted); font-size:.85rem; margin-top:8px; } </style> """, unsafe_allow_html=True, )
-
+st.markdown(
+    """ <style>
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{
+ --text:#0e1220; --muted:#667085; --border:rgba(14,18,32,.12);
+ --card-bg:rgba(255,255,255,.55); --glass:linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.60));
+ --accent:#7c3aed; --accent2:#06b6d4; --accent3:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+ --hl: rgba(252, 211, 77, .35); --ring: 0 8px 22px rgba(35, 38, 47, .10), 0 2px 6px rgba(35, 38, 47, .06);
+}
+html, body, .stApp { background:#f6f7fb !important; color:var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+.stApp { padding-top: 10px; }
+@media (prefers-color-scheme: dark){
+ :root{ --text:#e6e9ef; --muted:#a3afc6; --border:rgba(255,255,255,.09);
+   --card-bg:rgba(20,24,35,.55); --glass:linear-gradient(180deg, rgba(20,24,35,.75), rgba(20,24,35,.55));
+   --hl: rgba(234, 179, 8, .20);
+ }
+ html, body, .stApp{
+   background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.16), transparent),
+               radial-gradient(1000px 500px at 110% -20%, rgba(6,182,212,.12), transparent),
+               #0b1220 !important;
+ }
+}
+/* HERO */
+.hero{
+  position:relative; border:1px solid var(--border); border-radius:22px; padding:28px 24px;
+  overflow:hidden; margin-bottom:14px;
+  background: radial-gradient(900px 220px at -10% -20%, rgba(124,58,237,.18), transparent 55%),
+              radial-gradient(700px 220px at 110% -10%, rgba(6,182,212,.15), transparent 55%), var(--glass);
+  box-shadow: var(--ring);
+}
+.hero h1{ margin:0 0 8px 0; font-weight:800; letter-spacing:.2px; }
+.hero p{ margin:0; color:var(--muted); font-size:1.0rem; }
+.badges{ margin-top:8px; }
+.badge{
+ display:inline-flex; align-items:center; gap:.45rem; padding:.38rem .70rem; border:1px solid var(--border);
+ border-radius:999px; font-size:.78rem; font-weight:600;
+ background:linear-gradient(90deg, rgba(124,58,237,.10), rgba(6,182,212,.10));
+ margin-right:.45rem;
+}
+/* KPI CARDS */
+.kpi{ background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px 16px; box-shadow: var(--ring); }
+.kpi-label{ color:var(--muted); font-size:.85rem; margin-bottom:.25rem;}
+.kpi-value{ font-size:1.6rem; font-weight:800; letter-spacing:.2px;}
+.kpi-ok{ box-shadow:0 0 0 1px rgba(34,197,94,.28) inset; }
+.kpi-warn{ box-shadow:0 0 0 1px rgba(245,158,11,.28) inset; }
+.kpi-bad{ box-shadow:0 0 0 1px rgba(239,68,68,.28) inset; }
+/* CODE BOX with line numbers + highlight */
+.codebox{
+  font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12.5px; border:1px solid var(--border); border-radius:14px; overflow:hidden;
+  background: var(--glass); box-shadow: var(--ring);
+}
+.codebox table{ border-collapse: collapse; width:100%; }
+.codebox td{ vertical-align: top; padding: 0; }
+.codebox .gutter{ width: 3.2em; background: rgba(2,6,23,.05); color: var(--muted); text-align: right; user-select:none; }
+.codebox .code{ white-space: pre; }
+.codebox .line{ padding: 2px 10px; border-bottom: 1px solid rgba(2,6,23,.06); }
+.codebox .ln{ padding: 2px 8px; border-bottom: 1px solid rgba(2,6,23,.08); }
+.codebox .hl{ background: var(--hl); }
+/* SECTION CARD */
+.section{ background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:18px 18px; margin:10px 0 16px; box-shadow: var(--ring); }
+/* BUTTONS */
+.stButton > button {
+ background: linear-gradient(90deg, var(--accent), var(--accent2)) !important; color: white !important; border-radius: 12px;
+ font-size: 16px; font-weight: 800; padding: 0.70em 1.25em; border: none; letter-spacing:.2px;
+ box-shadow: 0 10px 18px rgba(124,58,237,.20), 0 6px 14px rgba(6,182,212,.12);
+}
+.stButton > button:focus { outline: none; box-shadow: 0 0 0 2px rgba(124,58,237,.45); }
+/* TABLE polish */
+.stDataFrame thead tr th { background:#eef2ff !important; color:#0f172a !important; font-weight:700; text-align:center; }
+.stDataFrame tbody tr:nth-child(even) { background-color: rgba(2, 6, 23, .03); }
+.muted{ color:var(--muted); }
+.pill{
+ display:inline-flex; align-items:center; gap:.45rem; padding:.32rem .65rem; border:1px solid var(--border); color:var(--text);
+ border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg,#ede9fe,#cffafe);
+ margin:.20rem .35rem .55rem 0;
+}
+.footnote{ color:var(--muted); font-size:.85rem; margin-top:8px; }
+</style> """,
+    unsafe_allow_html=True,
+)
 
 # =========================
 # Helpers
@@ -105,7 +187,10 @@ def render_code_with_highlight(title: str, code: str, hl_ranges: list[tuple[int,
             hl_set.add(i)
     rows_html = []
     for idx, txt in enumerate(lines, start=1):
-        safe = txt.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
+        safe = (txt
+                .replace("&","&amp;")
+                .replace("<","&lt;")
+                .replace(">","&gt;"))
         cls = "line hl" if idx in hl_set else "line"
         rows_html.append(
             f"<tr><td class='gutter ln'>{idx}</td><td class='code {cls}'><code>{safe}</code></td></tr>"
@@ -115,6 +200,44 @@ def render_code_with_highlight(title: str, code: str, hl_ranges: list[tuple[int,
     <div class='codebox'><table>{"".join(rows_html)}</table></div></div>
     """
     st.markdown(html, unsafe_allow_html=True)
+
+# -------------------------
+# NEW: helper to draw bars with bigger, readable labels (minimal change)
+# -------------------------
+def show_bar_with_bigger_labels(df: pd.DataFrame, value_cols, x_label_col=None, title=""):
+    """
+    Remplace st.bar_chart pour avoir des labels X lisibles :
+    - labelAngle=0, labelFontSize=16, labelLimit/padding généreux.
+    - df : DataFrame (index = noms → on reset en 'name' si x_label_col absent)
+    """
+    data = df.copy()
+    if x_label_col is None:
+        data = data.reset_index().rename(columns={"index": "name"})
+        x = "name"
+    else:
+        x = x_label_col
+
+    # Ne garder que les colonnes utiles (évite Altair warnings)
+    cols = [x] + list(value_cols)
+    data = data[cols]
+
+    melted = data.melt(id_vars=[x], value_vars=value_cols, var_name="metric", value_name="value")
+
+    chart = (
+        alt.Chart(melted)
+        .mark_bar()
+        .encode(
+            x=alt.X(f"{x}:N", axis=alt.Axis(
+                title=None, labelAngle=0, labelFontSize=16, labelLimit=260, labelPadding=10
+            )),
+            y=alt.Y("value:Q", title=None),
+            color=alt.Color("metric:N", legend=alt.Legend(title=None, labelFontSize=13)),
+        )
+        .properties(height=320, title=title or None)
+        .configure_title(fontSize=16, fontWeight="bold")
+        .configure_view(strokeOpacity=0)
+    )
+    st.altair_chart(chart, use_container_width=True)
 
 # =========================
 # HERO
@@ -322,60 +445,59 @@ with tabs[0]:
     zip_bytes = uploaded_zip.getvalue() if uploaded_zip is not None else None
     csv_bytes = uploaded_static.getvalue() if uploaded_static is not None else None
 
-   # Capabilities (type/line/column)
-user_require_type = False
-user_use_line_span = True
-user_use_cols_single = False
+    # Capabilities (type/line/column)
+    user_require_type = False
+    user_use_line_span = True
+    user_use_cols_single = False
 
-if uploaded_static is not None and csv_bytes:
-    try:
-        with tempfile.TemporaryDirectory() as _tmp:
-            tmp_csv = os.path.join(_tmp, uploaded_static.name)
-            with open(tmp_csv, "wb") as f: f.write(csv_bytes)
-            df_cap = _read_csv_robust(tmp_csv)
-        caps = detect_gt_capabilities(df_cap)
-    except Exception as e:
-        st.warning(f"Could not inspect GT capabilities: {e}")
-        caps = None
+    if uploaded_static is not None and csv_bytes:
+        try:
+            with tempfile.TemporaryDirectory() as _tmp:
+                tmp_csv = os.path.join(_tmp, uploaded_static.name)
+                with open(tmp_csv, "wb") as f: f.write(csv_bytes)
+                df_cap = _read_csv_robust(tmp_csv)
+            caps = detect_gt_capabilities(df_cap)
+        except Exception as e:
+            st.warning(f"Could not inspect GT capabilities: {e}")
+            caps = None
 
-    if caps:
-        st.markdown("### ✅ Detected GT capabilities")
-        sample = caps.get("sample", {})
-        c1, c2, c3 = st.columns(3)
+        if caps:
+            st.markdown("### ✅ Detected GT capabilities")
+            sample = caps.get("sample", {})
+            c1, c2, c3 = st.columns(3)
 
-        with c1:
-            if caps.get("has_type", False):
-                # default OFF
-                user_require_type = st.checkbox(
-                    f"Match by rule/type (e.g., “{sample.get('rule/type', '…')}”)",
-                    value=False
-                )
-            else:
-                st.caption("No rule/type column detected.")
-                user_require_type = False
+            with c1:
+                if caps.get("has_type", False):
+                    # default OFF
+                    user_require_type = st.checkbox(
+                        f"Match by rule/type (e.g., “{sample.get('rule/type', '…')}”)",
+                        value=False
+                    )
+                else:
+                    st.caption("No rule/type column detected.")
+                    user_require_type = False
 
-        with c2:
-            if caps.get("has_line_span", False):
-                # default ON
-                user_use_line_span = st.checkbox(
-                    f"Use line spans (start–end) (e.g., {sample.get('startLine','?')}–{sample.get('endLine','?')})",
-                    value=True
-                )
-            else:
-                st.caption("No endLine column detected.")
-                user_use_line_span = False
+            with c2:
+                if caps.get("has_line_span", False):
+                    # default ON
+                    user_use_line_span = st.checkbox(
+                        f"Use line spans (start–end) (e.g., {sample.get('startLine','?')}–{sample.get('endLine','?')})",
+                        value=True
+                    )
+                else:
+                    st.caption("No endLine column detected.")
+                    user_use_line_span = False
 
-        with c3:
-            if caps.get("has_col_span", False):
-                # default OFF
-                user_use_cols_single = st.checkbox(
-                    "Use column spans on single-line (if available)",
-                    value=False
-                )
-            else:
-                st.caption("No column spans detected.")
-                user_use_cols_single = False
-
+            with c3:
+                if caps.get("has_col_span", False):
+                    # default OFF
+                    user_use_cols_single = st.checkbox(
+                        "Use column spans on single-line (if available)",
+                        value=False
+                    )
+                else:
+                    st.caption("No column spans detected.")
+                    user_use_cols_single = False
 
     # Run
     if st.button("🚀 Run Analysis"):
@@ -447,11 +569,12 @@ if uploaded_static is not None and csv_bytes:
                 with c3: kpi("F1 Score",  pct(metrics.get("f1", 0.0)), "ok")
                 with c4: kpi("Elapsed",   f"{metrics.get('time_s', 0.0):.2f}s", "ok")
 
+                # ⬇️ Labels lisibles
                 metrics_df_single = pd.DataFrame([{
                     "precision": metrics.get("precision", 0.0),
                     "recall": metrics.get("recall", 0.0),
                     "f1": metrics.get("f1", 0.0)}], index=[f"{prompt_mode}@span"])
-                st.bar_chart(metrics_df_single[["precision","recall","f1"]])
+                show_bar_with_bigger_labels(metrics_df_single, ["precision","recall","f1"], title="Precision / Recall / F1")
 
                 t1,t2,t3,t4 = st.columns(4)
                 with t1: kpi("Prompt tokens", f"{usage_totals['prompt_tokens']:,}")
@@ -494,8 +617,13 @@ if uploaded_static is not None and csv_bytes:
                 st.markdown("### 📐 Comparison Metrics (All Strategies)")
                 st.dataframe(metrics_df, use_container_width=True)
 
-                st.markdown("### 📈 Precision / Recall / F1 by Strategy")
-                st.bar_chart(metrics_df[["precision", "recall", "f1"]])
+                # ⬇️ Labels lisibles pour stratégies
+                show_bar_with_bigger_labels(
+                    metrics_df.reset_index().rename(columns={"index": "strategy"}),
+                    ["precision","recall","f1"],
+                    x_label_col="strategy",
+                    title="Precision / Recall / F1 by Strategy"
+                )
 
                 st.markdown("## 🤖 LLM-based Findings per Strategy")
                 for p, sample in (samples or {}).items():
@@ -522,11 +650,29 @@ if uploaded_static is not None and csv_bytes:
                 st.dataframe(summary_U, use_container_width=True)
                 st.markdown("### 📐 Metrics per Model")
                 st.dataframe(metrics_df, use_container_width=True)
-                st.markdown("### 📈 Precision / Recall / F1 by Model")
-                st.bar_chart(metrics_df[["precision", "recall", "f1"]])
+
+                # ⬇️ Labels lisibles pour modèles
+                show_bar_with_bigger_labels(
+                    metrics_df.reset_index().rename(columns={"index": "model"}),
+                    ["precision", "recall", "f1"],
+                    x_label_col="model",
+                    title="Precision / Recall / F1 by Model"
+                )
+
                 st.markdown("### 💰 Tokens & Cost by Model")
-                st.bar_chart(metrics_df[["prompt_tokens","completion_tokens","total_tokens"]])
-                st.bar_chart(metrics_df[["usd_cost"]])
+                show_bar_with_bigger_labels(
+                    metrics_df.reset_index().rename(columns={"index": "model"}),
+                    ["prompt_tokens","completion_tokens","total_tokens"],
+                    x_label_col="model",
+                    title="Tokens by Model"
+                )
+                show_bar_with_bigger_labels(
+                    metrics_df.reset_index().rename(columns={"index": "model"}),
+                    ["usd_cost"],
+                    x_label_col="model",
+                    title="USD Cost by Model"
+                )
+
                 st.markdown("## 🤖 Samples per Model")
                 for model_label, sample in (samples or {}).items():
                     with st.expander(f"🔹 {model_label} (sample)"): st.json(sample)
@@ -563,7 +709,14 @@ with tabs[1]:
             pivot_df.columns = pivot_df.columns.astype(str)
         pivot_df = pivot_df.fillna(0)
         st.markdown("### 📈 Global Comparison (F1 across Projects • by LLM & Strategy)")
-        st.bar_chart(pivot_df)
+        # labels lisibles
+        show_bar_with_bigger_labels(
+            pivot_df,
+            list(pivot_df.columns),  # chaque colonne = une série différente, on les dessinera autrement
+            # Ici, pour rester simple et ne pas "exploser" les barres, on laisse le tableau. Tu peux aussi
+            # reformater pour un chart multi-séries si besoin.
+            title="(Pivot) F1 by Project / (LLM · Strategy)"
+        )
     except Exception:
         st.info("Pivot not available (insufficient data).")
     session.close()
@@ -858,6 +1011,9 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     st.markdown(f"➡️ Sampled **U**: **positives = {want_pos}**, **negatives = {want_neg}**, **total = {total_u}**")
 
     comp_df = pd.DataFrame({"count":[want_pos, want_neg]}, index=["positives (≥1 GT)","negatives (0 GT)"])
-    st.bar_chart(comp_df)
-
-    st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
+    show_bar_with_bigger_labels(
+        comp_df.reset_index().rename(columns={"index": "class"}),
+        ["count"],
+        x_label_col="class",
+        title="U composition (illustration)"
+    )
