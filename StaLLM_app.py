@@ -274,7 +274,7 @@ tabs = st.tabs([
 # ==========================================================
 # Tab 1 : Run Experiments (SPAN-LEVEL)
 # ==========================================================
-with tabs[0]:
+def render_tab_run_experiments():
     st.sidebar.header("⚙️ Settings")
     mode_run = st.sidebar.radio(
         "Execution mode",
@@ -290,7 +290,8 @@ with tabs[0]:
     strategies = load_strategies()
     if mode_run == "Single prompt":
         if not strategies:
-            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’."); st.stop()
+            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
+            return
         prompt_mode = st.sidebar.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
     elif mode_run == "Compare selected prompts":
         selected_modes = st.sidebar.multiselect(
@@ -300,7 +301,8 @@ with tabs[0]:
         )
     else:
         if not strategies:
-            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’."); st.stop()
+            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
+            return
         prompt_mode = st.sidebar.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
 
     if mode_run in ("Single prompt", "Compare selected prompts"):
@@ -308,7 +310,8 @@ with tabs[0]:
     else:
         llms_to_compare = build_llms_for_comparison()
         if not llms_to_compare:
-            st.warning("Select at least one LLM to compare."); st.stop()
+            st.warning("Select at least one LLM to compare.")
+            return
 
     st.markdown("### 📂 Upload Required Files")
     colu1, colu2 = st.columns([1,1])
@@ -322,65 +325,62 @@ with tabs[0]:
     zip_bytes = uploaded_zip.getvalue() if uploaded_zip is not None else None
     csv_bytes = uploaded_static.getvalue() if uploaded_static is not None else None
 
-   # Capabilities (type/line/column)
-user_require_type = False
-user_use_line_span = True
-user_use_cols_single = False
+    # Capabilities (type/line/column)
+    user_require_type = False
+    user_use_line_span = True
+    user_use_cols_single = False
 
-if uploaded_static is not None and csv_bytes:
-    try:
-        with tempfile.TemporaryDirectory() as _tmp:
-            tmp_csv = os.path.join(_tmp, uploaded_static.name)
-            with open(tmp_csv, "wb") as f: f.write(csv_bytes)
-            df_cap = _read_csv_robust(tmp_csv)
-        caps = detect_gt_capabilities(df_cap)
-    except Exception as e:
-        st.warning(f"Could not inspect GT capabilities: {e}")
-        caps = None
+    if uploaded_static is not None and csv_bytes:
+        try:
+            with tempfile.TemporaryDirectory() as _tmp:
+                tmp_csv = os.path.join(_tmp, uploaded_static.name)
+                with open(tmp_csv, "wb") as f: f.write(csv_bytes)
+                df_cap = _read_csv_robust(tmp_csv)
+            caps = detect_gt_capabilities(df_cap)
+        except Exception as e:
+            st.warning(f"Could not inspect GT capabilities: {e}")
+            caps = None
 
-    if caps:
-        st.markdown("### ✅ Detected GT capabilities")
-        sample = caps.get("sample", {})
-        c1, c2, c3 = st.columns(3)
+        if caps:
+            st.markdown("### ✅ Detected GT capabilities")
+            sample = caps.get("sample", {})
+            c1, c2, c3 = st.columns(3)
 
-        with c1:
-            if caps.get("has_type", False):
-                # default OFF
-                user_require_type = st.checkbox(
-                    f"Match by rule/type (e.g., “{sample.get('rule/type', '…')}”)",
-                    value=False
-                )
-            else:
-                st.caption("No rule/type column detected.")
-                user_require_type = False
+            with c1:
+                if caps.get("has_type", False):
+                    user_require_type = st.checkbox(
+                        f"Match by rule/type (e.g., “{sample.get('rule/type', '…')}”)",
+                        value=False
+                    )
+                else:
+                    st.caption("No rule/type column detected.")
+                    user_require_type = False
 
-        with c2:
-            if caps.get("has_line_span", False):
-                # default ON
-                user_use_line_span = st.checkbox(
-                    f"Use line spans (start–end) (e.g., {sample.get('startLine','?')}–{sample.get('endLine','?')})",
-                    value=True
-                )
-            else:
-                st.caption("No endLine column detected.")
-                user_use_line_span = False
+            with c2:
+                if caps.get("has_line_span", False):
+                    user_use_line_span = st.checkbox(
+                        f"Use line spans (start–end) (e.g., {sample.get('startLine','?')}–{sample.get('endLine','?')})",
+                        value=True
+                    )
+                else:
+                    st.caption("No endLine column detected.")
+                    user_use_line_span = False
 
-        with c3:
-            if caps.get("has_col_span", False):
-                # default OFF
-                user_use_cols_single = st.checkbox(
-                    "Use column spans on single-line (if available)",
-                    value=False
-                )
-            else:
-                st.caption("No column spans detected.")
-                user_use_cols_single = False
-
+            with c3:
+                if caps.get("has_col_span", False):
+                    user_use_cols_single = st.checkbox(
+                        "Use column spans on single-line (if available)",
+                        value=False
+                    )
+                else:
+                    st.caption("No column spans detected.")
+                    user_use_cols_single = False
 
     # Run
     if st.button("🚀 Run Analysis"):
         if not (uploaded_zip and uploaded_static and zip_bytes and csv_bytes):
-            st.warning("📥 Please upload both files (ZIP + CSV)."); st.stop()
+            st.warning("📥 Please upload both files (ZIP + CSV).")
+            return
 
         with tempfile.TemporaryDirectory() as tmpdir:
             zip_path = os.path.join(tmpdir, uploaded_zip.name); open(zip_path, "wb").write(zip_bytes)
@@ -395,7 +395,8 @@ if uploaded_static is not None and csv_bytes:
             try:
                 _ = load_ground_truth_spans(csv_path, allowed_exts=exts)
             except Exception as e:
-                st.error(f"⚠️ Error reading Static Analyzer CSV: {e}"); st.stop()
+                st.error(f"⚠️ Error reading Static Analyzer CSV: {e}")
+                return
 
             if mode_run == "Single prompt":
                 st.markdown(f"### 🤖 Running LLM analysis with `{prompt_mode}` strategy…")
@@ -411,7 +412,8 @@ if uploaded_static is not None and csv_bytes:
                             llm=llm
                         )
                 except Exception as e:
-                    st.error(f"LLM call failed: {e}"); st.stop()
+                    st.error(f"LLM call failed: {e}")
+                    return
 
                 elapsed = time.time() - start
                 metrics["time_s"] = round(elapsed, 2)
@@ -472,7 +474,8 @@ if uploaded_static is not None and csv_bytes:
 
             elif mode_run == "Compare selected prompts":
                 if not selected_modes:
-                    st.warning("⚠️ Please select at least one prompt strategy."); st.stop()
+                    st.warning("⚠️ Please select at least one prompt strategy.")
+                    return
                 st.markdown("### 🔄 Running Multiple Prompt Strategies (span-level)")
                 progress = st.progress(0); status_text = st.empty(); timer_text = st.empty()
                 try:
@@ -486,7 +489,8 @@ if uploaded_static is not None and csv_bytes:
                         llm=llm
                     )
                 except Exception as e:
-                    st.error(f"LLM call failed: {e}"); st.stop()
+                    st.error(f"LLM call failed: {e}")
+                    return
 
                 st.markdown("### 📁 Universe U (files considered)")
                 st.dataframe(summary_U, use_container_width=True)
@@ -503,7 +507,8 @@ if uploaded_static is not None and csv_bytes:
 
             else:
                 if not llms_to_compare:
-                    st.warning("⚠️ Please select at least one LLM to compare."); st.stop()
+                    st.warning("⚠️ Please select at least one LLM to compare.")
+                    return
                 st.markdown(f"### 🔄 Comparing LLM models (strategy: `{prompt_mode}`, span-level)")
                 progress = st.progress(0); status_text = st.empty(); timer_text = st.empty()
                 try:
@@ -516,7 +521,8 @@ if uploaded_static is not None and csv_bytes:
                         user_use_cols_single=user_use_cols_single
                     )
                 except Exception as e:
-                    st.error(f"LLM call failed: {e}"); st.stop()
+                    st.error(f"LLM call failed: {e}")
+                    return
 
                 st.markdown("### 📁 Universe U (files considered)")
                 st.dataframe(summary_U, use_container_width=True)
@@ -531,19 +537,26 @@ if uploaded_static is not None and csv_bytes:
                 for model_label, sample in (samples or {}).items():
                     with st.expander(f"🔹 {model_label} (sample)"): st.json(sample)
 
+with tabs[0]:
+    render_tab_run_experiments()
+
 # ==========================================================
 # Tab 2 : Results DB
 # ==========================================================
-with tabs[1]:
+def render_tab_results_db():
     st.markdown("## 🗃️ Stored Experiment Results (Database)")
     session = Session()
     try:
         results = session.query(SmellDetectionResult).all()
     except Exception as e:
-        st.error(f"DB error: {e}"); session.close(); st.stop()
+        st.error(f"DB error: {e}")
+        session.close()
+        return
 
     if not results:
-        st.info("ℹ️ No results stored in the database."); session.close(); st.stop()
+        st.info("ℹ️ No results stored in the database.")
+        session.close()
+        return
 
     df = pd.DataFrame([{
         "Project": r.project, "Language": r.language, "Filename": r.filename,
@@ -568,10 +581,13 @@ with tabs[1]:
         st.info("Pivot not available (insufficient data).")
     session.close()
 
+with tabs[1]:
+    render_tab_results_db()
+
 # ==========================================================
 # Tab 3 : Manage Prompts
 # ==========================================================
-with tabs[2]:
+def render_tab_manage_prompts():
     st.markdown("## 📝 Manage Prompt Strategies")
     strategies = load_strategies()
     if strategies:
@@ -586,16 +602,21 @@ with tabs[2]:
     new_name = st.text_input("Strategy name")
     new_prompt = st.text_area("Prompt template", height=200)
     if st.button("➕ Create strategy"):
-        if new_name in strategies: st.error("Strategy already exists!")
-        elif new_name.strip() == "": st.error("Please provide a name.")
+        if new_name in strategies:
+            st.error("Strategy already exists!")
+        elif new_name.strip() == "":
+            st.error("Please provide a name.")
         else:
             strategies[new_name] = new_prompt; save_strategies(strategies)
             st.success(f"Strategy '{new_name}' added!"); st.rerun()
 
+with tabs[2]:
+    render_tab_manage_prompts()
+
 # ==========================================================
 # Tab 4 : Batch Experiments (span-level)
 # ==========================================================
-with tabs[3]:
+def render_tab_batch():
     st.markdown("## 🔄 Batch Experiments (span-level)")
     data_dir = st.text_input("📂 Data folder", "data/apps/")
     output_dir = st.text_input("📂 Output folder", "output/apps/")
@@ -651,7 +672,8 @@ with tabs[3]:
 
     if st.button("🚀 Run Batch Analysis"):
         if not selected_strategies:
-            st.warning("⚠️ Please select at least one strategy."); st.stop()
+            st.warning("⚠️ Please select at least one strategy.")
+            return
 
         projects = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
         for project in projects:
@@ -660,7 +682,8 @@ with tabs[3]:
             zip_files = [str(project_dir / f) for f in os.listdir(project_dir) if f.endswith(".zip")]
             csv_files = [str(project_dir / f) for f in os.listdir(project_dir) if f.endswith(".csv")]
             if not zip_files or not csv_files:
-                st.warning(f"❌ Missing files for {project} (need at least one .zip and one .csv)"); continue
+                st.warning(f"❌ Missing files for {project} (need at least one .zip and one .csv)")
+                continue
             csv_path = csv_files[0]
             proj_out = Path(output_dir, project); proj_out.mkdir(parents=True, exist_ok=True)
             all_results = []
@@ -681,10 +704,13 @@ with tabs[3]:
                 (proj_out / "global_results.csv").write_text(global_df.to_csv())
                 st.info(f"📁 Global results saved for {project}: {proj_out/'global_results.csv'}")
 
+with tabs[3]:
+    render_tab_batch()
+
 # ==========================================================
 # Tab 5 : Guide & Examples (English, with visuals)
 # ==========================================================
-with tabs[4]:
+def render_tab_guide():
     st.markdown("## 📘 How to Read the Metrics (Span-Level, with Negatives)")
     st.markdown("""
 **What we evaluate**  
@@ -861,3 +887,6 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     st.bar_chart(comp_df)
 
     st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
+
+with tabs[4]:
+    render_tab_guide()
