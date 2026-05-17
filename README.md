@@ -185,6 +185,61 @@ streamlit run StaLLM_app.py
 
 ---
 
+## 🧭 Review Board & Code Evidence
+
+After each run, StaLLM shows a **Review board** that explains the score file by file.  
+This is the main qualitative inspection view for demos and research analysis.
+
+### Review board overview
+
+The board summarizes each sampled file with a verdict and span-level counts:
+
+| Verdict | Meaning | Typical interpretation |
+|---|---|---|
+| **Matched** | LLM spans align cleanly with GT spans | Strong agreement |
+| **Partial / mismatch** | Some overlap exists, but FP/FN remain | Needs inspection |
+| **Missed by LLM** | GT spans exist, but the LLM found none | Recall issue |
+| **LLM-only findings** | LLM reported spans where sampled GT has none | Possible false positives or novel findings |
+| **True negative** | Neither GT nor LLM reports findings | Correct rejection |
+
+Example board row:
+
+| Verdict | Main issue | File | GT spans | LLM spans | TP | FP | FN | File precision | File recall | File F1 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Partial | Many false negatives | `FacadeEUMLImpl.java` | 156 | 24 | 5 | 19 | 151 | 0.21 | 0.03 | 0.06 |
+| Extra | LLM-only findings | `Decision.java` | 0 | 6 | 0 | 6 | 0 | 0.00 | 0.00 | 0.00 |
+
+The UI also includes:
+
+- an automatic natural-language summary,
+- KPI cards for matched / partial / missed / extra files,
+- filters for all files, errors, false positives, false negatives, or matched files,
+- an error-mix chart for TP / FP / FN,
+- CSV export of the current board view.
+
+### Code evidence viewer
+
+The **Code evidence viewer** is placed directly under the board table. It lets you select a file and inspect the evidence side by side:
+
+| Ground Truth focus | LLM focus |
+|---|---|
+| Code window centered on static-analyzer spans | Code window centered on LLM-predicted spans |
+| Orange highlights = GT lines | Blue highlights = LLM lines |
+| Green highlights = overlap | Green highlights = overlap |
+
+This view is designed to answer the demo question:
+
+> “Why did this file count as matched, partial, missed, or LLM-only?”
+
+For comparison modes, StaLLM shows a board selector per prompt/model so you can inspect:
+
+- the best prompt by F1,
+- prompts with higher recall,
+- prompts that produce more false positives,
+- model-specific differences in code evidence.
+
+---
+
 ## 🔬 Metrics (span-level) — TP / FP / FN, Precision, Recall, F1
 
 StaLLM evaluates LLM findings against static-analyzer spans from the CSV, restricted to the sampled universe `U` of Top-K files.
