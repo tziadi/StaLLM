@@ -330,5 +330,20 @@ Each Review board includes:
 
 ## ☕ Citation
 
-If you use StaLLM or its dataset, please cite the paper (TBD).  
+If you use StaLLM or its dataset, please cite:
+
+Ziadi, T.; Bouallegue, S. and Bendraou, R. (2026). STALLM: Benchmarking Prompts and LLMs in Software Maintenance. In Proceedings of the 21st International Conference on Evaluation of Novel Approaches to Software Engineering - Volume 1, ISBN 978-989-758-828-0, ISSN 2184-4895, pages 326-333.
+
+```bibtex
+@inproceedings{ziadi2026stallm,
+  author = {Ziadi, T. and Bouallegue, S. and Bendraou, R.},
+  title = {{STALLM}: Benchmarking Prompts and {LLMs} in Software Maintenance},
+  booktitle = {Proceedings of the 21st International Conference on Evaluation of Novel Approaches to Software Engineering - Volume 1},
+  year = {2026},
+  pages = {326--333},
+  isbn = {978-989-758-828-0},
+  issn = {2184-4895}
+}
+```
+
 Feedback and PRs are welcome!
