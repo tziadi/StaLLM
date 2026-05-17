@@ -8,7 +8,8 @@
 - **LLM comparison mode** — fix one prompt strategy and **compare multiple LLM models side-by-side** (precision/recall/F1, tokens, cost, time).
 - **Multi-language dataset** (Java, C#, PHP) with paired static analysis reports for quantitative benchmarking.
 - **Unified evaluation pipeline** (file-level precision/recall/F1) + **token and cost accounting**.
-- **Streamlit UI** for interactive runs, visual comparison, and database-backed history.
+- **Streamlit UI** for interactive runs, preflight validation, review-board diagnostics, code evidence inspection, and database-backed history.
+- **Demo-first workflow** with bundled datasets, one-click demo configuration, and HTML report export.
 - **Batch mode** to run large experiment sweeps across projects/strategies/top-K.
 
 ---
@@ -21,6 +22,7 @@
 - Provide a clean **Streamlit UI** and **SQLite** persistence for runs.  
 - Track **LLM usage** (prompt/completion tokens, total tokens, USD cost).  
 - Ship a **reproducible dataset** (apps + static analyzer CSVs).
+- Make individual results explainable with file-level verdicts, span examples, and side-by-side code context.
 
 ---
 
@@ -151,15 +153,30 @@ streamlit run StaLLM_app.py
 2. **Compare selected prompts** — compare several prompt strategies on the **same LLM**.  
 3. **Compare LLM models** — fix **one prompt strategy** and select **multiple LLMs** to compare side-by-side.
 
+**Fast demo path:**
+1. Click **Load demo config** in the sidebar.
+2. Keep **Use bundled demo dataset** enabled, or choose another bundled dataset.
+3. Confirm the **Preflight checks** are green.
+4. Run the analysis and inspect the **Review board** plus **Code evidence viewer**.
+
 **Steps:**
 1. Choose **Execution mode**.  
 2. Select one **LLM slot** (modes 1–2) **or multiple slots/models** (mode 3).  
-3. Upload the **project ZIP** and the matching **CSV** (static analyzer output).  
+3. Upload the **project ZIP** and the matching **CSV** (static analyzer output), or use a bundled demo dataset.  
 4. Choose a **prompt strategy** (from `strategies.json`) and **Top-K** files.  
-5. Run. The UI displays:
-   - **Precision / Recall / F1** and a **file-level confusion summary (TP/FP/FN)**.  
+5. Review **Preflight checks**:
+   - ZIP validity,
+   - CSV readability,
+   - detected language,
+   - experiment universe,
+   - LLM configuration.
+6. Run. The UI displays:
+   - **Precision / Recall / F1** and **span-level TP/FP/FN**.  
+   - A **Review board** with per-file verdicts: matched, partial, missed, extra, mismatch, true negative.
+   - A **Code evidence viewer** with side-by-side **Ground Truth focus** and **LLM focus** snippets.
    - **Tokens** (prompt/completion/total) and **estimated cost (USD)**.  
-   - For comparison modes, **tables & charts per strategy or per model**.
+   - For comparison modes, **tables, charts, and review boards per strategy or per model**.
+   - An **Export HTML report** button for sharing standalone run/comparison reports.
 
 ### Other tabs
 - **Stored Results (DB)**: browse historical runs (includes *LLM used*, tokens, cost).  
@@ -168,44 +185,58 @@ streamlit run StaLLM_app.py
 
 ---
 
-## 🔬 Metrics (file-level) — TP / FP / TN / FN, Precision, Recall, F1
+## 🔬 Metrics (span-level) — TP / FP / FN, Precision, Recall, F1
 
-We evaluate at the **file level** against the static analyzer CSV, restricted to the **Top-K ground-truth files** for the selected language.
+StaLLM evaluates LLM findings against static-analyzer spans from the CSV, restricted to the sampled universe `U` of Top-K files.
 
 ### Definitions
-- **Ground-truth (GT files)**: the Top-K files (from the CSV) with the highest issue counts for the detected language.
-- **Predicted files**: files for which the LLM reports **at least one issue**.
+- **Universe U**: sampled files used for a run. It mixes positive files (with GT spans) and negative files (without GT spans) according to Top-K and positive ratio.
+- **Ground-truth spans**: static-analyzer findings with file + line/span metadata.
+- **LLM spans**: structured findings returned by the LLM with `line` or `startLine` / `endLine`.
 
-We compare **file identities by suffix** (robust to relative paths). For each run:
+For each file in `U`, StaLLM matches LLM spans to GT spans using line overlap / tolerance and optional rule/type matching.
 
-- **TP (True Positive)**: a GT file that the LLM flagged (≥1 issue reported).
-- **FN (False Negative)**: a GT file that the LLM did **not** flag.
-- **FP (False Positive)**: a non-GT file that the LLM flagged.
-- **TN (True Negative)**: a non-GT file that the LLM did **not** flag.  
-  > TN is not used in precision/recall/F1, but it matters for accuracy/specificity if you ever need them.
+- **TP (True Positive)**: an LLM span matched to a GT span.
+- **FP (False Positive)**: an LLM span that did not match a GT span.
+- **FN (False Negative)**: a GT span not matched by any LLM span.
 
 ### Formulas
 Let `TP`, `FP`, `FN` be the counts defined above.
 
 - **Precision** = `TP / (TP + FP)`  
-  *Of the files the LLM flagged, how many were truly among the Top-K GT files?*
+  *Of the spans the LLM reported, how many matched the static analyzer?*
 
 - **Recall** = `TP / (TP + FN)`  
-  *Of the Top-K GT files, how many did the LLM catch?*
+  *Of the GT spans, how many did the LLM catch?*
 
 - **F1** = `2 * Precision * Recall / (Precision + Recall)`  
   *Harmonic mean—penalizes imbalance between P and R.*
 
-> If different strategies have the **same recall**, it means they covered the **same number of GT files**; precision may still differ via different FPs.
+The Review board also groups files into qualitative verdicts:
+
+- **Matched**: LLM spans align cleanly with GT spans.
+- **Partial / mismatch**: some overlap exists, but FP/FN remain.
+- **Missed by LLM**: GT spans exist, but the LLM found none.
+- **LLM-only findings**: the LLM reported spans where the sampled GT has none.
+- **True negative**: neither GT nor LLM reports findings for the file.
 
 ### Edge cases
 - If `TP + FP = 0` ⇒ **Precision = 0** (model flagged nothing).  
-- If `TP + FN = 0` ⇒ **Recall = 0** (no GT files in scope—shouldn’t happen when Top-K > 0).  
+- If `TP + FN = 0` ⇒ **Recall = 0** (no GT spans in scope).  
 - If both P and R are 0 ⇒ **F1 = 0**.
 
-### What’s **not** measured here
-- Issue-level matching (per smell type/severity) — possible future extension.  
-- Confidence thresholds — you can add a policy like “count file as TP only if ≥ N issues or confidence ≥ τ” to make recall more discriminative.
+### Qualitative inspection
+
+Each Review board includes:
+
+- per-file TP/FP/FN,
+- file precision / recall / F1,
+- an automatic summary of dominant error type,
+- GT and LLM findings tables,
+- side-by-side code evidence:
+  - **Ground Truth focus**,
+  - **LLM focus**,
+  - colored line highlights for GT, LLM, and overlap.
 
 ---
 
@@ -215,6 +246,7 @@ Let `TP`, `FP`, `FN` be the counts defined above.
   project, language, strategy, **LLM used**, **TP/FP/FN**, precision, recall, F1, top-K, time, tokens, USD cost, timestamp.  
 - The DB tab shows a global **F1 comparison** and groups results by **strategy** and **LLM model**.  
 - Batch runs additionally export **CSV** summaries under `output/apps/<project>/`.
+- Single runs and comparisons can export standalone **HTML reports** containing configuration, metrics, review boards, and code evidence snippets.
 
 ---
 
@@ -227,6 +259,8 @@ Let `TP`, `FP`, `FN` be the counts defined above.
 - **Language filtering**: CSV paths must match detected language extensions.  
 - **Large ZIPs**: raise Streamlit upload limits or split the project.
 - **Ollama connection issues**: see [Ollama Multi-Deployment Guide](OLLAMA_MULTI_DEPLOYMENT.md) for detailed troubleshooting.
+- **Changing a selected file/prompt seems to reset the UI**: results are cached in the current Streamlit session after a run; rerun the analysis if you changed code or need newly added diagnostics.
+- **No code context shown**: rerun the analysis so the latest diagnostics include code excerpts.
 
 ---
 
@@ -235,7 +269,7 @@ Let `TP`, `FP`, `FN` be the counts defined above.
 - More languages & projects.  
 - Issue-level matching and severity/confidence thresholds.  
 - Deeper cost modeling and caching for large batch runs.  
-- CLI for reproducible experiment scripts and report export.
+- CLI for reproducible experiment scripts.
 
 ---
 
