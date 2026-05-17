@@ -239,6 +239,17 @@ st.markdown("""
   border-color:#94a3b8 !important;
   background:#f8fafc !important;
 }
+.stButton > button,
+.stButton > button *,
+[data-testid="baseButton-primary"],
+[data-testid="baseButton-primary"] *{
+  color:#ffffff !important;
+  text-shadow:0 1px 1px rgba(15,23,42,.22) !important;
+}
+.stButton > button p,
+[data-testid="baseButton-primary"] p{
+  color:#ffffff !important;
+}
 
 /* Sidebar polish */
 [data-testid="stSidebar"]{
