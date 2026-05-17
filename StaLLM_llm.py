@@ -3,7 +3,16 @@ import os
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Tuple, Any
 
-from openai import AzureOpenAI, OpenAI
+try:
+    from openai import AzureOpenAI, OpenAI
+except ModuleNotFoundError as exc:
+    if exc.name != "openai":
+        raise
+    raise ModuleNotFoundError(
+        "The 'openai' package is missing from the Python environment used to run StarLLM. "
+        "From the StaLLM folder, run the app with './.venv/bin/streamlit run StaLLM_app.py' "
+        "or install dependencies with 'python -m pip install -r requirements.txt'."
+    ) from exc
 
 __all__ = [
     "LLMConfig",

@@ -143,7 +143,7 @@ They are normalized internally to **$/1K** for cost calculation.
 
 ### Launch the app
 ```bash
-streamlit run StaLLM_app.py
+./.venv/bin/streamlit run StaLLM_app.py
 ```
 
 ### Workflow (Run Experiments tab)

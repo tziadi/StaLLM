@@ -73,7 +73,7 @@ OL4_HOST=http://localhost:8080
 
 If you have configured multiple Ollama slots in your `.env` file, they will automatically appear in the UI:
 
-1. Start the application: `streamlit run StaLLM_app.py`
+1. Start the application: `./.venv/bin/streamlit run StaLLM_app.py`
 2. In the sidebar, select your desired Ollama deployment from the "LLM Slot" dropdown
 3. The system will show the deployment as: `ollama:model@host:port`
 
@@ -217,4 +217,3 @@ OL1_PRICE_OUT_PER_1K=0.0
 1. Set up specialized servers for different model types
 2. Compare code analysis quality across different models
 3. Document performance characteristics for each deployment
-

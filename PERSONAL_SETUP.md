@@ -115,7 +115,7 @@ STALLM_PRICE_OUT_PER_1K=0.0
 ## Quick Start
 
 1. Copy the configuration above to your `.env` file
-2. Run `streamlit run StaLLM_app.py`
+2. Run `./.venv/bin/streamlit run StaLLM_app.py`
 3. Select "DeepSeek Coder V2 (Code)" from the LLM dropdown
 4. Upload your project ZIP and static analysis CSV
 5. Run your first experiment!
@@ -130,4 +130,3 @@ To find the best model for your specific use case:
 4. **Consider**: Resource usage vs. performance trade-offs
 
 Your setup is excellent for comprehensive static analysis research with multiple model comparisons!
-
