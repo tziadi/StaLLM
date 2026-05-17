@@ -817,6 +817,7 @@ def run_experiment(
     pt_sum = ct_sum = tt_sum = 0
     preds_all: List[Dict[str, Any]] = []
     results_all: List[Dict[str, Any]] = []
+    code_by_file: Dict[str, str] = {}
 
     with tempfile.TemporaryDirectory() as tmp:
         with zipfile.ZipFile(zip_path, "r") as z:
@@ -832,11 +833,16 @@ def run_experiment(
                     code = f.read()
             except Exception:
                 code = ""
+            code_by_file[base] = code
 
             # analyze_with_llm handles its own errors and falls back to heuristics
             smells, usage = analyze_with_llm(code, mode, language, llm)
 
-            results_all.extend(smells or [])
+            for smell in smells or []:
+                item = dict(smell)
+                item["basename"] = base
+                item["relpath"] = rel
+                results_all.append(item)
             preds_all.extend(_extract_pred_spans(smells, basename=base))
             pt_sum += usage.get("prompt_tokens", 0)
             ct_sum += usage.get("completion_tokens", 0)
@@ -868,13 +874,109 @@ def run_experiment(
             continue
         pred_by_file.setdefault(b, []).append(p)
 
+    def _span_preview(items: List[Dict[str, Any]], limit: int = 5) -> List[Dict[str, Any]]:
+        preview = []
+        for item in (items or [])[:limit]:
+            preview.append({
+                "type": item.get("type"),
+                "description": item.get("description"),
+                "startLine": item.get("startLine"),
+                "endLine": item.get("endLine"),
+            })
+        return preview
+
+    def _code_excerpt(basename: str, gt_items: List[Dict[str, Any]], pred_items: List[Dict[str, Any]],
+                      radius: int = 4, max_lines: int = 36, focus: str = "both") -> Dict[str, Any]:
+        code = code_by_file.get(basename, "")
+        lines = code.splitlines()
+        if not lines:
+            return {"start_line": 0, "lines": [], "gt_lines": [], "llm_lines": []}
+
+        gt_lines = set()
+        llm_lines = set()
+        gt_anchors = []
+        llm_anchors = []
+        for item in gt_items or []:
+            s = _to_int_or_none(item.get("startLine"))
+            e = _to_int_or_none(item.get("endLine")) or s
+            if s:
+                gt_anchors.append(s)
+                for n in range(max(1, s), min(len(lines), e or s) + 1):
+                    gt_lines.add(n)
+        for item in pred_items or []:
+            s = _to_int_or_none(item.get("startLine"))
+            e = _to_int_or_none(item.get("endLine")) or s
+            if s:
+                llm_anchors.append(s)
+                for n in range(max(1, s), min(len(lines), e or s) + 1):
+                    llm_lines.add(n)
+
+        if focus == "gt":
+            anchors = gt_anchors
+            visible_gt_lines = gt_lines
+            visible_llm_lines = set()
+        elif focus == "llm":
+            anchors = llm_anchors
+            visible_gt_lines = set()
+            visible_llm_lines = llm_lines
+        else:
+            anchors = gt_anchors + llm_anchors
+            visible_gt_lines = gt_lines
+            visible_llm_lines = llm_lines
+
+        if not anchors:
+            return {"start_line": 0, "lines": [], "gt_lines": [], "llm_lines": []}
+
+        center = min(anchors)
+        start = max(1, center - radius)
+        end = min(len(lines), start + max_lines - 1)
+        return {
+            "start_line": int(start),
+            "lines": lines[start - 1:end],
+            "gt_lines": sorted(n for n in visible_gt_lines if start <= n <= end),
+            "llm_lines": sorted(n for n in visible_llm_lines if start <= n <= end),
+        }
+
     TP = FP = FN = 0
+    file_diagnostics: List[Dict[str, Any]] = []
     for b in U_bases:
         tp, fp, fn = _match_file(pred_by_file.get(b, []), gt_by_file.get(b, []),
                                  require_type=require_type, use_cols_single=use_cols_single, preset=preset)
         TP += tp
         FP += fp
         FN += fn
+        row = summary_U[summary_U["basename"] == b].head(1)
+        relpath = str(row["relpath"].iloc[0]) if len(row) else b
+        gt_count = len(gt_by_file.get(b, []))
+        pred_count = len(pred_by_file.get(b, []))
+        if tp and not fp and not fn:
+            bucket = "matched"
+        elif tp:
+            bucket = "partial"
+        elif fn and not fp:
+            bucket = "missed"
+        elif fp and not fn:
+            bucket = "extra"
+        elif fp and fn:
+            bucket = "mismatch"
+        else:
+            bucket = "true_negative"
+        file_diagnostics.append({
+            "file": relpath,
+            "basename": b,
+            "bucket": bucket,
+            "tp": int(tp),
+            "fp": int(fp),
+            "fn": int(fn),
+            "gt_spans": int(gt_count),
+            "llm_spans": int(pred_count),
+            "is_positive": bool(gt_count > 0),
+            "gt_examples": _span_preview(gt_by_file.get(b, [])),
+            "llm_examples": _span_preview(pred_by_file.get(b, [])),
+            "code_excerpt": _code_excerpt(b, gt_by_file.get(b, []), pred_by_file.get(b, [])),
+            "gt_code_excerpt": _code_excerpt(b, gt_by_file.get(b, []), pred_by_file.get(b, []), focus="gt"),
+            "llm_code_excerpt": _code_excerpt(b, gt_by_file.get(b, []), pred_by_file.get(b, []), focus="llm"),
+        })
 
     precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
     recall    = TP / (TP + FN) if (TP + FN) > 0 else 0.0
@@ -896,6 +998,7 @@ def run_experiment(
         "preset": preset,
         "require_type": require_type,
         "use_cols_single": use_cols_single,
+        "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
     }
 
     return results_all, summary_U, metrics, usage_totals
