@@ -10,8 +10,15 @@ from html import escape
 from pathlib import Path
 from typing import Any
 
+import altair as alt
 import pandas as pd
 import streamlit as st
+
+CHART_FONT = "Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+
+alt.renderers.set_embed_options(
+    actions=False,
+)
 
 from StaLLM_core import (
     run_experiment,
@@ -92,6 +99,8 @@ st.markdown( """ <style> /* Fonts */ @import url('https://fonts.googleapis.com/c
 
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
 :root{
   --ui-bg:#ffffff;
   --ui-bg-soft:#f8fafc;
@@ -101,19 +110,61 @@ st.markdown("""
   --ui-muted:#667085;
   --ui-focus:#2563eb;
   --ui-shadow:0 8px 20px rgba(15,23,42,.06);
+  --brand-font:Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --brand-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* Global typography rhythm */
-.stApp, .stApp *{
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+.stApp,
+.stApp *,
+.stApp button,
+.stApp input,
+.stApp textarea,
+.stApp select,
+.stApp [data-baseweb],
+.stApp [data-baseweb] *,
+.stApp [data-testid],
+.stApp [data-testid] *,
+.stApp [role],
+.stApp [role] *{
+  font-family:var(--brand-font) !important;
   letter-spacing:0;
 }
 .stApp h1,.stApp h2,.stApp h3,.stApp h4{
   color:var(--ui-text);
+  font-family:var(--brand-font) !important;
   font-weight:800;
+  letter-spacing:-.01em;
+}
+.stApp h1{
+  font-size:clamp(1.7rem, 2.4vw, 2.5rem);
+}
+.stApp h2{
+  font-size:1.35rem;
+}
+.stApp h3{
+  font-size:1.08rem;
 }
 .stMarkdown p, .stCaptionContainer, [data-testid="stCaptionContainer"]{
   color:var(--ui-muted);
+  font-family:var(--brand-font) !important;
+  line-height:1.55;
+}
+.stMarkdown strong,
+.stMarkdown b{
+  color:#172033;
+  font-weight:800;
+}
+.stApp code,
+.stApp pre,
+.stApp kbd,
+.stApp samp,
+.stCode,
+.stCode *,
+.codebox,
+.codebox *,
+.file-cell{
+  font-family:var(--brand-mono) !important;
 }
 
 /* DataFrames: professional shell around every Streamlit table */
@@ -125,7 +176,7 @@ st.markdown("""
   box-shadow:var(--ui-shadow) !important;
 }
 [data-testid="stDataFrame"] *{
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-family:var(--brand-font) !important;
   font-size:13px !important;
 }
 [data-testid="stDataFrame"] [role="columnheader"],
@@ -170,7 +221,7 @@ st.markdown("""
   min-height:40px !important;
 }
 [data-testid="stTextArea"] textarea{
-  font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-family:var(--brand-mono) !important;
   font-size:12.5px !important;
   line-height:1.55 !important;
 }
@@ -226,7 +277,7 @@ st.markdown("""
 
 /* Sliders */
 [data-testid="stSlider"] [data-baseweb="slider"] div{
-  font-family:Inter, ui-sans-serif, system-ui !important;
+  font-family:var(--brand-font) !important;
 }
 
 /* Alerts */
@@ -271,6 +322,60 @@ st.markdown("""
 [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p{
   color:#475467;
 }
+
+/* Brand typography overrides for Streamlit/BaseWeb defaults */
+[data-testid="stSidebar"] *,
+[data-testid="stTabs"] *,
+[data-testid="stExpander"] *,
+[data-testid="stAlert"] *,
+[data-testid="stMetric"] *,
+[data-testid="stPopover"] *,
+[data-testid="stTooltipHoverTarget"] *,
+[data-baseweb="popover"] *,
+[data-baseweb="menu"] *,
+[data-baseweb="select"] *,
+[data-baseweb="tag"] *,
+[data-baseweb="slider"] *,
+[data-baseweb="checkbox"] *,
+[data-baseweb="radio"] *{
+  font-family:var(--brand-font) !important;
+}
+[data-testid="stSidebar"]{
+  font-size:13px;
+}
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3{
+  letter-spacing:-.01em;
+}
+[data-testid="stTabs"] [role="tab"] p,
+[data-testid="stRadio"] label p,
+[data-testid="stCheckbox"] label p,
+[data-testid="stSelectbox"] label p,
+[data-testid="stMultiSelect"] label p,
+[data-testid="stTextInput"] label p,
+[data-testid="stTextArea"] label p,
+[data-testid="stFileUploader"] label p{
+  font-family:var(--brand-font) !important;
+}
+.hero h1,
+.hero p,
+.badge,
+.pill,
+.kpi,
+.kpi *,
+.section,
+.section *,
+.pro-table,
+.pro-table *{
+  font-family:var(--brand-font) !important;
+}
+.pro-table .file-cell,
+.codebox,
+.codebox *,
+textarea{
+  font-family:var(--brand-mono) !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -292,6 +397,134 @@ def pct(x: float) -> str:
         return f"{float(x)*100:.2f}%"
     except Exception:
         return "0.00%"
+
+def _render_bar_chart(
+    df: pd.DataFrame,
+    *,
+    x: str,
+    y: str,
+    color: str | None = None,
+    y_title: str | None = None,
+    value_format: str = ".2f",
+    height: int = 320,
+) -> None:
+    if df.empty:
+        st.info("No chart data available.")
+        return
+    chart = (
+        alt.Chart(df)
+        .mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
+        .encode(
+            x=alt.X(f"{x}:N", sort=None, axis=alt.Axis(labelAngle=-25, title=None)),
+            y=alt.Y(f"{y}:Q", title=y_title or y, axis=alt.Axis(grid=True)),
+            tooltip=[
+                alt.Tooltip(f"{x}:N", title=x),
+                alt.Tooltip(f"{y}:Q", title=y_title or y, format=value_format),
+            ],
+        )
+        .properties(height=height)
+        .configure_axis(
+            labelFont=CHART_FONT,
+            titleFont=CHART_FONT,
+            labelColor="#475569",
+            titleColor="#334155",
+            gridColor="#e2e8f0",
+        )
+        .configure_legend(
+            labelFont=CHART_FONT,
+            titleFont=CHART_FONT,
+            labelColor="#334155",
+        )
+        .configure_view(stroke=None)
+    )
+    if color:
+        chart = chart.encode(
+            color=alt.Color(
+                f"{color}:N",
+                scale=alt.Scale(
+                    range=["#2563eb", "#14b8a6", "#7c3aed", "#f59e0b", "#ef4444", "#64748b"]
+                ),
+                legend=alt.Legend(title=None, orient="top"),
+            )
+        )
+    else:
+        chart = chart.encode(color=alt.value("#2563eb"))
+    st.altair_chart(chart, use_container_width=True)
+
+def _render_wide_metric_chart(
+    df: pd.DataFrame,
+    columns: list[str],
+    *,
+    group_label: str,
+    value_label: str,
+    value_format: str = ".2f",
+    height: int = 330,
+) -> None:
+    plot_df = df[columns].copy()
+    plot_df.index = plot_df.index.astype(str)
+    plot_df = (
+        plot_df.reset_index(names=group_label)
+        .melt(id_vars=group_label, var_name="Metric", value_name=value_label)
+    )
+    base = (
+        alt.Chart(plot_df)
+        .encode(
+            x=alt.X(
+                f"{group_label}:N",
+                sort=None,
+                axis=alt.Axis(labelAngle=-25, title=None),
+            ),
+            xOffset=alt.XOffset("Metric:N", sort=columns),
+            y=alt.Y(
+                f"{value_label}:Q",
+                title=value_label,
+                axis=alt.Axis(format=value_format if value_format.endswith("%") else None, grid=True),
+                scale=alt.Scale(zero=True),
+            ),
+            color=alt.Color(
+                "Metric:N",
+                sort=columns,
+                scale=alt.Scale(
+                    domain=columns,
+                    range=["#2563eb", "#14b8a6", "#7c3aed", "#f59e0b", "#ef4444", "#64748b"][:len(columns)],
+                ),
+                legend=alt.Legend(title=None, orient="top"),
+            ),
+            tooltip=[
+                alt.Tooltip(f"{group_label}:N", title=group_label),
+                alt.Tooltip("Metric:N", title="Metric"),
+                alt.Tooltip(f"{value_label}:Q", title=value_label, format=value_format),
+            ],
+        )
+        .properties(height=height)
+    )
+    bars = base.mark_bar(cornerRadiusTopLeft=5, cornerRadiusTopRight=5, size=28)
+    labels = base.mark_text(
+        dy=-8,
+        font=CHART_FONT,
+        fontSize=12,
+        fontWeight="bold",
+        color="#334155",
+    ).encode(
+        text=alt.Text(f"{value_label}:Q", format=value_format)
+    )
+    chart = (
+        (bars + labels)
+        .configure_axis(
+            labelFont=CHART_FONT,
+            titleFont=CHART_FONT,
+            labelColor="#475569",
+            titleColor="#334155",
+            gridColor="#e2e8f0",
+        )
+        .configure_legend(
+            labelFont=CHART_FONT,
+            titleFont=CHART_FONT,
+            labelColor="#334155",
+        )
+        .configure_view(stroke=None)
+    )
+    st.altair_chart(chart, use_container_width=True)
 
 def render_code_with_highlight(title: str, code: str, hl_ranges: list[tuple[int,int]]):
     """
@@ -971,14 +1204,11 @@ def _render_review_board(metrics: dict[str, Any], key_prefix: str = "review") ->
     _render_code_evidence_viewer(diagnostics, key_prefix)
 
     chart_df = pd.DataFrame({
-        "Count": {
-            "TP": int(df["TP"].sum()),
-            "FP": int(df["FP"].sum()),
-            "FN": int(df["FN"].sum()),
-        }
+        "Type": ["TP", "FP", "FN"],
+        "Count": [int(df["TP"].sum()), int(df["FP"].sum()), int(df["FN"].sum())],
     })
     st.markdown("#### Error mix")
-    st.bar_chart(chart_df)
+    _render_bar_chart(chart_df, x="Type", y="Count", color="Type", y_title="Count", value_format=",.0f", height=260)
     st.download_button(
         "Download review CSV",
         data=visible_df[board_cols].to_csv(index=False).encode("utf-8"),
@@ -1085,7 +1315,13 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
     _render_pro_dataframe(_metrics_table_view(metrics_df))
 
     st.markdown("### 📈 Precision / Recall / F1 by Strategy")
-    st.bar_chart(metrics_df[["precision", "recall", "f1"]])
+    _render_wide_metric_chart(
+        metrics_df,
+        ["precision", "recall", "f1"],
+        group_label="Strategy",
+        value_label="Score",
+        value_format=".2%",
+    )
 
     _render_comparison_review_boards(metrics_df, "strategy")
 
@@ -1106,10 +1342,29 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
     st.markdown("### 📐 Metrics per Model")
     _render_pro_dataframe(_metrics_table_view(metrics_df))
     st.markdown("### 📈 Precision / Recall / F1 by Model")
-    st.bar_chart(metrics_df[["precision", "recall", "f1"]])
+    _render_wide_metric_chart(
+        metrics_df,
+        ["precision", "recall", "f1"],
+        group_label="Model",
+        value_label="Score",
+        value_format=".2%",
+    )
     st.markdown("### 💰 Tokens & Cost by Model")
-    st.bar_chart(metrics_df[["prompt_tokens","completion_tokens","total_tokens"]])
-    st.bar_chart(metrics_df[["usd_cost"]])
+    _render_wide_metric_chart(
+        metrics_df,
+        ["prompt_tokens", "completion_tokens", "total_tokens"],
+        group_label="Model",
+        value_label="Tokens",
+        value_format=",.0f",
+    )
+    _render_wide_metric_chart(
+        metrics_df,
+        ["usd_cost"],
+        group_label="Model",
+        value_label="USD cost",
+        value_format="$.6f",
+        height=260,
+    )
     _render_comparison_review_boards(metrics_df, "model")
     _report_download_button(
         _comparison_report_html(summary_U, metrics_df, samples, label="model"),
@@ -1137,7 +1392,14 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
         "precision": metrics.get("precision", 0.0),
         "recall": metrics.get("recall", 0.0),
         "f1": metrics.get("f1", 0.0)}], index=[prompt_label])
-    st.bar_chart(metrics_df_single[["precision","recall","f1"]])
+    _render_wide_metric_chart(
+        metrics_df_single,
+        ["precision", "recall", "f1"],
+        group_label="Prompt",
+        value_label="Score",
+        value_format=".2%",
+        height=260,
+    )
 
     _render_review_board(metrics)
 
@@ -1701,7 +1963,19 @@ def render_tab_results_db():
             pivot_df.columns = pivot_df.columns.astype(str)
         pivot_df = pivot_df.fillna(0)
         st.markdown("### 📈 Global Comparison (F1 across Projects • by LLM & Strategy)")
-        st.bar_chart(pivot_df)
+        global_chart_df = (
+            pivot_df.reset_index()
+            .melt(id_vars="Project", var_name="LLM / Strategy", value_name="F1 Score")
+        )
+        _render_bar_chart(
+            global_chart_df,
+            x="Project",
+            y="F1 Score",
+            color="LLM / Strategy",
+            y_title="F1 Score",
+            value_format=".2%",
+            height=360,
+        )
     except Exception:
         st.info("Pivot not available (insufficient data).")
     session.close()
@@ -2008,8 +2282,11 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     st.markdown(f"- Requested U: **Top-K = {demo_topk}**, **Positive ratio = {demo_pos_ratio:.2f}**")
     st.markdown(f"➡️ Sampled **U**: **positives = {want_pos}**, **negatives = {want_neg}**, **total = {total_u}**")
 
-    comp_df = pd.DataFrame({"count":[want_pos, want_neg]}, index=["positives (≥1 GT)","negatives (0 GT)"])
-    st.bar_chart(comp_df)
+    comp_df = pd.DataFrame({
+        "Type": ["positives (>=1 GT)", "negatives (0 GT)"],
+        "Count": [want_pos, want_neg],
+    })
+    _render_bar_chart(comp_df, x="Type", y="Count", color="Type", y_title="Files", value_format=",.0f", height=260)
 
     st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
 
