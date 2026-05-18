@@ -2,6 +2,7 @@
 # Pro UI: Inter/JetBrains Mono fonts, premium hero, glass cards, KPI chips,
 # code viewer with line numbers + highlights, strictness guide, Top-K/Positive illustration.
 import base64
+import re
 import time
 import os
 import tempfile
@@ -38,6 +39,8 @@ from StaLLM_llm import (
     load_llm_registry, build_llm_from_slot,
     test_ollama_connectivity, validate_ollama_config, debug_ollama_response
 )
+from StaLLM_benchmarks import load_argouml_feature_tasks
+from StaLLM_tasks import LOCATION_PROMPT_TEMPLATES, list_repo_candidates, paths_match, run_location_task
 
 
 # =========================
@@ -379,6 +382,184 @@ textarea{
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<style>
+/* Enterprise app shell */
+.block-container{
+  padding-top:1.1rem !important;
+  max-width:100% !important;
+}
+.app-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin:-18px -46px 18px;
+  padding:13px 28px;
+  background:#1f497d;
+  border-bottom:1px solid rgba(255,255,255,.14);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(15,23,42,.14);
+}
+.app-topbar-left,.app-topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.app-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:850;
+  font-size:18px;
+  letter-spacing:-.01em;
+}
+.app-brand img{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+.nav-chip,.status-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:30px;
+  padding:6px 11px;
+  border-radius:7px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.16);
+  color:#eaf2ff;
+  font-size:13px;
+  font-weight:750;
+}
+.nav-chip.active{
+  background:#3f7fbd;
+  color:#fff;
+  box-shadow:inset 0 -2px 0 rgba(255,255,255,.18);
+}
+.status-chip{
+  background:#2a5d91;
+  color:#dbeafe;
+}
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 0 0 3px rgba(34,197,94,.16);
+}
+[data-testid="stSidebar"]{
+  background:#f3f6fa !important;
+  border-right:1px solid #d9e2ec !important;
+}
+[data-testid="stSidebar"] > div:first-child{
+  padding-top:1.15rem;
+}
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"]{
+  gap:.75rem;
+}
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3{
+  color:#0f172a !important;
+}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h3{
+  margin:0;
+  padding:10px 12px;
+  border-radius:8px 8px 0 0;
+  background:#244f82;
+  color:#fff !important;
+  font-size:15px;
+}
+[data-testid="stTabs"]{
+  margin-top:0;
+}
+[data-testid="stTabs"] [role="tablist"]{
+  background:#244f82;
+  padding:7px 8px;
+  border-radius:0;
+  border:none;
+  gap:6px;
+  margin:0 -46px 16px;
+}
+[data-testid="stTabs"] [role="tab"]{
+  border-radius:7px;
+  color:#dbeafe !important;
+  padding:8px 13px;
+  border:1px solid transparent;
+}
+[data-testid="stTabs"] [role="tab"] p{
+  color:inherit !important;
+  font-weight:800;
+}
+[data-testid="stTabs"] [aria-selected="true"]{
+  background:#3f7fbd !important;
+  color:#ffffff !important;
+  border-color:rgba(255,255,255,.22);
+}
+.hero{
+  border-radius:8px !important;
+  box-shadow:0 8px 18px rgba(15,23,42,.08) !important;
+  background:#ffffff !important;
+}
+.section{
+  border-radius:8px !important;
+  background:#ffffff !important;
+  box-shadow:0 8px 18px rgba(15,23,42,.06) !important;
+}
+.stButton > button{
+  border-radius:7px !important;
+  box-shadow:0 8px 16px rgba(31,73,125,.18) !important;
+}
+[data-testid="stAlert"]{
+  border-radius:8px !important;
+}
+@media (max-width: 900px){
+  .app-topbar{
+    margin-left:-22px;
+    margin-right:-22px;
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  [data-testid="stTabs"] [role="tablist"]{
+    margin-left:-22px;
+    margin-right:-22px;
+    overflow:auto;
+  }
+}
+
+/* Right-side settings panel */
+section[data-testid="stSidebar"]{ display:none !important; }
+.right-settings{
+  border:1px solid #d9e2ec;
+  border-radius:8px;
+  background:#f8fafc;
+  box-shadow:0 10px 24px rgba(15,23,42,.08);
+  padding:0 14px 14px;
+}
+.right-settings-title{
+  margin:0 -14px 12px;
+  padding:11px 13px;
+  border-radius:8px 8px 0 0;
+  background:#1f497d;
+  color:#fff;
+  font-weight:850;
+  font-size:15px;
+}
+@media (min-width: 901px){
+  .block-container{
+    padding-right:2.4rem !important;
+    padding-left:2.4rem !important;
+  }
+  .app-topbar{
+    margin-right:-46px;
+  }
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 # =========================
 # Helpers
@@ -397,6 +578,18 @@ def pct(x: float) -> str:
         return f"{float(x)*100:.2f}%"
     except Exception:
         return "0.00%"
+
+def _sidebar_prompt_preview(title: str, prompts: dict[str, str], selected: str | list[str] | tuple[str, ...], target=None) -> None:
+    selected_items = [selected] if isinstance(selected, str) else list(selected or [])
+    if not selected_items:
+        return
+    target = target or st.sidebar
+    with target.expander(title, expanded=False):
+        for idx, name in enumerate(selected_items):
+            if idx:
+                st.divider()
+            st.caption(str(name))
+            st.code(str(prompts.get(name, ""))[:3500], language="text")
 
 def _render_bar_chart(
     df: pd.DataFrame,
@@ -1436,6 +1629,21 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
 # HERO
 # =========================
 st.markdown(f"""
+<div class="app-topbar">
+  <div class="app-topbar-left">
+    <div class="app-brand">
+      <img src="{BRAND_LOGO_DATA_URI}" alt="StarLLM logo" />
+      <span>StarLLM</span>
+    </div>
+    <span class="nav-chip active">Maintenance Lab</span>
+    <span class="nav-chip">Prompt Benchmarks</span>
+    <span class="nav-chip">Model Comparison</span>
+  </div>
+  <div class="app-topbar-right">
+    <span class="status-chip"><span class="status-dot"></span> Branch: feature/maintenance-localization-tasks</span>
+    <span class="status-chip">ArgoUML FL ready</span>
+  </div>
+</div>
 <div class="hero">
   <div class="hero-brand">
     <img class="hero-logo" src="{BRAND_LOGO_DATA_URI}" alt="StarLLM logo" />
@@ -1454,42 +1662,43 @@ st.markdown(f"""
 # =========================
 # LLM builders (enhanced with Ollama host + connectivity test)
 # =========================
-def build_llm(sidebar_prefix: str = "") -> ChatModel:
+def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
+    target = target or st.sidebar
     registry = load_llm_registry()
     if registry:
         keys = list(registry.keys())
         labels = [f"{k} · {registry[k]['label']} ({registry[k]['config'].provider})" for k in keys]
-        choice = st.sidebar.selectbox(f"{sidebar_prefix}LLM Slot (.env)", labels, index=0,
+        choice = target.selectbox(f"{sidebar_prefix}LLM Slot (.env)", labels, index=0,
                                       help="Select a slot configured in your .env")
         slot = keys[labels.index(choice)]
         llm_obj = build_llm_from_slot(slot)
         st.markdown(f"<span class='pill'>🧠 <b>Model</b> {llm_obj.model_label()}</span>", unsafe_allow_html=True)
         return llm_obj
 
-    st.sidebar.markdown("**Manual configuration (no .env slots detected)**")
-    prov = st.sidebar.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0)
+    target.markdown("**Manual configuration (no .env slots detected)**")
+    prov = target.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0)
     mdl_list = available_models(prov)
 
     if prov == "azure-openai":
         base_default = os.getenv("AZURE_OPENAI_ENDPOINT") or os.getenv("OPENAI_API_BASE", "")
         ver_default  = os.getenv("AZURE_OPENAI_API_VERSION") or os.getenv("OPENAI_API_VERSION", "2024-05-01-preview")
         dep_default  = os.getenv("OPENAI_DEPLOYMENT_NAME", "")
-        with st.sidebar.expander(f"{sidebar_prefix}Advanced Azure settings", expanded=False):
+        with target.expander(f"{sidebar_prefix}Advanced Azure settings", expanded=False):
             api_base    = st.text_input("Azure Resource endpoint", value=base_default, help="e.g., https://<resource>.openai.azure.com/")
             api_version = st.text_input("API version", value=ver_default)
-        deployment = st.sidebar.text_input("Azure deployment name", value=dep_default, help="Exact name in Azure OpenAI Studio")
+        deployment = target.text_input("Azure deployment name", value=dep_default, help="Exact name in Azure OpenAI Studio")
         api_key_env = os.getenv("AZURE_OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
         if not api_key_env:
-            api_key_env = st.sidebar.text_input("Azure API Key (paste if .env missing)", value="", type="password")
+            api_key_env = target.text_input("Azure API Key (paste if .env missing)", value="", type="password")
             if api_key_env: os.environ["AZURE_OPENAI_API_KEY"] = api_key_env
         st.markdown(f"<span class='pill'>🧠 <b>Model</b> azure:{deployment or 'deployment'}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="azure-openai", model=deployment, api_base=api_base, api_version=api_version, api_key=api_key_env))
 
     elif prov == "openai":
-        model = st.sidebar.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
+        model = target.selectbox(f"{sidebar_prefix}Model", mdl_list, index=0)
         api_key_env = os.getenv("OPENAI_API_KEY") or ""
         if not api_key_env:
-            api_key_env = st.sidebar.text_input("OpenAI API Key (paste if .env missing)", value="", type="password")
+            api_key_env = target.text_input("OpenAI API Key (paste if .env missing)", value="", type="password")
             if api_key_env: os.environ["OPENAI_API_KEY"] = api_key_env
         base_url = os.getenv("OPENAI_BASE_URL") or None
         st.markdown(f"<span class='pill'>🧠 <b>Model</b> openai:{model}</span>", unsafe_allow_html=True)
@@ -1498,35 +1707,36 @@ def build_llm(sidebar_prefix: str = "") -> ChatModel:
     else:
         # Ollama: host + connectivity + dynamic models from that host
         default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
-        host = st.sidebar.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
+        host = target.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
                                      help="e.g., http://localhost:11434 or http://192.168.1.100:11434")
-        if st.sidebar.button("🔍 Test Connection", key=f"test_conn_{sidebar_prefix}"):
-            with st.sidebar.spinner("Testing connection..."):
+        if target.button("🔍 Test Connection", key=f"test_conn_{sidebar_prefix}"):
+            with target.spinner("Testing connection..."):
                 ok, msg = test_ollama_connectivity(host)
-                (st.sidebar.success if ok else st.sidebar.error)(msg)
+                (target.success if ok else target.error)(msg)
 
         try:
             models_for_host = available_models("ollama", host)
             if not models_for_host:
-                st.sidebar.warning("⚠️ No models returned by host. Falling back to env list.")
+                target.warning("⚠️ No models returned by host. Falling back to env list.")
                 models_for_host = available_models("ollama", None)
         except Exception as e:
-            st.sidebar.warning(f"⚠️ Could not list models from host: {e}")
+            target.warning(f"⚠️ Could not list models from host: {e}")
             models_for_host = available_models("ollama", None)
 
-        model = st.sidebar.selectbox(f"{sidebar_prefix}Model", models_for_host or mdl_list, index=0)
+        model = target.selectbox(f"{sidebar_prefix}Model", models_for_host or mdl_list, index=0)
         st.markdown(f"<span class='pill'>🧠 <b>Model</b> ollama:{model}@{host.replace('http://','').replace('https://','')}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="ollama", model=model, api_base=host))
 
-def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
+def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[ChatModel]:
+    target = target or st.sidebar
     llms: list[ChatModel] = []
     registry = load_llm_registry()
-    st.sidebar.markdown(f"### {sidebar_prefix}LLM selection for comparison")
+    target.markdown(f"### {sidebar_prefix}LLM selection for comparison")
 
     if registry:
         keys = list(registry.keys())
         labels = [f"{k} · {registry[k]['label']} ({registry[k]['config'].provider})" for k in keys]
-        picked = st.sidebar.multiselect("LLM Slots (.env)", labels, default=labels[:2] if len(labels) >= 2 else labels)
+        picked = target.multiselect("LLM Slots (.env)", labels, default=labels[:2] if len(labels) >= 2 else labels)
         for lab in picked:
             slot = keys[labels.index(lab)]
             cm = build_llm_from_slot(slot)
@@ -1537,31 +1747,31 @@ def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
         return llms
 
     # Manual multi-model selection
-    prov = st.sidebar.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0, key="cmp_prov")
+    prov = target.selectbox(f"{sidebar_prefix}LLM Provider", ["azure-openai", "openai", "ollama"], index=0, key="cmp_prov")
     if prov == "ollama":
         default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
-        host = st.sidebar.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
+        host = target.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
                                      help="Ollama server URL for model comparison", key="cmp_ollama_host")
-        if st.sidebar.button("🔍 Test Connection", key="test_conn_cmp"):
-            with st.sidebar.spinner("Testing connection..."):
+        if target.button("🔍 Test Connection", key="test_conn_cmp"):
+            with target.spinner("Testing connection..."):
                 ok, msg = test_ollama_connectivity(host)
-                (st.sidebar.success if ok else st.sidebar.error)(msg)
+                (target.success if ok else target.error)(msg)
         mdl_list = available_models("ollama", host) or available_models("ollama", None)
-        picked_models = st.sidebar.multiselect("Models to compare", mdl_list, default=mdl_list[:2] if len(mdl_list) >= 2 else mdl_list)
+        picked_models = target.multiselect("Models to compare", mdl_list, default=mdl_list[:2] if len(mdl_list) >= 2 else mdl_list)
         for m in picked_models:
             llms.append(ChatModel(LLMConfig(provider="ollama", model=m, api_base=host)))
     else:
         mdl_list = available_models(prov)
-        picked_models = st.sidebar.multiselect("Models to compare", mdl_list, default=mdl_list[:2] if len(mdl_list) >= 2 else mdl_list)
+        picked_models = target.multiselect("Models to compare", mdl_list, default=mdl_list[:2] if len(mdl_list) >= 2 else mdl_list)
         if prov == "azure-openai":
             base_default = os.getenv("AZURE_OPENAI_ENDPOINT") or os.getenv("OPENAI_API_BASE", "")
             ver_default  = os.getenv("AZURE_OPENAI_API_VERSION") or os.getenv("OPENAI_API_VERSION", "2024-05-01-preview")
-            with st.sidebar.expander(f"{sidebar_prefix}Advanced Azure settings", expanded=False):
+            with target.expander(f"{sidebar_prefix}Advanced Azure settings", expanded=False):
                 api_base    = st.text_input("Azure Resource endpoint", value=base_default, key="cmp_api_base")
                 api_version = st.text_input("API version", value=ver_default, key="cmp_api_ver")
             api_key_env = os.getenv("AZURE_OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
             if not api_key_env:
-                api_key_env = st.sidebar.text_input("Azure API Key", value="", type="password", key="cmp_api_key")
+                api_key_env = target.text_input("Azure API Key", value="", type="password", key="cmp_api_key")
                 if api_key_env: os.environ["AZURE_OPENAI_API_KEY"] = api_key_env
             for dep in picked_models:
                 llms.append(ChatModel(LLMConfig(provider="azure-openai", model=dep, api_base=api_base, api_version=api_version, api_key=api_key_env)))
@@ -1569,7 +1779,7 @@ def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
             base_url = os.getenv("OPENAI_BASE_URL") or None
             api_key_env = os.getenv("OPENAI_API_KEY") or ""
             if not api_key_env:
-                api_key_env = st.sidebar.text_input("OpenAI API Key", value="", type="password", key="cmp_openai_key")
+                api_key_env = target.text_input("OpenAI API Key", value="", type="password", key="cmp_openai_key")
                 if api_key_env: os.environ["OPENAI_API_KEY"] = api_key_env
             for m in picked_models:
                 llms.append(ChatModel(LLMConfig(provider="openai", model=m, api_base=base_url, api_key=api_key_env)))
@@ -1580,21 +1790,33 @@ def build_llms_for_comparison(sidebar_prefix: str = "") -> list[ChatModel]:
     return llms
 
 # =========================
-# Tabs
+# Navigation
 # =========================
-tabs = st.tabs([
+PAGES = [
+    "🧭 Maintenance Tasks",
     "⚙️ Run Experiments",
-    "🗃️ Stored Results (DB)",
     "📝 Manage Prompts",
+    "🗃️ Stored Results (DB)",
     "🔄 Batch Experiments",
-    "📘 Guide & Examples"
-])
+    "📘 Guide & Examples",
+]
+if "workspace_page" not in st.session_state:
+    st.session_state.workspace_page = PAGES[0]
+
+nav_cols = st.columns(len(PAGES))
+for idx, page_name in enumerate(PAGES):
+    with nav_cols[idx]:
+        if st.button(page_name, key=f"nav_{idx}", use_container_width=True):
+            st.session_state.workspace_page = page_name
+page = st.session_state.workspace_page
 
 # ==========================================================
 # Tab 1 : Run Experiments (SPAN-LEVEL)
 # ==========================================================
-def render_tab_run_experiments():
-    st.sidebar.header("⚙️ Settings")
+def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None):
+    sidebar_target = settings_target or (st.sidebar if render_sidebar else st.container())
+    if render_sidebar and settings_target is None:
+        st.sidebar.header("⚙️ Settings")
     if "run_top_k" not in st.session_state:
         st.session_state.run_top_k = 20
     if "run_pos_ratio" not in st.session_state:
@@ -1604,22 +1826,22 @@ def render_tab_run_experiments():
     if "use_bundled_demo" not in st.session_state:
         st.session_state.use_bundled_demo = False
 
-    if st.sidebar.button("⚡ Load demo config"):
+    if sidebar_target.button("⚡ Load demo config"):
         st.session_state.use_bundled_demo = True
         st.session_state.run_top_k = 5
         st.session_state.run_pos_ratio = 0.6
         st.session_state.run_preset = "Balanced"
 
-    mode_run = st.sidebar.radio(
+    mode_run = sidebar_target.radio(
         "Execution mode",
         ["Single prompt", "Compare selected prompts", "Compare LLM models"],
         index=0,
         help="Pick your execution scenario."
     )
-    top_k = st.sidebar.slider("Total files in U (Top-K)", 5, 50, key="run_top_k", step=1, help="Universe size U (positives + negatives).")
-    pos_ratio = st.sidebar.slider("Positive ratio in U", 0.0, 1.0, key="run_pos_ratio", step=0.05, help="Share of positive files in U.")
+    top_k = sidebar_target.slider("Total files in U (Top-K)", 5, 50, key="run_top_k", step=1, help="Universe size U (positives + negatives).")
+    pos_ratio = sidebar_target.slider("Positive ratio in U", 0.0, 1.0, key="run_pos_ratio", step=0.05, help="Share of positive files in U.")
     preset_options = ["Lenient", "Balanced", "Strict"]
-    preset = st.sidebar.selectbox("Evaluation strictness", preset_options,
+    preset = sidebar_target.selectbox("Evaluation strictness", preset_options,
                                   index=preset_options.index(st.session_state.run_preset),
                                   key="run_preset",
                                   help="Controls IoU threshold and line tolerance (δ).")
@@ -1629,26 +1851,37 @@ def render_tab_run_experiments():
         if not strategies:
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             return
-        prompt_mode = st.sidebar.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
+        prompt_mode = sidebar_target.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
+        if render_sidebar:
+            _sidebar_prompt_preview("View selected prompt", strategies, prompt_mode, target=sidebar_target)
     elif mode_run == "Compare selected prompts":
-        selected_modes = st.sidebar.multiselect(
+        selected_modes = sidebar_target.multiselect(
             "🧩 Select Prompt Strategies to Compare",
             list(strategies.keys()),
             default=[k for k in ["baseline", "scanner", "hybrid"] if k in strategies],
         )
+        if render_sidebar:
+            _sidebar_prompt_preview("View selected prompts", strategies, selected_modes, target=sidebar_target)
     else:
         if not strategies:
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             return
-        prompt_mode = st.sidebar.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
+        prompt_mode = sidebar_target.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
+        if render_sidebar:
+            _sidebar_prompt_preview("View fixed prompt", strategies, prompt_mode, target=sidebar_target)
 
     if mode_run in ("Single prompt", "Compare selected prompts"):
-        llm = build_llm()
+        llm = build_llm(target=sidebar_target) if render_sidebar else None
     else:
-        llms_to_compare = build_llms_for_comparison()
+        llms_to_compare = build_llms_for_comparison(target=sidebar_target) if render_sidebar else []
         if not llms_to_compare:
-            st.warning("Select at least one LLM to compare.")
+            if render_sidebar:
+                st.warning("Select at least one LLM to compare.")
             return
+
+    if not render_sidebar:
+        st.info("Open this tab directly to configure and run static-analysis experiments.")
+        return
 
     st.markdown("### 📂 Input data")
     demo_sets = _demo_datasets()
@@ -1924,11 +2157,379 @@ def render_tab_run_experiments():
             else:
                 st.info("Cached model-comparison results are from an older format. Rerun the analysis to enable Code context.")
 
-with tabs[0]:
-    render_tab_run_experiments()
+# ==========================================================
+# Tab 1 : Maintenance Tasks (Feature/Bug Location)
+# ==========================================================
+def render_tab_maintenance_tasks(settings_target=None):
+    st.markdown("## 🧭 Maintenance Tasks")
+    st.caption("Experimental branch: feature location and bug localization use file-level ranking metrics.")
+
+    settings = settings_target or st.sidebar
+    activity = settings.selectbox(
+        "Maintenance activity",
+        ["Static analysis", "Feature location", "Bug location"],
+        index=0,
+        help="Choose the software maintenance activity before selecting prompts or models.",
+    )
+    _render_maintenance_activity_intro(activity)
+    if activity == "Static analysis":
+        render_tab_run_experiments(render_sidebar=True, settings_target=settings)
+        return
+    if activity == "Bug location":
+        st.info("Bug location is the next activity to wire in the UI. The backend adapter is ready for Bench4BL-style records, but no bug-location dataset is configured in this workspace yet.")
+        st.markdown("### Expected bug-location benchmark format")
+        st.code(
+            "project,bug_id,title,body,changed_files\n"
+            "commons-lang,LANG-1,Crash on parse,Parser throws exception,src/main/java/Foo.java;src/main/java/Bar.java",
+            language="csv",
+        )
+        return
+
+    if activity == "Feature location":
+        technique = settings.selectbox(
+            "Technique / benchmark",
+            ["ArgoUML SPL benchmark"],
+            index=0,
+            help="Benchmark or technique used for this maintenance activity.",
+        )
+        settings.markdown("**Run configuration**")
+        execution_mode = settings.radio(
+            "Execution mode",
+            ["Single prompt", "Compare selected prompts", "Compare LLM models"],
+            index=0,
+            key="maint_execution_mode",
+            help="Same experimental scenarios as static-analysis runs.",
+        )
+        default_gt = "data/apps/Feature Location-ArgoUML"
+        default_zip = "data/apps/ArgoUML/ArgoUML.zip"
+        with settings.expander("Dataset paths", expanded=False):
+            gt_path = st.text_input("ArgoUML GT folder", value=default_gt)
+            repo_zip = st.text_input("ArgoUML source ZIP", value=default_zip)
+
+        try:
+            tasks = load_argouml_feature_tasks(gt_path, repo_zip=repo_zip)
+        except Exception as e:
+            st.error(f"Could not load ArgoUML feature-location benchmark: {e}")
+            return
+        if not tasks:
+            st.warning("No feature-location tasks found.")
+            return
+
+        labels = [f"{t.metadata.get('feature', t.task_id)} · {len(t.gold_locations)} gold files" for t in tasks]
+        task_by_label = dict(zip(labels, tasks))
+        feature_scope = settings.radio(
+            "Feature scope",
+            ["Single feature", "Selected features", "All features"],
+            index=0,
+            help="Choose whether to evaluate one feature scenario or a batch of feature scenarios.",
+        )
+        if feature_scope == "Single feature":
+            selected_label = settings.selectbox("Feature scenario", labels, index=0)
+            selected_tasks = [task_by_label[selected_label]]
+        elif feature_scope == "Selected features":
+            selected_labels = settings.multiselect("Feature scenarios", labels, default=labels[:3])
+            selected_tasks = [task_by_label[label] for label in selected_labels]
+        else:
+            selected_tasks = tasks
+        if not selected_tasks:
+            st.warning("Select at least one feature scenario.")
+            return
+        task = selected_tasks[0]
+
+        top_k = settings.slider("Top-K predictions", 1, 30, 10, 1, key="fl_top_k")
+        try:
+            candidates = list_repo_candidates(repo_zip, allowed_exts=[".java"])
+        except Exception as e:
+            st.error(f"Could not list source candidates from ZIP: {e}")
+            return
+        if not candidates:
+            st.warning("No Java source candidates found in the ZIP.")
+            return
+        max_candidates = settings.slider(
+            "Candidate budget",
+            50,
+            min(2000, len(candidates)),
+            min(600, len(candidates)),
+            50,
+            help="Number of candidate file paths included in the prompt.",
+        )
+        prompt_options = [k for k in LOCATION_PROMPT_TEMPLATES.keys() if k in ("feature_evidence", "baseline", "terse_ranking")]
+        if execution_mode == "Compare selected prompts":
+            prompt_styles = settings.multiselect("Prompt styles", prompt_options, default=prompt_options[:2])
+            _sidebar_prompt_preview("View selected prompt templates", LOCATION_PROMPT_TEMPLATES, prompt_styles, target=settings)
+            llm = build_llm("Maintenance ", target=settings)
+            llms = []
+        elif execution_mode == "Compare LLM models":
+            prompt_style = settings.selectbox("Fixed prompt style", prompt_options, index=0)
+            prompt_styles = [prompt_style]
+            _sidebar_prompt_preview("View fixed prompt template", LOCATION_PROMPT_TEMPLATES, prompt_style, target=settings)
+            llm = None
+            llms = build_llms_for_comparison("Maintenance ", target=settings)
+        else:
+            prompt_style = settings.selectbox("Prompt style", prompt_options, index=0)
+            prompt_styles = [prompt_style]
+            _sidebar_prompt_preview("View selected prompt template", LOCATION_PROMPT_TEMPLATES, prompt_style, target=settings)
+            llm = build_llm("Maintenance ", target=settings)
+            llms = []
+
+        st.markdown("### Feature Location Scope")
+        if len(selected_tasks) == 1:
+            st.info(task.query)
+        else:
+            st.info(f"Batch evaluation over {len(selected_tasks)} feature scenarios. The prompt preview below shows the first selected feature.")
+            scope_df = pd.DataFrame([
+                {
+                    "Feature": t.metadata.get("feature", t.task_id),
+                    "Gold files": len(t.gold_locations),
+                    "Query": t.query.splitlines()[0] if t.query else "",
+                }
+                for t in selected_tasks
+            ])
+            _render_pro_dataframe(scope_df, hide_index=True)
+
+        gold_df = pd.DataFrame([{"Gold file": g.file, "Symbol": g.symbol or ""} for g in task.gold_locations])
+        with st.expander(f"Gold locations for preview feature ({len(gold_df)})", expanded=False):
+            _render_pro_dataframe(gold_df, hide_index=True)
+
+        focused_candidates = _rank_feature_candidates(task.query, candidates)[:max_candidates]
+        c_info1, c_info2, c_info3 = st.columns(3)
+        with c_info1:
+            kpi("Selected features", str(len(selected_tasks)), "ok")
+        with c_info2:
+            kpi("Preview gold files", str(len(task.gold_locations)), "ok")
+        with c_info3:
+            kpi("Prompt candidates", str(len(focused_candidates)), "warn")
+        st.caption(f"Candidate pool: {len(candidates)} Java files. Prompt includes top {len(focused_candidates)} lexical candidates.")
+
+        with st.expander("Prompt preview", expanded=False):
+            from StaLLM_tasks import build_location_prompt
+            preview_style = prompt_styles[0] if prompt_styles else "baseline"
+            st.code(build_location_prompt(task, focused_candidates, top_k=top_k, prompt_style=preview_style)[:6000], language="text")
+
+        if execution_mode == "Compare selected prompts" and not prompt_styles:
+            st.warning("Select at least one prompt style.")
+            return
+        if execution_mode == "Compare LLM models" and not llms:
+            st.warning("Select at least one model.")
+            return
+
+        run_label = {
+            "Single prompt": "Run Feature Location",
+            "Compare selected prompts": "Compare Prompt Styles",
+            "Compare LLM models": "Compare LLM Models",
+        }[execution_mode]
+        if st.button(run_label, type="primary"):
+            results = []
+            if execution_mode == "Compare selected prompts":
+                for style in prompt_styles:
+                    with st.spinner(f"Running prompt style: {style} on {len(selected_tasks)} feature(s)"):
+                        try:
+                            result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, style)
+                        except Exception as e:
+                            st.error(f"Feature-location run failed for {style}: {e}")
+                            return
+                    result["label"] = style
+                    results.append(result)
+            elif execution_mode == "Compare LLM models":
+                for model_llm in llms:
+                    label = model_llm.model_label()
+                    with st.spinner(f"Running model: {label} on {len(selected_tasks)} feature(s)"):
+                        try:
+                            result = _run_feature_location_batch(selected_tasks, candidates, model_llm, top_k, max_candidates, prompt_styles[0])
+                        except Exception as e:
+                            st.error(f"Feature-location run failed for {label}: {e}")
+                            return
+                    result["label"] = label
+                    results.append(result)
+            else:
+                with st.spinner(f"Ranking files for {len(selected_tasks)} feature scenario(s)..."):
+                    try:
+                        result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, prompt_styles[0])
+                    except Exception as e:
+                        st.error(f"Feature-location run failed: {e}")
+                        return
+                result["label"] = prompt_styles[0]
+                results.append(result)
+
+            _render_location_results(results, task)
+
+
+def _render_maintenance_activity_intro(activity: str) -> None:
+    descriptions = {
+        "Static analysis": {
+            "goal": "Detect code-quality issues and compare LLM findings against static-analyzer ground truth.",
+            "input": "Project ZIP + analyzer CSV with file/span locations.",
+            "output": "Detected smells or maintainability findings with file/span evidence.",
+            "metrics": "Precision, recall, F1, TP/FP/FN, token usage, cost.",
+        },
+        "Feature location": {
+            "goal": "Locate the source files that implement or refine a requested feature.",
+            "input": "Feature description + repository candidates + feature-location ground truth.",
+            "output": "Ranked files likely to implement the feature.",
+            "metrics": "Hit@K, Recall@K, MRR, MAP.",
+        },
+        "Bug location": {
+            "goal": "Locate files likely to require a fix from a bug report or issue description.",
+            "input": "Bug report title/body + repository candidates + files changed by the fix.",
+            "output": "Ranked suspicious files for the bug.",
+            "metrics": "Hit@K, Recall@K, MRR, MAP.",
+        },
+    }
+    info = descriptions.get(activity)
+    if not info:
+        return
+    st.markdown(f"""
+    <div class="section">
+      <h3 style="margin-top:0">{escape(activity)}</h3>
+      <p class="muted">{escape(info["goal"])}</p>
+      <div class="badges">
+        <span class="badge"><b>Input</b> {escape(info["input"])}</span>
+        <span class="badge"><b>Output</b> {escape(info["output"])}</span>
+        <span class="badge"><b>Metrics</b> {escape(info["metrics"])}</span>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def _rank_feature_candidates(query: str, candidates: list[str]) -> list[str]:
+    terms = {
+        t.lower()
+        for t in re.findall(r"[A-Za-z][A-Za-z0-9]+", query)
+        if len(t) >= 4 and t.lower() not in {"feature", "description", "diagram", "diagrams"}
+    }
+    def score(path: str) -> tuple[int, int, str]:
+        low = path.lower()
+        hits = sum(1 for term in terms if term in low)
+        package_bonus = 2 if "org/argouml" in low else 0
+        return (hits + package_bonus, -len(path), path)
+    return sorted(candidates, key=score, reverse=True)
+
+
+def _run_feature_location_batch(
+    tasks: list[Any],
+    candidates: list[str],
+    llm: ChatModel,
+    top_k: int,
+    max_candidates: int,
+    prompt_style: str,
+) -> dict[str, Any]:
+    task_results = []
+    for task in tasks:
+        focused_candidates = _rank_feature_candidates(task.query, candidates)[:max_candidates]
+        task_results.append(run_location_task(task, focused_candidates, llm, top_k=top_k, prompt_style=prompt_style))
+
+    metric_keys = sorted({k for row in task_results for k in (row.get("metrics") or {})})
+    metrics = {}
+    for key in metric_keys:
+        vals = [float((row.get("metrics") or {}).get(key, 0.0)) for row in task_results]
+        metrics[key] = sum(vals) / len(vals) if vals else 0.0
+
+    usage = {
+        "prompt_tokens": sum(int((row.get("usage") or {}).get("prompt_tokens", 0)) for row in task_results),
+        "completion_tokens": sum(int((row.get("usage") or {}).get("completion_tokens", 0)) for row in task_results),
+        "total_tokens": sum(int((row.get("usage") or {}).get("total_tokens", 0)) for row in task_results),
+    }
+    return {
+        "task_id": "feature-location-batch" if len(tasks) > 1 else task_results[0].get("task_id"),
+        "task_type": "feature_location",
+        "project": "ArgoUML",
+        "prompt_style": prompt_style,
+        "metrics": metrics,
+        "usage": usage,
+        "predictions": task_results[0].get("predictions", []) if task_results else [],
+        "raw_response": task_results[0].get("raw_response", "") if task_results else "",
+        "task_results": task_results,
+        "task_count": len(tasks),
+    }
+
+
+def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
+    if not results:
+        st.info("No location results to display.")
+        return
+    summary_rows = []
+    for result in results:
+        metrics = result.get("metrics", {})
+        usage = result.get("usage", {})
+        summary_rows.append({
+            "Item": result.get("label", result.get("prompt_style", "run")),
+            "Prompt": result.get("prompt_style", ""),
+            "Hit@1": metrics.get("hit@1", 0.0),
+            "Hit@5": metrics.get("hit@5", 0.0),
+            "Hit@10": metrics.get("hit@10", 0.0),
+            "Recall@10": metrics.get("recall@10", 0.0),
+            "MRR": metrics.get("mrr", 0.0),
+            "MAP": metrics.get("map", 0.0),
+            "Total tokens": usage.get("total_tokens", 0),
+        })
+    summary_df = pd.DataFrame(summary_rows)
+
+    best = summary_df.sort_values(["MRR", "MAP", "Hit@1"], ascending=False).head(1)
+    metrics = results[0].get("metrics", {}) if results else {}
+    c1, c2, c3, c4 = st.columns(4)
+    with c1: kpi("Best item", str(best["Item"].iloc[0]) if len(best) else "n/a", "ok")
+    with c2: kpi("Best Hit@1", pct(float(best["Hit@1"].iloc[0])) if len(best) else "0.00%", "ok")
+    with c3: kpi("Best MRR", f"{float(best['MRR'].iloc[0]):.3f}" if len(best) else "0.000", "ok")
+    with c4: kpi("Gold files", str(len(task.gold_locations)), "warn")
+
+    st.markdown("### Location metrics")
+    _render_pro_dataframe(summary_df, hide_index=True)
+    if len(summary_df) > 1:
+        chart_df = summary_df.set_index("Item")
+        _render_wide_metric_chart(
+            chart_df,
+            ["Hit@1", "Hit@5", "Hit@10", "MRR", "MAP"],
+            group_label="Item",
+            value_label="Score",
+            value_format=".2%",
+            height=320,
+        )
+
+    result_labels = [str(r.get("label", idx)) for idx, r in enumerate(results)]
+    selected = st.selectbox("Review ranked predictions", result_labels, index=0)
+    result = results[result_labels.index(selected)]
+    pred_rows = []
+    for p in result.get("predictions", []):
+        file_name = str(p.get("file", ""))
+        pred_rows.append({
+            "Rank": p.get("rank"),
+            "File": file_name,
+            "Hit": any(paths_match(file_name, g.file) for g in task.gold_locations),
+            "Confidence": p.get("confidence"),
+            "Rationale": p.get("rationale", ""),
+        })
+    st.markdown("### Ranked predictions")
+    if result.get("task_count", 1) > 1:
+        detail_rows = []
+        for row in result.get("task_results", []):
+            metrics = row.get("metrics", {})
+            detail_rows.append({
+                "Feature": row.get("task_id", ""),
+                "Hit@1": metrics.get("hit@1", 0.0),
+                "Hit@5": metrics.get("hit@5", 0.0),
+                "MRR": metrics.get("mrr", 0.0),
+                "MAP": metrics.get("map", 0.0),
+            })
+        with st.expander("Per-feature results", expanded=False):
+            _render_pro_dataframe(pd.DataFrame(detail_rows), hide_index=True)
+        st.caption("Ranked predictions below show the first selected feature as a preview.")
+    _render_pro_dataframe(pd.DataFrame(pred_rows), hide_index=True)
+    with st.expander("Raw LLM response", expanded=False):
+        st.code(result.get("raw_response", ""), language="json")
+
+if page in ("🧭 Maintenance Tasks", "⚙️ Run Experiments"):
+    main_col, settings_col = st.columns([3.2, 1.05], gap="large")
+    with settings_col:
+        st.markdown('<div class="right-settings-title">Settings</div>', unsafe_allow_html=True)
+        settings_box = st.container()
+    with main_col:
+        if page == "🧭 Maintenance Tasks":
+            render_tab_maintenance_tasks(settings_target=settings_box)
+        else:
+            render_tab_run_experiments(render_sidebar=True, settings_target=settings_box)
 
 # ==========================================================
-# Tab 2 : Results DB
+# Tab 3 : Results DB
 # ==========================================================
 def render_tab_results_db():
     st.markdown("## 🗃️ Stored Experiment Results (Database)")
@@ -1980,9 +2581,6 @@ def render_tab_results_db():
         st.info("Pivot not available (insufficient data).")
     session.close()
 
-with tabs[1]:
-    render_tab_results_db()
-
 # ==========================================================
 # Tab 3 : Manage Prompts
 # ==========================================================
@@ -2009,11 +2607,17 @@ def render_tab_manage_prompts():
             strategies[new_name] = new_prompt; save_strategies(strategies)
             st.success(f"Strategy '{new_name}' added!"); st.rerun()
 
-with tabs[2]:
+if page == "📝 Manage Prompts":
     render_tab_manage_prompts()
 
 # ==========================================================
-# Tab 4 : Batch Experiments (span-level)
+# Tab 4 : Results DB
+# ==========================================================
+if page == "🗃️ Stored Results (DB)":
+    render_tab_results_db()
+
+# ==========================================================
+# Tab 5 : Batch Experiments (span-level)
 # ==========================================================
 def render_tab_batch():
     st.markdown("## 🔄 Batch Experiments (span-level)")
@@ -2103,11 +2707,11 @@ def render_tab_batch():
                 (proj_out / "global_results.csv").write_text(global_df.to_csv())
                 st.info(f"📁 Global results saved for {project}: {proj_out/'global_results.csv'}")
 
-with tabs[3]:
+if page == "🔄 Batch Experiments":
     render_tab_batch()
 
 # ==========================================================
-# Tab 5 : Guide & Examples (English, with visuals)
+# Tab 6 : Guide & Examples (English, with visuals)
 # ==========================================================
 def render_tab_guide():
     st.markdown("## 📘 How to Read the Metrics (Span-Level, with Negatives)")
@@ -2290,5 +2894,5 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 
     st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
 
-with tabs[4]:
+if page == "📘 Guide & Examples":
     render_tab_guide()
