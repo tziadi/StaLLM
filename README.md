@@ -13,6 +13,8 @@
 - **Batch mode** to run large experiment sweeps across projects/strategies/top-K.
 - **Extension branch in progress** for software maintenance localization tasks:
   feature location and bug location using shared ranking metrics.
+- **Human-oracle code-smell benchmarking** via DACOS/DACOSX and MLCQ adapters, so runs
+  can be evaluated against human annotations instead of analyzer output only.
 
 ---
 
@@ -186,6 +188,30 @@ They are normalized internally to **$/1K** for cost calculation.
 - **Stored Results (DB)**: browse historical runs (includes *LLM used*, tokens, cost).  
 - **Manage Prompts**: edit/create strategies, persisted to `strategies.json`.  
 - **Batch Experiments**: sweep projects/strategies/top-K; CSV exports under `output/apps/<project>/` + DB logging.
+
+### Human smell oracle: DACOS/DACOSX and MLCQ
+
+For code-smell detection, StaLLM can evaluate against DACOS/DACOSX or MLCQ human labels
+instead of only measuring agreement with SonarQube. Open **Maintenance Tasks**,
+choose **Code smell detection**, then select **Human smell oracle
+(DACOS/DACOSX)**. See `docs/dacos_integration.md` for DACOS setup; for MLCQ,
+place `MLCQCodeSmellSamples.csv` under `data/apps/MLCQ/`.
+
+### AutoResearch-style prompt benchmark
+
+StaLLM includes an **AutoResearch** workspace page for improving prompts against
+a fixed benchmark. In loop mode, StaLLM benchmarks a starting prompt, generates
+competing mutations from the best prompt so far, accepts only improving
+mutations, records the attempt history, and lets you promote the best prompt
+after review.
+
+```bash
+./.venv/bin/python StaLLM_autoresearch.py --task feature_location --slot OL5 --max-tasks 3
+```
+
+The CLI uses the same backend as the UI for repeatable terminal runs. Outputs
+are written under `output/autoresearch/<run-id>/`. See
+`docs/autoresearch_protocol.md` for the protocol and guardrails.
 
 ---
 

@@ -10,6 +10,7 @@ import tempfile
 import zipfile
 from html import escape
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import altair as alt
@@ -40,8 +41,20 @@ from StaLLM_llm import (
     load_llm_registry, build_llm_from_slot,
     test_ollama_connectivity, validate_ollama_config, debug_ollama_response
 )
-from StaLLM_benchmarks import load_argouml_feature_tasks
+from StaLLM_benchmarks import (
+    DACOS_PROMPT_TEMPLATE,
+    load_argouml_feature_tasks,
+    load_dacos_smell_samples,
+    load_mlcq_smell_samples,
+    run_dacos_smell_benchmark,
+)
 from StaLLM_tasks import LOCATION_PROMPT_TEMPLATES, list_repo_candidates, paths_match, run_location_task
+from StaLLM_autoresearch import (
+    PromptCandidate,
+    evaluate_code_smell,
+    evaluate_feature_location,
+    write_autoresearch_outputs,
+)
 
 
 # =========================
@@ -599,6 +612,82 @@ def pct(x: float) -> str:
     except Exception:
         return "0.00%"
 
+METRIC_INFO = {
+    "f1": {
+        "label": "Balanced detection score",
+        "short": "Balance",
+        "help": "Balances finding real analyzer issues and avoiding false alarms.",
+        "format": "pct",
+    },
+    "precision": {
+        "label": "Trustworthiness",
+        "short": "Precision",
+        "help": "Of the issues the LLM reports, how many match the analyzer ground truth.",
+        "format": "pct",
+    },
+    "recall": {
+        "label": "Coverage of real issues",
+        "short": "Recall",
+        "help": "Of the analyzer issues in the sampled files, how many the LLM finds.",
+        "format": "pct",
+    },
+    "accuracy": {
+        "label": "Overall agreement",
+        "short": "Accuracy",
+        "help": "Share of all human-oracle decisions that match the label.",
+        "format": "pct",
+    },
+    "mrr": {
+        "label": "First correct file rank",
+        "short": "MRR",
+        "help": "Rewards prompts that put a correct file near the very top of the ranked list.",
+        "format": "score",
+    },
+    "map": {
+        "label": "Overall ranking quality",
+        "short": "MAP",
+        "help": "Rewards ranking many correct files early, not just finding one.",
+        "format": "score",
+    },
+    "hit@1": {
+        "label": "Top answer is correct",
+        "short": "Hit@1",
+        "help": "Whether the first-ranked file is relevant.",
+        "format": "pct",
+    },
+    "hit@5": {
+        "label": "Correct file in top 5",
+        "short": "Hit@5",
+        "help": "Whether at least one relevant file appears in the first five predictions.",
+        "format": "pct",
+    },
+    "recall@10": {
+        "label": "Relevant files covered in top 10",
+        "short": "Recall@10",
+        "help": "Share of relevant files recovered within the first ten predictions.",
+        "format": "pct",
+    },
+}
+
+def _metric_label(metric: str, *, short: bool = False) -> str:
+    info = METRIC_INFO.get(metric, {})
+    return str(info.get("short" if short else "label") or metric)
+
+def _metric_help(metric: str) -> str:
+    return str((METRIC_INFO.get(metric) or {}).get("help") or "")
+
+def _metric_choice_label(metric: str) -> str:
+    return f"{_metric_label(metric)} ({_metric_label(metric, short=True)})"
+
+def _format_metric(metric: str, value: Any) -> str:
+    try:
+        number = float(value)
+    except Exception:
+        number = 0.0
+    if (METRIC_INFO.get(metric) or {}).get("format") == "pct":
+        return pct(number)
+    return f"{number:.3f}"
+
 def _sidebar_prompt_preview(title: str, prompts: dict[str, str], selected: str | list[str] | tuple[str, ...], target=None) -> None:
     selected_items = [selected] if isinstance(selected, str) else list(selected or [])
     if not selected_items:
@@ -715,6 +804,45 @@ def _prompt_templates_for_task(task_key: str, *, repo: dict[str, Any] | None = N
     source = repo or _load_prompt_repository()
     prompts = ((source.get(task_key) or {}).get("prompts") or {})
     return {str(name): str((entry or {}).get("template", "")) for name, entry in prompts.items() if isinstance(entry, dict)}
+
+
+def _dacos_prompt_templates() -> dict[str, str]:
+    return {
+        "binary_oracle_baseline": DACOS_PROMPT_TEMPLATE,
+        "conservative_evidence": """You are evaluating a human code-smell oracle.
+
+Question: is the target smell present in this snippet?
+Target smell: {smell}
+Language: {language}
+
+Use only visible evidence in the snippet. Do not report unrelated smells.
+Return JSON only:
+{{"present": true|false, "confidence": 0.0, "rationale": "one short evidence sentence"}}
+
+Code:
+{code}
+""",
+        "definition_driven": """You are a software-maintenance researcher.
+
+Decide whether the code contains this exact smell: {smell}.
+
+Interpretation guide:
+- complex_method: a method is too complex because of branching, nested logic, mixed responsibilities, or difficult control flow.
+- long_method: a method is too long or does too much to be easily understood.
+- long_parameter_list: a method/constructor exposes too many parameters or parameter groups.
+- multifaceted_abstraction: a class mixes multiple responsibilities or represents an overly broad abstraction.
+- god_class: a class centralizes too many responsibilities and collaborators.
+- data_class: a class mostly stores data with little meaningful behavior.
+- feature_envy: a method relies more on data or behavior from another class than its own class.
+
+Return strict JSON only, no markdown:
+{{"present": true|false, "confidence": 0.0, "rationale": "specific evidence or why absent"}}
+
+Language: {language}
+Code:
+{code}
+""",
+    }
 
 def _render_bar_chart(
     df: pd.DataFrame,
@@ -1765,7 +1893,7 @@ st.markdown(f"""
     <span class="nav-chip">Model Comparison</span>
   </div>
   <div class="app-topbar-right">
-    <span class="status-chip"><span class="status-dot"></span> Branch: feature/maintenance-localization-tasks</span>
+    <span class="status-chip"><span class="status-dot"></span> Branch: feature/autoresearch-benchmark</span>
     <span class="status-chip">ArgoUML FL ready</span>
   </div>
 </div>
@@ -1920,6 +2048,7 @@ def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[Cha
 PAGES = [
     "🧭 Maintenance Tasks",
     "⚙️ Run Experiments",
+    "🧪 AutoResearch",
     "📝 Manage Prompts",
     "🗃️ Stored Results (DB)",
     "🔄 Batch Experiments",
@@ -1946,8 +2075,8 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
         st.session_state.run_top_k = 20
     if "run_pos_ratio" not in st.session_state:
         st.session_state.run_pos_ratio = 0.5
-    if "run_preset" not in st.session_state:
-        st.session_state.run_preset = "Balanced"
+    if "run_preset_last" not in st.session_state:
+        st.session_state.run_preset_last = "Balanced"
     if "use_bundled_demo" not in st.session_state:
         st.session_state.use_bundled_demo = False
 
@@ -1955,7 +2084,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
         st.session_state.use_bundled_demo = True
         st.session_state.run_top_k = 5
         st.session_state.run_pos_ratio = 0.6
-        st.session_state.run_preset = "Balanced"
+        st.session_state.run_preset_last = "Balanced"
 
     mode_run = sidebar_target.radio(
         "Execution mode",
@@ -1966,10 +2095,14 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
     top_k = sidebar_target.slider("Total files in U (Top-K)", 5, 50, key="run_top_k", step=1, help="Universe size U (positives + negatives).")
     pos_ratio = sidebar_target.slider("Positive ratio in U", 0.0, 1.0, key="run_pos_ratio", step=0.05, help="Share of positive files in U.")
     preset_options = ["Lenient", "Balanced", "Strict"]
-    preset = sidebar_target.selectbox("Evaluation strictness", preset_options,
-                                  index=preset_options.index(st.session_state.run_preset),
-                                  key="run_preset",
-                                  help="Controls IoU threshold and line tolerance (δ).")
+    preset_default = st.session_state.get("run_preset_last", "Balanced")
+    preset = sidebar_target.selectbox(
+        "Evaluation strictness",
+        preset_options,
+        index=preset_options.index(preset_default) if preset_default in preset_options else 1,
+        help="Controls IoU threshold and line tolerance (δ).",
+    )
+    st.session_state.run_preset_last = preset
 
     strategies = _prompt_templates_for_task("code_smell_detection")
     selected_prompt_names: list[str] = []
@@ -2305,7 +2438,16 @@ def render_tab_maintenance_tasks(settings_target=None):
     )
     _render_maintenance_activity_intro(activity)
     if activity == "Code smell detection":
-        render_tab_run_experiments(render_sidebar=True, settings_target=settings)
+        oracle = settings.radio(
+            "Reference oracle",
+            ["Analyzer reference (SonarQube CSV)", "Human smell oracle (DACOS/DACOSX/MLCQ)"],
+            index=0,
+            help="Analyzer reference measures agreement with a static analyzer. Human-oracle mode uses DACOS/DACOSX or MLCQ labels.",
+        )
+        if oracle.startswith("Analyzer"):
+            render_tab_run_experiments(render_sidebar=True, settings_target=settings)
+        else:
+            render_tab_dacos_smell_benchmark(settings_target=settings)
         return
     if activity == "Bug location":
         st.info("Bug location is the next activity to wire in the UI. The backend adapter is ready for Bench4BL-style records, but no bug-location dataset is configured in this workspace yet.")
@@ -2512,6 +2654,432 @@ def render_tab_maintenance_tasks(settings_target=None):
                 results.append(result)
 
             _render_location_results(results, task)
+
+
+def render_tab_dacos_smell_benchmark(settings_target=None):
+    st.markdown("### Human Code-Smell Oracle")
+    st.caption("Evaluate against human smell labels instead of treating a static analyzer as ground truth.")
+
+    settings = settings_target or st.sidebar
+    settings.markdown("**Human oracle dataset**")
+    dataset_name = settings.selectbox(
+        "Dataset",
+        ["DACOS/DACOSX", "MLCQ"],
+        index=0,
+        key="human_oracle_dataset",
+        help="DACOS/DACOSX provides focused binary smell labels. MLCQ provides professional Java smell labels with severity.",
+    )
+    execution_mode = settings.radio(
+        "Execution mode",
+        ["Single prompt", "Compare selected prompts", "Compare LLM models"],
+        index=0,
+        key="dacos_execution_mode",
+        help="Use the human-oracle benchmark with the same StaLLM workflows: one run, prompt comparison, or model comparison.",
+    )
+    prompt_templates = _dacos_prompt_templates()
+    prompt_names = list(prompt_templates.keys())
+    if execution_mode == "Compare selected prompts":
+        selected_prompts = settings.multiselect(
+            "Human-oracle prompt variants",
+            prompt_names,
+            default=prompt_names[: min(3, len(prompt_names))],
+            key="dacos_prompt_compare",
+        )
+        fixed_prompt = selected_prompts[0] if selected_prompts else prompt_names[0]
+        llm = build_llm("Human oracle ", target=settings)
+        llms_to_compare: list[Any] = []
+    elif execution_mode == "Compare LLM models":
+        fixed_prompt = settings.selectbox("Fixed human-oracle prompt", prompt_names, index=0, key="dacos_fixed_prompt")
+        selected_prompts = [fixed_prompt]
+        llms_to_compare = build_llms_for_comparison("Human oracle ", target=settings)
+        llm = llms_to_compare[0] if llms_to_compare else None
+    else:
+        fixed_prompt = settings.selectbox("Human-oracle prompt", prompt_names, index=0, key="dacos_single_prompt")
+        selected_prompts = [fixed_prompt]
+        llm = build_llm("Human oracle ", target=settings)
+        llms_to_compare = []
+
+    if dataset_name == "MLCQ":
+        dacos_path = settings.text_input("MLCQ samples CSV", "data/apps/MLCQ/MLCQCodeSmellSamples.csv", key="mlcq_path")
+        files_root = None
+        positive_threshold = settings.selectbox(
+            "Positive severity threshold",
+            ["minor", "major", "critical"],
+            index=0,
+            key="mlcq_positive_threshold",
+            help="Labels at or above this severity are treated as smell-present.",
+        )
+    else:
+        dacos_path = settings.text_input("DACOSMain/DACOSX file", "data/apps/DACOS/DACOSMain.sql", key="dacos_path")
+        files_root = settings.text_input("Files folder or files.zip", "data/apps/DACOS/files", key="dacos_files_root")
+        positive_threshold = "minor"
+    sample_limit = settings.slider("Samples to evaluate", 1, 100, 10, 1, key="dacos_sample_limit")
+
+    st.markdown("""
+    <div class="section">
+      <b>What this benchmark measures</b>
+      <p class="muted">StaLLM asks the LLM whether a specific code smell is present in each snippet, then compares the answer to human annotations. This is a human-oracle benchmark, not analyzer replication.</p>
+      <div class="badges">
+        <span class="badge"><b>Oracle</b> Human labels</span>
+        <span class="badge"><b>Dataset</b> DACOS/DACOSX or MLCQ</span>
+        <span class="badge"><b>Output</b> present / absent</span>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    path_obj = Path(dacos_path)
+    if not path_obj.exists():
+        st.warning(f"{dataset_name} files are not present in this workspace yet.")
+        if dataset_name == "MLCQ":
+            st.markdown("Download `MLCQCodeSmellSamples.csv` from Zenodo, then place it under `data/apps/MLCQ/`.")
+            st.link_button("Open MLCQ on Zenodo", "https://zenodo.org/records/3666840")
+        else:
+            st.markdown("Download DACOS from Zenodo, then place `DACOSMain.sql`, `DACOSExtended.sql`, and extracted `files.zip` under `data/apps/DACOS/`.")
+            st.link_button("Open DACOS on Zenodo", "https://zenodo.org/records/7570428")
+        return
+
+    try:
+        if dataset_name == "MLCQ":
+            samples = load_mlcq_smell_samples(dacos_path, limit=sample_limit, positive_threshold=positive_threshold)
+        else:
+            samples = load_dacos_smell_samples(dacos_path, files_root=files_root, limit=sample_limit)
+    except Exception as e:
+        st.error(f"Could not load {dataset_name} dataset: {e}")
+        return
+    if not samples:
+        if dataset_name == "MLCQ":
+            st.warning("No MLCQ samples could be loaded. MLCQ stores GitHub links rather than inline code, so the first run needs internet access to fetch and cache snippets.")
+        else:
+            st.warning("No DACOS samples could be loaded. Check that `files.zip` is next to the SQL dump, or point the files field to an extracted DACOS files folder.")
+        return
+
+    preview_df = pd.DataFrame([
+        {
+            "Sample": sample.sample_id,
+            "Smell": sample.smell,
+            "Human label": "present" if sample.label else "absent",
+            "Chars": len(sample.code),
+        }
+        for sample in samples[:20]
+    ])
+    st.markdown("### Dataset Preview")
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        kpi("Loaded samples", str(len(samples)), "ok")
+    with c2:
+        kpi("Smell types", str(len({s.smell for s in samples})), "ok")
+    with c3:
+        positives = sum(1 for s in samples if s.label)
+        kpi("Positive labels", pct(positives / len(samples) if samples else 0.0), "warn")
+    _render_pro_dataframe(preview_df, hide_index=True)
+    _render_prompt_preview_panel(f"{dataset_name} Prompt Preview", prompt_templates, selected_prompts)
+
+    button_label = {
+        "Single prompt": f"Run {dataset_name} Human-Oracle Benchmark",
+        "Compare selected prompts": f"Compare {dataset_name} Prompt Variants",
+        "Compare LLM models": f"Compare {dataset_name} Models",
+    }[execution_mode]
+    if st.button(button_label, type="primary"):
+        if execution_mode == "Compare selected prompts" and not selected_prompts:
+            st.warning("Select at least one human-oracle prompt variant.")
+            return
+        if execution_mode == "Compare LLM models" and not llms_to_compare:
+            st.warning("Select at least one LLM model.")
+            return
+        with st.spinner(f"Evaluating {len(samples)} {dataset_name} sample(s)..."):
+            try:
+                if execution_mode == "Compare selected prompts":
+                    results = []
+                    progress = st.progress(0)
+                    for idx, prompt_name in enumerate(selected_prompts, start=1):
+                        result = run_dacos_smell_benchmark(
+                            samples,
+                            llm,
+                            prompt_template=prompt_templates[prompt_name],
+                            max_samples=sample_limit,
+                        )
+                        result["label"] = prompt_name
+                        result["prompt"] = prompt_name
+                        result["model"] = llm.model_label()
+                        results.append(result)
+                        progress.progress(idx / max(1, len(selected_prompts)))
+                    st.session_state.last_dacos_result = {"mode": execution_mode, "results": results}
+                    _render_dacos_comparison_results(results, compare_by="Prompt")
+                    return
+                if execution_mode == "Compare LLM models":
+                    results = []
+                    progress = st.progress(0)
+                    for idx, model_llm in enumerate(llms_to_compare, start=1):
+                        result = run_dacos_smell_benchmark(
+                            samples,
+                            model_llm,
+                            prompt_template=prompt_templates[fixed_prompt],
+                            max_samples=sample_limit,
+                        )
+                        result["label"] = model_llm.model_label()
+                        result["prompt"] = fixed_prompt
+                        result["model"] = model_llm.model_label()
+                        results.append(result)
+                        progress.progress(idx / max(1, len(llms_to_compare)))
+                    st.session_state.last_dacos_result = {"mode": execution_mode, "results": results}
+                    _render_dacos_comparison_results(results, compare_by="Model")
+                    return
+                result = run_dacos_smell_benchmark(
+                    samples,
+                    llm,
+                    prompt_template=prompt_templates[fixed_prompt],
+                    max_samples=sample_limit,
+                )
+                result["label"] = fixed_prompt
+                result["prompt"] = fixed_prompt
+                result["model"] = llm.model_label()
+            except Exception as e:
+                st.error(f"Human-oracle benchmark failed: {e}")
+                return
+        st.session_state.last_dacos_result = result
+        _render_dacos_results(result)
+
+    cached = st.session_state.get("last_dacos_result")
+    if cached:
+        st.markdown("### Last Human-Oracle Run")
+        if isinstance(cached, dict) and cached.get("results"):
+            _render_dacos_comparison_results(
+                cached["results"],
+                compare_by="Model" if cached.get("mode") == "Compare LLM models" else "Prompt",
+            )
+        else:
+            _render_dacos_results(cached)
+
+
+def _render_dacos_results(result: dict[str, Any]) -> None:
+    metrics = result.get("metrics") or {}
+    usage = result.get("usage") or {}
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi("Human-label F1", pct(metrics.get("f1", 0.0)), "ok")
+    with c2:
+        kpi("Human-label precision", pct(metrics.get("precision", 0.0)), "ok")
+    with c3:
+        kpi("Human-label recall", pct(metrics.get("recall", 0.0)), "warn")
+    with c4:
+        kpi("Accuracy", pct(metrics.get("accuracy", 0.0)), "warn")
+
+    st.markdown("### Confusion Counts")
+    count_df = pd.DataFrame([{
+        "Agreement present": metrics.get("tp", 0),
+        "LLM-only present": metrics.get("fp", 0),
+        "Human-only present": metrics.get("fn", 0),
+        "Agreement absent": metrics.get("tn", 0),
+        "Samples": metrics.get("samples", 0),
+        "Tokens": usage.get("total_tokens", 0),
+    }])
+    _render_pro_dataframe(count_df, hide_index=True)
+
+    rows = result.get("rows") or []
+    if rows:
+        detail_df = pd.DataFrame(rows)
+        detail_df["Human label"] = detail_df["gold"].map(lambda x: "present" if x else "absent")
+        detail_df["LLM label"] = detail_df["predicted"].map(lambda x: "present" if x else "absent")
+        st.markdown("### Sample Decisions")
+        _render_pro_dataframe(detail_df[["sample_id", "smell", "Human label", "LLM label", "confidence", "rationale"]], hide_index=True)
+
+
+def _render_dacos_comparison_results(results: list[dict[str, Any]], *, compare_by: str) -> None:
+    if not results:
+        st.info("No human-oracle comparison result to display.")
+        return
+    rows = []
+    for result in results:
+        metrics = result.get("metrics") or {}
+        usage = result.get("usage") or {}
+        rows.append({
+            compare_by: result.get("label", ""),
+            "Prompt": result.get("prompt", ""),
+            "Model": result.get("model", ""),
+            "Human-label F1": metrics.get("f1", 0.0),
+            "Precision": metrics.get("precision", 0.0),
+            "Recall": metrics.get("recall", 0.0),
+            "Accuracy": metrics.get("accuracy", 0.0),
+            "TP": metrics.get("tp", 0),
+            "FP": metrics.get("fp", 0),
+            "FN": metrics.get("fn", 0),
+            "TN": metrics.get("tn", 0),
+            "Tokens": usage.get("total_tokens", 0),
+        })
+    summary_df = pd.DataFrame(rows)
+    best = summary_df.sort_values(["Human-label F1", "Recall", "Precision"], ascending=False).iloc[0]
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi(f"Best {compare_by.lower()}", str(best.get(compare_by, "n/a")), "ok")
+    with c2:
+        kpi("Best human-label F1", pct(best.get("Human-label F1", 0.0)), "ok")
+    with c3:
+        kpi("Best recall", pct(best.get("Recall", 0.0)), "warn")
+    with c4:
+        kpi("Runs", str(len(results)), "ok")
+
+    st.markdown("### Human-Oracle Comparison")
+    _render_pro_dataframe(summary_df, hide_index=True)
+    metric_df = summary_df[[compare_by, "Human-label F1", "Precision", "Recall", "Accuracy"]].melt(
+        compare_by,
+        var_name="Metric",
+        value_name="Score",
+    )
+    metric_df["zero"] = 0.0
+    order = list(summary_df.sort_values("Human-label F1", ascending=True)[compare_by])
+    ranking_base = alt.Chart(metric_df).encode(
+        y=alt.Y(f"{compare_by}:N", title=None, sort=order, axis=alt.Axis(labelLimit=240)),
+        x=alt.X("Score:Q", title="Score", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+        color=alt.Color(
+            "Metric:N",
+            scale=alt.Scale(
+                domain=["Human-label F1", "Precision", "Recall", "Accuracy"],
+                range=["#2563eb", "#ef4444", "#f59e0b", "#10b981"],
+            ),
+        ),
+        tooltip=[f"{compare_by}:N", "Metric:N", alt.Tooltip("Score:Q", format=".2%")],
+    )
+    ranking_chart = (
+        ranking_base.mark_rule(opacity=0.28, strokeWidth=2).encode(x=alt.X("zero:Q"), x2="Score:Q")
+        + ranking_base.mark_circle(size=115, opacity=0.95)
+    ).properties(height=max(180, 58 * len(summary_df)))
+
+    confusion_df = summary_df[[compare_by, "TP", "FP", "FN", "TN"]].melt(compare_by, var_name="Outcome", value_name="Count")
+    confusion_chart = (
+        alt.Chart(confusion_df)
+        .mark_rect(cornerRadius=3)
+        .encode(
+            x=alt.X("Outcome:N", title=None, sort=["TP", "FP", "FN", "TN"]),
+            y=alt.Y(f"{compare_by}:N", title=None, sort=order, axis=alt.Axis(labelLimit=240)),
+            color=alt.Color(
+                "Count:Q",
+                title="Count",
+                scale=alt.Scale(scheme="blues"),
+            ),
+            tooltip=[f"{compare_by}:N", "Outcome:N", "Count:Q"],
+        )
+        .properties(height=max(180, 58 * len(summary_df)))
+    )
+    confusion_text = (
+        alt.Chart(confusion_df)
+        .mark_text(fontSize=13, fontWeight="bold")
+        .encode(
+            x=alt.X("Outcome:N", sort=["TP", "FP", "FN", "TN"]),
+            y=alt.Y(f"{compare_by}:N", sort=order),
+            text="Count:Q",
+            color=alt.condition(alt.datum.Count > max(1, float(confusion_df["Count"].max()) * 0.55), alt.value("white"), alt.value("#0f172a")),
+        )
+    )
+    c_left, c_right = st.columns([1.35, 1.0], gap="large")
+    with c_left:
+        st.markdown("### Score Profile")
+        st.altair_chart(ranking_chart, use_container_width=True)
+    with c_right:
+        st.markdown("### Error Shape")
+        st.altair_chart(confusion_chart + confusion_text, use_container_width=True)
+
+    pareto = (
+        alt.Chart(summary_df)
+        .mark_circle(size=220, opacity=0.88, stroke="#0f172a", strokeWidth=0.6)
+        .encode(
+            x=alt.X("Precision:Q", title="Precision", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+            y=alt.Y("Recall:Q", title="Recall", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+            size=alt.Size("Human-label F1:Q", title="F1", scale=alt.Scale(range=[120, 520])),
+            color=alt.Color(f"{compare_by}:N", title=compare_by),
+            tooltip=[
+                f"{compare_by}:N",
+                alt.Tooltip("Human-label F1:Q", format=".2%"),
+                alt.Tooltip("Precision:Q", format=".2%"),
+                alt.Tooltip("Recall:Q", format=".2%"),
+                alt.Tooltip("Accuracy:Q", format=".2%"),
+                "Tokens:Q",
+            ],
+        )
+        .properties(height=330)
+    )
+    label_layer = (
+        alt.Chart(summary_df)
+        .mark_text(align="left", dx=9, dy=-5, fontSize=12)
+        .encode(
+            x="Precision:Q",
+            y="Recall:Q",
+            text=f"{compare_by}:N",
+            color=alt.value("#334155"),
+        )
+    )
+    st.markdown("### Precision/Recall Pareto")
+    st.altair_chart(pareto + label_layer, use_container_width=True)
+
+    smell_rows = []
+    for result in results:
+        label = str(result.get("label", ""))
+        for item in result.get("rows") or []:
+            gold = bool(item.get("gold"))
+            predicted = bool(item.get("predicted"))
+            if gold and predicted:
+                outcome = "TP"
+            elif not gold and predicted:
+                outcome = "FP"
+            elif gold and not predicted:
+                outcome = "FN"
+            else:
+                outcome = "TN"
+            smell_rows.append({
+                compare_by: label,
+                "Smell": str(item.get("smell", "unknown")),
+                "Outcome": outcome,
+                "Count": 1,
+            })
+    if smell_rows:
+        smell_df = pd.DataFrame(smell_rows).groupby([compare_by, "Smell", "Outcome"], as_index=False)["Count"].sum()
+        smell_df["Prompt / smell"] = smell_df[compare_by].astype(str) + "  |  " + smell_df["Smell"].astype(str)
+        smell_order = (
+            smell_df[[compare_by, "Smell", "Prompt / smell"]]
+            .drop_duplicates()
+            .sort_values([compare_by, "Smell"], ascending=[True, True])["Prompt / smell"]
+            .tolist()
+        )
+        smell_chart = (
+            alt.Chart(smell_df)
+            .mark_bar(cornerRadiusTopRight=4, cornerRadiusBottomRight=4)
+            .encode(
+                x=alt.X("Count:Q", title="Decisions"),
+                y=alt.Y("Prompt / smell:N", title=None, sort=smell_order, axis=alt.Axis(labelLimit=360)),
+                color=alt.Color(
+                    "Outcome:N",
+                    title="Outcome",
+                    scale=alt.Scale(domain=["TP", "FP", "FN", "TN"], range=["#16a34a", "#ef4444", "#f59e0b", "#64748b"]),
+                ),
+                order=alt.Order("Outcome:N", sort="ascending"),
+                tooltip=[f"{compare_by}:N", "Smell:N", "Outcome:N", "Count:Q"],
+            )
+            .properties(height=max(260, 34 * len(smell_order)))
+        )
+        smell_text = (
+            alt.Chart(smell_df)
+            .mark_text(dx=-8, color="white", fontSize=12, fontWeight="bold")
+            .encode(
+                x=alt.X("sum(Count):Q", stack="zero"),
+                y=alt.Y("Prompt / smell:N", sort=smell_order),
+                detail="Outcome:N",
+                text=alt.Text("Count:Q"),
+                color=alt.condition(alt.datum.Count > 0, alt.value("white"), alt.value("transparent")),
+            )
+        )
+        st.markdown("### Error Distribution By Smell")
+        st.altair_chart(smell_chart + smell_text, use_container_width=True)
+
+    selected = st.selectbox(
+        "Review sample decisions",
+        [str(result.get("label", idx)) for idx, result in enumerate(results)],
+        key=f"dacos_review_{compare_by}",
+    )
+    result = next((item for item in results if str(item.get("label", "")) == selected), results[0])
+    detail_df = pd.DataFrame(result.get("rows") or [])
+    if not detail_df.empty:
+        detail_df["Human label"] = detail_df["gold"].map(lambda x: "present" if x else "absent")
+        detail_df["LLM label"] = detail_df["predicted"].map(lambda x: "present" if x else "absent")
+        _render_pro_dataframe(detail_df[["sample_id", "smell", "Human label", "LLM label", "confidence", "rationale"]], hide_index=True)
 
 
 def _render_maintenance_activity_intro(activity: str) -> None:
@@ -2874,8 +3442,818 @@ def render_tab_manage_prompts():
 
         _render_prompt_preview_panel("Repository Preview", {selected_prompt: edited_prompt}, selected_prompt)
 
+def render_tab_autoresearch():
+    st.markdown("## 🧪 AutoResearch")
+    st.caption("Compare prompt candidates on a fixed StarLLM benchmark, then keep the prompt that performs best under the chosen research objective.")
+
+    settings, main = st.columns([1.05, 2.4], gap="large")
+    with settings:
+        st.markdown("### Settings")
+        task_label = st.selectbox(
+            "Benchmark task",
+            ["Feature location", "Code smell detection"],
+            index=0,
+            help="Choose the StarLLM benchmark surface to optimize prompts against.",
+        )
+        task_key = "feature_location" if task_label == "Feature location" else "code_smell_detection"
+        code_smell_oracle = "Analyzer reference (SonarQube CSV)"
+        human_dataset_name = "MLCQ"
+        if task_key == "code_smell_detection":
+            code_smell_oracle = st.selectbox(
+                "Code-smell oracle",
+                ["Analyzer reference (SonarQube CSV)", "Human oracle (DACOS/DACOSX/MLCQ)"],
+                index=1,
+                key="ar_code_smell_oracle",
+                help="Use analyzer replication for SonarQube-style prompts, or human labels for DACOS/MLCQ binary smell prompts.",
+            )
+            if code_smell_oracle.startswith("Human"):
+                task_key = "human_smell_oracle"
+                task_label = "Human smell oracle"
+                human_dataset_name = st.selectbox(
+                    "Human oracle dataset",
+                    ["MLCQ", "DACOS/DACOSX"],
+                    index=0,
+                    key="ar_human_oracle_dataset",
+                )
+        llm = build_llm("AutoResearch ", target=st.container())
+        search_mode = st.radio(
+            "Search mode",
+            ["Iterative improvement loop", "Compare selected prompts"],
+            index=0,
+            help="The loop mutates the best prompt so far and accepts only improvements. Compare mode just evaluates selected prompts once.",
+        )
+
+        st.markdown("**Prompt candidates**")
+        prompt_templates = _dacos_prompt_templates() if task_key == "human_smell_oracle" else _prompt_templates_for_task(task_key)
+        if not prompt_templates:
+            fallback_key = "feature_location" if task_key == "feature_location" else "code_smell_detection"
+            prompt_templates = _prompt_templates_for_task(fallback_key)
+        metric_options = ["mrr", "map", "hit@1", "hit@5", "recall@10"] if task_key == "feature_location" else ["f1", "precision", "recall", "accuracy"]
+        metric_label_to_key = {_metric_choice_label(metric): metric for metric in metric_options}
+        selected_metric_label = st.selectbox(
+            "Research objective",
+            list(metric_label_to_key.keys()),
+            index=0,
+            help="This decides which prompt candidate wins the benchmark.",
+        )
+        primary_metric = metric_label_to_key[selected_metric_label]
+        st.info(_metric_help(primary_metric))
+        generated_key = f"ar_generated_prompts_{task_key}"
+        generated_prompts = st.session_state.setdefault(generated_key, {})
+        if generated_prompts:
+            prompt_templates = {**prompt_templates, **generated_prompts}
+
+        prompt_names = list(prompt_templates.keys())
+        if search_mode == "Iterative improvement loop":
+            seed_prompt = st.selectbox("Starting prompt", prompt_names, index=0, key=f"ar_loop_seed_{task_key}") if prompt_names else ""
+            loop_iterations = st.slider("Improvement attempts", 1, 10, 3, 1, key=f"ar_loop_iterations_{task_key}")
+            candidates_per_attempt = st.slider(
+                "Mutations per attempt",
+                1,
+                4,
+                2,
+                1,
+                key=f"ar_loop_candidates_{task_key}",
+                help="Generate several mutations at each step, benchmark them, and let the best compete with the current best prompt.",
+            )
+            focus_options = (
+                ["Auto", "Improve coverage", "Reduce false positives", "Improve JSON/location discipline", "Use analyzer taxonomy"]
+                if task_key == "code_smell_detection"
+                else ["Auto", "Improve MLCQ severity alignment", "Reduce false positives", "Improve recall on positive smells", "Use smell definitions"]
+                if task_key == "human_smell_oracle"
+                else ["Auto", "Improve top-ranked file", "Improve coverage of relevant files", "Diversify ranked files", "Use query terminology"]
+            )
+            mutation_focus = st.selectbox(
+                "Mutation focus",
+                focus_options,
+                index=0,
+                key=f"ar_loop_focus_{task_key}",
+                help="Guides the LLM when it proposes the next prompt mutation.",
+            )
+            min_gain = st.slider(
+                "Minimum gain to accept",
+                0.0,
+                0.10,
+                0.0,
+                0.005,
+                key=f"ar_loop_min_gain_{task_key}",
+                help="A mutation must improve the selected objective by at least this absolute amount.",
+            )
+            selected_prompts = [seed_prompt] if seed_prompt else []
+        else:
+            with st.expander("Generate prompt variants", expanded=False):
+                st.caption("Generate temporary prompt candidates with the selected LLM. They are benchmarked like repository prompts, but are not saved unless you promote them later.")
+                seed_options = list(prompt_templates.keys())
+                seed_prompt = st.selectbox("Seed prompt", seed_options, index=0, key=f"ar_seed_{task_key}") if seed_options else ""
+                variant_count = st.slider("Variants", 1, 5, 3, 1, key=f"ar_variant_count_{task_key}")
+                if st.button("Generate variants", key=f"ar_generate_{task_key}", use_container_width=True):
+                    if not seed_prompt:
+                        st.error("Select a seed prompt first.")
+                    else:
+                        try:
+                            variants = _generate_autoresearch_prompt_variants(
+                                task_key,
+                                seed_prompt,
+                                prompt_templates[seed_prompt],
+                                primary_metric,
+                                variant_count,
+                                llm,
+                            )
+                        except Exception as e:
+                            st.error(f"Could not generate prompt variants: {e}")
+                        else:
+                            st.session_state[generated_key] = {**generated_prompts, **variants}
+                            st.success(f"Generated {len(variants)} temporary prompt variant(s).")
+                            st.rerun()
+                if generated_prompts and st.button("Clear generated variants", key=f"ar_clear_generated_{task_key}", use_container_width=True):
+                    st.session_state[generated_key] = {}
+                    st.rerun()
+
+            default_prompts = [name for name in prompt_names if name.startswith("auto_")][:3] or prompt_names[: min(3, len(prompt_names))]
+            selected_prompts = st.multiselect("Prompt templates", prompt_names, default=default_prompts)
+            loop_iterations = 0
+            candidates_per_attempt = 1
+            mutation_focus = "Auto"
+            min_gain = 0.0
+
+        st.markdown("**Benchmark scope**")
+        if task_key == "feature_location":
+            gt_path = st.text_input("GT folder", "data/apps/Feature Location-ArgoUML")
+            repo_zip = st.text_input("Source ZIP", "data/apps/ArgoUML/ArgoUML.zip")
+            max_tasks = st.slider("Feature scenarios", 1, 20, 3, 1)
+            candidate_budget = st.slider("Candidate budget", 50, 1000, 300, 50)
+            top_k = st.slider("Top-K predictions", 1, 30, 10, 1, key="ar_fl_top_k")
+            args = SimpleNamespace(
+                task="feature_location",
+                gt_path=gt_path,
+                repo_zip=repo_zip,
+                max_tasks=max_tasks,
+                candidate_budget=candidate_budget,
+                top_k=top_k,
+                primary_metric=primary_metric,
+                output_dir="output/autoresearch",
+            )
+        elif task_key == "human_smell_oracle":
+            sample_limit = st.slider("Human-oracle samples", 3, 100, 10, 1, key="ar_human_sample_limit")
+            if human_dataset_name == "MLCQ":
+                human_path = st.text_input("MLCQ samples CSV", "data/apps/MLCQ/MLCQCodeSmellSamples.csv", key="ar_mlcq_path")
+                positive_threshold = st.selectbox(
+                    "Positive severity threshold",
+                    ["minor", "major", "critical"],
+                    index=0,
+                    key="ar_mlcq_threshold",
+                )
+                samples = load_mlcq_smell_samples(human_path, limit=sample_limit, positive_threshold=positive_threshold)
+                source_path = human_path
+            else:
+                human_path = st.text_input("DACOSMain/DACOSX file", "data/apps/DACOS/DACOSMain.sql", key="ar_dacos_path")
+                files_root = st.text_input("Files folder or files.zip", "data/apps/DACOS/files", key="ar_dacos_files_root")
+                samples = load_dacos_smell_samples(human_path, files_root=files_root, limit=sample_limit)
+                source_path = human_path
+                positive_threshold = "minor"
+            if not samples:
+                st.warning(f"No {human_dataset_name} samples could be loaded for AutoResearch.")
+            args = SimpleNamespace(
+                task="human_smell_oracle",
+                dataset_name=human_dataset_name,
+                source_path=source_path,
+                samples=samples,
+                sample_limit=sample_limit,
+                positive_threshold=positive_threshold,
+                primary_metric=primary_metric,
+                output_dir="output/autoresearch",
+            )
+        else:
+            demo_sets = _demo_datasets()
+            dataset_mode = st.radio("Dataset source", ["Bundled demo", "Custom paths"], index=0, key="ar_smell_dataset_mode")
+            if dataset_mode == "Bundled demo" and demo_sets:
+                dataset_name = st.selectbox("Demo dataset", list(demo_sets.keys()), key="ar_smell_demo_dataset")
+                repo_zip_path, static_csv_path = demo_sets[dataset_name]
+                repo_zip = str(repo_zip_path)
+                static_csv = str(static_csv_path)
+                st.caption(f"ZIP: {repo_zip_path.name}")
+                st.caption(f"GT: {static_csv_path.name}")
+            else:
+                if dataset_mode == "Bundled demo":
+                    st.warning("No bundled demo datasets were found. Use custom paths.")
+                repo_zip = st.text_input("Source ZIP", "data/apps/ArgoUML/ArgoUML.zip")
+                static_csv = st.text_input("Analyzer CSV", "data/apps/ArgoUML/ArgoUml-sonarqube-quality-analysis.csv")
+            top_k = st.slider(
+                "Sampled files",
+                1,
+                20,
+                5,
+                1,
+                key="ar_smell_top_k",
+                help="How many source files StarLLM samples for this quick benchmark run.",
+            )
+            pos_ratio = st.slider(
+                "Known-issue share",
+                0.0,
+                1.0,
+                0.6,
+                0.05,
+                key="ar_smell_pos_ratio",
+                help="Target share of sampled files that contain analyzer findings.",
+            )
+            preset = st.selectbox(
+                "Match strictness",
+                ["Lenient", "Balanced", "Strict"],
+                index=1,
+                key="ar_smell_preset",
+                help="Controls how close LLM-reported lines must be to analyzer lines.",
+            )
+            require_type = st.checkbox("Require issue category match", value=False)
+            args = SimpleNamespace(
+                task="code_smell",
+                repo_zip=repo_zip,
+                static_csv=static_csv,
+                top_k=top_k,
+                pos_ratio=pos_ratio,
+                preset=preset,
+                require_type=require_type,
+                primary_metric=primary_metric,
+                output_dir="output/autoresearch",
+            )
+
+    with main:
+        st.markdown("### Candidate Review")
+        if not prompt_names:
+            st.warning("No prompts are available for this benchmark task.")
+            return
+        if not selected_prompts:
+            st.warning("Select a starting prompt." if search_mode == "Iterative improvement loop" else "Select at least one prompt candidate.")
+            return
+        if task_key == "human_smell_oracle" and not getattr(args, "samples", []):
+            st.warning("Load at least one human-oracle sample before running AutoResearch.")
+            return
+
+        preview_title = "Starting Prompt" if search_mode == "Iterative improvement loop" else "Prompt Preview"
+        _render_prompt_preview_panel(preview_title, prompt_templates, selected_prompts)
+        prompt_candidates = [
+            PromptCandidate(name=name, template=prompt_templates[name], source="prompt_repository")
+            for name in selected_prompts
+            if name in prompt_templates
+        ]
+
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            kpi("Task", task_label, "ok")
+        with c2:
+            kpi("Mode", "Loop" if search_mode == "Iterative improvement loop" else "Compare", "ok")
+        with c3:
+            kpi("Objective", _metric_label(primary_metric, short=True), "warn")
+
+        st.markdown("### Benchmark Plan")
+        if task_key == "feature_location":
+            st.markdown(
+                f"""
+                <div class="section">
+                  <b>What this run measures</b>
+                  <p class="muted">Each prompt receives the same feature-location scenarios and candidate file list. StarLLM asks the LLM to rank source files, then scores whether relevant files appear early in the ranking.</p>
+                  <div class="badges">
+                    <span class="badge"><b>Dataset</b> {escape(Path(args.gt_path).name)}</span>
+                    <span class="badge"><b>Scenarios</b> {int(args.max_tasks)}</span>
+                    <span class="badge"><b>Candidates/prompt</b> {int(args.candidate_budget)}</span>
+                    <span class="badge"><b>Winner</b> {escape(_metric_label(primary_metric))}</span>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        elif task_key == "human_smell_oracle":
+            st.markdown(
+                f"""
+                <div class="section">
+                  <b>What this run measures</b>
+                  <p class="muted">Each prompt receives the same human-labeled smell snippets. StarLLM asks the LLM for a present/absent decision, then scores agreement with the human oracle.</p>
+                  <div class="badges">
+                    <span class="badge"><b>Dataset</b> {escape(str(args.dataset_name))}</span>
+                    <span class="badge"><b>Samples</b> {int(len(args.samples))}</span>
+                    <span class="badge"><b>Oracle</b> Human labels</span>
+                    <span class="badge"><b>Winner</b> {escape(_metric_label(primary_metric))}</span>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                f"""
+                <div class="section">
+                  <b>What this run measures</b>
+                  <p class="muted">Each prompt analyzes the same sampled files and is compared against the static analyzer CSV. StarLLM scores how well the LLM findings match the ground-truth issue locations.</p>
+                  <div class="badges">
+                    <span class="badge"><b>Project</b> {escape(Path(args.repo_zip).stem)}</span>
+                    <span class="badge"><b>Sampled files</b> {int(args.top_k)}</span>
+                    <span class="badge"><b>Positive ratio</b> {float(args.pos_ratio):.2f}</span>
+                    <span class="badge"><b>Winner</b> {escape(_metric_label(primary_metric))}</span>
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+        st.markdown("### Run")
+        if search_mode == "Iterative improvement loop":
+            st.caption("This benchmarks the starting prompt, then repeatedly asks the LLM to mutate the best prompt so far. Several mutations can compete at each attempt; only an improving winner is accepted.")
+            button_label = "Run Improvement Loop"
+        else:
+            st.caption("This evaluates selected prompt candidates once. It does not overwrite the prompt repository or modify Python code.")
+            button_label = "Run Prompt Comparison"
+        run_clicked = st.button(button_label, type="primary")
+        if run_clicked:
+            progress = st.progress(0)
+            status = st.empty()
+            try:
+                if search_mode == "Iterative improvement loop":
+                    rows, best_candidate = _run_autoresearch_loop(
+                        task_key,
+                        prompt_candidates[0],
+                        primary_metric,
+                        int(loop_iterations),
+                        int(candidates_per_attempt),
+                        str(mutation_focus),
+                        float(min_gain),
+                        args,
+                        llm,
+                        progress,
+                        status,
+                    )
+                    prompt_candidates_for_output = [PromptCandidate(str(row.get("prompt")), str(row.get("template", "")), str(row.get("source", "loop"))) for row in rows]
+                else:
+                    rows = []
+                    for idx, candidate in enumerate(prompt_candidates, start=1):
+                        status.markdown(f"Running `{candidate.name}` ({idx}/{len(prompt_candidates)})...")
+                        result_rows = _evaluate_autoresearch_candidate(task_key, candidate, args, llm)
+                        rows.extend(result_rows)
+                        progress.progress(idx / max(1, len(prompt_candidates)))
+                    best_row = max(rows, key=lambda row: float(row.get("score", 0.0))) if rows else {}
+                    best_candidate = next((c for c in prompt_candidates if c.name == best_row.get("prompt")), None)
+                    prompt_candidates_for_output = prompt_candidates
+            except Exception as e:
+                st.error(f"AutoResearch benchmark failed: {e}")
+                return
+
+            if not rows:
+                st.warning("No results produced.")
+                return
+
+            out_dir = write_autoresearch_outputs(rows, prompt_candidates_for_output, args)
+            result_df = pd.DataFrame(rows).sort_values("score", ascending=False)
+            st.session_state.last_autoresearch_results = {
+                "rows": rows,
+                "out_dir": str(out_dir),
+                "metric": primary_metric,
+                "mode": search_mode,
+                "best_prompt": best_candidate.name if best_candidate else "",
+                "best_template": best_candidate.template if best_candidate else "",
+                "task_key": task_key,
+            }
+            st.success(f"AutoResearch run saved to {out_dir}")
+            if search_mode == "Iterative improvement loop":
+                _render_autoresearch_loop_results(result_df, primary_metric)
+            else:
+                _render_autoresearch_results(result_df, primary_metric)
+            _render_autoresearch_promote_button(st.session_state.last_autoresearch_results)
+
+        cached = st.session_state.get("last_autoresearch_results")
+        if cached and not run_clicked:
+            st.markdown("### Last AutoResearch Run")
+            st.caption(f"Artifacts: {cached.get('out_dir')}")
+            if cached.get("mode") == "Iterative improvement loop":
+                _render_autoresearch_loop_results(pd.DataFrame(cached.get("rows", [])), cached.get("metric", primary_metric))
+            else:
+                _render_autoresearch_results(pd.DataFrame(cached.get("rows", [])), cached.get("metric", primary_metric))
+            _render_autoresearch_promote_button(cached)
+
+def _evaluate_autoresearch_candidate(task_key: str, candidate: PromptCandidate, args: Any, llm: ChatModel) -> list[dict[str, Any]]:
+    if task_key == "feature_location":
+        rows = evaluate_feature_location(args, [candidate], llm)
+    elif task_key == "human_smell_oracle":
+        started = time.time()
+        result = run_dacos_smell_benchmark(
+            args.samples,
+            llm,
+            prompt_template=candidate.template,
+            max_samples=getattr(args, "sample_limit", None),
+        )
+        metrics = result.get("metrics") or {}
+        usage = result.get("usage") or {}
+        rows = [{
+            "rank_order": 1,
+            "task": "human_smell_oracle",
+            "dataset": getattr(args, "dataset_name", "human"),
+            "prompt": candidate.name,
+            "source": candidate.source,
+            "primary_metric": args.primary_metric,
+            "score": metrics.get(args.primary_metric, 0.0),
+            "task_count": metrics.get("samples", len(getattr(args, "samples", []))),
+            "elapsed_s": round(time.time() - started, 2),
+            **metrics,
+            **usage,
+        }]
+    else:
+        rows = evaluate_code_smell(args, [candidate], llm)
+    for row in rows:
+        row["template"] = candidate.template
+        row["source"] = candidate.source
+    return rows
+
+def _run_autoresearch_loop(
+    task_key: str,
+    seed_candidate: PromptCandidate,
+    primary_metric: str,
+    iterations: int,
+    candidates_per_attempt: int,
+    mutation_focus: str,
+    min_gain: float,
+    args: Any,
+    llm: ChatModel,
+    progress: Any,
+    status: Any,
+) -> tuple[list[dict[str, Any]], PromptCandidate]:
+    rows: list[dict[str, Any]] = []
+    status.markdown(f"Benchmarking starting prompt `{seed_candidate.name}`...")
+    seed_rows = _evaluate_autoresearch_candidate(task_key, seed_candidate, args, llm)
+    seed_row = seed_rows[0]
+    seed_row.update({
+        "iteration": 0,
+        "decision": "seed",
+        "parent": "",
+        "gain_vs_best": 0.0,
+    })
+    rows.append(seed_row)
+
+    best_candidate = seed_candidate
+    best_score = float(seed_row.get("score", 0.0))
+    progress.progress(1 / max(1, iterations + 1))
+
+    for iteration in range(1, iterations + 1):
+        status.markdown(f"Iteration {iteration}: mutating `{best_candidate.name}`...")
+        variants = _generate_autoresearch_prompt_variants(
+            task_key,
+            best_candidate.name,
+            best_candidate.template,
+            primary_metric,
+            candidates_per_attempt,
+            llm,
+            history=rows,
+            mutation_focus=mutation_focus,
+        )
+        attempt_rows: list[tuple[dict[str, Any], PromptCandidate]] = []
+        for candidate_idx, (variant_name, variant_template) in enumerate(variants.items(), start=1):
+            candidate = PromptCandidate(
+                name=f"{variant_name}_i{iteration}_{candidate_idx}",
+                template=variant_template,
+                source=f"mutation_of:{best_candidate.name}",
+            )
+            status.markdown(f"Iteration {iteration}: benchmarking `{candidate.name}`...")
+            candidate_rows = _evaluate_autoresearch_candidate(task_key, candidate, args, llm)
+            row = candidate_rows[0]
+            score = float(row.get("score", 0.0))
+            gain = score - best_score
+            row.update({
+                "iteration": iteration,
+                "decision": "pending",
+                "parent": best_candidate.name,
+                "gain_vs_best": gain,
+                "attempt_candidate": candidate_idx,
+            })
+            attempt_rows.append((row, candidate))
+
+        winner_row, winner_candidate = max(attempt_rows, key=lambda pair: float(pair[0].get("score", 0.0)))
+        winner_score = float(winner_row.get("score", 0.0))
+        accepted = (winner_score - best_score) >= min_gain and winner_score > best_score
+        for row, candidate in attempt_rows:
+            if candidate.name == winner_candidate.name:
+                row["decision"] = "accepted" if accepted else "best rejected"
+            else:
+                row["decision"] = "rejected"
+            rows.append(row)
+        if accepted:
+            best_candidate = winner_candidate
+            best_score = winner_score
+        progress.progress((iteration + 1) / max(1, iterations + 1))
+
+    status.markdown(f"Done. Best prompt: `{best_candidate.name}`.")
+    return rows, best_candidate
+
+def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: str) -> None:
+    if result_df.empty:
+        return
+    history_df = result_df.sort_values("iteration") if "iteration" in result_df.columns else result_df
+    accepted_df = history_df[history_df["decision"].isin(["seed", "accepted"])] if "decision" in history_df.columns else history_df
+    best = accepted_df.sort_values("score", ascending=False).iloc[0] if not accepted_df.empty else history_df.sort_values("score", ascending=False).iloc[0]
+    seed = history_df.iloc[0]
+    improvement = float(best.get("score", 0.0)) - float(seed.get("score", 0.0))
+
+    st.markdown(
+        "<div class='section'><b>Loop behavior</b><p class='muted'>StarLLM benchmarks the seed prompt, generates competing mutations from the best prompt so far, and accepts only the winning mutation when it improves the selected objective.</p></div>",
+        unsafe_allow_html=True,
+    )
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi("Best prompt", str(best.get("prompt", "n/a")), "ok")
+    with c2:
+        kpi(_metric_label(primary_metric), _format_metric(primary_metric, best.get("score", 0.0)), "ok")
+    with c3:
+        kpi("Gain vs seed", _format_metric(primary_metric, improvement), "warn" if improvement > 0 else "bad")
+    with c4:
+        accepted_count = int((history_df.get("decision", pd.Series(dtype=str)) == "accepted").sum()) if "decision" in history_df.columns else 0
+        kpi("Accepted", str(accepted_count), "ok")
+
+    display_rows = []
+    for _, row in history_df.iterrows():
+        attempt_candidate = row.get("attempt_candidate", "")
+        try:
+            candidate_display = "" if pd.isna(attempt_candidate) else int(attempt_candidate)
+        except Exception:
+            candidate_display = ""
+        display_rows.append({
+            "Iteration": int(row.get("iteration", 0)),
+            "Candidate": candidate_display,
+            "Prompt": row.get("prompt", ""),
+            "Decision": str(row.get("decision", "")),
+            "Score": _format_metric(primary_metric, row.get("score", 0.0)),
+            "Gain vs previous best": _format_metric(primary_metric, row.get("gain_vs_best", 0.0)),
+            "Parent": row.get("parent", ""),
+            "Tokens": f"{int(row.get('total_tokens', 0)):,}",
+            "Time": f"{float(row.get('elapsed_s', 0.0)):.1f}s",
+        })
+    st.markdown("### Attempt History")
+    _render_pro_dataframe(pd.DataFrame(display_rows), hide_index=True)
+
+    if "iteration" in history_df.columns:
+        chart_df = history_df[["iteration", "score", "decision", "prompt"]].copy()
+        chart_df["Score"] = chart_df["score"].astype(float)
+        chart = alt.Chart(chart_df).mark_line(point=True).encode(
+            x=alt.X("iteration:O", title="Iteration"),
+            y=alt.Y("Score:Q", title=_metric_label(primary_metric), scale=alt.Scale(domain=[0, 1])),
+            color=alt.Color("decision:N", title="Decision"),
+            tooltip=["iteration:O", "prompt:N", "decision:N", alt.Tooltip("Score:Q", format=".3f")],
+        ).properties(height=280)
+        st.altair_chart(chart, use_container_width=True)
+
+    metric_cols = [col for col in ["f1", "precision", "recall", "accuracy", "mrr", "map", "hit@1", "hit@5"] if col in history_df.columns]
+    if metric_cols:
+        slope_rows = []
+        for metric in metric_cols:
+            slope_rows.append({"Stage": "Seed", "Metric": _metric_label(metric, short=True), "Score": float(seed.get(metric, 0.0))})
+            slope_rows.append({"Stage": "Best", "Metric": _metric_label(metric, short=True), "Score": float(best.get(metric, 0.0))})
+        slope_df = pd.DataFrame(slope_rows)
+        slope = (
+            alt.Chart(slope_df)
+            .mark_line(point=alt.OverlayMarkDef(size=95, filled=True), strokeWidth=3)
+            .encode(
+                x=alt.X("Stage:N", title=None, sort=["Seed", "Best"]),
+                y=alt.Y("Score:Q", title="Score", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+                color=alt.Color("Metric:N", title="Metric"),
+                detail="Metric:N",
+                tooltip=["Metric:N", "Stage:N", alt.Tooltip("Score:Q", format=".2%")],
+            )
+            .properties(height=260)
+        )
+        st.markdown("### Seed vs Best Shift")
+        st.altair_chart(slope, use_container_width=True)
+
+def _render_autoresearch_promote_button(cached: dict[str, Any]) -> None:
+    best_template = str(cached.get("best_template") or "")
+    best_name = str(cached.get("best_prompt") or "autoresearch_best")
+    task_key = str(cached.get("task_key") or "")
+    if not best_template or task_key not in PROMPT_TASKS:
+        return
+    with st.expander("Promote best prompt", expanded=False):
+        st.caption("Save the best prompt from this AutoResearch run into the StarLLM prompt repository.")
+        clean_default = re.sub(r"[^A-Za-z0-9_-]+", "_", f"{best_name}_promoted").strip("_").lower()
+        target_name = st.text_input("Repository prompt id", value=clean_default, key=f"promote_{task_key}_{best_name}")
+        if st.button("Save best prompt to repository", key=f"promote_btn_{task_key}_{best_name}", type="primary"):
+            clean_name = re.sub(r"[^A-Za-z0-9_-]+", "_", target_name.strip()).strip("_")
+            if not clean_name:
+                st.error("Provide a prompt id.")
+                return
+            repo = _load_prompt_repository()
+            prompts = (repo.get(task_key) or {}).get("prompts") or {}
+            if clean_name in prompts:
+                st.error("A prompt with this id already exists.")
+                return
+            prompts[clean_name] = _prompt_entry(best_template, tags=["autoresearch", "promoted"], source="autoresearch")
+            repo[task_key]["prompts"] = prompts
+            _save_prompt_repository(repo)
+            st.success(f"Saved `{clean_name}` to the prompt repository.")
+
+def _render_autoresearch_results(result_df: pd.DataFrame, primary_metric: str) -> None:
+    if result_df.empty:
+        return
+    result_df = result_df.sort_values("score", ascending=False)
+    best = result_df.iloc[0]
+    task_name = str(best.get("task", ""))
+    if task_name == "code_smell":
+        summary = (
+            "For code-smell detection, a strong prompt should find analyzer-confirmed issues "
+            "without flooding the review board with false positives."
+        )
+    else:
+        summary = (
+            "For localization, a strong prompt should rank at least one relevant source file "
+            "near the top and keep other relevant files early in the list."
+        )
+    st.markdown(f"<div class='section'><b>How to read this result</b><p class='muted'>{escape(summary)}</p></div>", unsafe_allow_html=True)
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi("Best prompt", str(best.get("prompt", "n/a")), "ok")
+    with c2:
+        kpi(_metric_label(primary_metric), _format_metric(primary_metric, best.get("score", 0.0)), "ok")
+    with c3:
+        kpi("Total tokens", f"{int(best.get('total_tokens', 0)):,}", "warn")
+    with c4:
+        kpi("Elapsed", f"{float(best.get('elapsed_s', 0.0)):.1f}s", "warn")
+
+    display_df = _autoresearch_display_df(result_df, primary_metric)
+    st.markdown("### Ranked Candidates")
+    _render_pro_dataframe(display_df, hide_index=True)
+
+    chart_cols = [
+        col for col in ["precision", "recall", "f1", "accuracy", "mrr", "map", "hit@1", "hit@5", "recall@10"]
+        if col in result_df.columns
+    ]
+    if len(result_df) > 1 and chart_cols:
+        chart_df = result_df[["prompt", *chart_cols]].melt("prompt", var_name="Metric", value_name="Score")
+        chart_df["Metric"] = chart_df["Metric"].map(lambda m: _metric_label(str(m), short=True))
+        chart_df["zero"] = 0.0
+        order = list(result_df.sort_values("score", ascending=True)["prompt"])
+        base = alt.Chart(chart_df).encode(
+            y=alt.Y("prompt:N", title=None, sort=order, axis=alt.Axis(labelLimit=260)),
+            x=alt.X("Score:Q", title="Score", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+            color=alt.Color("Metric:N", title="Metric"),
+            tooltip=["prompt:N", "Metric:N", alt.Tooltip("Score:Q", format=".3f")],
+        )
+        chart = (
+            base.mark_rule(opacity=0.25, strokeWidth=2).encode(x=alt.X("zero:Q"), x2="Score:Q")
+            + base.mark_circle(size=105, opacity=0.95)
+        ).properties(height=max(220, 54 * len(result_df)))
+        st.altair_chart(chart, use_container_width=True)
+
+def _autoresearch_display_df(result_df: pd.DataFrame, primary_metric: str) -> pd.DataFrame:
+    rows = []
+    for _, row in result_df.iterrows():
+        item = {
+            "Prompt candidate": row.get("prompt", ""),
+            "Winning objective": _format_metric(primary_metric, row.get("score", 0.0)),
+        }
+        if "precision" in result_df.columns:
+            item["Trustworthiness"] = _format_metric("precision", row.get("precision", 0.0))
+        if "recall" in result_df.columns:
+            item["Coverage"] = _format_metric("recall", row.get("recall", 0.0))
+        if "f1" in result_df.columns:
+            item["Balanced score"] = _format_metric("f1", row.get("f1", 0.0))
+        if "hit@1" in result_df.columns:
+            item["Top answer correct"] = _format_metric("hit@1", row.get("hit@1", 0.0))
+        if "hit@5" in result_df.columns:
+            item["Correct file in top 5"] = _format_metric("hit@5", row.get("hit@5", 0.0))
+        if "mrr" in result_df.columns:
+            item["First correct rank score"] = _format_metric("mrr", row.get("mrr", 0.0))
+        if "map" in result_df.columns:
+            item["Overall ranking quality"] = _format_metric("map", row.get("map", 0.0))
+        item["Tokens"] = f"{int(row.get('total_tokens', 0)):,}"
+        item["Time"] = f"{float(row.get('elapsed_s', 0.0)):.1f}s"
+        item["Scope"] = int(row.get("task_count", 0))
+        rows.append(item)
+    return pd.DataFrame(rows)
+
+def _generate_autoresearch_prompt_variants(
+    task_key: str,
+    seed_name: str,
+    seed_template: str,
+    primary_metric: str,
+    count: int,
+    llm: ChatModel,
+    *,
+    history: list[dict[str, Any]] | None = None,
+    mutation_focus: str = "Auto",
+) -> dict[str, str]:
+    if task_key == "human_smell_oracle":
+        placeholders = "{smell}, {language}, {code}"
+        task_label = "binary code-smell classification against human oracle labels"
+    else:
+        placeholders = "{language}, {code}" if task_key == "code_smell_detection" else "{task_name}, {project}, {language}, {candidate_level}, {query}, {candidate_text}, {top_k}"
+        task_label = "code-smell detection against static analyzer ground truth" if task_key == "code_smell_detection" else "file-level feature/bug localization ranking"
+    objective = f"{_metric_label(primary_metric)}: {_metric_help(primary_metric)}"
+    history_rows = history or []
+    history_summary = "\n".join(
+        f"- iter {row.get('iteration', '?')} {row.get('prompt', '')}: score={float(row.get('score', 0.0)):.4f}, "
+        f"precision={float(row.get('precision', 0.0)):.4f}, recall={float(row.get('recall', 0.0)):.4f}, "
+        f"decision={row.get('decision', '')}"
+        for row in history_rows[-8:]
+    ) or "- no previous attempts"
+    if task_key == "human_smell_oracle":
+        domain_guidance = """
+Human-oracle smell benchmark guidance:
+- The ground truth is a human label such as MLCQ or DACOS, not a static analyzer issue list.
+- The prompt must answer only whether the target smell is present in the snippet.
+- Preserve strict JSON output with keys: present, confidence, rationale.
+- Use MLCQ-style smell definitions: god_class/blob, long_method, data_class, feature_envy, complex_method, long_parameter_list, multifaceted_abstraction.
+- For positive recall, emphasize structural evidence such as size, centralization, many fields/methods, branching, parameter count, external-class reliance, and data-holder behavior.
+- For precision, require visible evidence and avoid declaring unrelated smells.
+"""
+    elif task_key == "code_smell_detection":
+        domain_guidance = """
+Code-smell benchmark guidance:
+- The ground truth comes from static analyzer CSVs such as SonarQube.
+- Improve line/span discipline: prefer exact startLine/endLine near the concrete issue.
+- Avoid broad architectural commentary unless it points to a concrete code location.
+- Name issue types with common analyzer-like categories: Long Method, Long Parameter List, Magic Number, Duplicated Code, Deeply Nested Ifs, God Class, Tight Coupling, Unused Variable, Resource Leak, Null Dereference Risk.
+- If optimizing coverage, ask for more concrete findings but still require evidence.
+- If reducing false positives, ask for fewer high-confidence findings with specific code evidence.
+"""
+    else:
+        domain_guidance = """
+Localization benchmark guidance:
+- Rank concrete files, not packages or vague components.
+- Use query terms, class/file names, UI concepts, model/controller names, and likely implementation responsibilities.
+- Put the most likely correct file first, then diversify related files.
+"""
+    prompt = f"""
+Generate {int(count)} improved prompt templates for StarLLM AutoResearch.
+
+Task: {task_label}
+Optimization objective: {objective}
+Mutation focus: {mutation_focus}
+Seed prompt name: {seed_name}
+Required placeholders: {placeholders}
+
+Recent benchmark history:
+{history_summary}
+
+{domain_guidance}
+
+Rules:
+- Return JSON only, no markdown.
+- JSON shape: [{{"name":"short_id","template":"prompt template text"}}]
+- Keep every generated template compatible with the required placeholders.
+- Do not include ground-truth answers, dataset-specific file names, or benchmark leakage.
+- Prefer prompts that improve measurable benchmark behavior, not verbose explanations.
+- Make each variant meaningfully different from the seed and from the recent rejected attempts.
+- Keep templates concise enough for repeated benchmarking.
+
+Seed template:
+{seed_template}
+"""
+    content, _ = llm.chat(
+        messages=[
+            {"role": "system", "content": "You design benchmarkable prompt variants. Return strict JSON only."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.7,
+        max_tokens=2500,
+        return_meta=True,
+    )
+    text = str(content or "").strip()
+    if text.startswith("```"):
+        text = text.strip("`").strip()
+        if text.lower().startswith("json"):
+            text = text[4:].strip()
+    try:
+        data = json.loads(text)
+    except Exception:
+        match = re.search(r"\[.*\]", text, flags=re.DOTALL)
+        if not match:
+            raise ValueError("The LLM did not return a JSON array of prompt variants.")
+        data = json.loads(match.group(0))
+    if not isinstance(data, list):
+        raise ValueError("The LLM response must be a JSON array.")
+
+    out: dict[str, str] = {}
+    if task_key == "human_smell_oracle":
+        required = ["smell", "language", "code"]
+    else:
+        required = ["language", "code"] if task_key == "code_smell_detection" else ["query", "candidate_text", "top_k"]
+    for idx, item in enumerate(data[:count], start=1):
+        if not isinstance(item, dict):
+            continue
+        raw_name = str(item.get("name") or f"variant_{idx}")
+        name = re.sub(r"[^A-Za-z0-9_-]+", "_", raw_name.strip()).strip("_").lower() or f"variant_{idx}"
+        template = str(item.get("template") or "").strip()
+        if not template:
+            continue
+        missing = [placeholder for placeholder in required if "{" + placeholder + "}" not in template]
+        if missing:
+            continue
+        candidate_name = f"auto_{name}"
+        suffix = 2
+        while candidate_name in out:
+            candidate_name = f"auto_{name}_{suffix}"
+            suffix += 1
+        out[candidate_name] = template
+    if not out:
+        raise ValueError("No usable prompt variants were generated. Try another seed prompt or objective.")
+    return out
+
 if page == "📝 Manage Prompts":
     render_tab_manage_prompts()
+
+if page == "🧪 AutoResearch":
+    render_tab_autoresearch()
 
 # ==========================================================
 # Tab 4 : Results DB

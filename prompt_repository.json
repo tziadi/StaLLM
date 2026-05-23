@@ -1,0 +1,124 @@
+{
+  "code_smell_detection": {
+    "label": "Code smell detection",
+    "description": "Span-level detection of maintainability issues and code smells against analyzer ground truth.",
+    "prompts": {
+      "baseline": {
+        "template": "You are a software quality analyzer specialized in {language}.\nTask: detect potential issues.\nCode:\n{code}\nReturn STRICT JSON: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "java_strict": {
+        "template": "You are a static-analysis annotator for Java.\nReturn a JSON ARRAY ONLY. No prose, no fences.\nEach item: {\"type\": string, \"description\": string, and either \"line\": int\nOR (\"startLine\": int, \"endLine\": int)}.\nPrefer common Java smells: Long Method, Deeply Nested Ifs, Magic Number,\nLong Parameter List, God Class, Tight Coupling, Unused Variable,\nNull Dereference Risk, Resource Leak, Duplicated Code.\nReturn at least 3 plausible findings when reasonable.\n\n{code}",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "php_strict": {
+        "template": "You are a static-analysis annotator for PHP.\nReturn a JSON ARRAY ONLY. No prose, no fences.\nEach item: {\"type\": string, \"description\": string, and either \"line\": int\nOR (\"startLine\": int, \"endLine\": int)}.\nPrefer: Long Method, Deeply Nested Ifs, Magic Number, Long Parameter List,\nGod Class, Tight Coupling, Unused Variable, SQL Injection Risk, XSS Risk,\nNull Dereference Risk, Resource Leak.\nReturn at least 3 plausible findings when reasonable.\n\n{code}",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "scanner": {
+        "template": "You are a static analyzer like SonarQube.\nTask: detect ALL issues in {language} code.\nCode:\n{code}\nReturn STRICT JSON only: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "hybrid": {
+        "template": "You are BOTH a static analyzer and a careful human auditor.\nTask: detect ALL issues in {language} code (style, maintainability, performance, security).\nCode:\n{code}\nReturn STRICT JSON only: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "vulnirability_prompt": {
+        "template": "You are an application security reviewer specialized in {language}.\nTask: detect credible vulnerabilities only (e.g., SQL injection, XSS, command/OS injection, path traversal, SSRF, insecure deserialization, weak crypto, hardcoded secrets, missing auth/validation, unsafe file I/O). No style/smell items. De-duplicate similar findings. Max 10.\n\nCode:\n{code}\n\nReturn STRICT JSON (array only, no prose/markdown).\nEach item must be one of the two forms:\n\n{\"type\":\"<CWE or short label>\",\"description\":\"<concise why/where>\",\"line\":<int>}\n\n{\"type\":\"<CWE or short label>\",\"description\":\"<concise why/where>\",\"startLine\":<int>,\"endLine\":<int>}\n\nIf no findings, return [].",
+        "tags": [
+          "span-level",
+          "json"
+        ],
+        "source": "strategies.json"
+      },
+      "auto_evidence_based_i1_2_promoted": {
+        "template": "You are an advanced static analyzer for {language}. Carefully assess the provided code snippet for potential issues, focusing on high-confidence findings with clear evidence. Use categories like Resource Leak, Unused Variable, or God Class. Keep line/span annotations specific to the exact problematic code. Code: {code} Return STRICT JSON: [{{\"type\":\"issue\",\"description\":\"...\",\"line\":<line or null>}}]",
+        "tags": [
+          "autoresearch",
+          "promoted"
+        ],
+        "source": "autoresearch"
+      }
+    }
+  },
+  "feature_location": {
+    "label": "Feature location",
+    "description": "File-level ranking of source files that implement or refine a requested feature.",
+    "prompts": {
+      "baseline": {
+        "template": "You are a software maintenance assistant performing {task_name}.\n\nProject: {project}\nLanguage: {language}\nCandidate level: {candidate_level}\n\nQuery:\n{query}\n\nCandidate files:\n{candidate_text}\n\nReturn JSON only, no markdown. Rank the top {top_k} files most likely to be relevant.\nSchema:\n[\n  {{\"rank\": 1, \"file\": \"path/to/File.ext\", \"confidence\": 0.0, \"rationale\": \"short reason\"}}\n]\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      },
+      "feature_evidence": {
+        "template": "You are performing feature location in a software product line.\n\nGoal: identify source files that implement, refine, or directly support the requested feature.\nPrefer files whose package/class names, diagram concepts, UI actions, graph models, renderers, parsers, or property panels semantically match the feature.\n\nProject: {project}\nLanguage: {language}\n\nFeature query:\n{query}\n\nCandidate files:\n{candidate_text}\n\nReturn strict JSON only. Rank the top {top_k} files.\nEach item must include: rank, file, confidence from 0 to 1, and a short rationale.\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      },
+      "terse_ranking": {
+        "template": "Rank files for {task_name}.\n\nProject: {project}\nQuery:\n{query}\n\nFiles:\n{candidate_text}\n\nReturn only JSON array with top {top_k}: rank, file, confidence, rationale.\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      }
+    }
+  },
+  "bug_location": {
+    "label": "Bug location",
+    "description": "File-level ranking of source files likely to be changed for a bug report.",
+    "prompts": {
+      "baseline": {
+        "template": "You are a software maintenance assistant performing {task_name}.\n\nProject: {project}\nLanguage: {language}\nCandidate level: {candidate_level}\n\nQuery:\n{query}\n\nCandidate files:\n{candidate_text}\n\nReturn JSON only, no markdown. Rank the top {top_k} files most likely to be relevant.\nSchema:\n[\n  {{\"rank\": 1, \"file\": \"path/to/File.ext\", \"confidence\": 0.0, \"rationale\": \"short reason\"}}\n]\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      },
+      "bug_report": {
+        "template": "You are performing bug localization from a bug report.\n\nGoal: rank the source files most likely to require a fix.\nUse report terms, stack/API clues, component names, symptoms, and likely control/data flow.\n\nProject: {project}\nLanguage: {language}\n\nBug report:\n{query}\n\nCandidate files:\n{candidate_text}\n\nReturn strict JSON only. Rank the top {top_k} files.\nEach item must include: rank, file, confidence from 0 to 1, and a short rationale.\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      },
+      "terse_ranking": {
+        "template": "Rank files for {task_name}.\n\nProject: {project}\nQuery:\n{query}\n\nFiles:\n{candidate_text}\n\nReturn only JSON array with top {top_k}: rank, file, confidence, rationale.\n",
+        "tags": [
+          "file-ranking",
+          "json"
+        ],
+        "source": "built-in"
+      }
+    }
+  }
+}

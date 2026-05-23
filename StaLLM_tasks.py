@@ -244,6 +244,24 @@ def paths_match(predicted: Any, gold: Any) -> bool:
     return p == g or p.endswith(f"/{g}") or g.endswith(f"/{p}")
 
 
+def _safe_prompt_format(template: str, values: dict[str, Any]) -> str:
+    """Format known placeholders while tolerating literal JSON braces."""
+
+    try:
+        return template.format(**values)
+    except (KeyError, ValueError):
+        protected = str(template)
+        tokens: dict[str, str] = {}
+        for key in sorted(values, key=len, reverse=True):
+            token = f"@@STALLM_{key.upper()}@@"
+            tokens[key] = token
+            protected = protected.replace("{" + key + "}", token)
+        protected = protected.replace("{", "{{").replace("}", "}}")
+        for key, token in tokens.items():
+            protected = protected.replace(token, "{" + key + "}")
+        return protected.format(**values)
+
+
 def build_location_prompt(
     task: MaintenanceTask,
     candidates: Iterable[str],
@@ -261,15 +279,15 @@ def build_location_prompt(
     candidate_text = "\n".join(f"- {c}" for c in candidates)
     templates = prompt_templates or LOCATION_PROMPT_TEMPLATES
     template = templates.get(prompt_style) or templates.get("baseline") or LOCATION_PROMPT_TEMPLATES["baseline"]
-    return template.format(
-        task_name=task_name,
-        project=task.project,
-        language=task.language or "unknown",
-        candidate_level=task.candidate_level,
-        query=task.query,
-        candidate_text=candidate_text,
-        top_k=top_k,
-    )
+    return _safe_prompt_format(template, {
+        "task_name": task_name,
+        "project": task.project,
+        "language": task.language or "unknown",
+        "candidate_level": task.candidate_level,
+        "query": task.query,
+        "candidate_text": candidate_text,
+        "top_k": top_k,
+    })
 
 
 def run_location_task(

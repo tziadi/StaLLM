@@ -394,14 +394,37 @@ def _fallback_heuristics(code: str, min_findings: int = 3) -> List[Dict[str, Any
     findings.extend(_heuristic_todos(lines))
     return findings[: max(min_findings, len(findings))]
 
+def _safe_prompt_format(template: str, values: Dict[str, Any]) -> str:
+    """Format known placeholders while tolerating literal JSON braces."""
+
+    try:
+        return template.format(**values)
+    except (KeyError, ValueError):
+        protected = str(template)
+        tokens: Dict[str, str] = {}
+        for key in sorted(values, key=len, reverse=True):
+            token = f"@@STALLM_{key.upper()}@@"
+            tokens[key] = token
+            protected = protected.replace("{" + key + "}", token)
+        protected = protected.replace("{", "{{").replace("}", "}}")
+        for key, token in tokens.items():
+            protected = protected.replace(token, "{" + key + "}")
+        return protected.format(**values)
+
 # =========================
 # LLM call (sanitizer + retry + heuristics; never bubble exceptions)
 # =========================
-def analyze_with_llm(code: str, mode: str, language: str, llm: ChatModel) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
-    strategies = load_strategies()
+def analyze_with_llm(
+    code: str,
+    mode: str,
+    language: str,
+    llm: ChatModel,
+    prompt_templates: Optional[Dict[str, str]] = None,
+) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+    strategies = prompt_templates or load_strategies()
     template = strategies.get(mode) or strategies.get("baseline") or "Language: {language}\nCode:\n{code}\nReturn JSON array."
     code_snippet = code[:20000]
-    base_prompt = template.format(language=language, code=code_snippet)
+    base_prompt = _safe_prompt_format(template, {"language": language, "code": code_snippet})
 
     rules_footer = (
         "\n\nOutput rules (MANDATORY):\n"
@@ -806,6 +829,7 @@ def run_experiment(
     user_use_line_span: Optional[bool] = True,   # compatibility with UI switch
     user_use_cols_single: Optional[bool] = True,
     llm: Optional[ChatModel] = None,
+    prompt_templates: Optional[Dict[str, str]] = None,
 ):
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
@@ -836,7 +860,7 @@ def run_experiment(
             code_by_file[base] = code
 
             # analyze_with_llm handles its own errors and falls back to heuristics
-            smells, usage = analyze_with_llm(code, mode, language, llm)
+            smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates)
 
             for smell in smells or []:
                 item = dict(smell)
