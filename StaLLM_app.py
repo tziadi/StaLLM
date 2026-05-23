@@ -1754,6 +1754,14 @@ def _render_comparison_review_boards(metrics_df: pd.DataFrame, label: str) -> No
     _render_one_board(selected)
 
 def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.DataFrame, samples: dict[str, Any]) -> None:
+    if not metrics_df.empty:
+        _row = metrics_df.iloc[0].to_dict()
+        _render_matching_config_badge(
+            _row,
+            preset=str(_row.get("preset", "Balanced")),
+            language=str(_row.get("language", "?")),
+            model_label=str(_row.get("model", "?")),
+        )
     st.markdown("### 📁 Universe U (files considered)")
     _render_pro_dataframe(summary_U)
 
@@ -1783,6 +1791,14 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
             st.json(sample)
 
 def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.DataFrame, samples: dict[str, Any]) -> None:
+    if not metrics_df.empty:
+        _row = metrics_df.iloc[0].to_dict()
+        _render_matching_config_badge(
+            _row,
+            preset=str(_row.get("preset", "Balanced")),
+            language=str(_row.get("language", "?")),
+            model_label=f"{len(metrics_df)} models compared",
+        )
     st.markdown("### 📁 Universe U (files considered)")
     _render_pro_dataframe(summary_U)
     st.markdown("### 📐 Metrics per Model")
@@ -1822,6 +1838,25 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
         with st.expander(f"🔹 {model_label} (sample)"):
             st.json(sample)
 
+def _render_matching_config_badge(metrics: dict[str, Any], *, preset: str, language: str, model_label: str) -> None:
+    require_type = metrics.get("require_type", True)
+    use_cols = metrics.get("use_cols_single", True)
+    top_k = metrics.get("top_k_total_files", "?")
+    positives = (metrics.get("diagnostics") or {}).get("positives", "?")
+    negatives = (metrics.get("diagnostics") or {}).get("negatives", "?")
+    type_label = "type-aware" if require_type else "location-only"
+    col_label  = "col-aware"  if use_cols    else "line-only"
+    st.markdown(
+        f"<div style='margin:.5rem 0 .75rem;display:flex;flex-wrap:wrap;gap:7px;font-size:13px;'>"
+        f"<span class='pill'>🌐 {escape(language)}</span>"
+        f"<span class='pill'>🤖 {escape(model_label)}</span>"
+        f"<span class='pill'>⚖️ Preset: {escape(preset)}</span>"
+        f"<span class='pill'>🔍 Matching: {type_label}, {col_label}</span>"
+        f"<span class='pill'>📂 Universe: {top_k} files ({positives}+ / {negatives}−)</span>"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+
 def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any], usage_totals: dict[str, Any],
                                *, prompt_label: str, language: str, model_label: str, preset: str) -> None:
     st.markdown("### 📁 Universe U (files considered)")
@@ -1833,6 +1868,8 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
     with c2: kpi("Recall",    pct(metrics.get("recall", 0.0)), "warn")
     with c3: kpi("F1 Score",  pct(metrics.get("f1", 0.0)), "ok")
     with c4: kpi("Elapsed",   f"{metrics.get('time_s', 0.0):.2f}s", "ok")
+
+    _render_matching_config_badge(metrics, preset=preset, language=language, model_label=model_label)
 
     metrics_df_single = pd.DataFrame([{
         "precision": metrics.get("precision", 0.0),

@@ -1,6 +1,6 @@
 # StaLLM_v2_core.py
 import os, re, json, zipfile, tempfile, time
-from typing import Dict, List, Any, Tuple, Optional
+from typing import Dict, List, Any, Tuple, Optional, NamedTuple
 from pathlib import Path
 
 import pandas as pd
@@ -524,10 +524,47 @@ _TYPE_ALIASES = {
     "resourceleak": "resource_leak",
     "missingnullcheck": "missing_null_check",
 }
+
+# SonarQube rule IDs (java:S138, squid:S138, csharpsquid:S138, php:S138, …)
+# S-numbers are consistent across languages for equivalent rules.
+_SONAR_RULE_TO_SMELL: Dict[str, str] = {
+    "s138":   "long_method",           # Method too long
+    "s3776":  "complex_method",        # Cognitive complexity
+    "s1541":  "complex_method",        # Cyclomatic complexity
+    "s6541":  "complex_method",        # Brain method
+    "s107":   "long_parameter_list",   # Too many parameters
+    "s1448":  "god_class",             # Too many methods in class
+    "s1200":  "god_class",             # Too many dependencies
+    "s2436":  "god_class",             # Too many fields
+    "s1135":  "maintainability_note",  # TODO/FIXME
+    "s1854":  "unused_variable",       # Unnecessary assignment
+    "s1481":  "unused_variable",       # Unused local variable
+    "s1068":  "unused_variable",       # Unused private field
+    "s2095":  "resource_leak",         # Resources not closed
+    "s1143":  "resource_leak",         # Return/throw inside finally
+    "s2259":  "missing_null_check",    # Null dereference
+    "s1066":  "deeply_nested_ifs",     # Collapsible if
+    "s1479":  "deeply_nested_ifs",     # Switch cases too many
+    "s109":   "magic_number",          # Magic number
+    "s1192":  "magic_number",          # String literal duplicated
+    "s1301":  "deeply_nested_ifs",     # Switch with single case
+}
+
+# Pattern: optional prefix (java, squid, csharpsquid, php, …) + colon + S + digits
+_SONAR_RULE_RE = re.compile(r"^(?:[a-z]+:)?[Ss](\d+)$", re.IGNORECASE)
+
 def _norm_type(x: Any) -> Optional[str]:
     if x is None:
         return None
-    t = re.sub(r"[^a-z0-9]+", "", str(x).strip().lower())
+    raw = str(x).strip()
+    if not raw:
+        return None
+    # SonarQube rule ID takes priority before stripping special chars
+    m = _SONAR_RULE_RE.match(raw)
+    if m:
+        key = f"s{m.group(1)}"
+        return _SONAR_RULE_TO_SMELL.get(key, key)
+    t = re.sub(r"[^a-z0-9]+", "", raw.lower())
     if not t:
         return None
     return _TYPE_ALIASES.get(t, t)
@@ -797,6 +834,29 @@ def _cost_usd(pt: int, ct: int, llm: ChatModel) -> float:
     return (pt / 1000.0) * in_rate + (ct / 1000.0) * out_rate
 
 # =========================
+# Experiment context (shared universe across runs)
+# =========================
+class ExperimentContext(NamedTuple):
+    language: str
+    exts: Optional[List[str]]
+    gt_spans: Any          # pd.DataFrame
+    summary_U: Any         # pd.DataFrame
+    diag: Dict[str, Any]
+
+def _prepare_context(
+    zip_path: str,
+    static_csv: str,
+    top_k: int,
+    pos_ratio: float,
+) -> ExperimentContext:
+    language = detect_language_from_zip(zip_path)
+    exts = find_exts_for_language(language) or None
+    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    return ExperimentContext(language=language, exts=exts, gt_spans=gt_spans,
+                             summary_U=summary_U, diag=diag)
+
+# =========================
 # Default LLM
 # =========================
 def _default_llm() -> ChatModel:
@@ -830,12 +890,15 @@ def run_experiment(
     user_use_cols_single: Optional[bool] = True,
     llm: Optional[ChatModel] = None,
     prompt_templates: Optional[Dict[str, str]] = None,
+    _ctx: Optional[ExperimentContext] = None,
 ):
-    language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
-
-    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    if _ctx is not None:
+        language, exts, gt_spans, summary_U, diag = _ctx
+    else:
+        language = detect_language_from_zip(zip_path)
+        exts = find_exts_for_language(language) or None
+        gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+        summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
 
     llm = llm or _default_llm()
     pt_sum = ct_sum = tt_sum = 0
@@ -1049,10 +1112,7 @@ def run_selected_experiments(
     samples_dict = {}
     llm = llm or _default_llm()
 
-    language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
-    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    ctx = _prepare_context(zip_path, static_csv, top_k, pos_ratio)
 
     for idx, mode in enumerate(selected_modes):
         if status:
@@ -1061,7 +1121,7 @@ def run_selected_experiments(
         results, _, metrics, usage_totals = run_experiment(
             zip_path, static_csv, mode, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
             user_require_type=user_require_type, user_use_line_span=user_use_line_span,
-            user_use_cols_single=user_use_cols_single, llm=llm
+            user_use_cols_single=user_use_cols_single, llm=llm, _ctx=ctx
         )
         elapsed = time.time() - start
         row = dict(metrics)
@@ -1081,7 +1141,7 @@ def run_selected_experiments(
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds for `{mode}`")
 
     metrics_df = pd.DataFrame(all_metrics).set_index("strategy")
-    return summary_U, metrics_df, samples_dict
+    return ctx.summary_U, metrics_df, samples_dict
 
 def run_selected_models_experiments(
     zip_path: str,
@@ -1100,17 +1160,17 @@ def run_selected_models_experiments(
 ):
     rows = []
     samples = {}
-    language = detect_language_from_zip(zip_path)
+    ctx = _prepare_context(zip_path, static_csv, top_k, pos_ratio)
 
     for i, llm in enumerate(llms, 1):
         label = llm.model_label()
         if status:
             status.markdown(f"🔍 `{label}` with strategy `{strategy}`…")
         start = time.time()
-        results, summary_U, metrics, usage_totals = run_experiment(
+        results, _, metrics, usage_totals = run_experiment(
             zip_path, static_csv, strategy, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
             user_require_type=user_require_type, user_use_line_span=user_use_line_span,
-            user_use_cols_single=user_use_cols_single, llm=llm
+            user_use_cols_single=user_use_cols_single, llm=llm, _ctx=ctx
         )
         elapsed = time.time() - start
         rows.append({
@@ -1122,7 +1182,7 @@ def run_selected_models_experiments(
             "fp": metrics.get("fp", 0),
             "fn": metrics.get("fn", 0),
             "time_s": round(elapsed, 2),
-            "language": language,
+            "language": ctx.language,
             "top_k_total_files": metrics.get("top_k_total_files", 0),
             "prompt_tokens": usage_totals.get("prompt_tokens", 0),
             "completion_tokens": usage_totals.get("completion_tokens", 0),
@@ -1136,4 +1196,4 @@ def run_selected_models_experiments(
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds • {label}")
 
     metrics_df = pd.DataFrame(rows).set_index("model")
-    return summary_U, metrics_df, samples
+    return ctx.summary_U, metrics_df, samples
