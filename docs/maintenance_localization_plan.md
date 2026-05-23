@@ -1,13 +1,13 @@
 # StarLLM Maintenance Localization Extension
 
-This branch extends StarLLM from static-analysis benchmarking toward a common
+This branch extends StarLLM from code-smell detection benchmarking toward a common
 localization benchmark for software maintenance tasks.
 
 ## Target Tasks
 
 | Task | Query | Gold locations | Main metrics |
 | --- | --- | --- | --- |
-| Static analysis | Source code + smell prompt | Analyzer spans/files | Precision, recall, F1 |
+| Code smell detection | Source code + smell prompt | Analyzer spans/files | Precision, recall, F1 |
 | Feature location | Feature description | Feature-related files/classes/methods | Hit@K, Recall@K, MRR, MAP |
 | Bug location | Bug report / issue | Files changed by the fixing commit | Hit@K, Recall@K, MRR, MAP |
 
@@ -38,7 +38,7 @@ localization benchmark for software maintenance tasks.
 
 ## First Implementation Scope
 
-- Keep the existing static-analysis pipeline stable.
+- Keep the existing code-smell detection pipeline stable.
 - Add adapters that normalize feature/bug datasets into `MaintenanceTask`.
 - Add file-level ranking metrics: `Hit@K`, `Recall@K`, `MRR`, and `MAP`.
 - Add task-specific prompts that ask the LLM to return ranked file predictions.

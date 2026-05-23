@@ -249,6 +249,7 @@ def build_location_prompt(
     candidates: Iterable[str],
     top_k: int = 10,
     prompt_style: str = "baseline",
+    prompt_templates: Optional[dict[str, str]] = None,
 ) -> str:
     """Build a task-specific prompt for file-level bug/feature localization."""
 
@@ -258,7 +259,8 @@ def build_location_prompt(
         MaintenanceTaskType.STATIC_ANALYSIS: "static analysis",
     }.get(task.task_type, "code localization")
     candidate_text = "\n".join(f"- {c}" for c in candidates)
-    template = LOCATION_PROMPT_TEMPLATES.get(prompt_style) or LOCATION_PROMPT_TEMPLATES["baseline"]
+    templates = prompt_templates or LOCATION_PROMPT_TEMPLATES
+    template = templates.get(prompt_style) or templates.get("baseline") or LOCATION_PROMPT_TEMPLATES["baseline"]
     return template.format(
         task_name=task_name,
         project=task.project,
@@ -276,6 +278,7 @@ def run_location_task(
     llm: Any,
     top_k: int = 10,
     prompt_style: str = "baseline",
+    prompt_templates: Optional[dict[str, str]] = None,
 ) -> dict[str, Any]:
     """Run one feature/bug localization task with a ChatModel-like object.
 
@@ -284,7 +287,13 @@ def run_location_task(
     to one concrete LLM implementation.
     """
 
-    prompt = build_location_prompt(task, candidates, top_k=top_k, prompt_style=prompt_style)
+    prompt = build_location_prompt(
+        task,
+        candidates,
+        top_k=top_k,
+        prompt_style=prompt_style,
+        prompt_templates=prompt_templates,
+    )
     content, meta = llm.chat(
         messages=[
             {"role": "system", "content": "You rank source files for software maintenance localization. Return strict JSON only."},

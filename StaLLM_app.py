@@ -2,6 +2,7 @@
 # Pro UI: Inter/JetBrains Mono fonts, premium hero, glass cards, KPI chips,
 # code viewer with line numbers + highlights, strictness guide, Top-K/Positive illustration.
 import base64
+import json
 import re
 import time
 import os
@@ -510,8 +511,27 @@ st.markdown("""
   box-shadow:0 8px 18px rgba(15,23,42,.06) !important;
 }
 .stButton > button{
+  background:#1f497d !important;
+  border:1px solid #1f497d !important;
+  color:#ffffff !important;
   border-radius:7px !important;
   box-shadow:0 8px 16px rgba(31,73,125,.18) !important;
+}
+.stButton > button:hover{
+  background:#183b66 !important;
+  border-color:#183b66 !important;
+  color:#ffffff !important;
+}
+.stButton > button:focus{
+  box-shadow:0 0 0 3px rgba(31,73,125,.22), 0 8px 16px rgba(31,73,125,.18) !important;
+}
+[data-testid="baseButton-primary"]{
+  background:#1f497d !important;
+  border-color:#1f497d !important;
+}
+[data-testid="baseButton-primary"]:hover{
+  background:#183b66 !important;
+  border-color:#183b66 !important;
 }
 [data-testid="stAlert"]{
   border-radius:8px !important;
@@ -590,6 +610,111 @@ def _sidebar_prompt_preview(title: str, prompts: dict[str, str], selected: str |
                 st.divider()
             st.caption(str(name))
             st.code(str(prompts.get(name, ""))[:3500], language="text")
+
+def _render_prompt_preview_panel(
+    title: str,
+    prompts: dict[str, str],
+    selected: str | list[str] | tuple[str, ...],
+    *,
+    preview_builder=None,
+) -> None:
+    selected_items = [selected] if isinstance(selected, str) else list(selected or [])
+    selected_items = [item for item in selected_items if item]
+    if not selected_items:
+        return
+    st.markdown(f"### {title}")
+    st.caption("Same preview pattern for every maintenance activity: inspect the prompt before launching the experiment.")
+    tabs = st.tabs([str(item) for item in selected_items[:4]])
+    for tab, name in zip(tabs, selected_items[:4]):
+        with tab:
+            prompt_text = preview_builder(name) if preview_builder else prompts.get(name, "")
+            st.code(str(prompt_text or "")[:6000], language="text")
+    if len(selected_items) > 4:
+        st.caption(f"{len(selected_items) - 4} additional prompt(s) selected; only the first four are previewed here.")
+
+PROMPT_REPOSITORY_FILE = Path(__file__).with_name("prompt_repository.json")
+PROMPT_TASKS = {
+    "code_smell_detection": {
+        "label": "Code smell detection",
+        "description": "Span-level detection of maintainability issues and code smells against analyzer ground truth.",
+    },
+    "feature_location": {
+        "label": "Feature location",
+        "description": "File-level ranking of source files that implement or refine a requested feature.",
+    },
+    "bug_location": {
+        "label": "Bug location",
+        "description": "File-level ranking of source files likely to be changed for a bug report.",
+    },
+}
+
+def _prompt_entry(template: str, *, tags: list[str] | None = None, source: str = "user") -> dict[str, Any]:
+    return {"template": str(template), "tags": tags or [], "source": source}
+
+def _default_prompt_repository() -> dict[str, Any]:
+    smell_prompts = {
+        name: _prompt_entry(text, tags=["span-level", "json"], source="strategies.json")
+        for name, text in load_strategies().items()
+    }
+    feature_prompts = {
+        name: _prompt_entry(text, tags=["file-ranking", "json"], source="built-in")
+        for name, text in LOCATION_PROMPT_TEMPLATES.items()
+        if name in {"baseline", "feature_evidence", "terse_ranking"}
+    }
+    bug_prompts = {
+        name: _prompt_entry(text, tags=["file-ranking", "json"], source="built-in")
+        for name, text in LOCATION_PROMPT_TEMPLATES.items()
+        if name in {"baseline", "bug_report", "terse_ranking"}
+    }
+    return {
+        task_key: {
+            "label": meta["label"],
+            "description": meta["description"],
+            "prompts": {
+                "code_smell_detection": smell_prompts,
+                "feature_location": feature_prompts,
+                "bug_location": bug_prompts,
+            }[task_key],
+        }
+        for task_key, meta in PROMPT_TASKS.items()
+    }
+
+def _load_prompt_repository() -> dict[str, Any]:
+    repo = _default_prompt_repository()
+    if PROMPT_REPOSITORY_FILE.exists():
+        try:
+            data = json.loads(PROMPT_REPOSITORY_FILE.read_text(encoding="utf-8"))
+            if isinstance(data, dict):
+                for task_key, task_data in data.items():
+                    if task_key not in repo or not isinstance(task_data, dict):
+                        continue
+                    repo[task_key]["label"] = str(task_data.get("label") or repo[task_key]["label"])
+                    repo[task_key]["description"] = str(task_data.get("description") or repo[task_key]["description"])
+                    prompts = task_data.get("prompts") or {}
+                    if isinstance(prompts, dict):
+                        for name, entry in prompts.items():
+                            if isinstance(entry, dict):
+                                repo[task_key]["prompts"][str(name)] = {
+                                    "template": str(entry.get("template", "")),
+                                    "tags": list(entry.get("tags") or []),
+                                    "source": str(entry.get("source") or "repository"),
+                                }
+                            else:
+                                repo[task_key]["prompts"][str(name)] = _prompt_entry(str(entry), source="legacy")
+        except Exception:
+            pass
+    return repo
+
+def _save_prompt_repository(repo: dict[str, Any]) -> None:
+    PROMPT_REPOSITORY_FILE.write_text(json.dumps(repo, indent=2, ensure_ascii=False), encoding="utf-8")
+    smell_prompts = _prompt_templates_for_task("code_smell_detection", repo=repo)
+    if smell_prompts:
+        save_strategies(smell_prompts)
+
+def _prompt_templates_for_task(task_key: str, *, repo: dict[str, Any] | None = None) -> dict[str, str]:
+    source = repo or _load_prompt_repository()
+    prompts = ((source.get(task_key) or {}).get("prompts") or {})
+    return {str(name): str((entry or {}).get("template", "")) for name, entry in prompts.items() if isinstance(entry, dict)}
 
 def _render_bar_chart(
     df: pd.DataFrame,
@@ -1649,7 +1774,7 @@ st.markdown(f"""
     <img class="hero-logo" src="{BRAND_LOGO_DATA_URI}" alt="StarLLM logo" />
     <h1>StarLLM: Static Analysis meets LLMs</h1>
   </div>
-  <p>LLM-guided static analysis with span-level evaluation, token/cost accounting, and crisp benchmarking workflows.</p>
+  <p>LLM-guided code-smell detection with span-level evaluation, token/cost accounting, and crisp benchmarking workflows.</p>
   <div class="badges">
     <span class="badge">Span-level scoring</span>
     <span class="badge">Universe sampling (Top-K)</span>
@@ -1846,12 +1971,14 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                                   key="run_preset",
                                   help="Controls IoU threshold and line tolerance (δ).")
 
-    strategies = load_strategies()
+    strategies = _prompt_templates_for_task("code_smell_detection")
+    selected_prompt_names: list[str] = []
     if mode_run == "Single prompt":
         if not strategies:
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             return
         prompt_mode = sidebar_target.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
+        selected_prompt_names = [prompt_mode]
         if render_sidebar:
             _sidebar_prompt_preview("View selected prompt", strategies, prompt_mode, target=sidebar_target)
     elif mode_run == "Compare selected prompts":
@@ -1860,6 +1987,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             list(strategies.keys()),
             default=[k for k in ["baseline", "scanner", "hybrid"] if k in strategies],
         )
+        selected_prompt_names = list(selected_modes)
         if render_sidebar:
             _sidebar_prompt_preview("View selected prompts", strategies, selected_modes, target=sidebar_target)
     else:
@@ -1867,6 +1995,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
             return
         prompt_mode = sidebar_target.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
+        selected_prompt_names = [prompt_mode]
         if render_sidebar:
             _sidebar_prompt_preview("View fixed prompt", strategies, prompt_mode, target=sidebar_target)
 
@@ -1880,10 +2009,11 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             return
 
     if not render_sidebar:
-        st.info("Open this tab directly to configure and run static-analysis experiments.")
+        st.info("Open this tab directly to configure and run code-smell detection experiments.")
         return
 
-    st.markdown("### 📂 Input data")
+    st.markdown("### Input Dataset")
+    st.caption("Choose a bundled demo or upload your own project and analyzer ground truth.")
     demo_sets = _demo_datasets()
     use_demo = st.checkbox(
         "Use bundled demo dataset",
@@ -1927,6 +2057,8 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
         preflight_report["llm"] = {"ok": True, "message": f"{len(labels)} model(s): {', '.join(labels[:3])}{'...' if len(labels) > 3 else ''}"}
         preflight_ok = all(preflight_report[k]["ok"] for k in ["zip", "csv", "language", "universe", "llm"])
     _render_preflight(preflight_report)
+
+    _render_prompt_preview_panel("Prompt Preview", strategies, selected_prompt_names)
 
     # Capabilities (type/line/column)
     user_require_type = False
@@ -2167,12 +2299,12 @@ def render_tab_maintenance_tasks(settings_target=None):
     settings = settings_target or st.sidebar
     activity = settings.selectbox(
         "Maintenance activity",
-        ["Static analysis", "Feature location", "Bug location"],
+        ["Code smell detection", "Feature location", "Bug location"],
         index=0,
         help="Choose the software maintenance activity before selecting prompts or models.",
     )
     _render_maintenance_activity_intro(activity)
-    if activity == "Static analysis":
+    if activity == "Code smell detection":
         render_tab_run_experiments(render_sidebar=True, settings_target=settings)
         return
     if activity == "Bug location":
@@ -2186,6 +2318,16 @@ def render_tab_maintenance_tasks(settings_target=None):
         return
 
     if activity == "Feature location":
+        default_gt = "data/apps/Feature Location-ArgoUML"
+        default_zip = "data/apps/ArgoUML/ArgoUML.zip"
+        st.session_state.setdefault("fl_gt_path", default_gt)
+        st.session_state.setdefault("fl_repo_zip", default_zip)
+        st.session_state.setdefault("fl_top_k", 10)
+        if settings.button("⚡ Load demo config", key="fl_load_demo_config"):
+            st.session_state.fl_gt_path = default_gt
+            st.session_state.fl_repo_zip = default_zip
+            st.session_state.fl_top_k = 10
+
         technique = settings.selectbox(
             "Technique / benchmark",
             ["ArgoUML SPL benchmark"],
@@ -2198,13 +2340,21 @@ def render_tab_maintenance_tasks(settings_target=None):
             ["Single prompt", "Compare selected prompts", "Compare LLM models"],
             index=0,
             key="maint_execution_mode",
-            help="Same experimental scenarios as static-analysis runs.",
+            help="Same experimental scenarios as code-smell detection runs.",
         )
-        default_gt = "data/apps/Feature Location-ArgoUML"
-        default_zip = "data/apps/ArgoUML/ArgoUML.zip"
         with settings.expander("Dataset paths", expanded=False):
-            gt_path = st.text_input("ArgoUML GT folder", value=default_gt)
-            repo_zip = st.text_input("ArgoUML source ZIP", value=default_zip)
+            gt_path = st.text_input("ArgoUML GT folder", key="fl_gt_path")
+            repo_zip = st.text_input("ArgoUML source ZIP", key="fl_repo_zip")
+
+        st.markdown("### Input Dataset")
+        st.caption("Same workflow as code-smell detection: select the benchmark data, inspect the prompt, then launch the run.")
+        dataset_cols = st.columns(3)
+        with dataset_cols[0]:
+            kpi("Benchmark", technique.replace(" benchmark", ""), "ok")
+        with dataset_cols[1]:
+            kpi("GT folder", Path(gt_path).name or "not set", "ok")
+        with dataset_cols[2]:
+            kpi("Source archive", Path(repo_zip).name or "not set", "warn")
 
         try:
             tasks = load_argouml_feature_tasks(gt_path, repo_zip=repo_zip)
@@ -2236,7 +2386,7 @@ def render_tab_maintenance_tasks(settings_target=None):
             return
         task = selected_tasks[0]
 
-        top_k = settings.slider("Top-K predictions", 1, 30, 10, 1, key="fl_top_k")
+        top_k = settings.slider("Top-K predictions", 1, 30, key="fl_top_k", step=1)
         try:
             candidates = list_repo_candidates(repo_zip, allowed_exts=[".java"])
         except Exception as e:
@@ -2253,22 +2403,23 @@ def render_tab_maintenance_tasks(settings_target=None):
             50,
             help="Number of candidate file paths included in the prompt.",
         )
-        prompt_options = [k for k in LOCATION_PROMPT_TEMPLATES.keys() if k in ("feature_evidence", "baseline", "terse_ranking")]
+        location_prompt_templates = _prompt_templates_for_task("feature_location") or LOCATION_PROMPT_TEMPLATES
+        prompt_options = list(location_prompt_templates.keys())
         if execution_mode == "Compare selected prompts":
             prompt_styles = settings.multiselect("Prompt styles", prompt_options, default=prompt_options[:2])
-            _sidebar_prompt_preview("View selected prompt templates", LOCATION_PROMPT_TEMPLATES, prompt_styles, target=settings)
+            _sidebar_prompt_preview("View selected prompt templates", location_prompt_templates, prompt_styles, target=settings)
             llm = build_llm("Maintenance ", target=settings)
             llms = []
         elif execution_mode == "Compare LLM models":
             prompt_style = settings.selectbox("Fixed prompt style", prompt_options, index=0)
             prompt_styles = [prompt_style]
-            _sidebar_prompt_preview("View fixed prompt template", LOCATION_PROMPT_TEMPLATES, prompt_style, target=settings)
+            _sidebar_prompt_preview("View fixed prompt template", location_prompt_templates, prompt_style, target=settings)
             llm = None
             llms = build_llms_for_comparison("Maintenance ", target=settings)
         else:
             prompt_style = settings.selectbox("Prompt style", prompt_options, index=0)
             prompt_styles = [prompt_style]
-            _sidebar_prompt_preview("View selected prompt template", LOCATION_PROMPT_TEMPLATES, prompt_style, target=settings)
+            _sidebar_prompt_preview("View selected prompt template", location_prompt_templates, prompt_style, target=settings)
             llm = build_llm("Maintenance ", target=settings)
             llms = []
 
@@ -2301,10 +2452,19 @@ def render_tab_maintenance_tasks(settings_target=None):
             kpi("Prompt candidates", str(len(focused_candidates)), "warn")
         st.caption(f"Candidate pool: {len(candidates)} Java files. Prompt includes top {len(focused_candidates)} lexical candidates.")
 
-        with st.expander("Prompt preview", expanded=False):
-            from StaLLM_tasks import build_location_prompt
-            preview_style = prompt_styles[0] if prompt_styles else "baseline"
-            st.code(build_location_prompt(task, focused_candidates, top_k=top_k, prompt_style=preview_style)[:6000], language="text")
+        from StaLLM_tasks import build_location_prompt
+        _render_prompt_preview_panel(
+            "Prompt Preview",
+            location_prompt_templates,
+            prompt_styles,
+            preview_builder=lambda style: build_location_prompt(
+                task,
+                focused_candidates,
+                top_k=top_k,
+                prompt_style=style,
+                prompt_templates=location_prompt_templates,
+            ),
+        )
 
         if execution_mode == "Compare selected prompts" and not prompt_styles:
             st.warning("Select at least one prompt style.")
@@ -2324,7 +2484,7 @@ def render_tab_maintenance_tasks(settings_target=None):
                 for style in prompt_styles:
                     with st.spinner(f"Running prompt style: {style} on {len(selected_tasks)} feature(s)"):
                         try:
-                            result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, style)
+                            result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, style, location_prompt_templates)
                         except Exception as e:
                             st.error(f"Feature-location run failed for {style}: {e}")
                             return
@@ -2335,7 +2495,7 @@ def render_tab_maintenance_tasks(settings_target=None):
                     label = model_llm.model_label()
                     with st.spinner(f"Running model: {label} on {len(selected_tasks)} feature(s)"):
                         try:
-                            result = _run_feature_location_batch(selected_tasks, candidates, model_llm, top_k, max_candidates, prompt_styles[0])
+                            result = _run_feature_location_batch(selected_tasks, candidates, model_llm, top_k, max_candidates, prompt_styles[0], location_prompt_templates)
                         except Exception as e:
                             st.error(f"Feature-location run failed for {label}: {e}")
                             return
@@ -2344,7 +2504,7 @@ def render_tab_maintenance_tasks(settings_target=None):
             else:
                 with st.spinner(f"Ranking files for {len(selected_tasks)} feature scenario(s)..."):
                     try:
-                        result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, prompt_styles[0])
+                        result = _run_feature_location_batch(selected_tasks, candidates, llm, top_k, max_candidates, prompt_styles[0], location_prompt_templates)
                     except Exception as e:
                         st.error(f"Feature-location run failed: {e}")
                         return
@@ -2356,7 +2516,7 @@ def render_tab_maintenance_tasks(settings_target=None):
 
 def _render_maintenance_activity_intro(activity: str) -> None:
     descriptions = {
-        "Static analysis": {
+        "Code smell detection": {
             "goal": "Detect code-quality issues and compare LLM findings against static-analyzer ground truth.",
             "input": "Project ZIP + analyzer CSV with file/span locations.",
             "output": "Detected smells or maintainability findings with file/span evidence.",
@@ -2412,11 +2572,19 @@ def _run_feature_location_batch(
     top_k: int,
     max_candidates: int,
     prompt_style: str,
+    prompt_templates: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     task_results = []
     for task in tasks:
         focused_candidates = _rank_feature_candidates(task.query, candidates)[:max_candidates]
-        task_results.append(run_location_task(task, focused_candidates, llm, top_k=top_k, prompt_style=prompt_style))
+        task_results.append(run_location_task(
+            task,
+            focused_candidates,
+            llm,
+            top_k=top_k,
+            prompt_style=prompt_style,
+            prompt_templates=prompt_templates,
+        ))
 
     metric_keys = sorted({k for row in task_results for k in (row.get("metrics") or {})})
     metrics = {}
@@ -2585,27 +2753,126 @@ def render_tab_results_db():
 # Tab 3 : Manage Prompts
 # ==========================================================
 def render_tab_manage_prompts():
-    st.markdown("## 📝 Manage Prompt Strategies")
-    strategies = load_strategies()
-    if strategies:
-        st.markdown("### ✏️ Edit Existing Strategy")
-        selected = st.selectbox("Select strategy", list(strategies.keys()))
-        new_text = st.text_area("Edit prompt", value=strategies[selected], height=220)
-        if st.button("💾 Save changes"):
-            strategies[selected] = new_text; save_strategies(strategies)
-            st.success(f"Strategy '{selected}' updated!"); st.rerun()
-    st.markdown("---")
-    st.markdown("### ➕ Add New Strategy")
-    new_name = st.text_input("Strategy name")
-    new_prompt = st.text_area("Prompt template", height=200)
-    if st.button("➕ Create strategy"):
-        if new_name in strategies:
-            st.error("Strategy already exists!")
-        elif new_name.strip() == "":
-            st.error("Please provide a name.")
+    st.markdown("## 📝 Prompt Repository")
+    st.caption("Manage prompts as a real repository: one category per maintenance task, with tags, descriptions, and reusable templates.")
+
+    repo = _load_prompt_repository()
+    task_options = list(PROMPT_TASKS.keys())
+    task_labels = [repo[key]["label"] for key in task_options]
+    left, right = st.columns([0.92, 1.55], gap="large")
+
+    with left:
+        selected_label = st.selectbox("Task category", task_labels, index=0)
+        task_key = task_options[task_labels.index(selected_label)]
+        task_repo = repo[task_key]
+        prompts = task_repo.get("prompts", {})
+        kpi("Prompt templates", str(len(prompts)), "ok")
+        st.caption(task_repo.get("description", ""))
+
+        rows = [
+            {
+                "Name": name,
+                "Tags": ", ".join(entry.get("tags", [])),
+                "Source": entry.get("source", "repository"),
+                "Chars": len(entry.get("template", "")),
+            }
+            for name, entry in prompts.items()
+        ]
+        if rows:
+            _render_pro_dataframe(pd.DataFrame(rows), hide_index=True)
         else:
-            strategies[new_name] = new_prompt; save_strategies(strategies)
-            st.success(f"Strategy '{new_name}' added!"); st.rerun()
+            st.info("No prompt in this category yet.")
+
+        st.markdown("### Add Template")
+        new_name = st.text_input("Template id", key=f"new_prompt_name_{task_key}")
+        new_tags = st.text_input("Tags", value="json", help="Comma-separated tags.", key=f"new_prompt_tags_{task_key}")
+        new_prompt = st.text_area("Template", height=180, key=f"new_prompt_text_{task_key}")
+        if st.button("➕ Add to repository", key=f"add_prompt_{task_key}", use_container_width=True):
+            clean_name = re.sub(r"[^A-Za-z0-9_-]+", "_", new_name.strip()).strip("_")
+            if not clean_name:
+                st.error("Provide a template id.")
+            elif clean_name in prompts:
+                st.error("This template id already exists in the selected category.")
+            elif not new_prompt.strip():
+                st.error("Provide a prompt template.")
+            else:
+                prompts[clean_name] = _prompt_entry(
+                    new_prompt,
+                    tags=[tag.strip() for tag in new_tags.split(",") if tag.strip()],
+                    source="repository",
+                )
+                _save_prompt_repository(repo)
+                st.success(f"Prompt `{clean_name}` added to {task_repo['label']}.")
+                st.rerun()
+
+    with right:
+        prompts = repo[task_key].get("prompts", {})
+        if not prompts:
+            return
+        selected_prompt = st.selectbox("Template", list(prompts.keys()), key=f"edit_prompt_select_{task_key}")
+        selected_entry = prompts[selected_prompt]
+        c1, c2 = st.columns([1, 1])
+        with c1:
+            edited_name = st.text_input("Template id", value=selected_prompt, key=f"edit_prompt_name_{task_key}")
+        with c2:
+            edited_tags = st.text_input(
+                "Tags",
+                value=", ".join(selected_entry.get("tags", [])),
+                key=f"edit_prompt_tags_{task_key}",
+            )
+        edited_prompt = st.text_area(
+            "Prompt template",
+            value=selected_entry.get("template", ""),
+            height=360,
+            key=f"edit_prompt_text_{task_key}",
+        )
+        st.caption("Available placeholders depend on the task. Code smell uses `{language}` and `{code}`. Localization uses `{task_name}`, `{project}`, `{language}`, `{candidate_level}`, `{query}`, `{candidate_text}`, `{top_k}`.")
+
+        b1, b2, b3 = st.columns([1, 1, 1])
+        with b1:
+            if st.button("💾 Save template", key=f"save_prompt_{task_key}", type="primary", use_container_width=True):
+                clean_name = re.sub(r"[^A-Za-z0-9_-]+", "_", edited_name.strip()).strip("_")
+                if not clean_name:
+                    st.error("Template id cannot be empty.")
+                    return
+                if clean_name != selected_prompt and clean_name in prompts:
+                    st.error("Another template already uses this id.")
+                    return
+                entry = _prompt_entry(
+                    edited_prompt,
+                    tags=[tag.strip() for tag in edited_tags.split(",") if tag.strip()],
+                    source="repository",
+                )
+                if clean_name != selected_prompt:
+                    prompts.pop(selected_prompt, None)
+                prompts[clean_name] = entry
+                _save_prompt_repository(repo)
+                st.success(f"Prompt `{clean_name}` saved.")
+                st.rerun()
+        with b2:
+            if st.button("📄 Duplicate", key=f"duplicate_prompt_{task_key}", use_container_width=True):
+                base = f"{selected_prompt}_copy"
+                candidate = base
+                i = 2
+                while candidate in prompts:
+                    candidate = f"{base}_{i}"
+                    i += 1
+                prompts[candidate] = dict(selected_entry)
+                prompts[candidate]["source"] = "repository"
+                _save_prompt_repository(repo)
+                st.success(f"Prompt duplicated as `{candidate}`.")
+                st.rerun()
+        with b3:
+            if st.button("🗑️ Delete", key=f"delete_prompt_{task_key}", use_container_width=True):
+                if len(prompts) <= 1:
+                    st.error("Keep at least one prompt in the category.")
+                else:
+                    prompts.pop(selected_prompt, None)
+                    _save_prompt_repository(repo)
+                    st.success(f"Prompt `{selected_prompt}` deleted.")
+                    st.rerun()
+
+        _render_prompt_preview_panel("Repository Preview", {selected_prompt: edited_prompt}, selected_prompt)
 
 if page == "📝 Manage Prompts":
     render_tab_manage_prompts()
@@ -2623,7 +2890,7 @@ def render_tab_batch():
     st.markdown("## 🔄 Batch Experiments (span-level)")
     data_dir = st.text_input("📂 Data folder", "data/apps/")
     output_dir = st.text_input("📂 Output folder", "output/apps/")
-    strategies = load_strategies()
+    strategies = _prompt_templates_for_task("code_smell_detection")
     selected_strategies = st.multiselect("🧩 Select strategies", list(strategies.keys()), default=list(strategies.keys()))
     top_k_values = st.multiselect("Top-K values (files in U)", [10,20,30,50], default=[20,30])
     pos_ratio = st.slider("Positive ratio in U", 0.0, 1.0, 0.5, 0.05, key="batch_pos_ratio")
