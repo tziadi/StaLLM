@@ -457,10 +457,15 @@ def analyze_with_llm(
         except Exception:
             raw_list = []
         smells = _coerce_items_schema(raw_list)
-    except Exception:
-        smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
-        return smells, meta
+    except Exception as exc:
+        meta["source"] = "llm_error"
+        meta["error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+        if _heuristic_fallback_enabled():
+            meta["source"] = "heuristic_fallback"
+            return _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3"))), meta
+        return [], meta
 
+    meta["source"] = "llm"
     # Retry with a nudge if empty (also catch errors)
     if not smells:
         try:
@@ -488,19 +493,26 @@ def analyze_with_llm(
             except Exception:
                 raw_list2 = []
             smells2 = _coerce_items_schema(raw_list2)
-            if smells2:
-                smells = smells2
-                meta = {
-                    "prompt_tokens": meta.get("prompt_tokens", 0) + int(meta2.get("prompt_tokens", 0)),
-                    "completion_tokens": meta.get("completion_tokens", 0) + int(meta2.get("completion_tokens", 0)),
-                    "total_tokens": meta.get("total_tokens", 0) + int(meta2.get("total_tokens", 0)),
-                }
+            meta = {
+                "prompt_tokens": meta.get("prompt_tokens", 0) + int(meta2.get("prompt_tokens", 0)),
+                "completion_tokens": meta.get("completion_tokens", 0) + int(meta2.get("completion_tokens", 0)),
+                "total_tokens": meta.get("total_tokens", 0) + int(meta2.get("total_tokens", 0)),
+                "source": "llm_retry" if smells2 else "llm",
+            }
+            smells = smells2 or smells
         except Exception:
-            smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
+            pass
 
-    if not smells:
+    # Heuristic findings are not LLM output: injecting them silently would mix
+    # two methods in one score, so they are opt-in (STALLM_HEURISTIC_FALLBACK=1).
+    if not smells and _heuristic_fallback_enabled():
+        meta["source"] = "heuristic_fallback"
         smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
     return smells, meta
+
+
+def _heuristic_fallback_enabled() -> bool:
+    return os.getenv("STALLM_HEURISTIC_FALLBACK", "0").strip().lower() in {"1", "true", "yes"}
 
 # =========================
 # Type normalization (aliases) for robust matching
@@ -998,6 +1010,7 @@ def run_experiment(
 
     llm = llm or _default_llm()
     pt_sum = ct_sum = tt_sum = 0
+    source_counts: Dict[str, int] = {}
     preds_all: List[Dict[str, Any]] = []
     results_all: List[Dict[str, Any]] = []
     code_by_file: Dict[str, str] = {}
@@ -1018,8 +1031,9 @@ def run_experiment(
                 code = ""
             code_by_file[base] = code
 
-            # analyze_with_llm handles its own errors and falls back to heuristics
+            # analyze_with_llm handles its own errors; usage["source"] records provenance
             smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates)
+            source_counts[usage.get("source", "llm")] = source_counts.get(usage.get("source", "llm"), 0) + 1
 
             for smell in smells or []:
                 item = dict(smell)
@@ -1191,6 +1205,7 @@ def run_experiment(
         "use_cols_single": use_cols_single,
         "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
         "type_breakdown": type_breakdown,
+        "file_sources": source_counts,
     }
 
     return results_all, summary_U, metrics, usage_totals
