@@ -1,0 +1,114 @@
+{
+  "task_id": "argouml-feature-cognitive",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "org/argouml/cognitive/Agency.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "This method applies all critics to a given object, which is a core functionality of the Design Critics feature.",
+      "method": "applyAllCritics(Object, Designer, long)"
+    },
+    {
+      "file": "org/argouml/cognitive/Agency.java",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "This method applies a specific set of critics to an object, directly supporting the Design Critics feature.",
+      "method": "applyCritics(Object, Designer, Collection, long)"
+    },
+    {
+      "file": "org/argouml/cognitive/Agency.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "This method allows adding new critics to the system, which is essential for extending the Design Critics functionality.",
+      "method": "addCritic(Critic)"
+    },
+    {
+      "file": "org/argouml/cognitive/Designer.java",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "This method enables the designer to critique a specific object, which is a key part of the Design Critics process.",
+      "method": "critique(Object)"
+    },
+    {
+      "file": "org/argouml/cognitive/Designer.java",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "This method determines which critics are active, directly supporting the dynamic nature of the Design Critics feature.",
+      "method": "determineActiveCritics()"
+    },
+    {
+      "file": "org/argouml/cognitive/ToDoList.java",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "This method spawns a validity checker for the designer, which aligns with the continuous background analysis of Design Critics.",
+      "method": "spawnValidityChecker(Designer)"
+    },
+    {
+      "file": "org/argouml/cognitive/ToDoList.java",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "This method executes the ToDoList's background thread, which is critical for the continuous operation of Design Critics.",
+      "method": "run()"
+    },
+    {
+      "file": "org/argouml/cognitive/Critic.java",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "This method critiques a specific object, which is a fundamental operation of individual critics in the Design Critics system.",
+      "method": "critique(Object, Designer)"
+    },
+    {
+      "file": "org/argouml/cognitive/Agency.java",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "This method determines active critics for a specific designer, supporting the personalized feedback aspect of Design Critics.",
+      "method": "determineActiveCritics(Designer)"
+    },
+    {
+      "file": "org/argouml/cognitive/ToDoList.java",
+      "rank": 10,
+      "confidence": 0.72,
+      "rationale": "This method forces a validity check, ensuring that the Design Critics feature can provide up-to-date feedback.",
+      "method": "forceValidityCheck()"
+    }
+  ],
+  "metrics_method": {
+    "hit@1": 0.0,
+    "hit@5": 0.0,
+    "hit@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "metrics_file": {
+    "hit@1": 1.0,
+    "recall@1": 0.004219409282700422,
+    "hit@5": 1.0,
+    "recall@5": 0.008438818565400843,
+    "hit@10": 1.0,
+    "recall@10": 0.016877637130801686,
+    "mrr": 1.0,
+    "map": 0.010548523206751054
+  },
+  "metrics": {
+    "hit@1": 0.0,
+    "hit@5": 0.0,
+    "hit@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "method_gold_count": 63,
+  "file_gold_count": 299,
+  "method_candidates_count": 656,
+  "prompt_style": "method_level",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"org/argouml/cognitive/Agency.java\",\n    \"method\": \"applyAllCritics(Object, Designer, long)\",\n    \"confidence\": 0.95,\n    \"rationale\": \"This method applies all critics to a given object, which is a core functionality of the Design Critics feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"org/argouml/cognitive/Agency.java\",\n    \"method\": \"applyCritics(Object, Designer, Collection, long)\",\n    \"confidence\": 0.92,\n    \"rationale\": \"This method applies a specific set of critics to an object, directly supporting the Design Critics feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"org/argouml/cognitive/Agency.java\",\n    \"method\": \"addCritic(Critic)\",\n    \"confidence\": 0.9,\n    \"rationale\": \"This method allows adding new critics to the system, which is essential for extending the Design Critics functionality.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"org/argouml/cognitive/Designer.java\",\n    \"method\": \"critique(Object)\",\n    \"confidence\": 0.88,\n    \"rationale\": \"This method enables the designer to critique a specific object, which is a key part of the Design Critics process.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"org/argouml/cognitive/Designer.java\",\n    \"method\": \"determineActiveCritics()\",\n    \"confidence\": 0.85,\n    \"rationale\": \"This method determines which critics are active, directly supporting the dynamic nature of the Design Critics feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"org/argouml/cognitive/ToDoList.java\",\n    \"method\": \"spawnValidityChecker(Designer)\",\n    \"confidence\": 0.83,\n    \"rationale\": \"This method spawns a validity checker for the designer, which aligns with the continuous background analysis of Design Critics.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"org/argouml/cognitive/ToDoList.java\",\n    \"method\": \"run()\",\n    \"confidence\": 0.8,\n    \"rationale\": \"This method executes the ToDoList's background thread, which is critical for the continuous operation of Design Critics.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"org/argouml/cognitive/Critic.java\",\n    \"method\": \"critique(Object, Designer)\",\n    \"confidence\": 0.78,\n    \"rationale\": \"This method critiques a specific object, which is a fundamental operation of individual critics in the Design Critics system.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"org/argouml/cognitive/Agency.java\",\n    \"method\": \"determineActiveCritics(Designer)\",\n    \"confidence\": 0.75,\n    \"rationale\": \"This method determines active critics for a specific designer, supporting the personalized feedback aspect of Design Critics.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"org/argouml/cognitive/ToDoList.java\",\n    \"method\": \"forceValidityCheck()\",\n    \"confidence\": 0.72,\n    \"rationale\": \"This method forces a validity check, ensuring that the Design Critics feature can provide up-to-date feedback.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 14941,
+    "completion_tokens": 744,
+    "total_tokens": 15685
+  },
+  "slot": "AZ1",
+  "feature": "COGNITIVE",
+  "elapsed_s": 6.6
+}

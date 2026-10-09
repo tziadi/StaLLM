@@ -1,5 +1,5 @@
 # StaLLM_v2_core.py
-import os, re, json, zipfile, tempfile, time
+import os, re, json, zipfile, tempfile, time, random
 from typing import Dict, List, Any, Tuple, Optional, NamedTuple
 from pathlib import Path
 
@@ -731,6 +731,102 @@ def _extract_pred_spans(smells: List[Dict[str, Any]], basename: str) -> List[Dic
     return out
 
 # =========================
+# Statistical utilities
+# =========================
+def _bootstrap_ci_spanwise(
+    file_diagnostics: List[Dict[str, Any]],
+    n: int = 1000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> Dict[str, Tuple[float, float]]:
+    rng = random.Random(seed)
+    k = len(file_diagnostics)
+    if k == 0:
+        return {"precision_ci": (0.0, 0.0), "recall_ci": (0.0, 0.0), "f1_ci": (0.0, 0.0)}
+    p_vals, r_vals, f_vals = [], [], []
+    for _ in range(n):
+        sample = rng.choices(file_diagnostics, k=k)
+        tp = sum(r["tp"] for r in sample)
+        fp = sum(r["fp"] for r in sample)
+        fn = sum(r["fn"] for r in sample)
+        p = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        r = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+        p_vals.append(p); r_vals.append(r); f_vals.append(f)
+    lo_idx = max(0, min(n - 1, int(alpha / 2 * n)))
+    hi_idx = max(0, min(n - 1, int((1 - alpha / 2) * n)))
+    def _ci(vals: List[float]) -> Tuple[float, float]:
+        s = sorted(vals)
+        return (s[lo_idx], s[hi_idx])
+    return {"precision_ci": _ci(p_vals), "recall_ci": _ci(r_vals), "f1_ci": _ci(f_vals)}
+
+
+def _type_breakdown(
+    pred_by_file: Dict[str, List[Dict[str, Any]]],
+    gt_by_file: Dict[str, List[Dict[str, Any]]],
+    U_bases: List[str],
+    *,
+    require_type: bool,
+    use_cols_single: bool,
+    preset: str,
+) -> List[Dict[str, Any]]:
+    """Per-type TP/FP/FN across all files in U."""
+    from collections import defaultdict
+    cfg = _preset_cfg(preset)
+    iou_thr, delta = cfg["iou_thr"], cfg["delta"]
+    tp_by_type: Dict[str, int] = defaultdict(int)
+    fp_by_type: Dict[str, int] = defaultdict(int)
+    fn_by_type: Dict[str, int] = defaultdict(int)
+
+    for b in U_bases:
+        preds = pred_by_file.get(b, [])
+        gts = gt_by_file.get(b, [])
+        pairs = []
+        for i, p in enumerate(preds):
+            for j, g in enumerate(gts):
+                iou_line = _iou_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+                dist_line = _dist_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+                ok = (iou_line >= iou_thr) or (dist_line <= delta)
+                if ok and use_cols_single:
+                    if (p["startLine"] == p["endLine"] == g["startLine"] == g["endLine"]
+                            and all(x is not None for x in [p.get("startColumn"), p.get("endColumn"),
+                                                             g.get("startColumn"), g.get("endColumn")])):
+                        iou_col = _iou_1d(int(p["startColumn"]), int(p["endColumn"]),
+                                          int(g["startColumn"]), int(g["endColumn"]))
+                        ok = (min(iou_line, iou_col) >= iou_thr) or (dist_line <= delta)
+                if ok:
+                    pairs.append((max(iou_line, 1.0 / (1.0 + dist_line)), i, j))
+        pairs.sort(key=lambda x: x[0], reverse=True)
+        used_p, used_g = set(), set()
+        for _, i, j in pairs:
+            if i in used_p or j in used_g:
+                continue
+            used_p.add(i); used_g.add(j)
+            gt_type = _norm_type(gts[j].get("type")) or "unknown"
+            tp_by_type[gt_type] += 1
+        for i, p in enumerate(preds):
+            if i not in used_p:
+                pt = _norm_type(p.get("type")) or "unknown"
+                fp_by_type[pt] += 1
+        for j, g in enumerate(gts):
+            if j not in used_g:
+                gt_type = _norm_type(g.get("type")) or "unknown"
+                fn_by_type[gt_type] += 1
+
+    all_types = sorted(set(list(tp_by_type) + list(fp_by_type) + list(fn_by_type)))
+    rows = []
+    for t in all_types:
+        tp = tp_by_type[t]; fp = fp_by_type[t]; fn = fn_by_type[t]
+        p = tp / (tp + fp) if (tp + fp) else 0.0
+        r = tp / (tp + fn) if (tp + fn) else 0.0
+        f = 2 * p * r / (p + r) if (p + r) else 0.0
+        rows.append({"type": t, "tp": tp, "fp": fp, "fn": fn,
+                     "precision": round(p, 4), "recall": round(r, 4), "f1": round(f, 4),
+                     "gt_count": tp + fn})
+    return sorted(rows, key=lambda x: x["gt_count"], reverse=True)
+
+
+# =========================
 # Matching (span-level) with type normalization
 # =========================
 def _match_file(preds: List[Dict[str, Any]], gts: List[Dict[str, Any]],
@@ -1068,6 +1164,11 @@ def run_experiment(
     precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
     recall    = TP / (TP + FN) if (TP + FN) > 0 else 0.0
     f1        = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+    ci        = _bootstrap_ci_spanwise(file_diagnostics)
+    type_breakdown = _type_breakdown(
+        pred_by_file, gt_by_file, list(U_bases),
+        require_type=require_type, use_cols_single=use_cols_single, preset=preset,
+    )
 
     usage_totals = {
         "prompt_tokens": int(pt_sum),
@@ -1078,6 +1179,9 @@ def run_experiment(
 
     metrics = {
         "precision": precision, "recall": recall, "f1": f1,
+        "precision_ci_lo": ci["precision_ci"][0], "precision_ci_hi": ci["precision_ci"][1],
+        "recall_ci_lo": ci["recall_ci"][0], "recall_ci_hi": ci["recall_ci"][1],
+        "f1_ci_lo": ci["f1_ci"][0], "f1_ci_hi": ci["f1_ci"][1],
         "tp": TP, "fp": FP, "fn": FN,
         "language": language,
         "diagnostics": diag,
@@ -1086,6 +1190,7 @@ def run_experiment(
         "require_type": require_type,
         "use_cols_single": use_cols_single,
         "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
+        "type_breakdown": type_breakdown,
     }
 
     return results_all, summary_U, metrics, usage_totals

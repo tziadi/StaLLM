@@ -11,7 +11,7 @@
 - **Streamlit UI** for interactive runs, preflight validation, review-board diagnostics, code evidence inspection, and database-backed history.
 - **Demo-first workflow** with bundled datasets, one-click demo configuration, and HTML report export.
 - **Batch mode** to run large experiment sweeps across projects/strategies/top-K.
-- **Extension branch in progress** for software maintenance localization tasks:
+- **Extension branch in progress** for software maintenance localization activities:
   feature location and bug location using shared ranking metrics.
 - **Human-oracle code-smell benchmarking** via DACOS/DACOSX and MLCQ adapters, so runs
   can be evaluated against human annotations instead of analyzer output only.
@@ -57,7 +57,7 @@ Each folder contains the **source ZIP** and the **static analyzer CSV** (typical
 StaLLM/
 │── StatLLM_app.py          # Streamlit interface (Experiments, DB, Prompts, Batch)
 │── StaLLM_core.py          # Core pipeline (LLM calls, metrics, usage/cost aggregation)
-│── StaLLM_tasks.py         # Shared task model for feature/bug localization extensions
+│── StaLLM_tasks.py         # Shared internal activity model for feature/bug localization extensions
 │── StaLLM_benchmarks.py    # Feature/bug localization benchmark adapters
 │── StaLLM_llm.py           # LLM wrapper + .env slot registry (Azure/OpenAI/Ollama)
 │── StaLLM_models.py        # SQLAlchemy models + SQLite persistence
@@ -192,7 +192,7 @@ They are normalized internally to **$/1K** for cost calculation.
 ### Human smell oracle: DACOS/DACOSX and MLCQ
 
 For code-smell detection, StaLLM can evaluate against DACOS/DACOSX or MLCQ human labels
-instead of only measuring agreement with SonarQube. Open **Maintenance Tasks**,
+instead of only measuring agreement with SonarQube. Open **Maintenance Activities**,
 choose **Code smell detection**, then select **Human smell oracle
 (DACOS/DACOSX)**. See `docs/dacos_integration.md` for DACOS setup; for MLCQ,
 place `MLCQCodeSmellSamples.csv` under `data/apps/MLCQ/`.

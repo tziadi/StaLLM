@@ -112,7 +112,7 @@ RESULTS_SCHEMA_VERSION = 2
 # =========================
 # Styles (UI) — English + Pro look
 # =========================
-st.markdown( """ <style> /* Fonts */ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap'); :root{ --text:#0e1220; --muted:#667085; --border:rgba(14,18,32,.12); --card-bg:rgba(255,255,255,.55); --glass:linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.60)); --accent:#7c3aed; --accent2:#06b6d4; --accent3:#22c55e; --warn:#f59e0b; --danger:#ef4444; --hl: rgba(252, 211, 77, .35); --ring: 0 8px 22px rgba(35, 38, 47, .10), 0 2px 6px rgba(35, 38, 47, .06); } #MainMenu, footer, header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"], .stDeployButton { visibility:hidden !important; height:0 !important; display:none !important; } html, body, .stApp { background:#f6f7fb !important; color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; } .stApp { padding-top: 10px; } @media (prefers-color-scheme: dark){ :root{ --text:#e6e9ef; --muted:#a3afc6; --border:rgba(255,255,255,.09); --card-bg:rgba(20,24,35,.55); --glass:linear-gradient(180deg, rgba(20,24,35,.75), rgba(20,24,35,.55)); --hl: rgba(234, 179, 8, .20); } html, body, .stApp{ background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.16), transparent), radial-gradient(1000px 500px at 110% -20%, rgba(6,182,212,.12), transparent), #0b1220 !important; } } /* HERO */ .hero{ position:relative; border:1px solid var(--border); border-radius:22px; padding:28px 24px; overflow:hidden; margin-bottom:14px; background: radial-gradient(900px 220px at -10% -20%, rgba(124,58,237,.18), transparent 55%), radial-gradient(700px 220px at 110% -10%, rgba(6,182,212,.15), transparent 55%), var(--glass); box-shadow: var(--ring); } .hero-brand{ display:flex; align-items:center; gap:14px; margin-bottom:8px; } .hero-logo{ width:48px; height:48px; border-radius:13px; box-shadow:0 10px 24px rgba(15,23,42,.18); flex:0 0 auto; } .hero h1{ margin:0; font-weight:800; letter-spacing:.2px; } .hero p{ margin:0; color:var(--muted); font-size:1.0rem; } .badges{ margin-top:8px; } .badge{ display:inline-flex; align-items:center; gap:.45rem; padding:.38rem .70rem; border:1px solid var(--border); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg, rgba(124,58,237,.10), rgba(6,182,212,.10)); margin-right:.45rem; } /* KPI CARDS */ .kpi{ background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px 16px; box-shadow: var(--ring); } .kpi-label{ color:var(--muted); font-size:.85rem; margin-bottom:.25rem;} .kpi-value{ font-size:1.6rem; font-weight:800; letter-spacing:.2px;} .kpi-ok{ box-shadow:0 0 0 1px rgba(34,197,94,.28) inset; } .kpi-warn{ box-shadow:0 0 0 1px rgba(245,158,11,.28) inset; } .kpi-bad{ box-shadow:0 0 0 1px rgba(239,68,68,.28) inset; } /* CODE BOX with line numbers + highlight */ .codebox{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; border:1px solid var(--border); border-radius:14px; overflow:hidden; background: var(--glass); box-shadow: var(--ring); } .codebox table{ border-collapse: collapse; width:100%; } .codebox td{ vertical-align: top; padding: 0; } .codebox .gutter{ width: 3.2em; background: rgba(2,6,23,.05); color: var(--muted); text-align: right; user-select:none; } .codebox .code{ white-space: pre; } .codebox .line{ padding: 2px 10px; border-bottom: 1px solid rgba(2,6,23,.06); } .codebox .ln{ padding: 2px 8px; border-bottom: 1px solid rgba(2,6,23,.08); } .codebox .hl{ background: var(--hl); } .codebox .gt{ background:#fff7ed; box-shadow:inset 3px 0 #f97316; } .codebox .llm{ background:#eff6ff; box-shadow:inset 3px 0 #2563eb; } .codebox .both{ background:#ecfdf5; box-shadow:inset 3px 0 #16a34a; } .code-legend{ display:flex; gap:8px; margin:.4rem 0 .6rem; flex-wrap:wrap; } .legend-chip{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 8px; font-size:12px; font-weight:750; border:1px solid #d9e0ea; background:#fff; color:#344054; } .legend-dot{ width:8px; height:8px; border-radius:999px; margin-right:6px; } .dot-gt{ background:#f97316; } .dot-llm{ background:#2563eb; } .dot-both{ background:#16a34a; } /* SECTION CARD */ .section{ background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:18px 18px; margin:10px 0 16px; box-shadow: var(--ring); } /* BUTTONS */ .stButton > button { background: linear-gradient(90deg, var(--accent), var(--accent2)) !important; color: white !important; border-radius: 12px; font-size: 16px; font-weight: 800; padding: 0.70em 1.25em; border: none; letter-spacing:.2px; box-shadow: 0 10px 18px rgba(124,58,237,.20), 0 6px 14px rgba(6,182,212,.12); } .stButton > button:focus { outline: none; box-shadow: 0 0 0 2px rgba(124,58,237,.45); } /* TABLE polish */ .stDataFrame thead tr th { background:#eef2ff !important; color:#0f172a !important; font-weight:700; text-align:center; } .stDataFrame tbody tr:nth-child(even) { background-color: rgba(2, 6, 23, .03); } .pro-table-wrap{ border:1px solid rgba(15,23,42,.10); border-radius:12px; overflow:auto; background:#fff; box-shadow:0 10px 24px rgba(15,23,42,.06); margin:.6rem 0 1rem; } .pro-table{ width:100%; border-collapse:separate; border-spacing:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size:13px; line-height:1.35; color:#111827; } .pro-table th{ position:sticky; top:0; z-index:1; background:#f8fafc; color:#475569; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:800; padding:11px 12px; border-bottom:1px solid #e5e7eb; white-space:nowrap; } .pro-table td{ padding:10px 12px; border-bottom:1px solid #eef2f7; vertical-align:middle; } .pro-table tr:hover td{ background:#f8fbff; } .pro-table td.num{ text-align:right; font-variant-numeric:tabular-nums; color:#0f172a; font-weight:650; } .pro-table .file-cell{ font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px; color:#1f2937; max-width:620px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .verdict-badge{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 9px; font-size:12px; font-weight:800; border:1px solid transparent; white-space:nowrap; } .verdict-matched{ color:#166534; background:#dcfce7; border-color:#bbf7d0; } .verdict-partial,.verdict-mismatch{ color:#92400e; background:#fef3c7; border-color:#fde68a; } .verdict-missed{ color:#991b1b; background:#fee2e2; border-color:#fecaca; } .verdict-extra{ color:#6d28d9; background:#ede9fe; border-color:#ddd6fe; } .verdict-true_negative{ color:#334155; background:#e2e8f0; border-color:#cbd5e1; } .issue-pill{ display:inline-flex; border-radius:7px; padding:4px 7px; background:#f1f5f9; color:#334155; font-weight:650; white-space:nowrap; } .metric-bar{ min-width:92px; } .metric-bar-track{ height:7px; border-radius:999px; background:#e5e7eb; overflow:hidden; } .metric-bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#06b6d4); } .metric-bar-label{ margin-top:3px; color:#475569; font-size:11px; font-variant-numeric:tabular-nums; text-align:right; } .muted{ color:var(--muted); } .pill{ display:inline-flex; align-items:center; gap:.45rem; padding:.32rem .65rem; border:1px solid var(--border); color:var(--text); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg,#ede9fe,#cffafe); margin:.20rem .35rem .55rem 0; } .footnote{ color:var(--muted); font-size:.85rem; margin-top:8px; } </style> """, unsafe_allow_html=True, )
+st.markdown( """ <style> /* Fonts */ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap'); :root{ --text:#0e1220; --muted:#667085; --border:rgba(14,18,32,.12); --card-bg:rgba(255,255,255,.55); --glass:linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.60)); --accent:#7c3aed; --accent2:#06b6d4; --accent3:#22c55e; --warn:#f59e0b; --danger:#ef4444; --hl: rgba(252, 211, 77, .35); --ring: 0 8px 22px rgba(35, 38, 47, .10), 0 2px 6px rgba(35, 38, 47, .06); } #MainMenu, footer, header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"], .stDeployButton { visibility:hidden !important; height:0 !important; display:none !important; } html, body, .stApp { background:#f6f7fb !important; color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; } .stApp { padding-top: 10px; } @media (prefers-color-scheme: dark){ :root{ --text:#e6e9ef; --muted:#a3afc6; --border:rgba(255,255,255,.09); --card-bg:rgba(20,24,35,.55); --glass:linear-gradient(180deg, rgba(20,24,35,.75), rgba(20,24,35,.55)); --hl: rgba(234, 179, 8, .20); } html, body, .stApp{ background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.16), transparent), radial-gradient(1000px 500px at 110% -20%, rgba(6,182,212,.12), transparent), #0b1220 !important; } } /* HERO */ .hero{ position:relative; border:1px solid var(--border); border-radius:22px; padding:28px 24px; overflow:hidden; margin-bottom:14px; background: radial-gradient(900px 220px at -10% -20%, rgba(124,58,237,.18), transparent 55%), radial-gradient(700px 220px at 110% -10%, rgba(6,182,212,.15), transparent 55%), var(--glass); box-shadow: var(--ring); } .hero-brand{ display:flex; align-items:center; gap:14px; margin-bottom:8px; } .hero-logo{ width:48px; height:48px; border-radius:13px; box-shadow:0 10px 24px rgba(15,23,42,.18); flex:0 0 auto; } .hero h1{ margin:0; font-weight:800; letter-spacing:.2px; } .hero p{ margin:0; color:var(--muted); font-size:1.0rem; } .badges{ margin-top:8px; } .badge{ display:inline-flex; align-items:center; gap:.45rem; padding:.38rem .70rem; border:1px solid var(--border); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg, rgba(124,58,237,.10), rgba(6,182,212,.10)); margin-right:.45rem; } /* KPI CARDS */ .kpi{ background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px 16px; box-shadow: var(--ring); min-height:72px; display:flex; flex-direction:column; justify-content:center; overflow:hidden; } .kpi-label{ color:var(--muted); font-size:.85rem; margin-bottom:.25rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;} .kpi-value{ font-size:1.6rem; font-weight:800; letter-spacing:.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;} .kpi-ok{ box-shadow:0 0 0 1px rgba(34,197,94,.28) inset; } .kpi-warn{ box-shadow:0 0 0 1px rgba(245,158,11,.28) inset; } .kpi-bad{ box-shadow:0 0 0 1px rgba(239,68,68,.28) inset; } /* CODE BOX with line numbers + highlight */ .codebox{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; border:1px solid var(--border); border-radius:14px; overflow:hidden; background: var(--glass); box-shadow: var(--ring); } .codebox table{ border-collapse: collapse; width:100%; } .codebox td{ vertical-align: top; padding: 0; } .codebox .gutter{ width: 3.2em; background: rgba(2,6,23,.05); color: var(--muted); text-align: right; user-select:none; } .codebox .code{ white-space: pre; } .codebox .line{ padding: 2px 10px; border-bottom: 1px solid rgba(2,6,23,.06); } .codebox .ln{ padding: 2px 8px; border-bottom: 1px solid rgba(2,6,23,.08); } .codebox .hl{ background: var(--hl); } .codebox .gt{ background:#fff7ed; box-shadow:inset 3px 0 #f97316; } .codebox .llm{ background:#eff6ff; box-shadow:inset 3px 0 #2563eb; } .codebox .both{ background:#ecfdf5; box-shadow:inset 3px 0 #16a34a; } .code-legend{ display:flex; gap:8px; margin:.4rem 0 .6rem; flex-wrap:wrap; } .legend-chip{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 8px; font-size:12px; font-weight:750; border:1px solid #d9e0ea; background:#fff; color:#344054; } .legend-dot{ width:8px; height:8px; border-radius:999px; margin-right:6px; } .dot-gt{ background:#f97316; } .dot-llm{ background:#2563eb; } .dot-both{ background:#16a34a; } /* SECTION CARD */ .section{ background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:18px 18px; margin:10px 0 16px; box-shadow: var(--ring); } /* BUTTONS */ .stButton > button { background: linear-gradient(90deg, var(--accent), var(--accent2)) !important; color: white !important; border-radius: 12px; font-size: 16px; font-weight: 800; padding: 0.70em 1.25em; border: none; letter-spacing:.2px; box-shadow: 0 10px 18px rgba(124,58,237,.20), 0 6px 14px rgba(6,182,212,.12); } .stButton > button:focus { outline: none; box-shadow: 0 0 0 2px rgba(124,58,237,.45); } /* TABLE polish */ .stDataFrame thead tr th { background:#eef2ff !important; color:#0f172a !important; font-weight:700; text-align:center; } .stDataFrame tbody tr:nth-child(even) { background-color: rgba(2, 6, 23, .03); } .pro-table-wrap{ border:1px solid rgba(15,23,42,.10); border-radius:12px; overflow:auto; background:#fff; box-shadow:0 10px 24px rgba(15,23,42,.06); margin:.6rem 0 1rem; } .pro-table{ width:100%; border-collapse:separate; border-spacing:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size:13px; line-height:1.35; color:#111827; } .pro-table th{ position:sticky; top:0; z-index:1; background:#f8fafc; color:#475569; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:800; padding:11px 12px; border-bottom:1px solid #e5e7eb; white-space:nowrap; } .pro-table td{ padding:10px 12px; border-bottom:1px solid #eef2f7; vertical-align:middle; } .pro-table tr:hover td{ background:#f8fbff; } .pro-table td.num{ text-align:right; font-variant-numeric:tabular-nums; color:#0f172a; font-weight:650; } .pro-table .file-cell{ font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px; color:#1f2937; max-width:620px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .verdict-badge{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 9px; font-size:12px; font-weight:800; border:1px solid transparent; white-space:nowrap; } .verdict-matched{ color:#166534; background:#dcfce7; border-color:#bbf7d0; } .verdict-partial,.verdict-mismatch{ color:#92400e; background:#fef3c7; border-color:#fde68a; } .verdict-missed{ color:#991b1b; background:#fee2e2; border-color:#fecaca; } .verdict-extra{ color:#6d28d9; background:#ede9fe; border-color:#ddd6fe; } .verdict-true_negative{ color:#334155; background:#e2e8f0; border-color:#cbd5e1; } .issue-pill{ display:inline-flex; border-radius:7px; padding:4px 7px; background:#f1f5f9; color:#334155; font-weight:650; white-space:nowrap; } .metric-bar{ min-width:92px; } .metric-bar-track{ height:7px; border-radius:999px; background:#e5e7eb; overflow:hidden; } .metric-bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#06b6d4); } .metric-bar-label{ margin-top:3px; color:#475569; font-size:11px; font-variant-numeric:tabular-nums; text-align:right; } .muted{ color:var(--muted); } .pill{ display:inline-flex; align-items:center; gap:.45rem; padding:.32rem .65rem; border:1px solid var(--border); color:var(--text); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg,#ede9fe,#cffafe); margin:.20rem .35rem .55rem 0; } .footnote{ color:var(--muted); font-size:.85rem; margin-top:8px; } </style> """, unsafe_allow_html=True, )
 
 st.markdown("""
 <style>
@@ -601,8 +601,8 @@ def kpi(title: str, value: str, tone: str = "ok"):
     cls = {"ok":"kpi-ok", "warn":"kpi-warn", "bad":"kpi-bad"}.get(tone,"")
     st.markdown(f"""
     <div class="kpi {cls}">
-      <div class="kpi-label">{title}</div>
-      <div class="kpi-value">{value}</div>
+      <div class="kpi-label" title="{title}">{title}</div>
+      <div class="kpi-value" title="{value}">{value}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -611,6 +611,32 @@ def pct(x: float) -> str:
         return f"{float(x)*100:.2f}%"
     except Exception:
         return "0.00%"
+
+
+def _df_to_latex(df: pd.DataFrame, caption: str = "", label: str = "") -> str:
+    def _esc(s: str) -> str:
+        return s.replace("_", r"\_").replace("%", r"\%").replace("&", r"\&").replace("#", r"\#")
+    cols = list(df.columns)
+    col_fmt = "l" + "r" * (len(cols) - 1)
+    lines = [
+        r"\begin{table}[htbp]", r"\centering",
+        f"\\caption{{{_esc(caption)}}}" if caption else "",
+        f"\\label{{{label}}}" if label else "",
+        f"\\begin{{tabular}}{{{col_fmt}}}",
+        r"\toprule",
+        " & ".join(_esc(str(c)) for c in cols) + r" \\",
+        r"\midrule",
+    ]
+    lines = [l for l in lines if l]
+    for _, row in df.iterrows():
+        lines.append(" & ".join(_esc(str(v)) for v in row) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
+    return "\n".join(lines)
+
+
+def _latex_button(df: pd.DataFrame, caption: str, label: str, key: str) -> None:
+    with st.expander("📋 Export as LaTeX", expanded=False):
+        st.code(_df_to_latex(df, caption=caption, label=label), language="latex")
 
 METRIC_INFO = {
     "f1": {
@@ -1703,9 +1729,31 @@ def _render_review_board(metrics: dict[str, Any], key_prefix: str = "review") ->
                     with llm_ctx:
                         render_code_context("LLM code context", item.get("llm_code_excerpt") or item.get("code_excerpt", {}))
 
+_CI_RAW_COLS = {"precision_ci_lo", "precision_ci_hi", "recall_ci_lo", "recall_ci_hi", "f1_ci_lo", "f1_ci_hi",
+                "kappa_ci_lo", "kappa_ci_hi", "type_breakdown"}
+
+
 def _metrics_table_view(metrics_df: pd.DataFrame) -> pd.DataFrame:
-    hidden_cols = {"diagnostics", "file_diagnostics"}
-    return metrics_df.drop(columns=[c for c in hidden_cols if c in metrics_df.columns], errors="ignore")
+    hidden_cols = {"diagnostics", "file_diagnostics"} | _CI_RAW_COLS
+    df = metrics_df.drop(columns=[c for c in hidden_cols if c in metrics_df.columns], errors="ignore").copy()
+    if "f1_ci_lo" in metrics_df.columns and "f1_ci_hi" in metrics_df.columns:
+        df.insert(
+            df.columns.get_loc("f1") + 1 if "f1" in df.columns else len(df.columns),
+            "F1 [95% CI]",
+            metrics_df.apply(
+                lambda r: f"{r.get('f1', 0.0):.1%}  [{r.get('f1_ci_lo', 0.0):.1%}–{r.get('f1_ci_hi', 0.0):.1%}]",
+                axis=1,
+            ),
+        )
+    if "kappa" in metrics_df.columns:
+        kappa_col = metrics_df["kappa"].map(lambda v: f"{v:.3f}")
+        if "kappa_ci_lo" in metrics_df.columns:
+            kappa_col = metrics_df.apply(
+                lambda r: f"{r.get('kappa', 0.0):.3f}  [{r.get('kappa_ci_lo', 0.0):.3f}–{r.get('kappa_ci_hi', 0.0):.3f}]",
+                axis=1,
+            )
+        df["κ [95% CI]"] = kappa_col
+    return df
 
 def _render_comparison_review_boards(metrics_df: pd.DataFrame, label: str) -> None:
     if metrics_df is None or metrics_df.empty or "file_diagnostics" not in metrics_df.columns:
@@ -1766,7 +1814,9 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
     _render_pro_dataframe(summary_U)
 
     st.markdown("### 📐 Comparison Metrics (All Strategies)")
-    _render_pro_dataframe(_metrics_table_view(metrics_df))
+    _view = _metrics_table_view(metrics_df)
+    _render_pro_dataframe(_view)
+    _latex_button(_view.reset_index(), caption="Prompt comparison: precision, recall, F1", label="tab:prompt_comparison", key="latex_prompt_cmp")
 
     st.markdown("### 📈 Precision / Recall / F1 by Strategy")
     _render_wide_metric_chart(
@@ -1778,6 +1828,13 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
     )
 
     _render_comparison_review_boards(metrics_df, "strategy")
+
+    if "type_breakdown" in metrics_df.columns:
+        with st.expander("📊 Breakdown by smell type (best strategy)", expanded=False):
+            best_idx = metrics_df["f1"].idxmax() if "f1" in metrics_df.columns else metrics_df.index[0]
+            breakdown = metrics_df.loc[best_idx, "type_breakdown"]
+            if isinstance(breakdown, list):
+                _render_type_breakdown(breakdown, use_expander=False)
 
     _report_download_button(
         _comparison_report_html(summary_U, metrics_df, samples, label="strategy"),
@@ -1802,7 +1859,9 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
     st.markdown("### 📁 Universe U (files considered)")
     _render_pro_dataframe(summary_U)
     st.markdown("### 📐 Metrics per Model")
-    _render_pro_dataframe(_metrics_table_view(metrics_df))
+    _view_m = _metrics_table_view(metrics_df)
+    _render_pro_dataframe(_view_m)
+    _latex_button(_view_m.reset_index(), caption="Model comparison: precision, recall, F1", label="tab:model_comparison", key="latex_model_cmp")
     st.markdown("### 📈 Precision / Recall / F1 by Model")
     _render_wide_metric_chart(
         metrics_df,
@@ -1857,6 +1916,23 @@ def _render_matching_config_badge(metrics: dict[str, Any], *, preset: str, langu
         unsafe_allow_html=True,
     )
 
+def _render_type_breakdown(type_breakdown: list[dict], *, use_expander: bool = True) -> None:
+    if not type_breakdown:
+        return
+    df = pd.DataFrame(type_breakdown)[["type", "precision", "recall", "f1", "tp", "fp", "fn", "gt_count"]]
+    df.columns = ["Type", "Precision", "Recall", "F1", "TP", "FP", "FN", "GT spans"]
+    df["Precision"] = df["Precision"].map(lambda v: f"{v:.1%}")
+    df["Recall"]    = df["Recall"].map(lambda v: f"{v:.1%}")
+    df["F1"]        = df["F1"].map(lambda v: f"{v:.1%}")
+    if use_expander:
+        with st.expander("📊 Breakdown by smell type", expanded=True):
+            _render_pro_dataframe(df, hide_index=True)
+            _latex_button(df, caption="Per-type precision, recall, and F1", label="tab:type_breakdown", key="latex_type_breakdown")
+    else:
+        _render_pro_dataframe(df, hide_index=True)
+        _latex_button(df, caption="Per-type precision, recall, and F1", label="tab:type_breakdown", key="latex_type_breakdown_inline")
+
+
 def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any], usage_totals: dict[str, Any],
                                *, prompt_label: str, language: str, model_label: str, preset: str) -> None:
     st.markdown("### 📁 Universe U (files considered)")
@@ -1885,6 +1961,7 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
     )
 
     _render_review_board(metrics)
+    _render_type_breakdown(metrics.get("type_breakdown") or [])
 
     t1,t2,t3,t4 = st.columns(4)
     with t1: kpi("Prompt tokens", f"{usage_totals.get('prompt_tokens', 0):,}")
@@ -2083,23 +2160,248 @@ def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[Cha
 # Navigation
 # =========================
 PAGES = [
-    "🧭 Maintenance Tasks",
+    "🧭 Maintenance",
     "⚙️ Run Experiments",
     "🧪 AutoResearch",
     "📝 Manage Prompts",
-    "🗃️ Stored Results (DB)",
-    "🔄 Batch Experiments",
-    "📘 Guide & Examples",
+    "🗃️ Results",
+    "🔄 Batch",
+    "📘 Guide",
 ]
+PAGE_LABELS = {
+    "🧭 Maintenance":    "Maintenance Activities",
+    "⚙️ Run Experiments": "Run Experiments",
+    "🧪 AutoResearch":   "AutoResearch",
+    "📝 Manage Prompts": "Manage Prompts",
+    "🗃️ Results":        "Stored Results (DB)",
+    "🔄 Batch":          "Batch Experiments",
+    "📘 Guide":          "Guide & Examples",
+}
+
 if "workspace_page" not in st.session_state:
     st.session_state.workspace_page = PAGES[0]
-
-nav_cols = st.columns(len(PAGES))
-for idx, page_name in enumerate(PAGES):
-    with nav_cols[idx]:
-        if st.button(page_name, key=f"nav_{idx}", use_container_width=True):
-            st.session_state.workspace_page = page_name
 page = st.session_state.workspace_page
+_active_idx = PAGES.index(page)
+
+# CSS class-based styles — applied via JS below
+st.markdown(f"""
+<style>
+.stallm-nav-bar {{
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 5px !important;
+    gap: 4px !important;
+    box-shadow: 0 1px 4px rgba(15,23,42,.06), 0 4px 12px rgba(15,23,42,.04) !important;
+    margin-bottom: 4px !important;
+}}
+@media (prefers-color-scheme: dark) {{
+    .stallm-nav-bar {{ background: #1e293b !important; border-color: rgba(255,255,255,.09) !important; }}
+}}
+.stallm-nav-bar .stButton > button {{
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    padding: 0 8px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    background: transparent !important;
+    color: #1e293b !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 9px !important;
+    transition: background .12s, color .12s !important;
+    letter-spacing: .01em !important;
+}}
+.stallm-nav-bar .stButton > button:hover {{
+    background: #eff6ff !important;
+    color: #2563eb !important;
+}}
+@media (prefers-color-scheme: dark) {{
+    .stallm-nav-bar .stButton > button {{ color: #e2e8f0 !important; }}
+    .stallm-nav-bar .stButton > button:hover {{ background: rgba(37,99,235,.15) !important; color: #93c5fd !important; }}
+}}
+.stallm-nav-bar div[data-testid="column"]:nth-child({_active_idx + 1}) .stButton > button {{
+    background: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(37,99,235,.35) !important;
+}}
+.stallm-nav-bar div[data-testid="column"]:nth-child({_active_idx + 1}) .stButton > button:hover {{
+    background: #1d4ed8 !important;
+}}
+</style>
+""", unsafe_allow_html=True)
+
+# Anchor marker so JS can find the nav block
+st.markdown('<div id="stallm-nav-anchor"></div>', unsafe_allow_html=True)
+
+# st.button nav — Streamlit rerun only, no browser reload
+_nav_cols = st.columns(len(PAGES))
+for _i, _pg in enumerate(PAGES):
+    with _nav_cols[_i]:
+        if st.button(_pg, key=f"nav_{_i}", use_container_width=True):
+            st.session_state.workspace_page = _pg
+            st.rerun()
+
+# JS: find the stHorizontalBlock next to the anchor, then apply inline styles
+# directly on each button — inline styles beat every CSS !important rule.
+import streamlit.components.v1 as _components
+_components.html(f"""
+<script>
+(function() {{
+  var ACTIVE = {_active_idx};
+  var N      = {len(PAGES)};
+
+  function styleNav() {{
+    var doc    = window.parent.document;
+    var anchor = doc.getElementById('stallm-nav-anchor');
+    if (!anchor) return;
+
+    // Walk up to find the stHorizontalBlock sibling
+    var navBlock = null;
+    var node = anchor;
+    for (var d = 0; d < 10; d++) {{
+      var par  = node.parentElement;
+      if (!par) break;
+      var kids = Array.from(par.children);
+      var idx  = kids.indexOf(node);
+      for (var j = idx + 1; j < kids.length; j++) {{
+        if (kids[j].getAttribute('data-testid') === 'stHorizontalBlock') {{
+          navBlock = kids[j]; break;
+        }}
+      }}
+      if (navBlock) break;
+      node = par;
+    }}
+    if (!navBlock) return;
+
+    // Style the container
+    Object.assign(navBlock.style, {{
+      background:   '#ffffff',
+      border:       '1px solid #e2e8f0',
+      borderRadius: '14px',
+      padding:      '5px',
+      gap:          '4px',
+      boxShadow:    '0 1px 4px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.04)',
+      marginBottom: '4px'
+    }});
+
+    // Style each button
+    var cols = navBlock.querySelectorAll('[data-testid="column"]');
+    cols.forEach(function(col, i) {{
+      var btn = col.querySelector('button');
+      if (!btn) return;
+      var isActive = (i === ACTIVE);
+      Object.assign(btn.style, {{
+        height:         '38px',
+        minHeight:      '38px',
+        maxHeight:      '38px',
+        padding:        '0 8px',
+        fontSize:       '13px',
+        fontWeight:     isActive ? '700' : '600',
+        whiteSpace:     'nowrap',
+        overflow:       'hidden',
+        textOverflow:   'ellipsis',
+        background:     isActive ? '#2563eb' : 'transparent',
+        color:          isActive ? '#ffffff' : '#1e293b',
+        border:         'none',
+        boxShadow:      isActive ? '0 2px 8px rgba(37,99,235,.35)' : 'none',
+        borderRadius:   '9px',
+        transition:     'background .12s,color .12s',
+        letterSpacing:  '.01em'
+      }});
+    }});
+  }}
+
+  styleNav();
+  var timer = null;
+  var ob = new MutationObserver(function() {{
+    clearTimeout(timer);
+    timer = setTimeout(styleNav, 80);
+  }});
+  ob.observe(window.parent.document.body, {{ childList: true, subtree: true }});
+}})();
+</script>
+""", height=0, scrolling=False)
+
+
+def _run_multilanguage_benchmark(
+    demo_sets: dict,
+    prompt_names: list[str],
+    strategies: dict[str, str],
+    top_k: int,
+    pos_ratio: float,
+    preset: str,
+    require_type: bool,
+    use_line_span: bool,
+    use_cols_single: bool,
+    llm: Any,
+) -> None:
+    all_rows = []
+    progress = st.progress(0)
+    status = st.empty()
+    total = len(demo_sets) * len(prompt_names)
+    done = 0
+    for dataset_name, (zip_path, csv_path) in demo_sets.items():
+        for prompt_name in prompt_names:
+            status.markdown(f"Running `{prompt_name}` on **{dataset_name}**…")
+            try:
+                _, _, metrics, usage = run_experiment(
+                    str(zip_path), str(csv_path), prompt_name,
+                    top_k=top_k, pos_ratio=pos_ratio, preset=preset,
+                    user_require_type=require_type,
+                    user_use_line_span=use_line_span,
+                    user_use_cols_single=use_cols_single,
+                    llm=llm,
+                )
+                all_rows.append({
+                    "Dataset": dataset_name,
+                    "Language": metrics.get("language", "?"),
+                    "Prompt": prompt_name,
+                    "Precision": metrics.get("precision", 0.0),
+                    "Recall": metrics.get("recall", 0.0),
+                    "F1": metrics.get("f1", 0.0),
+                    "F1 [95% CI]": _fmt_ci(metrics.get("f1_ci_lo", 0.0), metrics.get("f1_ci_hi", 0.0)),
+                    "TP": metrics.get("tp", 0),
+                    "FP": metrics.get("fp", 0),
+                    "FN": metrics.get("fn", 0),
+                    "Tokens": usage.get("total_tokens", 0),
+                })
+            except Exception as e:
+                st.warning(f"Failed on {dataset_name} / {prompt_name}: {e}")
+            done += 1
+            progress.progress(done / total)
+
+    status.empty()
+    progress.empty()
+
+    if not all_rows:
+        st.warning("No results produced.")
+        return
+
+    st.session_state["last_multilang_results"] = all_rows
+    _render_multilanguage_results(all_rows)
+
+
+def _render_multilanguage_results(all_rows: list[dict]) -> None:
+    st.markdown("### 🌐 Multi-language Benchmark")
+    df = pd.DataFrame(all_rows)
+    df_display = df.copy()
+    df_display["Precision"] = df_display["Precision"].map(lambda v: f"{v:.1%}")
+    df_display["Recall"]    = df_display["Recall"].map(lambda v: f"{v:.1%}")
+    df_display["F1"]        = df_display["F1"].map(lambda v: f"{v:.1%}")
+    _render_pro_dataframe(df_display, hide_index=True)
+    _latex_button(
+        df_display[["Dataset", "Language", "Prompt", "Precision", "Recall", "F1", "F1 [95% CI]", "TP", "FP", "FN"]],
+        caption="Multi-language benchmark: span-level precision, recall, and F1 per dataset and prompt strategy",
+        label="tab:multilang",
+        key="latex_multilang",
+    )
+
 
 # ==========================================================
 # Tab 1 : Run Experiments (SPAN-LEVEL)
@@ -2281,6 +2583,20 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                     st.caption("No column spans detected.")
                     user_use_cols_single = False
 
+    # Multi-language benchmark
+    if demo_sets and len(demo_sets) > 1 and mode_run == "Compare selected prompts":
+        st.markdown("---")
+        ml_clicked = st.button("🌐 Run on all datasets (multi-language benchmark)", help="Runs the selected prompts on every available demo dataset and aggregates results in one table.")
+        if ml_clicked:
+            if not preflight_ok:
+                st.warning("Fix the configuration issues before running.")
+            elif not selected_prompt_names:
+                st.warning("Select at least one prompt.")
+            else:
+                _run_multilanguage_benchmark(demo_sets, selected_prompt_names, strategies, top_k, pos_ratio, preset,
+                                             user_require_type, user_use_line_span, user_use_cols_single, llm)
+        st.markdown("---")
+
     # Run
     run_clicked = st.button("🚀 Run Analysis")
     if run_clicked:
@@ -2459,11 +2775,14 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             else:
                 st.info("Cached model-comparison results are from an older format. Rerun the analysis to enable Code context.")
 
+    if "last_multilang_results" in st.session_state and not st.session_state.get("_ml_just_ran"):
+        _render_multilanguage_results(st.session_state["last_multilang_results"])
+
 # ==========================================================
-# Tab 1 : Maintenance Tasks (Feature/Bug Location)
+# Tab 1 : Maintenance Activities (Feature/Bug Location)
 # ==========================================================
 def render_tab_maintenance_tasks(settings_target=None):
-    st.markdown("## 🧭 Maintenance Tasks")
+    st.markdown("## 🧭 Maintenance Activities")
     st.caption("Experimental branch: feature location and bug localization use file-level ranking metrics.")
 
     settings = settings_target or st.sidebar
@@ -2535,8 +2854,15 @@ def render_tab_maintenance_tasks(settings_target=None):
         with dataset_cols[2]:
             kpi("Source archive", Path(repo_zip).name or "not set", "warn")
 
+        single_only = settings.checkbox(
+            "Single features only (8 core features, no combinations)",
+            value=True,
+            help="Restrict evaluation to the 8 independent ArgoUML SPL features. "
+                 "Uncheck to include combined feature scenarios.",
+            key="fl_single_only",
+        )
         try:
-            tasks = load_argouml_feature_tasks(gt_path, repo_zip=repo_zip)
+            tasks = load_argouml_feature_tasks(gt_path, repo_zip=repo_zip, single_only=single_only)
         except Exception as e:
             st.error(f"Could not load ArgoUML feature-location benchmark: {e}")
             return
@@ -2838,6 +3164,7 @@ def render_tab_dacos_smell_benchmark(settings_target=None):
                         result["label"] = prompt_name
                         result["prompt"] = prompt_name
                         result["model"] = llm.model_label()
+                        result["template"] = prompt_templates[prompt_name]
                         results.append(result)
                         progress.progress(idx / max(1, len(selected_prompts)))
                     st.session_state.last_dacos_result = {"mode": execution_mode, "results": results}
@@ -2888,18 +3215,31 @@ def render_tab_dacos_smell_benchmark(settings_target=None):
             _render_dacos_results(cached)
 
 
+def _fmt_ci(lo: float, hi: float) -> str:
+    return f"[{lo:.1%}–{hi:.1%}]"
+
+
 def _render_dacos_results(result: dict[str, Any]) -> None:
     metrics = result.get("metrics") or {}
     usage = result.get("usage") or {}
-    c1, c2, c3, c4 = st.columns(4)
+    f1_lo = metrics.get("f1_ci_lo", 0.0)
+    f1_hi = metrics.get("f1_ci_hi", 0.0)
+    kappa = metrics.get("kappa", 0.0)
+    kappa_lo = metrics.get("kappa_ci_lo", 0.0)
+    kappa_hi = metrics.get("kappa_ci_hi", 0.0)
+    c1, c2, c3, c4, c5 = st.columns(5)
     with c1:
         kpi("Human-label F1", pct(metrics.get("f1", 0.0)), "ok")
+        st.caption(f"95% CI {_fmt_ci(f1_lo, f1_hi)}")
     with c2:
         kpi("Human-label precision", pct(metrics.get("precision", 0.0)), "ok")
     with c3:
         kpi("Human-label recall", pct(metrics.get("recall", 0.0)), "warn")
     with c4:
         kpi("Accuracy", pct(metrics.get("accuracy", 0.0)), "warn")
+    with c5:
+        kpi("Cohen's κ", f"{kappa:.3f}", "ok")
+        st.caption(f"95% CI [{kappa_lo:.3f}–{kappa_hi:.3f}]")
 
     st.markdown("### Confusion Counts")
     count_df = pd.DataFrame([{
@@ -2921,6 +3261,31 @@ def _render_dacos_results(result: dict[str, Any]) -> None:
         _render_pro_dataframe(detail_df[["sample_id", "smell", "Human label", "LLM label", "confidence", "rationale"]], hide_index=True)
 
 
+def _mcnemar_p(rows_a: list[dict], rows_b: list[dict]) -> float | None:
+    """McNemar test (normal approx.) between two result row lists matched by sample_id."""
+    import math
+    a_map = {r["sample_id"]: r.get("predicted") for r in rows_a}
+    b_map = {r["sample_id"]: r.get("predicted") for r in rows_b}
+    gold_map = {r["sample_id"]: r.get("gold") for r in rows_a}
+    b_count = c_count = 0
+    for sid in a_map:
+        if sid not in b_map:
+            continue
+        gold = gold_map.get(sid)
+        a_correct = a_map[sid] == gold
+        b_correct = b_map[sid] == gold
+        if a_correct and not b_correct:
+            b_count += 1
+        elif not a_correct and b_correct:
+            c_count += 1
+    denom = b_count + c_count
+    if denom < 2:
+        return None
+    z = (abs(b_count - c_count) - 1) / math.sqrt(denom)
+    p = 2 * (1 - 0.5 * (1 + math.erf(z / math.sqrt(2))))
+    return p
+
+
 def _render_dacos_comparison_results(results: list[dict[str, Any]], *, compare_by: str) -> None:
     if not results:
         st.info("No human-oracle comparison result to display.")
@@ -2934,9 +3299,11 @@ def _render_dacos_comparison_results(results: list[dict[str, Any]], *, compare_b
             "Prompt": result.get("prompt", ""),
             "Model": result.get("model", ""),
             "Human-label F1": metrics.get("f1", 0.0),
+            "F1 95% CI": _fmt_ci(metrics.get("f1_ci_lo", 0.0), metrics.get("f1_ci_hi", 0.0)),
             "Precision": metrics.get("precision", 0.0),
             "Recall": metrics.get("recall", 0.0),
             "Accuracy": metrics.get("accuracy", 0.0),
+            "Cohen's κ": round(metrics.get("kappa", 0.0), 3),
             "TP": metrics.get("tp", 0),
             "FP": metrics.get("fp", 0),
             "FN": metrics.get("fn", 0),
@@ -2957,6 +3324,35 @@ def _render_dacos_comparison_results(results: list[dict[str, Any]], *, compare_b
 
     st.markdown("### Human-Oracle Comparison")
     _render_pro_dataframe(summary_df, hide_index=True)
+    _latex_button(summary_df, caption="Human-oracle comparison: F1, precision, recall, Cohen's $\\kappa$", label="tab:human_oracle", key="latex_dacos_cmp")
+
+    prompt_names_in_table = summary_df["Prompt"].dropna().unique().tolist()
+    if prompt_names_in_table:
+        templates_from_results = {r.get("prompt", ""): r.get("template", "") for r in results if r.get("template")}
+        templates_builtin = _dacos_prompt_templates()
+        with st.expander("🔍 Inspect prompt template", expanded=False):
+            selected_for_preview = st.selectbox(
+                "Select prompt to preview",
+                prompt_names_in_table,
+                key=f"dacos_prompt_inspect_{compare_by}",
+            )
+            template_text = (
+                templates_from_results.get(selected_for_preview)
+                or templates_builtin.get(selected_for_preview, "")
+            )
+            if template_text:
+                st.code(template_text, language="text")
+            else:
+                st.info(f"Template not available for '{selected_for_preview}'.")
+
+    if len(results) == 2:
+        p_val = _mcnemar_p(results[0].get("rows") or [], results[1].get("rows") or [])
+        if p_val is not None:
+            sig = "significant (p < 0.05)" if p_val < 0.05 else "not significant (p ≥ 0.05)"
+            label_a = results[0].get("label", "A")
+            label_b = results[1].get("label", "B")
+            st.info(f"**McNemar test** ({label_a} vs {label_b}): p = {p_val:.4f} — {sig}")
+
     metric_df = summary_df[[compare_by, "Human-label F1", "Precision", "Recall", "Accuracy"]].melt(
         compare_by,
         var_name="Metric",
@@ -3197,6 +3593,21 @@ def _run_feature_location_batch(
         vals = [float((row.get("metrics") or {}).get(key, 0.0)) for row in task_results]
         metrics[key] = sum(vals) / len(vals) if vals else 0.0
 
+    import random as _rng
+    _r = _rng.Random(42)
+    n_tasks = len(task_results)
+    ci_keys = [k for k in ["mrr", "map", "hit@1", "hit@5"] if k in metrics]
+    boot = {k: [] for k in ci_keys}
+    for _ in range(1000):
+        sample = _r.choices(task_results, k=n_tasks)
+        for k in ci_keys:
+            vals = [float((row.get("metrics") or {}).get(k, 0.0)) for row in sample]
+            boot[k].append(sum(vals) / len(vals) if vals else 0.0)
+    for k in ci_keys:
+        s = sorted(boot[k])
+        metrics[f"{k}_ci_lo"] = s[25]
+        metrics[f"{k}_ci_hi"] = s[974]
+
     usage = {
         "prompt_tokens": sum(int((row.get("usage") or {}).get("prompt_tokens", 0)) for row in task_results),
         "completion_tokens": sum(int((row.get("usage") or {}).get("completion_tokens", 0)) for row in task_results),
@@ -3238,15 +3649,33 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
     summary_df = pd.DataFrame(summary_rows)
 
     best = summary_df.sort_values(["MRR", "MAP", "Hit@1"], ascending=False).head(1)
-    metrics = results[0].get("metrics", {}) if results else {}
+    metrics_top = results[0].get("metrics", {}) if results else {}
     c1, c2, c3, c4 = st.columns(4)
     with c1: kpi("Best item", str(best["Item"].iloc[0]) if len(best) else "n/a", "ok")
-    with c2: kpi("Best Hit@1", pct(float(best["Hit@1"].iloc[0])) if len(best) else "0.00%", "ok")
-    with c3: kpi("Best MRR", f"{float(best['MRR'].iloc[0]):.3f}" if len(best) else "0.000", "ok")
+    with c2:
+        kpi("Best Hit@1", pct(float(best["Hit@1"].iloc[0])) if len(best) else "0.00%", "ok")
+    with c3:
+        mrr_val = float(best["MRR"].iloc[0]) if len(best) else 0.0
+        kpi("Best MRR", f"{mrr_val:.3f}", "ok")
+        best_result = results[summary_rows.index(best.iloc[0].to_dict()) if best.iloc[0].to_dict() in summary_rows else 0]
+        m = best_result.get("metrics", {}) if isinstance(best_result, dict) else {}
+        if "mrr_ci_lo" in m:
+            st.caption(f"95% CI [{m['mrr_ci_lo']:.3f}–{m['mrr_ci_hi']:.3f}]")
     with c4: kpi("Gold files", str(len(task.gold_locations)), "warn")
 
-    st.markdown("### Location metrics")
-    _render_pro_dataframe(summary_df, hide_index=True)
+    st.markdown("### 📐 Location Metrics")
+    summary_display = summary_df.copy()
+    for col in ["Hit@1", "Hit@5", "Hit@10", "Recall@10", "MRR", "MAP"]:
+        if col in summary_display.columns:
+            summary_display[col] = summary_display[col].map(lambda v: f"{float(v):.3f}")
+    _render_pro_dataframe(summary_display, hide_index=True)
+    _latex_button(
+        summary_display,
+        caption="Feature location: MRR, MAP, Hit@K per prompt strategy",
+        label="tab:feature_location",
+        key="latex_fl_summary",
+    )
+
     if len(summary_df) > 1:
         chart_df = summary_df.set_index("Item")
         _render_wide_metric_chart(
@@ -3256,6 +3685,37 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
             value_label="Score",
             value_format=".2%",
             height=320,
+        )
+
+    all_task_ids = sorted({
+        str(row.get("task_id", ""))
+        for result in results
+        for row in result.get("task_results", [])
+        if row.get("task_id")
+    })
+    if all_task_ids:
+        st.markdown("### 📊 Breakdown by Feature Scenario")
+        feature_rows = []
+        for feat_id in all_task_ids:
+            row_dict: dict[str, Any] = {"Feature": feat_id}
+            for result in results:
+                label = str(result.get("label", result.get("prompt_style", "run")))
+                task_row = next((r for r in result.get("task_results", []) if str(r.get("task_id", "")) == feat_id), None)
+                if task_row:
+                    m = task_row.get("metrics", {})
+                    row_dict[f"{label} MRR"] = round(float(m.get("mrr", 0.0)), 3)
+                    row_dict[f"{label} Hit@1"] = round(float(m.get("hit@1", 0.0)), 3)
+                else:
+                    row_dict[f"{label} MRR"] = "—"
+                    row_dict[f"{label} Hit@1"] = "—"
+            feature_rows.append(row_dict)
+        feat_df = pd.DataFrame(feature_rows)
+        _render_pro_dataframe(feat_df, hide_index=True)
+        _latex_button(
+            feat_df,
+            caption="Per-feature MRR and Hit@1 by prompt strategy",
+            label="tab:feature_breakdown",
+            key="latex_fl_breakdown",
         )
 
     result_labels = [str(r.get("label", idx)) for idx, r in enumerate(results)]
@@ -3272,31 +3732,17 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
             "Rationale": p.get("rationale", ""),
         })
     st.markdown("### Ranked predictions")
-    if result.get("task_count", 1) > 1:
-        detail_rows = []
-        for row in result.get("task_results", []):
-            metrics = row.get("metrics", {})
-            detail_rows.append({
-                "Feature": row.get("task_id", ""),
-                "Hit@1": metrics.get("hit@1", 0.0),
-                "Hit@5": metrics.get("hit@5", 0.0),
-                "MRR": metrics.get("mrr", 0.0),
-                "MAP": metrics.get("map", 0.0),
-            })
-        with st.expander("Per-feature results", expanded=False):
-            _render_pro_dataframe(pd.DataFrame(detail_rows), hide_index=True)
-        st.caption("Ranked predictions below show the first selected feature as a preview.")
     _render_pro_dataframe(pd.DataFrame(pred_rows), hide_index=True)
     with st.expander("Raw LLM response", expanded=False):
         st.code(result.get("raw_response", ""), language="json")
 
-if page in ("🧭 Maintenance Tasks", "⚙️ Run Experiments"):
+if page in ("🧭 Maintenance", "⚙️ Run Experiments"):
     main_col, settings_col = st.columns([3.2, 1.05], gap="large")
     with settings_col:
         st.markdown('<div class="right-settings-title">Settings</div>', unsafe_allow_html=True)
         settings_box = st.container()
     with main_col:
-        if page == "🧭 Maintenance Tasks":
+        if page == "🧭 Maintenance":
             render_tab_maintenance_tasks(settings_target=settings_box)
         else:
             render_tab_run_experiments(render_sidebar=True, settings_target=settings_box)
@@ -3359,7 +3805,7 @@ def render_tab_results_db():
 # ==========================================================
 def render_tab_manage_prompts():
     st.markdown("## 📝 Prompt Repository")
-    st.caption("Manage prompts as a real repository: one category per maintenance task, with tags, descriptions, and reusable templates.")
+    st.caption("Manage prompts as a real repository: one category per maintenance activity, with tags, descriptions, and reusable templates.")
 
     repo = _load_prompt_repository()
     task_options = list(PROMPT_TASKS.keys())
@@ -3367,7 +3813,7 @@ def render_tab_manage_prompts():
     left, right = st.columns([0.92, 1.55], gap="large")
 
     with left:
-        selected_label = st.selectbox("Task category", task_labels, index=0)
+        selected_label = st.selectbox("Activity category", task_labels, index=0)
         task_key = task_options[task_labels.index(selected_label)]
         task_repo = repo[task_key]
         prompts = task_repo.get("prompts", {})
@@ -3479,6 +3925,25 @@ def render_tab_manage_prompts():
 
         _render_prompt_preview_panel("Repository Preview", {selected_prompt: edited_prompt}, selected_prompt)
 
+def _stratified_split(samples: list, test_ratio: float = 0.3, seed: int = 42) -> tuple[list, list]:
+    import random as _random
+    rng = _random.Random(seed)
+    positives = [s for s in samples if getattr(s, "label", False)]
+    negatives = [s for s in samples if not getattr(s, "label", False)]
+    def _split(items: list) -> tuple[list, list]:
+        shuffled = items[:]
+        rng.shuffle(shuffled)
+        n_test = max(1, round(len(shuffled) * test_ratio)) if shuffled else 0
+        return shuffled[n_test:], shuffled[:n_test]
+    pos_train, pos_test = _split(positives)
+    neg_train, neg_test = _split(negatives)
+    train = pos_train + neg_train
+    test = pos_test + neg_test
+    rng.shuffle(train)
+    rng.shuffle(test)
+    return train, test
+
+
 def render_tab_autoresearch():
     st.markdown("## 🧪 AutoResearch")
     st.caption("Compare prompt candidates on a fixed StarLLM benchmark, then keep the prompt that performs best under the chosen research objective.")
@@ -3487,7 +3952,7 @@ def render_tab_autoresearch():
     with settings:
         st.markdown("### Settings")
         task_label = st.selectbox(
-            "Benchmark task",
+            "Benchmark activity",
             ["Feature location", "Code smell detection"],
             index=0,
             help="Choose the StarLLM benchmark surface to optimize prompts against.",
@@ -3650,12 +4115,21 @@ def render_tab_autoresearch():
                 positive_threshold = "minor"
             if not samples:
                 st.warning(f"No {human_dataset_name} samples could be loaded for AutoResearch.")
+            test_ratio = st.slider(
+                "Holdout test split",
+                0.1, 0.5, 0.3, 0.05,
+                key="ar_test_split_ratio",
+                help="Fraction of samples held out for final evaluation. The loop only sees the train split.",
+            )
+            train_samples, test_samples = _stratified_split(samples, test_ratio=test_ratio)
+            st.caption(f"Train: {len(train_samples)} samples · Test (holdout): {len(test_samples)} samples")
             args = SimpleNamespace(
                 task="human_smell_oracle",
                 dataset_name=human_dataset_name,
                 source_path=source_path,
-                samples=samples,
-                sample_limit=sample_limit,
+                samples=train_samples,
+                test_samples=test_samples,
+                sample_limit=len(train_samples),
                 positive_threshold=positive_threshold,
                 primary_metric=primary_metric,
                 output_dir="output/autoresearch",
@@ -3836,6 +4310,14 @@ def render_tab_autoresearch():
                 st.warning("No results produced.")
                 return
 
+            holdout_result = None
+            test_samples = getattr(args, "test_samples", [])
+            if best_candidate and test_samples and task_key == "human_smell_oracle":
+                status.markdown(f"Evaluating best prompt `{best_candidate.name}` on holdout set ({len(test_samples)} samples)...")
+                holdout_args = SimpleNamespace(**{**vars(args), "samples": test_samples, "sample_limit": len(test_samples)})
+                holdout_rows = _evaluate_autoresearch_candidate(task_key, best_candidate, holdout_args, llm)
+                holdout_result = holdout_rows[0] if holdout_rows else None
+
             out_dir = write_autoresearch_outputs(rows, prompt_candidates_for_output, args)
             result_df = pd.DataFrame(rows).sort_values("score", ascending=False)
             st.session_state.last_autoresearch_results = {
@@ -3846,12 +4328,19 @@ def render_tab_autoresearch():
                 "best_prompt": best_candidate.name if best_candidate else "",
                 "best_template": best_candidate.template if best_candidate else "",
                 "task_key": task_key,
+                "holdout_result": holdout_result,
+                "n_train": len(getattr(args, "samples", [])),
+                "n_test": len(test_samples),
             }
             st.success(f"AutoResearch run saved to {out_dir}")
             if search_mode == "Iterative improvement loop":
                 _render_autoresearch_loop_results(result_df, primary_metric)
             else:
                 _render_autoresearch_results(result_df, primary_metric)
+            if holdout_result:
+                _render_autoresearch_holdout(holdout_result, primary_metric,
+                                             n_train=len(getattr(args, "samples", [])),
+                                             n_test=len(test_samples))
             _render_autoresearch_promote_button(st.session_state.last_autoresearch_results)
 
         cached = st.session_state.get("last_autoresearch_results")
@@ -3862,6 +4351,11 @@ def render_tab_autoresearch():
                 _render_autoresearch_loop_results(pd.DataFrame(cached.get("rows", [])), cached.get("metric", primary_metric))
             else:
                 _render_autoresearch_results(pd.DataFrame(cached.get("rows", [])), cached.get("metric", primary_metric))
+            if cached.get("holdout_result"):
+                _render_autoresearch_holdout(
+                    cached["holdout_result"], cached.get("metric", primary_metric),
+                    n_train=cached.get("n_train", 0), n_test=cached.get("n_test", 0),
+                )
             _render_autoresearch_promote_button(cached)
 
 def _evaluate_autoresearch_candidate(task_key: str, candidate: PromptCandidate, args: Any, llm: ChatModel) -> list[dict[str, Any]]:
@@ -4021,6 +4515,22 @@ def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: s
     st.markdown("### Attempt History")
     _render_pro_dataframe(pd.DataFrame(display_rows), hide_index=True)
 
+    if "template" in history_df.columns:
+        prompt_options = history_df["prompt"].dropna().unique().tolist()
+        if prompt_options:
+            with st.expander("🔍 Inspect prompt template", expanded=False):
+                selected_prompt = st.selectbox(
+                    "Select prompt to inspect",
+                    prompt_options,
+                    key="autoresearch_loop_prompt_inspect",
+                )
+                match = history_df[history_df["prompt"] == selected_prompt]
+                template_text = str(match.iloc[0].get("template", "")) if not match.empty else ""
+                if template_text:
+                    st.code(template_text, language="text")
+                else:
+                    st.info("Template not available for this prompt.")
+
     if "iteration" in history_df.columns:
         chart_df = history_df[["iteration", "score", "decision", "prompt"]].copy()
         chart_df["Score"] = chart_df["score"].astype(float)
@@ -4053,6 +4563,30 @@ def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: s
         )
         st.markdown("### Seed vs Best Shift")
         st.altair_chart(slope, use_container_width=True)
+
+def _render_autoresearch_holdout(holdout_result: dict[str, Any], primary_metric: str, *, n_train: int, n_test: int) -> None:
+    st.markdown("### 🧪 Holdout Evaluation (test set)")
+    st.caption(f"The best prompt was re-evaluated on the **held-out test set** ({n_test} samples, never seen during optimization). Train set: {n_train} samples.")
+    score = float(holdout_result.get("score", 0.0))
+    train_score = float(holdout_result.get("score", 0.0))
+    metrics = holdout_result.get("metrics") or {}
+    f1 = metrics.get("f1", score)
+    kappa = metrics.get("kappa", 0.0)
+    f1_lo = metrics.get("f1_ci_lo", 0.0)
+    f1_hi = metrics.get("f1_ci_hi", 0.0)
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        kpi("Holdout F1", pct(f1), "ok")
+        st.caption(f"95% CI {_fmt_ci(f1_lo, f1_hi)}")
+    with c2:
+        kpi("Holdout precision", pct(metrics.get("precision", 0.0)), "ok")
+    with c3:
+        kpi("Holdout recall", pct(metrics.get("recall", 0.0)), "warn")
+    with c4:
+        kpi("Cohen's κ (test)", f"{kappa:.3f}", "ok")
+    st.info(f"**Interpretation:** Train F1 = {_format_metric(primary_metric, holdout_result.get('score', 0.0))} · Holdout F1 = {pct(f1)}. "
+            f"{'⚠️ Gap suggests overfitting on train set.' if abs(holdout_result.get('score', 0.0) - f1) > 0.10 else '✅ Train/test scores are consistent.'}")
+
 
 def _render_autoresearch_promote_button(cached: dict[str, Any]) -> None:
     best_template = str(cached.get("best_template") or "")
@@ -4295,7 +4829,7 @@ if page == "🧪 AutoResearch":
 # ==========================================================
 # Tab 4 : Results DB
 # ==========================================================
-if page == "🗃️ Stored Results (DB)":
+if page == "🗃️ Results":
     render_tab_results_db()
 
 # ==========================================================
@@ -4389,7 +4923,7 @@ def render_tab_batch():
                 (proj_out / "global_results.csv").write_text(global_df.to_csv())
                 st.info(f"📁 Global results saved for {project}: {proj_out/'global_results.csv'}")
 
-if page == "🔄 Batch Experiments":
+if page == "🔄 Batch":
     render_tab_batch()
 
 # ==========================================================
@@ -4576,5 +5110,5 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 
     st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
 
-if page == "📘 Guide & Examples":
+if page == "📘 Guide":
     render_tab_guide()

@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import os
+import random
 import re
 import urllib.request
 import zipfile
@@ -637,6 +639,44 @@ def _parse_dacos_prediction(raw: Any) -> tuple[bool, Optional[float], str]:
     return bool(present), confidence, rationale
 
 
+def _cohen_kappa(tp: int, fp: int, fn: int, tn: int) -> float:
+    n = tp + fp + fn + tn
+    if n == 0:
+        return 0.0
+    po = (tp + tn) / n
+    pe = ((tp + fp) * (tp + fn) + (tn + fn) * (tn + fp)) / (n * n)
+    return (po - pe) / (1 - pe) if (1 - pe) > 0 else 0.0
+
+
+def _bootstrap_ci_binary(
+    rows: list[dict[str, Any]],
+    n: int = 1000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> dict[str, tuple[float, float]]:
+    rng = random.Random(seed)
+    k = len(rows)
+    if k == 0:
+        return {"f1_ci": (0.0, 0.0), "kappa_ci": (0.0, 0.0)}
+    f_vals, kappa_vals = [], []
+    for _ in range(n):
+        sample = rng.choices(rows, k=k)
+        tp = sum(1 for r in sample if r.get("gold") is True and r.get("predicted") is True)
+        fp = sum(1 for r in sample if r.get("gold") is False and r.get("predicted") is True)
+        fn = sum(1 for r in sample if r.get("gold") is True and r.get("predicted") is False)
+        tn = sum(1 for r in sample if r.get("gold") is False and r.get("predicted") is False)
+        p = tp / (tp + fp) if (tp + fp) else 0.0
+        r = tp / (tp + fn) if (tp + fn) else 0.0
+        f_vals.append(2 * p * r / (p + r) if (p + r) else 0.0)
+        kappa_vals.append(_cohen_kappa(tp, fp, fn, tn))
+    lo_idx = max(0, min(n - 1, int(alpha / 2 * n)))
+    hi_idx = max(0, min(n - 1, int((1 - alpha / 2) * n)))
+    def _ci(vals: list[float]) -> tuple[float, float]:
+        s = sorted(vals)
+        return (s[lo_idx], s[hi_idx])
+    return {"f1_ci": _ci(f_vals), "kappa_ci": _ci(kappa_vals)}
+
+
 def _binary_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     tp = sum(1 for row in rows if row.get("gold") is True and row.get("predicted") is True)
     fp = sum(1 for row in rows if row.get("gold") is False and row.get("predicted") is True)
@@ -646,11 +686,18 @@ def _binary_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     recall = tp / (tp + fn) if (tp + fn) else 0.0
     f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
     accuracy = (tp + tn) / len(rows) if rows else 0.0
+    kappa = _cohen_kappa(tp, fp, fn, tn)
+    ci = _bootstrap_ci_binary(rows)
     return {
         "precision": precision,
         "recall": recall,
         "f1": f1,
         "accuracy": accuracy,
+        "kappa": kappa,
+        "f1_ci_lo": ci["f1_ci"][0],
+        "f1_ci_hi": ci["f1_ci"][1],
+        "kappa_ci_lo": ci["kappa_ci"][0],
+        "kappa_ci_hi": ci["kappa_ci"][1],
         "tp": tp,
         "fp": fp,
         "fn": fn,
@@ -675,7 +722,13 @@ def _safe_dacos_format(template: str, values: dict[str, Any]) -> str:
         return protected.format(**values)
 
 
-def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> list[MaintenanceTask]:
+def load_argouml_feature_tasks(
+    path: str,
+    *,
+    repo_zip: Optional[str] = None,
+    single_only: bool = False,
+    granularity: str = "file",
+) -> list[MaintenanceTask]:
     """Load ArgoUML SPL feature-location mappings.
 
     The public ArgoUML SPL benchmark has been reused in several formats. This
@@ -685,11 +738,19 @@ def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> 
     - feature, feature_name, scenario, concern
     - file, path, class, class_name, method, method_name
     - description, query
+
+    Args:
+        single_only: When True, keep only the 8 core single-feature scenarios
+            (no combined ``_and_`` variants).  Useful for controlled evaluation
+            where each task corresponds to exactly one independent feature.
     """
 
     path_obj = Path(path)
     if path_obj.is_dir():
-        return _load_argouml_directory(path_obj, repo_zip=repo_zip)
+        tasks = _load_argouml_directory(path_obj, repo_zip=repo_zip, granularity=granularity)
+        if single_only:
+            tasks = [t for t in tasks if "_and_" not in t.metadata.get("feature", "")]
+        return tasks
 
     rows = _load_rows(path)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -736,7 +797,8 @@ def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> 
     return tasks
 
 
-def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> list[MaintenanceTask]:
+def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None,
+                            granularity: str = "file") -> list[MaintenanceTask]:
     """Load the ArgoUML SPL benchmark directory format.
 
     Expected layout:
@@ -763,12 +825,14 @@ def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> li
     tasks: list[MaintenanceTask] = []
     for gt_file in sorted(gt_dir.glob("*.txt")):
         feature_key = gt_file.stem
+        if feature_key.startswith("not_"):
+            continue
         gold = []
         for raw in gt_file.read_text(encoding="utf-8", errors="ignore").splitlines():
             file_name = _argouml_gt_line_to_file(raw)
             if file_name:
                 gold.append(LocalizationGold(file=file_name, symbol=_argouml_gt_line_to_symbol(raw)))
-        unique_gold = _dedupe_gold(gold)
+        unique_gold = _dedupe_gold(gold, granularity=granularity)
         if not unique_gold:
             continue
         query = _argouml_query_from_feature_key(feature_key, feature_info)
@@ -783,6 +847,7 @@ def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> li
             candidate_level="file",
             metadata={
                 "benchmark": "ArgoUML SPL feature location",
+                "granularity": granularity,
                 "feature": feature_key,
                 "source": str(gt_file),
                 "raw_locations": len(gold),
@@ -1016,12 +1081,20 @@ def _split_locations(value: Any) -> list[str]:
     return [x for x in out if x]
 
 
-def _dedupe_gold(items: Iterable[LocalizationGold]) -> list[LocalizationGold]:
-    seen = set()
+def _dedupe_gold(items: Iterable[LocalizationGold], granularity: str = "file") -> list[LocalizationGold]:
+    """Deduplicate gold entries.
+
+    granularity='file'   — one entry per file (existing behaviour, drops method symbols).
+    granularity='method' — one entry per (file, symbol) pair; keeps all methods.
+    """
+    seen: set = set()
     out = []
     for item in items:
-        key = item.normalized_file
-        if not key or key in seen:
+        if granularity == "method":
+            key = (item.normalized_file, (item.symbol or "").lower().strip())
+        else:
+            key = item.normalized_file
+        if not item.normalized_file or key in seen:
             continue
         seen.add(key)
         out.append(item)

@@ -1,0 +1,1829 @@
+{
+  "rows": [
+    {
+      "sample_id": "526",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is a static utility class with no methods accessing fields or methods of another class, making feature_envy unlikely.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is a static utility class with no methods accessing fields or methods of another class, making feature_envy unlikely.\"\n}"
+    },
+    {
+      "sample_id": "527",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method is absent, and the class only contains static fields and a private constructor, which does not meet the thresholds for long_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method is absent, and the class only contains static fields and a private constructor, which does not meet the thresholds for long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "528",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `UnorderedPartitionedKVWriter` has more than 10 methods, numerous fields, and mixes multiple responsibilities such as buffer management, file writing, and partition handling, which are indicators of a god_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `UnorderedPartitionedKVWriter` has more than 10 methods, numerous fields, and mixes multiple responsibilities such as buffer management, file writing, and partition handling, which are indicators of a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "529",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple fields, methods, and complex logic, indicating it is not a data class but rather a functional class with significant responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple fields, methods, and complex logic, indicating it is not a data class but rather a functional class with significant responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "530",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet primarily access and modify fields within their own class, with no evidence of excessive interaction with another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet primarily access and modify fields within their own class, with no evidence of excessive interaction with another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "531",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not exceed 50 lines, lacks excessive branching, and does not demonstrate convoluted control flow or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not exceed 50 lines, lacks excessive branching, and does not demonstrate convoluted control flow or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "532",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise, each under 50 lines, with no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise, each under 50 lines, with no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "533",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily interact with their own class fields and do not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily interact with their own class fields and do not excessively access fields or methods of another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "534",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple constructors, a static field, and an overridden method with logic, indicating it is not a pure data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple constructors, a static field, and an overridden method with logic, indicating it is not a pure data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "535",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has fewer than 10 methods, does not centralize unrelated responsibilities, and does not exhibit excessive complexity or multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has fewer than 10 methods, does not centralize unrelated responsibilities, and does not exhibit excessive complexity or multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "536",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 5 methods and does not centralize unrelated responsibilities, staying within the thresholds for god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 5 methods and does not centralize unrelated responsibilities, staying within the thresholds for god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "537",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, indicating it is not a data class. It performs security checks and redirects, which are functional responsibilities beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, indicating it is not a data class. It performs security checks and redirects, which are functional responsibilities beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "538",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has fewer than 10 methods, does not mix more than two distinct responsibilities, and the methods are concise without excessive complexity or long parameter lists.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has fewer than 10 methods, does not mix more than two distinct responsibilities, and the methods are concise without excessive complexity or long parameter lists.\"\n}\n```"
+    },
+    {
+      "sample_id": "539",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic and responsibilities, such as rendering elements and managing conditional rendering, which disqualifies it as a data_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic and responsibilities, such as rendering elements and managing conditional rendering, which disqualifies it as a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "540",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a clear single responsibility, and does not exceed the 50-line threshold or involve excessive operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has a clear single responsibility, and does not exceed the 50-line threshold or involve excessive operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "541",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'visitMethodTypeAnnotation' does not access fields or methods of another class more than its own; it simply throws an exception without interacting with external objects.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'visitMethodTypeAnnotation' does not access fields or methods of another class more than its own; it simply throws an exception without interacting with external objects.\"\n}\n```"
+    },
+    {
+      "sample_id": "542",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet primarily access their own class's fields and do not exhibit excessive interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet primarily access their own class's fields and do not exhibit excessive interaction with another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "543",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, focused, and the class does not exceed the 50-line threshold or exhibit excessive complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short, focused, and the class does not exceed the 50-line threshold or exhibit excessive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "544",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "545",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access fields within their own class, and there is no evidence of excessive interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily access fields within their own class, and there is no evidence of excessive interaction with another class's fields or methods.\"}\n```"
+    },
+    {
+      "sample_id": "546",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet does not exhibit evidence of a god_class as it contains only a few short classes with no excessive methods or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided code snippet does not exhibit evidence of a god_class as it contains only a few short classes with no excessive methods or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "547",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'ElementPropertyEvent' contains only fields and lacks any meaningful methods beyond trivial constructors, fitting the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ElementPropertyEvent' contains only fields and lacks any meaningful methods beyond trivial constructors, fitting the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "548",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily delegate to a superclass and do not access fields or methods of another class more than their own.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily delegate to a superclass and do not access fields or methods of another class more than their own.\"\n}\n```"
+    },
+    {
+      "sample_id": "549",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, focused, and do not exceed the 50-line threshold or exhibit excessive operations or branching.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are short, focused, and do not exceed the 50-line threshold or exhibit excessive operations or branching.\"}\n```"
+    },
+    {
+      "sample_id": "552",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method length exceeds 50 lines, contains nested control flow, and performs multiple operations, meeting the thresholds for long_method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method length exceeds 50 lines, contains nested control flow, and performs multiple operations, meeting the thresholds for long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "553",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'getPropertyMapping' accesses more fields/methods of the 'mappings' object than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'getPropertyMapping' accesses more fields/methods of the 'mappings' object than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "554",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains more than 10 methods, mixes multiple distinct responsibilities (e.g., list management, profile updates, subscription handling), and centralizes unrelated operations, meeting the god_class thresholds.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains more than 10 methods, mixes multiple distinct responsibilities (e.g., list management, profile updates, subscription handling), and centralizes unrelated operations, meeting the god_class thresholds.\"\n}\n```"
+    },
+    {
+      "sample_id": "555",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains multiple methods with significant logic and responsibilities, including interacting with external services and processing data, which disqualifies it as a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains multiple methods with significant logic and responsibilities, including interacting with external services and processing data, which disqualifies it as a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "556",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not exceed the thresholds for god_class: it has fewer than 10 methods, does not centralize unrelated responsibilities, and its methods are not excessively long or complex.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not exceed the thresholds for god_class: it has fewer than 10 methods, does not centralize unrelated responsibilities, and its methods are not excessively long or complex.\"\n}\n```"
+    },
+    {
+      "sample_id": "557",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'SessionAttributeElement' contains a field, a constructor, and a non-trivial method 'addElement', which performs logic beyond simple getters/setters, so it is not a data_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'SessionAttributeElement' contains a field, a constructor, and a non-trivial method 'addElement', which performs logic beyond simple getters/setters, so it is not a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "558",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet contains only a few short methods and does not exhibit excessive methods, responsibilities, or complexity indicative of a god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet contains only a few short methods and does not exhibit excessive methods, responsibilities, or complexity indicative of a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "559",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'ChannelConfigException' contains only fields and trivial constructors, which aligns with the definition of a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ChannelConfigException' contains only fields and trivial constructors, which aligns with the definition of a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "562",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length does not exceed 50 lines, and the operations are minimal with no excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method length does not exceed 50 lines, and the operations are minimal with no excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "563",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet primarily consists of trivial getters and setters, which do not exhibit feature envy as no method accesses more fields/methods of another class than its own.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet primarily consists of trivial getters and setters, which do not exhibit feature envy as no method accesses more fields/methods of another class than its own.\"}\n```"
+    },
+    {
+      "sample_id": "564",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'DynamicExpression' does not access more fields or methods of another class than its own; it primarily interacts with its own class and local objects.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'DynamicExpression' does not access more fields or methods of another class than its own; it primarily interacts with its own class and local objects.\"\n}\n```"
+    },
+    {
+      "sample_id": "565",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'DynamicExpression' is 24 lines long, which is below the 50-line threshold for long_method, and its control flow is not excessively convoluted.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'DynamicExpression' is 24 lines long, which is below the 50-line threshold for long_method, and its control flow is not excessively convoluted.\"\n}\n```"
+    },
+    {
+      "sample_id": "566",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet primarily access their own class's fields or perform operations without excessive reliance on another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet primarily access their own class's fields or perform operations without excessive reliance on another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "567",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'adjustRelativePath' is 26 lines long and does not exceed the 50-line threshold for long_method. It has a clear single responsibility and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'adjustRelativePath' is 26 lines long and does not exceed the 50-line threshold for long_method. It has a clear single responsibility and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "568",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet defines an interface with only two methods and does not exhibit characteristics of a god_class, such as excessive methods, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet defines an interface with only two methods and does not exhibit characteristics of a god_class, such as excessive methods, mixed responsibilities, or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "569",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with methods that are not trivial getters/setters and includes domain-specific functionality, which does not meet the criteria for a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with methods that are not trivial getters/setters and includes domain-specific functionality, which does not meet the criteria for a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "570",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access fields within their own class, not another class, and do not exhibit feature envy behavior.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily access fields within their own class, not another class, and do not exhibit feature envy behavior.\"}\n```"
+    },
+    {
+      "sample_id": "571",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise, with fewer than 50 lines and no excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise, with fewer than 50 lines and no excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "572",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided snippet does not exceed 50 lines, nor does it show excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The provided snippet does not exceed 50 lines, nor does it show excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "573",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'endAccess' accesses more fields/methods of another class (ClusterManagerBase) than its own, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'endAccess' accesses more fields/methods of another class (ClusterManagerBase) than its own, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "574",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise, each under 50 lines, with clear responsibilities and minimal branching, indicating no long_method smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise, each under 50 lines, with clear responsibilities and minimal branching, indicating no long_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "575",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access their own class's fields and do not exhibit significant interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily access their own class's fields and do not exhibit significant interaction with another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "576",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getText' is concise, contains fewer than 50 lines, and has straightforward control flow without excessive branching.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'getText' is concise, contains fewer than 50 lines, and has straightforward control flow without excessive branching.\"}\n```"
+    },
+    {
+      "sample_id": "577",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getText' primarily accesses its own parameters and does not exhibit significant interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getText' primarily accesses its own parameters and does not exhibit significant interaction with another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "578",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single responsibility (handling file save events), contains only one method apart from the constructor, and does not exhibit excessive complexity or unrelated responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single responsibility (handling file save events), contains only one method apart from the constructor, and does not exhibit excessive complexity or unrelated responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "579",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains a field, a constructor, and a method with non-trivial logic, indicating it is not a pure data class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains a field, a constructor, and a method with non-trivial logic, indicating it is not a pure data class.\"}\n```"
+    },
+    {
+      "sample_id": "580",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "581",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'getMethod' accesses more fields/methods of the 'introspector' object than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'getMethod' accesses more fields/methods of the 'introspector' object than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "582",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has only 4 methods, does not mix distinct responsibilities, and none of the methods exceed the thresholds for complexity or length.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has only 4 methods, does not mix distinct responsibilities, and none of the methods exceed the thresholds for complexity or length.\"\n}\n```"
+    },
+    {
+      "sample_id": "583",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains methods with non-trivial logic and is not limited to fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains methods with non-trivial logic and is not limited to fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "586",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains only fields and trivial constructors without any additional logic, strongly indicating a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only fields and trivial constructors without any additional logic, strongly indicating a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "587",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains only a single constructor and does not exhibit excessive methods, multifaceted responsibilities, or other god_class characteristics.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only a single constructor and does not exhibit excessive methods, multifaceted responsibilities, or other god_class characteristics.\"\n}\n```"
+    },
+    {
+      "sample_id": "588",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is an interface with only method declarations and an enum, containing no implementation or mixed responsibilities, and does not meet the thresholds for god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is an interface with only method declarations and an enum, containing no implementation or mixed responsibilities, and does not meet the thresholds for god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "589",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains only fields and trivial getters/setters without any complex logic or distinct responsibilities, meeting the definition of a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only fields and trivial getters/setters without any complex logic or distinct responsibilities, meeting the definition of a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "590",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are trivial getters accessing fields of their own class, which does not exhibit feature envy behavior.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are trivial getters accessing fields of their own class, which does not exhibit feature envy behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "591",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods are trivial getters, and the code snippet does not exceed the thresholds for long_method in terms of length, complexity, or operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The methods are trivial getters, and the code snippet does not exceed the thresholds for long_method in terms of length, complexity, or operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "592",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'JobSchedulerService' exhibits characteristics of a god class, including having more than 10 methods, handling multiple responsibilities (e.g., job scheduling, job execution, metrics management, and listener management), and containing long and complex methods such as 'runOneIteration' and 'submitWork'.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'JobSchedulerService' exhibits characteristics of a god class, including having more than 10 methods, handling multiple responsibilities (e.g., job scheduling, job execution, metrics management, and listener management), and containing long and complex methods such as 'runOneIteration' and 'submitWork'.\"\n}\n```"
+    },
+    {
+      "sample_id": "593",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with significant logic, including scheduling, job submission, and metrics handling, which go beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with significant logic, including scheduling, job submission, and metrics handling, which go beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "596",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The code snippet defines an interface with no methods or fields, so it does not meet any of the thresholds for god_class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The code snippet defines an interface with no methods or fields, so it does not meet any of the thresholds for god_class.\"}\n```"
+    },
+    {
+      "sample_id": "597",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The code defines an interface with no fields or methods, so it cannot be classified as a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The code defines an interface with no fields or methods, so it cannot be classified as a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "598",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has only two methods and does not exhibit excessive complexity, mixed responsibilities, or unrelated centralization of functionality.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has only two methods and does not exhibit excessive complexity, mixed responsibilities, or unrelated centralization of functionality.\"\n}\n```"
+    },
+    {
+      "sample_id": "599",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains abstract methods and overrides, which are not trivial getters/setters or fields-only; it does not meet the data_class smell criteria.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains abstract methods and overrides, which are not trivial getters/setters or fields-only; it does not meet the data_class smell criteria.\"\n}\n```"
+    },
+    {
+      "sample_id": "600",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 10 methods, but they are tightly focused on array manipulation and do not mix unrelated responsibilities, meeting the multifaceted_abstraction threshold conservatively.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 10 methods, but they are tightly focused on array manipulation and do not mix unrelated responsibilities, meeting the multifaceted_abstraction threshold conservatively.\"\n}\n```"
+    },
+    {
+      "sample_id": "601",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, indicating it is not a data class as it performs operations beyond trivial getters and setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, indicating it is not a data class as it performs operations beyond trivial getters and setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "602",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a resource bundle for error messages and does not exhibit characteristics of a god_class, such as excessive methods, multifaceted abstraction, or complex control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a resource bundle for error messages and does not exhibit characteristics of a god_class, such as excessive methods, multifaceted abstraction, or complex control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "603",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains only fields and a trivial getter method (`getContents`), which returns a static lookup table, meeting the definition of a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only fields and a trivial getter method (`getContents`), which returns a static lookup table, meeting the definition of a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "604",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is very short, contains no branching or complex operations, and does not exceed the 50-line threshold.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is very short, contains no branching or complex operations, and does not exceed the 50-line threshold.\"}\n```"
+    },
+    {
+      "sample_id": "605",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'splitText' does not access fields or methods of another class, and the code snippet lacks sufficient context to suggest feature envy.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'splitText' does not access fields or methods of another class, and the code snippet lacks sufficient context to suggest feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "606",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains only two methods with clear, single-purpose responsibilities and does not meet the thresholds for god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only two methods with clear, single-purpose responsibilities and does not meet the thresholds for god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "607",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains utility methods with non-trivial logic and does not consist solely of fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains utility methods with non-trivial logic and does not consist solely of fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "608",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility, and does not exceed the thresholds for long_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has a single responsibility, and does not exceed the thresholds for long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "609",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, with no excessive branching, and the code snippet does not exceed 50 lines or contain too many operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short, with no excessive branching, and the code snippet does not exceed 50 lines or contain too many operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "610",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily interact with their own class and do not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.8, \"rationale\": \"The methods primarily interact with their own class and do not excessively access fields or methods of another class.\"}\n```"
+    },
+    {
+      "sample_id": "611",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet contains classes with methods performing specific operations (e.g., read, write, getScheme), indicating functionality beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet contains classes with methods performing specific operations (e.g., read, write, getScheme), indicating functionality beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "612",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'validateToken' exceeds 50 lines and contains excessive branching with multiple nested levels, indicating a long_method smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'validateToken' exceeds 50 lines and contains excessive branching with multiple nested levels, indicating a long_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "613",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'validateToken' accesses multiple fields and methods of the 'SignedJWT' class and 'org.apache.shiro.SecurityUtils' more than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'validateToken' accesses multiple fields and methods of the 'SignedJWT' class and 'org.apache.shiro.SecurityUtils' more than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "614",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class ZooInspectorPanel has more than 10 methods, mixes multiple distinct responsibilities (UI management, event handling, connection management), and contains long methods with convoluted control flow, indicating a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ZooInspectorPanel has more than 10 methods, mixes multiple distinct responsibilities (UI management, event handling, connection management), and contains long methods with convoluted control flow, indicating a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "615",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains multiple methods with non-trivial logic, event handling, and UI management, which go beyond just fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, event handling, and UI management, which go beyond just fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "616",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, have clear responsibilities, and do not exceed 50 lines or involve excessive branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short, have clear responsibilities, and do not exceed 50 lines or involve excessive branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "617",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'setProperty' accesses more fields/methods of 'System' and 'internalProperties' than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'setProperty' accesses more fields/methods of 'System' and 'internalProperties' than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "618",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 20 methods, but they are cohesive and focused on version comparison, without mixing unrelated responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 20 methods, but they are cohesive and focused on version comparison, without mixing unrelated responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "619",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, such as version comparison and parsing, which go beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, such as version comparison and parsing, which go beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "620",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided snippet is incomplete and does not show evidence of exceeding 50 lines or containing excessive operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided snippet is incomplete and does not show evidence of exceeding 50 lines or containing excessive operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "621",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The snippet does not show evidence of a method accessing more fields/methods of another class than its own, and the provided code primarily contains trivial getters/setters.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The snippet does not show evidence of a method accessing more fields/methods of another class than its own, and the provided code primarily contains trivial getters/setters.\"}\n```"
+    },
+    {
+      "sample_id": "622",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method accesses more fields and methods of the LogEntry and Log4JEntry classes than its own, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method accesses more fields and methods of the LogEntry and Log4JEntry classes than its own, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "623",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor 'JsonGenerator' exceeds 50 lines and contains excessive branching with multiple nested levels, making it a long and complex method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor 'JsonGenerator' exceeds 50 lines and contains excessive branching with multiple nested levels, making it a long and complex method.\"\n}\n```"
+    },
+    {
+      "sample_id": "624",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The classes contain constructors or methods with specific logic, and are not limited to only fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The classes contain constructors or methods with specific logic, and are not limited to only fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "625",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not meet any measurable thresholds for god_class; it contains only three small classes with focused responsibilities and no excessive methods or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet does not meet any measurable thresholds for god_class; it contains only three small classes with focused responsibilities and no excessive methods or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "634",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class is empty and does not exhibit any of the measurable thresholds for god_class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The class is empty and does not exhibit any of the measurable thresholds for god_class.\"}\n```"
+    },
+    {
+      "sample_id": "635",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains no methods or logic, suggesting it is a data class intended only to hold fields, though no fields are currently defined.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains no methods or logic, suggesting it is a data class intended only to hold fields, though no fields are currently defined.\"\n}\n```"
+    },
+    {
+      "sample_id": "636",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length is well below the 50-line threshold, and the operations are straightforward without excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method length is well below the 50-line threshold, and the operations are straightforward without excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "637",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The methods in the code snippet access more fields/methods of another class (e.g., getConnectionContext(), getRootV3(), getTokenProvider()) than their own, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods in the code snippet access more fields/methods of another class (e.g., getConnectionContext(), getRootV3(), getTokenProvider()) than their own, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "638",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, focused, and do not exceed 50 lines or contain excessive operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short, focused, and do not exceed 50 lines or contain excessive operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "639",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily interact with their own parameters and constructors, without excessive reliance on another class's fields or methods.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily interact with their own parameters and constructors, without excessive reliance on another class's fields or methods.\"}\n```"
+    },
+    {
+      "sample_id": "640",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceSubstitution' is concise, contains fewer than 50 lines, has clear responsibilities, and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceSubstitution' is concise, contains fewer than 50 lines, has clear responsibilities, and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "641",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceSubstitution' primarily operates on its own parameters and does not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceSubstitution' primarily operates on its own parameters and does not excessively access fields or methods of another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "642",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily contains fields, trivial getters/setters, and constructors, with no significant behavior or logic, meeting the criteria for a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily contains fields, trivial getters/setters, and constructors, with no significant behavior or logic, meeting the criteria for a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "643",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not exhibit god_class characteristics as it primarily serves as a data exception with focused responsibilities, contains fewer than 10 methods, and does not centralize unrelated responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not exhibit god_class characteristics as it primarily serves as a data exception with focused responsibilities, contains fewer than 10 methods, and does not centralize unrelated responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "644",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single responsibility (handling application instance responses), contains fewer than 10 methods, and does not exhibit excessive complexity or unrelated responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single responsibility (handling application instance responses), contains fewer than 10 methods, and does not exhibit excessive complexity or unrelated responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "645",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class _ApplicationInstancesResponse contains only fields and trivial getters/setters, meeting the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class _ApplicationInstancesResponse contains only fields and trivial getters/setters, meeting the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "648",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is incomplete but does not exceed 50 lines or exhibit excessive operations or branching in its current state.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is incomplete but does not exceed 50 lines or exhibit excessive operations or branching in its current state.\"\n}\n```"
+    },
+    {
+      "sample_id": "649",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'from' does not access more fields/methods of another class than its own, and the class does not exhibit excessive branching or other feature envy characteristics.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'from' does not access more fields/methods of another class than its own, and the class does not exhibit excessive branching or other feature envy characteristics.\"}\n```"
+    },
+    {
+      "sample_id": "650",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains methods with non-trivial logic and does not solely consist of fields and trivial getters/setters.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains methods with non-trivial logic and does not solely consist of fields and trivial getters/setters.\"}\n```"
+    },
+    {
+      "sample_id": "651",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit god_class characteristics as it contains only two small inner classes with limited methods and responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit god_class characteristics as it contains only two small inner classes with limited methods and responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "652",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class DimsDataList has over 10 methods, several of which are long and complex, and it centralizes multiple unrelated responsibilities such as data manipulation, serialization, and axis management.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class DimsDataList has over 10 methods, several of which are long and complex, and it centralizes multiple unrelated responsibilities such as data manipulation, serialization, and axis management.\"\n}\n```"
+    },
+    {
+      "sample_id": "653",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, indicating it is not a simple data class with only fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, indicating it is not a simple data class with only fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "654",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, focused, and do not exceed the 50-line threshold or exhibit excessive branching.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are short, focused, and do not exceed the 50-line threshold or exhibit excessive branching.\"}\n```"
+    },
+    {
+      "sample_id": "655",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "Methods in the class access more fields and methods of another class (e.g., NX_TYPE, NX_COMPOSITION) than their own, indicating feature envy.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.8, \"rationale\": \"Methods in the class access more fields and methods of another class (e.g., NX_TYPE, NX_COMPOSITION) than their own, indicating feature envy.\"}\n```"
+    },
+    {
+      "sample_id": "656",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single method with a clear and concise responsibility, does not exceed thresholds for method length, parameter count, or multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single method with a clear and concise responsibility, does not exceed thresholds for method length, parameter count, or multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "657",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains only fields and a trivial method (applyEvent) that delegates functionality without adding significant logic, matching the data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains only fields and a trivial method (applyEvent) that delegates functionality without adding significant logic, matching the data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "658",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below the 50-line threshold, and the operations are minimal without excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method lengths are well below the 50-line threshold, and the operations are minimal without excessive branching or mixed responsibilities.\"}\n```"
+    },
+    {
+      "sample_id": "659",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'accept' and constructor primarily interact with their own class fields and do not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'accept' and constructor primarily interact with their own class fields and do not excessively access fields or methods of another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "660",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains more than 10 methods, mixes multiple distinct responsibilities (e.g., signal enforcement, caching, pub-sub mediation), and has long methods with convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains more than 10 methods, mixes multiple distinct responsibilities (e.g., signal enforcement, caching, pub-sub mediation), and has long methods with convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "661",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, including enforcement, authorization, and publishing operations, which go beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, including enforcement, authorization, and publishing operations, which go beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "662",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not exceed thresholds for god_class; it has limited methods, focused responsibilities, and no excessive complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not exceed thresholds for god_class; it has limited methods, focused responsibilities, and no excessive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "663",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet contains functional classes with specific responsibilities and methods beyond trivial getters/setters, indicating it is not a data_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet contains functional classes with specific responsibilities and methods beyond trivial getters/setters, indicating it is not a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "666",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below 50 lines, and the control flow is straightforward without excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below 50 lines, and the control flow is straightforward without excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "667",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access fields within their own class and do not exhibit excessive interaction with another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily access fields within their own class and do not exhibit excessive interaction with another class.\"}\n```"
+    },
+    {
+      "sample_id": "668",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with a single method, which does not meet any thresholds for god_class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code defines an interface with a single method, which does not meet any thresholds for god_class.\"}\n```"
+    },
+    {
+      "sample_id": "669",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with a single method and no fields, which does not meet the criteria for a data_class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code defines an interface with a single method and no fields, which does not meet the criteria for a data_class.\"}\n```"
+    },
+    {
+      "sample_id": "670",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method lengths are well below the 50-line threshold, and the operations are minimal without excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method lengths are well below the 50-line threshold, and the operations are minimal without excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "671",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the class primarily access its own fields, and there is no evidence of excessive interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the class primarily access its own fields, and there is no evidence of excessive interaction with another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "674",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet contains short methods with no excessive length, branching, or operations, and does not meet the thresholds for long_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippet contains short methods with no excessive length, branching, or operations, and does not meet the thresholds for long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "675",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are simple, self-contained, and do not access fields or methods of another class, which rules out feature envy.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code snippet are simple, self-contained, and do not access fields or methods of another class, which rules out feature envy.\"}\n```"
+    },
+    {
+      "sample_id": "676",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class is a data class containing only fields and trivial getters/setters, with no evidence of god_class characteristics such as excessive methods, multifaceted abstraction, or complex control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class is a data class containing only fields and trivial getters/setters, with no evidence of god_class characteristics such as excessive methods, multifaceted abstraction, or complex control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "677",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class contains only fields and trivial getters/setters, meeting the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains only fields and trivial getters/setters, meeting the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "678",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise, none exceed 50 lines, and the control flow is straightforward without excessive branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise, none exceed 50 lines, and the control flow is straightforward without excessive branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "679",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The methods access more fields/methods of the 'Element' and 'Elements' classes than their own, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods access more fields/methods of the 'Element' and 'Elements' classes than their own, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "680",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single responsibility, only 4 methods, and no complex or long methods, which does not meet the thresholds for god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single responsibility, only 4 methods, and no complex or long methods, which does not meet the thresholds for god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "681",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains fields, a constructor, and non-trivial methods (e.g., dispatch and getAssociatedType), which go beyond trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains fields, a constructor, and non-trivial methods (e.g., dispatch and getAssociatedType), which go beyond trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "682",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below the 50-line threshold, and the operations are straightforward without excessive complexity or branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below the 50-line threshold, and the operations are straightforward without excessive complexity or branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "683",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods in the code snippet primarily access fields within the same class, and there is no evidence of excessive interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The methods in the code snippet primarily access fields within the same class, and there is no evidence of excessive interaction with another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "686",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'addProgress' accesses more fields/methods of the 'ProgressReport' class (e.g., 'progress.getId()') than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'addProgress' accesses more fields/methods of the 'ProgressReport' class (e.g., 'progress.getId()') than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "687",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "688",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GoIntoAction has only 3 methods, does not mix distinct responsibilities, and does not exceed thresholds for method complexity or parameter count.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GoIntoAction has only 3 methods, does not mix distinct responsibilities, and does not exceed thresholds for method complexity or parameter count.\"\n}\n```"
+    },
+    {
+      "sample_id": "689",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, indicating it is not a simple data container with only fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, indicating it is not a simple data container with only fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "690",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'Ipam' does not meet any god_class thresholds: it has fewer than 10 methods, does not mix distinct responsibilities, and primarily serves as a data container with trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'Ipam' does not meet any god_class thresholds: it has fewer than 10 methods, does not mix distinct responsibilities, and primarily serves as a data container with trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "691",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'Ipam' contains only fields, trivial getters/setters, and basic overrides (equals, hashCode, toString), which aligns with the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'Ipam' contains only fields, trivial getters/setters, and basic overrides (equals, hashCode, toString), which aligns with the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "692",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below 50 lines, and the control flow is straightforward without excessive branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below 50 lines, and the control flow is straightforward without excessive branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "693",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access fields within their own class, and there is no evidence of excessive interaction with another class's fields or methods.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily access fields within their own class, and there is no evidence of excessive interaction with another class's fields or methods.\"}\n```"
+    },
+    {
+      "sample_id": "694",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 11 methods, but they are cohesive and focused on a single responsibility: document partitioning. It does not mix unrelated responsibilities or exhibit excessive complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 11 methods, but they are cohesive and focused on a single responsibility: document partitioning. It does not mix unrelated responsibilities or exhibit excessive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "695",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic (e.g., onDocumentChanged, initialize, computePartitioning) and is not limited to just fields and trivial getters/setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic (e.g., onDocumentChanged, initialize, computePartitioning) and is not limited to just fields and trivial getters/setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "696",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceWith' is concise, well-structured, and does not exceed 50 lines or contain excessive operations or branching.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'replaceWith' is concise, well-structured, and does not exceed 50 lines or contain excessive operations or branching.\"}\n```"
+    },
+    {
+      "sample_id": "697",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceWith' primarily interacts with its own class's methods and does not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceWith' primarily interacts with its own class's methods and does not excessively access fields or methods of another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "698",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet is too short to exceed the 50-line threshold or exhibit excessive operations, and it does not show signs of complex control flow or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet is too short to exceed the 50-line threshold or exhibit excessive operations, and it does not show signs of complex control flow or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "699",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getEvent' only accesses a field of its own class and does not interact with another class, so feature_envy is not present.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getEvent' only accesses a field of its own class and does not interact with another class, so feature_envy is not present.\"\n}\n```"
+    },
+    {
+      "sample_id": "700",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has clear responsibilities, and does not exceed the thresholds for long_method.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has clear responsibilities, and does not exceed the thresholds for long_method.\"}\n```"
+    },
+    {
+      "sample_id": "701",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not access more fields/methods of another class than its own, and the class structure does not exhibit feature envy characteristics.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method does not access more fields/methods of another class than its own, and the class structure does not exhibit feature envy characteristics.\"}\n```"
+    },
+    {
+      "sample_id": "702",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has only 2 methods, does not mix distinct responsibilities, and does not meet any god_class thresholds.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has only 2 methods, does not mix distinct responsibilities, and does not meet any god_class thresholds.\"\n}\n```"
+    },
+    {
+      "sample_id": "703",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains fields, a constructor, and non-trivial overridden methods, indicating it is not a pure data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains fields, a constructor, and non-trivial overridden methods, indicating it is not a pure data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "704",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains more than 10 methods and centralizes unrelated responsibilities, such as object creation, string conversion, and exception handling, indicating a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains more than 10 methods and centralizes unrelated responsibilities, such as object creation, string conversion, and exception handling, indicating a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "705",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, such as `init`, `create`, and `createFromString`, which go beyond simple getters and setters. Therefore, it does not qualify as a data_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, such as `init`, `create`, and `createFromString`, which go beyond simple getters and setters. Therefore, it does not qualify as a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "706",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GExpressionsHelper has only two methods, both of which are static utility methods, and it does not exhibit multifaceted abstraction or excessive size.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GExpressionsHelper has only two methods, both of which are static utility methods, and it does not exhibit multifaceted abstraction or excessive size.\"\n}\n```"
+    },
+    {
+      "sample_id": "707",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains methods with logic beyond trivial getters/setters, indicating it is not a data_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains methods with logic beyond trivial getters/setters, indicating it is not a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "708",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not exceed 10 methods, and its responsibilities are cohesive and related to testing resize policies, avoiding the god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not exceed 10 methods, and its responsibilities are cohesive and related to testing resize policies, avoiding the god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "709",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains methods with non-trivial logic, such as `doCreateVisual`, `doRefreshVisual`, and `createResizePolicy`, which go beyond simple getters and setters, indicating it is not a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains methods with non-trivial logic, such as `doCreateVisual`, `doRefreshVisual`, and `createResizePolicy`, which go beyond simple getters and setters, indicating it is not a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "710",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not exceed 50 lines, has minimal operations, and lacks excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not exceed 50 lines, has minimal operations, and lacks excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "711",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not access fields or methods of another class more than its own, and the code snippet lacks evidence of feature envy.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method does not access fields or methods of another class more than its own, and the code snippet lacks evidence of feature envy.\"}\n```"
+    },
+    {
+      "sample_id": "712",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method exceeds 50 lines and contains repetitive operations, indicating a long_method smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method exceeds 50 lines and contains repetitive operations, indicating a long_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "713",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not access more fields/methods of another class than its own; it primarily interacts with its own class's grammar access and assignments.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not access more fields/methods of another class than its own; it primarily interacts with its own class's grammar access and assignments.\"\n}\n```"
+    },
+    {
+      "sample_id": "714",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'NodeOrderer' has multiple methods (more than 10), mixes distinct responsibilities such as graph traversal, node ordering, and progress monitoring, and contains long and complex methods like 'process' and 'orderLevel' with excessive branching and convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'NodeOrderer' has multiple methods (more than 10), mixes distinct responsibilities such as graph traversal, node ordering, and progress monitoring, and contains long and complex methods like 'process' and 'orderLevel' with excessive branching and convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "715",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods with non-trivial logic, indicating it is not a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods with non-trivial logic, indicating it is not a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "716",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, contains minimal operations, and does not exceed 50 lines or exhibit excessive branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, contains minimal operations, and does not exceed 50 lines or exhibit excessive branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "717",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'generatePositions' does not access more fields/methods of another class than its own, and the class does not exhibit excessive interaction with external classes.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'generatePositions' does not access more fields/methods of another class than its own, and the class does not exhibit excessive interaction with external classes.\"\n}\n```"
+    },
+    {
+      "sample_id": "718",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 10 methods but does not mix distinct responsibilities; it primarily handles cryptographic configuration properties, adhering to a single responsibility.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 10 methods but does not mix distinct responsibilities; it primarily handles cryptographic configuration properties, adhering to a single responsibility.\"\n}\n```"
+    },
+    {
+      "sample_id": "719",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains non-trivial methods such as validation logic in setters and utility methods like isAppropriateForCreating and isAppropriateForValidating, which go beyond simple getters and setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains non-trivial methods such as validation logic in setters and utility methods like isAppropriateForCreating and isAppropriateForValidating, which go beyond simple getters and setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "720",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet only access fields of their own class, and there is no evidence of accessing fields or methods of another class more frequently than their own.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet only access fields of their own class, and there is no evidence of accessing fields or methods of another class more frequently than their own.\"\n}\n```"
+    },
+    {
+      "sample_id": "721",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code snippet contains only short methods with single responsibilities, and the method lengths are well below the 50-line threshold.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code snippet contains only short methods with single responsibilities, and the method lengths are well below the 50-line threshold.\"\n}\n```"
+    },
+    {
+      "sample_id": "722",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'get' exceeds 50 lines when fully expanded, has a long parameter list with 6 parameters, and demonstrates mixed responsibilities by handling validation, data retrieval, and result handling.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'get' exceeds 50 lines when fully expanded, has a long parameter list with 6 parameters, and demonstrates mixed responsibilities by handling validation, data retrieval, and result handling.\"\n}\n```"
+    },
+    {
+      "sample_id": "723",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'get' primarily accesses its own fields and methods, with no evidence of excessive reliance on another class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'get' primarily accesses its own fields and methods, with no evidence of excessive reliance on another class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "724",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not exceed 50 lines, lacks excessive branching, and does not demonstrate convoluted control flow or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not exceed 50 lines, lacks excessive branching, and does not demonstrate convoluted control flow or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "725",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not show evidence of accessing more fields/methods of another class than its own, and the methods primarily interact with their own class fields.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet does not show evidence of accessing more fields/methods of another class than its own, and the methods primarily interact with their own class fields.\"}\n```"
+    },
+    {
+      "sample_id": "726",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "727",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not show any method accessing more fields/methods of another class than its own, and the provided context lacks evidence of feature envy.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not show any method accessing more fields/methods of another class than its own, and the provided context lacks evidence of feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "728",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length is well below the 50-line threshold and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method length is well below the 50-line threshold and does not exhibit excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "729",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'displayWarning' accesses a method of another class (notificationMessage.showNotification), but there is insufficient evidence that it accesses more fields/methods of another class than its own.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'displayWarning' accesses a method of another class (notificationMessage.showNotification), but there is insufficient evidence that it accesses more fields/methods of another class than its own.\"}\n```"
+    },
+    {
+      "sample_id": "730",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'Build' contains only fields and trivial getters/setters, meeting the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'Build' contains only fields and trivial getters/setters, meeting the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "731",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not meet god_class thresholds: it has fewer than 10 methods, no excessive branching, and focuses on simple data handling without mixing distinct responsibilities.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class does not meet god_class thresholds: it has fewer than 10 methods, no excessive branching, and focuses on simple data handling without mixing distinct responsibilities.\"}\n```"
+    },
+    {
+      "sample_id": "732",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains multiple methods beyond trivial getters and setters, including constructors, equality checks, cloning, copying, hashCode, and visitor pattern implementation, indicating it is not a pure data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains multiple methods beyond trivial getters and setters, including constructors, equality checks, cloning, copying, hashCode, and visitor pattern implementation, indicating it is not a pure data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "733",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has 10 methods, but it does not centralize unrelated responsibilities or mix distinct abstractions; its methods and fields are cohesive and focused on the 'Subchannel' concept.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has 10 methods, but it does not centralize unrelated responsibilities or mix distinct abstractions; its methods and fields are cohesive and focused on the 'Subchannel' concept.\"\n}\n```"
+    },
+    {
+      "sample_id": "736",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not show evidence of a method accessing more fields/methods of another class than its own; it primarily initializes fields and constructors.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not show evidence of a method accessing more fields/methods of another class than its own; it primarily initializes fields and constructors.\"\n}\n```"
+    },
+    {
+      "sample_id": "737",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method length does not exceed 50 lines, and there is no evidence of excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "738",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily interact with their own class fields and methods, and there is no evidence of excessive reliance on another class's fields or methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily interact with their own class fields and methods, and there is no evidence of excessive reliance on another class's fields or methods.\"\n}"
+    },
+    {
+      "sample_id": "739",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method 'onCompleteFailure' is short, has a clear purpose, and does not exceed 50 lines or contain excessive operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'onCompleteFailure' is short, has a clear purpose, and does not exceed 50 lines or contain excessive operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "740",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has minimal branching, and does not exceed 50 lines or contain excessive operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has minimal branching, and does not exceed 50 lines or contain excessive operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "741",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not access more fields/methods of another class than its own, and the code does not exhibit clear signs of feature envy.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not access more fields/methods of another class than its own, and the code does not exhibit clear signs of feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "742",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily operate on their own parameters and do not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods primarily operate on their own parameters and do not excessively access fields or methods of another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "743",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'resolveGenericRef' exceeds 50 lines of code, contains excessive branching with multiple nested levels, and has a convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'resolveGenericRef' exceeds 50 lines of code, contains excessive branching with multiple nested levels, and has a convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "744",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are well below 50 lines, and there is no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "745",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily interact with their own class fields and do not excessively access fields or methods of another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily interact with their own class fields and do not excessively access fields or methods of another class.\"}\n```"
+    },
+    {
+      "sample_id": "746",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class is a data_class with only fields and trivial getters/setters, and does not meet any god_class thresholds such as excessive methods or mixed responsibilities.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The class is a data_class with only fields and trivial getters/setters, and does not meet any god_class thresholds such as excessive methods or mixed responsibilities.\"}\n```"
+    },
+    {
+      "sample_id": "747",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 1.0,
+      "rationale": "The class contains only fields and trivial getters/setters, meeting the definition of a data_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class contains only fields and trivial getters/setters, meeting the definition of a data_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "748",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'hasPermission' does not access more fields/methods of another class than its own; it primarily delegates to another method within the same class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'hasPermission' does not access more fields/methods of another class than its own; it primarily delegates to another method within the same class.\"\n}\n```"
+    },
+    {
+      "sample_id": "749",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method hasPermission is concise, contains only one operation, and does not exceed the 50-line threshold or exhibit excessive branching.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method hasPermission is concise, contains only one operation, and does not exceed the 50-line threshold or exhibit excessive branching.\"\n}\n```"
+    },
+    {
+      "sample_id": "750",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are trivial getters and setters, and the code snippet does not exceed the thresholds for long_method in terms of length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are trivial getters and setters, and the code snippet does not exceed the thresholds for long_method in terms of length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "751",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods in the code snippet only access fields within their own class, and there is no evidence of accessing fields or methods of another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The methods in the code snippet only access fields within their own class, and there is no evidence of accessing fields or methods of another class.\"\n}\n```"
+    }
+  ],
+  "metrics": {
+    "precision": 0.5405405405405406,
+    "recall": 0.5555555555555556,
+    "f1": 0.547945205479452,
+    "accuracy": 0.835,
+    "kappa": 0.44705093833780146,
+    "f1_ci_lo": 0.39999999999999997,
+    "f1_ci_hi": 0.676056338028169,
+    "kappa_ci_lo": 0.2838780756518547,
+    "kappa_ci_hi": 0.605263157894737,
+    "tp": 20,
+    "fp": 17,
+    "fn": 16,
+    "tn": 147,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 131340,
+    "completion_tokens": 11007,
+    "total_tokens": 142347
+  },
+  "prompt": "threshold_guided",
+  "dataset": "MLCQ",
+  "slot": "AZ1",
+  "elapsed_s": 276.3
+}

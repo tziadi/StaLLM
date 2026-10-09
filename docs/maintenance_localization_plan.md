@@ -1,11 +1,11 @@
 # StarLLM Maintenance Localization Extension
 
 This branch extends StarLLM from code-smell detection benchmarking toward a common
-localization benchmark for software maintenance tasks.
+localization benchmark for software maintenance activities.
 
-## Target Tasks
+## Target Activities
 
-| Task | Query | Gold locations | Main metrics |
+| Activity | Query | Gold locations | Main metrics |
 | --- | --- | --- | --- |
 | Code smell detection | Source code + smell prompt | Analyzer spans/files | Precision, recall, F1 |
 | Feature location | Feature description | Feature-related files/classes/methods | Hit@K, Recall@K, MRR, MAP |
@@ -13,7 +13,9 @@ localization benchmark for software maintenance tasks.
 
 ## Common Format
 
-`StaLLM_tasks.py` introduces a shared task representation:
+`StaLLM_tasks.py` introduces a shared internal activity representation. The
+Python identifiers still use `task_id`/`task_type` for compatibility with
+benchmark terminology and existing adapters:
 
 ```json
 {
@@ -41,7 +43,7 @@ localization benchmark for software maintenance tasks.
 - Keep the existing code-smell detection pipeline stable.
 - Add adapters that normalize feature/bug datasets into `MaintenanceTask`.
 - Add file-level ranking metrics: `Hit@K`, `Recall@K`, `MRR`, and `MAP`.
-- Add task-specific prompts that ask the LLM to return ranked file predictions.
+- Add activity-specific prompts that ask the LLM to return ranked file predictions.
 
 ## Adapter Entry Points
 

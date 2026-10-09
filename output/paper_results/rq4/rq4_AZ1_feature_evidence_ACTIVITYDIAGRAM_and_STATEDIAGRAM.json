@@ -1,0 +1,99 @@
+{
+  "task_id": "argouml-feature-activitydiagram-and-statediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly references state diagrams in its name and likely handles navigation or relationships involving state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToStateMachine.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "References state machines, which are closely related to state diagrams, indicating potential relevance to the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "Focuses on state machines and their states, which are integral to state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTransition.java",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Handles transitions within state machines, a key component of state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java",
+      "rank": 5,
+      "confidence": 0.83,
+      "rationale": "Directly references activities, which are central to activity diagrams and their workflows.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToIncomingTrans.java",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Focuses on incoming transitions to states, relevant to both state and activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java",
+      "rank": 7,
+      "confidence": 0.78,
+      "rationale": "Handles outgoing transitions from states, which are critical in modeling workflows and state changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "References state body notation, which is likely used to describe states in state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/TransitionNotation.java",
+      "rank": 9,
+      "confidence": 0.73,
+      "rationale": "Focuses on transition notation, essential for representing state changes in state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Links state machines to diagrams, indicating relevance to state diagram visualization.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 1.0,
+    "recall@10": 0.16666666666666666,
+    "mrr": 0.1,
+    "map": 0.016666666666666666
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Directly references state diagrams in its name and likely handles navigation or relationships involving state diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToStateMachine.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"References state machines, which are closely related to state diagrams, indicating potential relevance to the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Focuses on state machines and their states, which are integral to state diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTransition.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles transitions within state machines, a key component of state diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Directly references activities, which are central to activity diagrams and their workflows.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToIncomingTrans.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Focuses on incoming transitions to states, relevant to both state and activity diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles outgoing transitions from states, which are critical in modeling workflows and state changes.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"References state body notation, which is likely used to describe states in state diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/TransitionNotation.java\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Focuses on transition notation, essential for representing state changes in state diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java\",\n    \"confidence\": 0.70,\n    \"rationale\": \"Links state machines to diagrams, indicating relevance to state diagram visualization.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 12483,
+    "completion_tokens": 698,
+    "total_tokens": 13181
+  },
+  "slot": "AZ1",
+  "feature": "ACTIVITYDIAGRAM_and_STATEDIAGRAM",
+  "gold_count": 6,
+  "candidate_order": "alphabetical",
+  "elapsed_s": 5.5
+}

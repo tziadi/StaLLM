@@ -1,0 +1,22 @@
+[
+  {
+    "name": "chain_of_thought_reasoning",
+    "template": "You are a code quality analyst specializing in detecting code smells.\n\nTask: Determine if the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nReason step-by-step:\n1. Identify key characteristics of the smell {smell}.\n2. Analyze the provided code snippet for evidence matching these characteristics.\n3. Decide if the evidence is strong enough to confirm the presence of the smell.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_certainty",
+    "template": "You are a software quality expert tasked with detecting code smells.\n\nSmell to evaluate: {smell}\nLanguage: {language}\n\nInstructions:\n1. Carefully analyze the code snippet for evidence of the smell {smell}.\n2. Assign a confidence score (0.0-1.0) based on how strongly the evidence supports the presence of the smell.\n3. Provide a one-sentence rationale explaining the evidence.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "contrastive_analysis",
+    "template": "You are a code smell detection expert.\n\nTask: Determine if the following code snippet contains the smell {smell}.\nLanguage: {language}\n\nApproach:\n1. Describe what the smell {smell} typically looks like.\n2. Contrast this with what the absence of the smell would look like.\n3. Compare the code snippet against both descriptions to decide if the smell is present.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "threshold_guided",
+    "template": "You are a software quality evaluator.\n\nTask: Decide if the following code snippet contains the smell {smell}.\nLanguage: {language}\n\nUse these measurable thresholds for {smell}:\n- complex_method: excessive branching (e.g., >3 nested levels), mixed responsibilities, or convoluted control flow.\n- long_method: method length exceeds 50 lines or contains too many operations.\n- long_parameter_list: more than 5 parameters or parameter groups.\n- multifaceted_abstraction: class mixes >2 distinct responsibilities.\n- god_class: class has >10 methods or centralizes unrelated responsibilities.\n- data_class: class contains only fields and trivial getters/setters.\n- feature_envy: method accesses more fields/methods of another class than its own.\n\nAnalyze the code snippet against these thresholds and decide conservatively.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "socratic_diagnostic",
+    "template": "You are a diagnostic assistant for code smell detection.\n\nSmell to evaluate: {smell}\nLanguage: {language}\n\nFollow these diagnostic questions:\n1. Does the code snippet exhibit any characteristics of the smell {smell}? If yes, what are they?\n2. Are there any counterexamples or mitigating factors that suggest the smell is absent?\n3. Based on the evidence, is the smell {smell} present?\n\nSummarize your findings in JSON format:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}\n\nCode:\n{code}"
+  }
+]
