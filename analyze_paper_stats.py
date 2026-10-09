@@ -19,6 +19,10 @@ Outputs (in output/paper_results/stats/):
     rq3_oracle_swap.csv      each LLM configuration scored against the human
                              labels and against the metric heuristic (same samples)
     rq3_heuristic_by_smell.csv  metric-heuristic confusion counts per smell
+    rq12_rerun.csv           RQ1/RQ2 span-level runs (mean over runs) with a
+                             random-placement baseline: the same number and
+                             lengths of predicted spans placed uniformly at
+                             random in the same files, scored with the same matcher
     rq5_heldout.csv          held-out DACOS results + McNemar vs. manual prompts
     report.md                human-readable digest of all of the above
 """
@@ -27,6 +31,7 @@ from __future__ import annotations
 
 import csv
 import itertools
+import random
 import json
 import statistics
 from collections import defaultdict
@@ -332,7 +337,42 @@ def analyze_rq3_baselines(md: list[str]) -> None:
     md.append("")
 
 
+RANDOM_DRAWS = 1000
+
+
+def _span_f1(spans_by_file: dict[str, Any], preds_by_file: dict[str, list], match) -> float:
+    tp = fp = fn = 0
+    for b, f in spans_by_file.items():
+        a, p_, n = match(preds_by_file.get(b, []), [{"startLine": s, "endLine": e} for s, e in f["gt"]])
+        tp, fp, fn = tp + a, fp + p_, fn + n
+    return 2 * tp / (2 * tp + fp + fn) if tp else 0.0
+
+
+def random_placement_f1(spans_by_file: dict[str, Any], rng: random.Random, match,
+                        shuffle_files: bool = False) -> float:
+    """F1 when every predicted span keeps its length but is moved to a uniformly
+    random position, in the same file or, with shuffle_files, in a file drawn
+    uniformly from the evaluation universe."""
+    names = sorted(spans_by_file)
+    preds: dict[str, list] = defaultdict(list)
+    for b, f in spans_by_file.items():
+        for s, e in f["pred"]:
+            target = rng.choice(names) if shuffle_files else b
+            n_lines = spans_by_file[target]["lines"]
+            length = min(max(0, e - s), n_lines - 1)
+            start = rng.randint(1, max(1, n_lines - length))
+            preds[target].append({"startLine": start, "endLine": start + length})
+    return _span_f1(spans_by_file, preds, match)
+
+
 def analyze_rq12(md: list[str]) -> None:
+    from StaLLM_core import _match_file
+
+    def match(p, g):
+        return _match_file([dict(x, startColumn=None, endColumn=None, type=None) for x in p],
+                           [dict(x, startColumn=None, endColumn=None, type=None) for x in g],
+                           require_type=False, use_cols_single=False, preset="Lenient")
+
     files = sorted((OUT / "rq2").glob("rq2_*.json"))
     if not files:
         return
@@ -343,20 +383,38 @@ def analyze_rq12(md: list[str]) -> None:
     rows = []
     for (slot, prompt), runs in sorted(groups.items()):
         f1 = [d["metrics"]["f1"] for d in runs]
-        rows.append({"slot": slot, "prompt": prompt, "runs": len(runs),
-                     "model": runs[0].get("model"),
-                     "precision": _r(statistics.mean(d["metrics"]["precision"] for d in runs)),
-                     "recall": _r(statistics.mean(d["metrics"]["recall"] for d in runs)),
-                     "f1_mean": _r(statistics.mean(f1)),
-                     "f1_sd": _r(statistics.stdev(f1)) if len(f1) > 1 else 0.0,
-                     "llm_errors": sum(d.get("llm_errors", 0) for d in runs),
-                     "time_s": _r(statistics.mean(d["elapsed_s"] for d in runs), 1)})
+        row = {"slot": slot, "prompt": prompt, "runs": len(runs),
+               "model": runs[0].get("model"),
+               "precision": _r(statistics.mean(d["metrics"]["precision"] for d in runs)),
+               "recall": _r(statistics.mean(d["metrics"]["recall"] for d in runs)),
+               "f1_mean": _r(statistics.mean(f1)),
+               "f1_sd": _r(statistics.stdev(f1)) if len(f1) > 1 else 0.0,
+               "llm_errors": sum(d.get("llm_errors", 0) for d in runs),
+               "time_s": _r(statistics.median(d["elapsed_s"] for d in runs), 1)}
+        if all("spans_by_file" in d["metrics"] for d in runs):
+            for tag, shuffle in (("random", False), ("random_files", True)):
+                rng = random.Random(42)
+                draws = sorted(
+                    statistics.mean(random_placement_f1(d["metrics"]["spans_by_file"], rng, match, shuffle)
+                                    for d in runs)
+                    for _ in range(RANDOM_DRAWS))
+                row.update({f"f1_{tag}_mean": _r(statistics.mean(draws)),
+                            f"f1_{tag}_ci": f"[{_r(draws[int(0.025 * RANDOM_DRAWS)])}, "
+                                            f"{_r(draws[int(0.975 * RANDOM_DRAWS) - 1])}]",
+                            f"p_{tag}": _r((1 + sum(x >= statistics.mean(f1) for x in draws)) / (1 + RANDOM_DRAWS), 4)})
+        rows.append(row)
     _write_csv(STATS / "rq12_rerun.csv", rows)
-    md.append("## RQ1/RQ2 — span-level reruns on the current pipeline (eShop Catalog, Top-k=20, Lenient)\n")
-    md.append("| Slot | Model | Prompt | runs | P | R | F1 mean ± sd | LLM errors | time (s) |\n|---|---|---|---|---|---|---|---|---|")
+    md.append("## RQ1/RQ2 — span-level reruns (eShop Catalog, path-matched oracle, Top-k=20, Lenient)\n")
+    md.append("*Random placement: same number and lengths of spans, uniformly random lines in the same file; "
+              "random files: also a uniformly random file of the universe. p = share of draws reaching the LLM F1.*\n")
+    md.append("| Slot | Model | Prompt | runs | P | R | F1 mean ± sd | random placement [95%] | p "
+              "| random files [95%] | p | LLM errors | median time (s) |\n"
+              "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         md.append(f"| {r['slot']} | {r['model']} | {r['prompt']} | {r['runs']} | {r['precision']} | {r['recall']} "
-                  f"| {r['f1_mean']} ± {r['f1_sd']} | {r['llm_errors']} | {r['time_s']} |")
+                  f"| {r['f1_mean']} ± {r['f1_sd']} | {r.get('f1_random_mean', '-')} {r.get('f1_random_ci', '')} "
+                  f"| {r.get('p_random', '-')} | {r.get('f1_random_files_mean', '-')} {r.get('f1_random_files_ci', '')} "
+                  f"| {r.get('p_random_files', '-')} | {r['llm_errors']} | {r['time_s']} |")
     md.append("")
 
 
