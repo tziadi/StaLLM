@@ -16,6 +16,9 @@ Outputs (in output/paper_results/stats/):
     rq4_conditions.csv       mean ranking metrics per slot x prompt x ordering,
                              plus the non-LLM keyword / BM25 baselines
     rq4_wilcoxon.csv         paired Wilcoxon tests across features
+    rq3_oracle_swap.csv      each LLM configuration scored against the human
+                             labels and against the metric heuristic (same samples)
+    rq3_heuristic_by_smell.csv  metric-heuristic confusion counts per smell
     rq5_heldout.csv          held-out DACOS results + McNemar vs. manual prompts
     report.md                human-readable digest of all of the above
 """
@@ -30,7 +33,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from scipy.stats import binomtest, wilcoxon
+from scipy.stats import binomtest, spearmanr, wilcoxon
 
 OUT = Path("output/paper_results")
 STATS = OUT / "stats"
@@ -253,6 +256,67 @@ def _wilcoxon_row(a_name: str, b_name: str, metric: str, a: list[float], b: list
             "wins_a": sum(d > 0 for d in diffs), "wins_b": sum(d < 0 for d in diffs), "p": _r(p, 4)}
 
 
+def _binary_scores(gold: list[bool], pred: list[bool]) -> tuple[float, float]:
+    """F1 and Cohen's kappa of `pred` against `gold`."""
+    n = len(gold)
+    tp = sum(g and p for g, p in zip(gold, pred))
+    fp = sum(p and not g for g, p in zip(gold, pred))
+    fn = sum(g and not p for g, p in zip(gold, pred))
+    f1 = 2 * tp / (2 * tp + fp + fn) if tp else 0.0
+    po = sum(g == p for g, p in zip(gold, pred)) / n
+    pg, pp = sum(gold) / n, sum(pred) / n
+    pe = pg * pp + (1 - pg) * (1 - pp)
+    return f1, (po - pe) / (1 - pe) if pe < 1 else 0.0
+
+
+def analyze_rq3_oracle_swap(results: list[dict[str, Any]], md: list[str]) -> None:
+    """Score every RQ3 configuration against two oracles on the same samples:
+    the human labels and the Designite-inspired metric heuristic."""
+    base = OUT / "rq3" / "baselines"
+    swap, by_smell = [], []
+    md.append("## RQ3 — oracle substitution (human labels vs. metric heuristic, same samples)\n")
+    for split in ("DACOS", "DACOS_heldout", "MLCQ"):
+        hfile = base / f"rq3b_metric_heuristic_{split}.json"
+        if not hfile.exists():
+            continue
+        hrows = _load(hfile)["rows"]
+        counts: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
+        for r in hrows:
+            g, p = r["gold"], r["predicted"]
+            counts[r["smell"]][0 if g and p else 1 if p else 2 if g else 3] += 1
+        for smell, (tp, fp, fn, tn) in sorted(counts.items()):
+            by_smell.append({"dataset": split, "smell": smell, "tp": tp, "fp": fp, "fn": fn, "tn": tn})
+        heur = {r["sample_id"]: bool(r["predicted"]) for r in hrows}
+        configs = [d for d in results if d["run"] == 1 and d["dataset"] == split
+                   and {r["sample_id"] for r in d["rows"]} == set(heur)]
+        if len(configs) < 3:
+            continue
+        rows = []
+        for d in sorted(configs, key=lambda d: (d["slot"], d["prompt"])):
+            gold = [bool(r["gold"]) for r in d["rows"]]
+            pred = [bool(r["predicted"]) for r in d["rows"]]
+            hpred = [heur[r["sample_id"]] for r in d["rows"]]
+            f1_h, k_h = _binary_scores(gold, pred)
+            f1_m, k_m = _binary_scores(hpred, pred)
+            rows.append({"dataset": split, "slot": d["slot"], "prompt": d["prompt"],
+                         "f1_human": _r(f1_h), "kappa_human": _r(k_h),
+                         "f1_heuristic": _r(f1_m), "kappa_heuristic": _r(k_m)})
+        rho, p = spearmanr([r["kappa_human"] for r in rows], [r["kappa_heuristic"] for r in rows])
+        best_h = max(rows, key=lambda r: r["kappa_human"])
+        best_m = max(rows, key=lambda r: r["kappa_heuristic"])
+        swap.extend(rows)
+        md.append(f"**{split}** ({len(rows)} configurations): Spearman ρ(κ human, κ heuristic) = "
+                  f"{_r(rho)} (p={_r(p, 3)}); best vs human: {best_h['slot']}/{best_h['prompt']}, "
+                  f"best vs heuristic: {best_m['slot']}/{best_m['prompt']}\n")
+        md.append("| Slot | Prompt | F1 human | κ human | F1 heuristic | κ heuristic |\n|---|---|---|---|---|---|")
+        for r in rows:
+            md.append(f"| {r['slot']} | {r['prompt']} | {r['f1_human']} | {r['kappa_human']} "
+                      f"| {r['f1_heuristic']} | {r['kappa_heuristic']} |")
+        md.append("")
+    _write_csv(STATS / "rq3_oracle_swap.csv", swap)
+    _write_csv(STATS / "rq3_heuristic_by_smell.csv", by_smell)
+
+
 # ── RQ3 baselines and RQ1/RQ2 reruns ─────────────────────────────────────────
 
 def analyze_rq3_baselines(md: list[str]) -> None:
@@ -337,7 +401,9 @@ def analyze_rq5(md: list[str]) -> None:
 def main() -> None:
     STATS.mkdir(parents=True, exist_ok=True)
     md = ["# StaLLM paper — statistical analysis\n"]
-    analyze_rq3(load_rq3(), md)
+    rq3 = load_rq3()
+    analyze_rq3(rq3, md)
+    analyze_rq3_oracle_swap(rq3, md)
     for i, (title, root) in enumerate(RQ4_SYSTEMS.items()):
         analyze_rq4(md, root=root, title=title, tag="" if i == 0 else "_eshop")
     analyze_rq3_baselines(md)
