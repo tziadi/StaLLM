@@ -34,8 +34,9 @@ from scipy.stats import binomtest, wilcoxon
 
 OUT = Path("output/paper_results")
 STATS = OUT / "stats"
-RQ4_DIRS = {"alphabetical": OUT / "rq4", "keyword_sorted": OUT / "rq4_sorted",
-            "bm25_sorted": OUT / "rq4_bm25", "bm25_masked": OUT / "rq4_masked"}
+RQ4_DIRS = {"alphabetical": "rq4", "keyword_sorted": "rq4_sorted",
+            "bm25_sorted": "rq4_bm25", "bm25_masked": "rq4_masked"}
+RQ4_SYSTEMS = {"ArgoUML (8 single features)": OUT, "eShopOnContainers (5 features)": OUT / "eshop"}
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -174,10 +175,10 @@ def analyze_rq3(results: list[dict[str, Any]], md: list[str]) -> None:
 METRICS4 = ("hit@1", "hit@5", "recall@10", "mrr", "map")
 
 
-def analyze_rq4(md: list[str]) -> None:
+def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: str = "") -> None:
     per_feature: dict[tuple, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     for label, folder in RQ4_DIRS.items():
-        for f in sorted(folder.glob("rq4_*.json")):
+        for f in sorted((root / folder).glob("rq4_*.json")):
             d = _load(f)
             if "_and_" in d.get("feature", ""):
                 continue
@@ -195,7 +196,7 @@ def analyze_rq4(md: list[str]) -> None:
                      "features": len(features), "runs": runs,
                      **{m: _r(statistics.mean(fm[f][m] for f in features)) for m in METRICS4}})
 
-    base_path = OUT / "summary_rq4_baselines.csv"
+    base_path = root / "summary_rq4_baselines.csv"
     baselines: dict[str, dict[str, dict[str, float]]] = defaultdict(dict)
     if base_path.exists():
         with open(base_path, newline="") as f:
@@ -205,9 +206,9 @@ def analyze_rq4(md: list[str]) -> None:
             rows.append({"method": method, "slot": "-", "prompt": "-", "ordering": "-",
                          "features": len(fm), "runs": 1,
                          **{m: _r(statistics.mean(v[m] for v in fm.values())) for m in METRICS4}})
-    _write_csv(STATS / "rq4_conditions.csv", rows)
+    _write_csv(STATS / f"rq4_conditions{tag}.csv", rows)
 
-    md.append("## RQ4 — feature location (8 single features; mean over features, runs averaged)\n")
+    md.append(f"## RQ4 — feature location, {title} (mean over features, runs averaged)\n")
     md.append("| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP |\n"
               "|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
@@ -234,9 +235,10 @@ def analyze_rq4(md: list[str]) -> None:
                     tests.append(_wilcoxon_row(f"{slot}/{prompt}/{o1}", f"{slot}/{prompt}/{o2}", m,
                                                [feat_means[k1][f][m] for f in feats],
                                                [feat_means[k2][f][m] for f in feats]))
-    _write_csv(STATS / "rq4_wilcoxon.csv", tests)
-    md.append("*Paired Wilcoxon tests across features are in `rq4_wilcoxon.csv`; with n=8 "
-              "features the minimum attainable two-sided p is 0.0078.*\n")
+    _write_csv(STATS / f"rq4_wilcoxon{tag}.csv", tests)
+    md.append(f"*Paired Wilcoxon tests across features are in `rq4_wilcoxon{tag}.csv` (with n=8 "
+              "features the minimum two-sided p is 0.0078; with n=5 it is 0.0625, so eShop "
+              "comparisons are descriptive only).*\n")
 
 
 def _wilcoxon_row(a_name: str, b_name: str, metric: str, a: list[float], b: list[float]) -> dict:
@@ -249,6 +251,49 @@ def _wilcoxon_row(a_name: str, b_name: str, metric: str, a: list[float], b: list
             "mean_a": _r(statistics.mean(a)) if a else None,
             "mean_b": _r(statistics.mean(b)) if b else None,
             "wins_a": sum(d > 0 for d in diffs), "wins_b": sum(d < 0 for d in diffs), "p": _r(p, 4)}
+
+
+# ── RQ3 baselines and RQ1/RQ2 reruns ─────────────────────────────────────────
+
+def analyze_rq3_baselines(md: list[str]) -> None:
+    path = OUT / "summary_rq3_baselines.csv"
+    if not path.exists():
+        return
+    with open(path, newline="") as f:
+        rows = list(csv.DictReader(f))
+    md.append("## RQ3 — non-LLM baselines\n")
+    md.append("| Dataset | Method | P | R | F1 | κ |\n|---|---|---|---|---|---|")
+    for r in rows:
+        md.append(f"| {r['dataset']} | {r['method']} | {r['precision']} | {r['recall']} | {r['f1']} | {r['kappa']} |")
+    md.append("")
+
+
+def analyze_rq12(md: list[str]) -> None:
+    files = sorted((OUT / "rq2").glob("rq2_*.json"))
+    if not files:
+        return
+    groups: dict[tuple, list] = defaultdict(list)
+    for f in files:
+        d = _load(f)
+        groups[(d["slot"], d["prompt"])].append(d)
+    rows = []
+    for (slot, prompt), runs in sorted(groups.items()):
+        f1 = [d["metrics"]["f1"] for d in runs]
+        rows.append({"slot": slot, "prompt": prompt, "runs": len(runs),
+                     "model": runs[0].get("model"),
+                     "precision": _r(statistics.mean(d["metrics"]["precision"] for d in runs)),
+                     "recall": _r(statistics.mean(d["metrics"]["recall"] for d in runs)),
+                     "f1_mean": _r(statistics.mean(f1)),
+                     "f1_sd": _r(statistics.stdev(f1)) if len(f1) > 1 else 0.0,
+                     "llm_errors": sum(d.get("llm_errors", 0) for d in runs),
+                     "time_s": _r(statistics.mean(d["elapsed_s"] for d in runs), 1)})
+    _write_csv(STATS / "rq12_rerun.csv", rows)
+    md.append("## RQ1/RQ2 — span-level reruns on the current pipeline (eShop Catalog, Top-k=20, Lenient)\n")
+    md.append("| Slot | Model | Prompt | runs | P | R | F1 mean ± sd | LLM errors | time (s) |\n|---|---|---|---|---|---|---|---|---|")
+    for r in rows:
+        md.append(f"| {r['slot']} | {r['model']} | {r['prompt']} | {r['runs']} | {r['precision']} | {r['recall']} "
+                  f"| {r['f1_mean']} ± {r['f1_sd']} | {r['llm_errors']} | {r['time_s']} |")
+    md.append("")
 
 
 # ── RQ5 held-out ─────────────────────────────────────────────────────────────
@@ -277,12 +322,26 @@ def analyze_rq5(md: list[str]) -> None:
                   f"| {r['kappa']} | {r.get('mcnemar_p', '-')} |")
     md.append("")
 
+    mlcq_gen = OUT / "rq5" / "rq5_MLCQ_threshold_guided.json"
+    if mlcq_gen.exists():
+        g = _load(mlcq_gen)
+        md.append(f"**MLCQ validation** — generated threshold_guided F1={_r(g['metrics']['f1'])}:\n")
+        for f in sorted((OUT / "rq3").glob("rq3_AZ1_*_MLCQ.json")):
+            d = _load(f)
+            a_only, b_only, p = mcnemar_exact(_correct(g["rows"]), _correct(d["rows"]))
+            md.append(f"- vs {d['prompt']} (F1={_r(d['metrics']['f1'])}): {a_only} vs {b_only} "
+                      f"discordant, McNemar p={_r(p, 4)}")
+        md.append("")
+
 
 def main() -> None:
     STATS.mkdir(parents=True, exist_ok=True)
     md = ["# StaLLM paper — statistical analysis\n"]
     analyze_rq3(load_rq3(), md)
-    analyze_rq4(md)
+    for i, (title, root) in enumerate(RQ4_SYSTEMS.items()):
+        analyze_rq4(md, root=root, title=title, tag="" if i == 0 else "_eshop")
+    analyze_rq3_baselines(md)
+    analyze_rq12(md)
     analyze_rq5(md)
     (STATS / "report.md").write_text("\n".join(md))
     print(f"Wrote {STATS / 'report.md'}")
