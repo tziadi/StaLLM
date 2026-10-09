@@ -897,9 +897,73 @@ def _zip_listing(zip_path: str, allowed_exts: Optional[List[str]]) -> pd.DataFra
             rows.append({"relpath": name, "basename": base})
     return pd.DataFrame(rows)
 
+
+def _norm_path(p: str) -> str:
+    return re.sub(r"^(\./|/)+", "", str(p).replace("\\", "/")).lower()
+
+
+def _common_suffix_len(a: List[str], b: List[str]) -> int:
+    n = 0
+    while n < min(len(a), len(b)) and a[-1 - n] == b[-1 - n]:
+        n += 1
+    return n
+
+
+def _align_gt_to_zip(gt_spans: pd.DataFrame, zip_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, Any]]:
+    """Match oracle rows to archive files by path rather than by file name.
+
+    Matching on the file name alone attaches to e.g. Catalog/Program.cs the
+    findings of every Program.cs in the system. We infer the prefix that maps
+    archive paths to oracle paths (e.g. "catalog/" -> "services/catalog/") from
+    files whose best path match is unambiguous, then require an exact path
+    match. Both frames get their "basename" column replaced by the matched
+    archive path, which is the key used downstream. Falls back to file-name
+    matching when no prefix can be inferred.
+    """
+    gt = gt_spans.copy()
+    zdf = zip_df.copy()
+    gt_paths = {f: _norm_path(f) for f in gt["file"].unique()}
+    by_base: Dict[str, List[str]] = {}
+    for norm in set(gt_paths.values()):
+        by_base.setdefault(norm.rsplit("/", 1)[-1], []).append(norm)
+
+    votes: Dict[Tuple[str, str], int] = {}
+    for rel in zdf["relpath"]:
+        z = _norm_path(rel)
+        zc = z.split("/")
+        scored = sorted(((_common_suffix_len(zc, g.split("/")), g) for g in by_base.get(zc[-1], [])), reverse=True)
+        if not scored or (len(scored) > 1 and scored[0][0] == scored[1][0]):
+            continue
+        n, g = scored[0]
+        gc = g.split("/")
+        key = ("/".join(zc[:len(zc) - n]), "/".join(gc[:len(gc) - n]))
+        votes[key] = votes.get(key, 0) + 1
+
+    if not votes:
+        diag = {"mode": "basename", "gt_spans_matched": int(len(gt)), "gt_spans_dropped": 0}
+        return gt, zdf, diag
+
+    (zp, gp), _ = max(votes.items(), key=lambda kv: kv[1])
+
+    def _to_gt(z: str) -> Optional[str]:
+        if zp and not z.startswith(zp + "/"):
+            return None
+        rest = z[len(zp) + 1:] if zp else z
+        return f"{gp}/{rest}" if gp else rest
+
+    zip_key = {_to_gt(_norm_path(r)): _norm_path(r) for r in zdf["relpath"]}
+    zip_key.pop(None, None)
+    zdf["basename"] = zdf["relpath"].map(_norm_path)
+    gt["basename"] = gt["file"].map(lambda f: zip_key.get(gt_paths[f]))
+    n_all = len(gt)
+    gt = gt.dropna(subset=["basename"]).reset_index(drop=True)
+    diag = {"mode": "path", "zip_prefix": zp, "gt_prefix": gp,
+            "gt_spans_matched": int(len(gt)), "gt_spans_dropped": int(n_all - len(gt))}
+    return gt, zdf, diag
+
 def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optional[List[str]],
-                    top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    zip_df = _zip_listing(zip_path, allowed_exts)
+                    top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any], pd.DataFrame]:
+    gt_spans, zip_df, align = _align_gt_to_zip(gt_spans, _zip_listing(zip_path, allowed_exts))
     gt_counts = gt_spans.groupby("basename").size().rename("gt_lines").reset_index()
 
     summary = zip_df.merge(gt_counts, on="basename", how="left")
@@ -921,9 +985,10 @@ def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optiona
         "mapped_gt_files": int((summary["gt_lines"] > 0).sum()),
         "top_k_total_files": int(len(U)),
         "positives": int(U["is_positive"].sum()),
-        "negatives": int((~U['is_positive']).sum())
+        "negatives": int((~U['is_positive']).sum()),
+        "gt_alignment": align,
     }
-    return U, diag
+    return U, diag, gt_spans
 
 # =========================
 # Cost helpers
@@ -960,7 +1025,7 @@ def _prepare_context(
     language = detect_language_from_zip(zip_path)
     exts = find_exts_for_language(language) or None
     gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    summary_U, diag, gt_spans = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
     return ExperimentContext(language=language, exts=exts, gt_spans=gt_spans,
                              summary_U=summary_U, diag=diag)
 
@@ -1006,7 +1071,7 @@ def run_experiment(
         language = detect_language_from_zip(zip_path)
         exts = find_exts_for_language(language) or None
         gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-        summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+        summary_U, diag, gt_spans = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
 
     llm = llm or _default_llm()
     pt_sum = ct_sum = tt_sum = 0
@@ -1048,7 +1113,7 @@ def run_experiment(
     require_type = bool(user_require_type)
     use_cols_single = bool(user_use_cols_single)
 
-    # Group GT and predictions by basename (limited to U)
+    # Group GT and predictions by file key (archive path, limited to U)
     U_bases = set(summary_U["basename"])
     gt_by_file: Dict[str, List[Dict[str, Any]]] = {}
     for _, g in gt_spans.iterrows():
@@ -1206,6 +1271,16 @@ def run_experiment(
         "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
         "type_breakdown": type_breakdown,
         "file_sources": source_counts,
+        # Per-file spans and sizes, so that span-level results can be re-scored
+        # offline (e.g. against a random-placement baseline) without new calls.
+        "spans_by_file": {
+            b: {
+                "lines": code_by_file.get(b, "").count("\n") + 1,
+                "pred": [[p["startLine"], p["endLine"]] for p in pred_by_file.get(b, [])],
+                "gt": [[g["startLine"], g["endLine"]] for g in gt_by_file.get(b, [])],
+            }
+            for b in sorted(U_bases)
+        },
     }
 
     return results_all, summary_U, metrics, usage_totals
