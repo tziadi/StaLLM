@@ -35,7 +35,7 @@ from scipy.stats import binomtest, wilcoxon
 OUT = Path("output/paper_results")
 STATS = OUT / "stats"
 RQ4_DIRS = {"alphabetical": OUT / "rq4", "keyword_sorted": OUT / "rq4_sorted",
-            "bm25_sorted": OUT / "rq4_bm25"}
+            "bm25_sorted": OUT / "rq4_bm25", "bm25_masked": OUT / "rq4_masked"}
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────

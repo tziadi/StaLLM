@@ -65,6 +65,7 @@ OUT_4      = OUT / "rq4"           # alphabetical candidate order (baseline)
 OUT_4_KW   = OUT / "rq4_sorted"    # keyword pre-sorted candidates (main condition)
 OUT_4_MTH  = OUT / "rq4_method"    # method-level evaluation (keyword-sorted)
 OUT_4_BM25 = OUT / "rq4_bm25"      # BM25-ranked candidates (no feature-name heuristic)
+OUT_4_MASK = OUT / "rq4_masked"    # feature name masked in the query, BM25-ranked candidates
 OUT_5      = OUT / "rq5"           # AutoResearch: generated prompt variants
 OUT_5_HO   = OUT_5 / "heldout"     # RQ5 held-out DACOS test split
 
@@ -134,6 +135,7 @@ def ensure_dirs():
     OUT_4_MTH.mkdir(parents=True, exist_ok=True)
     OUT_5.mkdir(parents=True, exist_ok=True)
     OUT_4_BM25.mkdir(parents=True, exist_ok=True)
+    OUT_4_MASK.mkdir(parents=True, exist_ok=True)
     OUT_5_HO.mkdir(parents=True, exist_ok=True)
 
 
@@ -343,7 +345,34 @@ RQ4_CONDITIONS = {
     "alphabetical": ("alphabetical", OUT_4),
     "keyword_sorted": ("keyword_sorted", OUT_4_KW),
     "bm25_sorted": ("bm25", OUT_4_BM25),
+    # Same BM25 policy, but run on name-masked tasks (see mask_feature_task).
+    "bm25_masked": ("bm25", OUT_4_MASK),
 }
+
+# Terms that name each feature; masked in the query so neither BM25 nor the LLM
+# can rely on lexical overlap between the feature name and package/class names.
+FEATURE_MASK_TERMS = {
+    "ACTIVITYDIAGRAM": r"activit(?:y|ies)",
+    "COGNITIVE": r"critics?|cognitive",
+    "COLLABORATIONDIAGRAM": r"collaborations?",
+    "DEPLOYMENTDIAGRAM": r"deployments?",
+    "LOGGING": r"log(?:s|ging|ger)?",
+    "SEQUENCEDIAGRAM": r"sequences?",
+    "STATEDIAGRAM": r"states?",
+    "USECASEDIAGRAM": r"use[ -]?cases?",
+}
+
+
+def mask_feature_task(task):
+    """Copy of a feature task whose query keeps only the masked description."""
+    import dataclasses
+    feature = task.metadata.get("feature", task.task_id)
+    lines = [l for l in task.query.splitlines() if not l.lower().startswith("feature:")]
+    query = "\n".join(lines)
+    pattern = FEATURE_MASK_TERMS.get(feature)
+    if pattern:
+        query = re.sub(rf"\b(?:{pattern})\b", "[MASKED]", query, flags=re.IGNORECASE)
+    return dataclasses.replace(task, query=query)
 
 
 def _run_rq4_condition(
@@ -398,17 +427,21 @@ def _run_rq4_condition(
                     print(f"    {fmt_metrics(data.get('metrics', {}))}")
 
 
-def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: bool) -> None:
+def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: bool,
+                      masked_tasks: Optional[list] = None) -> None:
     """Non-LLM rankings: the top-k of each candidate-ordering policy, scored directly."""
 
     rows = []
-    for policy in ("keyword_sorted", "bm25"):
-        for task in tasks:
+    runs = [("keyword_sorted", "keyword_sorted", tasks), ("bm25", "bm25", tasks)]
+    if masked_tasks:
+        runs.append(("bm25_masked", "bm25", masked_tasks))
+    for name, policy, task_list in runs:
+        for task in task_list:
             ranked = rq4_candidates(policy, task, all_candidates)[:FL_TOP_K]
             preds = [RankedLocation(file=f, rank=i) for i, f in enumerate(ranked, start=1)]
             m = ranking_metrics(preds, task.gold_locations, ks=(1, 5, 10))
             rows.append({
-                "method": f"{policy}_only",
+                "method": f"{name}_only",
                 "feature": task.metadata.get("feature", task.task_id),
                 "gold_count": len(task.gold_locations),
                 **{k: round(v, 4) for k, v in m.items()},
@@ -416,7 +449,7 @@ def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: 
     name = "summary_rq4_baselines_all.csv" if include_compound else "summary_rq4_baselines.csv"
     _write_csv(OUT / name, rows)
     print(f"\n[RQ4] Non-LLM baselines → {OUT / name}")
-    for method in ("keyword_sorted_only", "bm25_only"):
+    for method in sorted({r["method"] for r in rows}):
         sub = [r for r in rows if r["method"] == method]
         agg = {k: sum(r[k] for r in sub) / len(sub) for k in ("hit@1", "hit@5", "mrr", "map")}
         print(f"  {method:22s} {fmt_metrics(agg)}")
@@ -446,12 +479,14 @@ def run_rq4(dry: bool = False, *, include_compound: bool = False,
     all_candidates = list_repo_candidates(str(ARGOUML_ZIP), allowed_exts=[".java"])
     print(f"  {len(all_candidates)} total Java files → budget = {CANDIDATE_BUDGET}")
 
-    run_rq4_baselines(tasks, all_candidates, include_compound)
+    masked = [mask_feature_task(t) for t in tasks]
+    run_rq4_baselines(tasks, all_candidates, include_compound, masked_tasks=masked)
 
     for label in conditions or list(RQ4_CONDITIONS):
         policy, out_dir = RQ4_CONDITIONS[label]
         print(f"\n--- Condition: {label} candidate ordering ---")
-        _run_rq4_condition(tasks, all_candidates, RQ4_SLOTS, out_dir,
+        _run_rq4_condition(masked if label == "bm25_masked" else tasks,
+                           all_candidates, RQ4_SLOTS, out_dir,
                            label=label, dry=dry, policy=policy)
 
     rebuild_summaries()
@@ -760,6 +795,146 @@ def run_rq5(dry: bool = False):
     print(f"\n[RQ5] Summary → {OUT / 'summary_rq5.csv'}")
 
 
+# ── RQ3 baselines : non-LLM smell classifiers ────────────────────────────────
+
+_SIG_RE = re.compile(
+    r"(?:public|protected|private|static|final|abstract|synchronized|\s)+[\w<>\[\],.?\s]+?\s+(\w+)\s*\(([^)]*)\)\s*(?:throws[^{;]+)?\{")
+_FIELD_RE = re.compile(r"^\s*(?:private|protected|public)\s+(?:static\s+)?(?:final\s+)?[\w<>\[\],.?\s]+\s+\w+\s*(?:=[^;]*)?;", re.M)
+_DECISION_RE = re.compile(r"\b(?:if|for|while|case|catch)\b|&&|\|\||\?(?!\s*>)")
+
+
+def smell_heuristic(smell: str, code: str) -> bool:
+    """Designite-inspired thresholds, approximated with regexes, fixed a priori.
+
+    long_parameter_list: a method with >= 5 parameters; complex_method: >= 8
+    decision points (cyclomatic proxy); long_method: > 100 non-blank lines;
+    multifaceted_abstraction: >= 7 fields and >= 7 methods; god_class: >= 20
+    methods or > 500 non-blank lines; data_class: >= 3 fields and >= 70% of the
+    methods are accessors; feature_envy: >= 5 calls on other objects and more
+    than twice the accesses to `this`.
+    """
+    sigs = _SIG_RE.findall(code)
+    loc = sum(1 for line in code.splitlines() if line.strip())
+    params = max((len([p for p in a.split(",") if p.strip()]) for _, a in sigs), default=0)
+    fields = len(_FIELD_RE.findall(code))
+    methods = len(sigs)
+    if smell == "long_parameter_list":
+        return params >= 5
+    if smell == "complex_method":
+        return len(_DECISION_RE.findall(code)) >= 8
+    if smell == "long_method":
+        return loc > 100
+    if smell == "multifaceted_abstraction":
+        return fields >= 7 and methods >= 7
+    if smell == "god_class":
+        return methods >= 20 or loc > 500
+    if smell == "data_class":
+        accessors = sum(1 for name, _ in sigs if re.match(r"(?:get|set|is)[A-Z]", name))
+        return fields >= 3 and methods > 0 and accessors / methods >= 0.7
+    if smell == "feature_envy":
+        external = len(re.findall(r"\b(?!this\b|super\b)[a-z]\w*\.\w+\s*\(", code))
+        own = len(re.findall(r"\bthis\.", code))
+        return external >= 5 and external > 2 * own
+    return False
+
+
+def run_rq3_baselines():
+    from StaLLM_benchmarks import _binary_metrics
+    print("\n" + "="*60)
+    print("RQ3 baselines — non-LLM smell classifiers")
+    print("="*60)
+    files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
+    sets = {
+        "DACOS": load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES),
+        "MLCQ": load_mlcq_smell_samples(str(MLCQ_CSV), limit=MAX_SAMPLES),
+        "DACOS_heldout": load_dacos_heldout(),
+    }
+    rows = []
+    for ds, samples in sets.items():
+        for name, fn in (("always_present", lambda s: True),
+                         ("metric_heuristic", lambda s: smell_heuristic(s.smell, s.code))):
+            preds = [{"sample_id": s.sample_id, "smell": s.smell, "gold": bool(s.label),
+                      "predicted": bool(fn(s))} for s in samples]
+            m = _binary_metrics(preds)
+            rows.append({"method": name, "dataset": ds, **_rounded(m, _METRIC_KEYS_BIN)})
+            print(f"  {ds:14s} {name:17s} {fmt_metrics(m)}  kappa={m['kappa']:.3f}")
+            (OUT_3 / "baselines").mkdir(exist_ok=True)
+            (OUT_3 / "baselines" / f"rq3b_{name}_{ds}.json").write_text(
+                json.dumps({"method": name, "dataset": ds, "rows": preds, "metrics": m}, indent=2))
+    _write_csv(OUT / "summary_rq3_baselines.csv", rows)
+    print(f"[RQ3] Baselines → {OUT / 'summary_rq3_baselines.csv'}")
+
+
+# ── RQ2 : span-level model sensitivity (rerun with correct Ollama context) ───
+
+ESHOP_ZIP = DATA / "eShopOnWeb" / "Catalog.zip"
+ESHOP_CSV = DATA / "eShopOnWeb" / "eShopOnContainers-sonarqube-quality-analysis.csv"
+OUT_2 = OUT / "rq2"
+
+
+class _CountingLLM:
+    """Wraps a ChatModel and counts failed calls.
+
+    StaLLM_core.analyze_with_llm silently falls back to heuristics when a call
+    raises, so failures must be counted here to keep the rerun auditable.
+    """
+
+    def __init__(self, inner):
+        self.inner, self.calls, self.errors = inner, 0, 0
+        self.slot_key = getattr(inner, "slot_key", None)
+        self.cfg = inner.cfg
+
+    def chat(self, *args, **kwargs):
+        self.calls += 1
+        try:
+            return self.inner.chat(*args, **kwargs)
+        except Exception:
+            self.errors += 1
+            raise
+
+    def __getattr__(self, name):
+        return getattr(self.inner, name)
+
+
+def run_rq2(dry: bool = False, prompts: tuple[str, ...] = ("scanner",)):
+    """RQ1/RQ2 span-level runs with the ENASE E1/E2 setup on the current pipeline:
+    eShop Catalog, Top-k=20, positive ratio 1.0, Lenient (RQ1 = prompts on AZ1,
+    RQ2 = Scanner across slots)."""
+    from StaLLM_core import run_experiment
+
+    print("\n" + "="*60)
+    print(f"RQ1/RQ2 — span-level runs (prompts={','.join(prompts)}, {ESHOP_ZIP.name})")
+    print("="*60)
+    OUT_2.mkdir(parents=True, exist_ok=True)
+    for slot, prompt, run in [(sl, p, r) for sl in RQ3_SLOTS for r in range(1, RUNS + 1) for p in prompts]:
+        suffix = f"_r{run}" if run > 1 else ""
+        out = OUT_2 / f"rq2_{slot}_{prompt}{suffix}.json"
+        if out.exists():
+            print(f"  [skip] {out.name}")
+            continue
+        if dry:
+            print(f"  [dry-run] would run {slot}")
+            continue
+        llm = _CountingLLM(build_llm_from_slot_lazy(slot))
+        t0 = time.time()
+        _, summary_u, metrics, usage = run_experiment(
+            str(ESHOP_ZIP), str(ESHOP_CSV), mode=prompt, top_k=20, pos_ratio=1.0,
+            preset="Lenient", user_require_type=False, user_use_line_span=True,
+            user_use_cols_single=False, llm=llm,
+        )
+        data = {
+            "slot": slot, "prompt": prompt, "run": run, "zip": ESHOP_ZIP.name,
+            "model": llm.model_label(), "num_ctx": getattr(llm.cfg, "num_ctx", None),
+            "files": len(summary_u), "llm_calls": llm.calls, "llm_errors": llm.errors,
+            "elapsed_s": round(time.time() - t0, 1), "usage": usage,
+            "metrics": {k: v for k, v in metrics.items() if k not in ("file_diagnostics",)},
+        }
+        out.write_text(json.dumps(data, indent=2, default=str))
+        m = metrics
+        print(f"  {slot} {prompt} r{run}: P={m['precision']:.3f} R={m['recall']:.3f} F1={m['f1']:.3f} "
+              f"files={len(summary_u)} calls={llm.calls} errors={llm.errors} time={data['elapsed_s']}s")
+
+
 # ── RQ5 held-out : selection/test split on DACOS ─────────────────────────────
 
 def _rq5_best_generated() -> Optional[dict]:
@@ -883,7 +1058,7 @@ def _write_csv(path: Path, rows: list[dict]):
 def main():
     global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
-    parser.add_argument("--rq", choices=["3", "4", "4m", "5", "5h", "summary"],
+    parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
                              "5h=RQ5 held-out DACOS test, summary=rebuild CSVs only.")
     parser.add_argument("--dry", action="store_true", help="Dry run — print plan without calling the LLM")
@@ -895,6 +1070,7 @@ def main():
     parser.add_argument("--slots", help="Comma-separated model slots (default: AZ1).")
     parser.add_argument("--runs", type=int, default=RUNS, help="Repeated runs per configuration.")
     parser.add_argument("--workers", type=int, default=WORKERS, help="Concurrent requests for hosted slots.")
+    parser.add_argument("--prompts", help="RQ3: comma-separated prompt names (default: all).")
     parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
                                              f"(default: {','.join(RQ4_CONDITIONS)}).")
     args = parser.parse_args()
@@ -903,6 +1079,11 @@ def main():
         RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]
     RUNS, WORKERS = args.runs, args.workers
     conditions = [c.strip() for c in args.conditions.split(",")] if args.conditions else None
+    if args.prompts:
+        keep = {p.strip() for p in args.prompts.split(",")}
+        for name in list(DACOS_PROMPTS):
+            if name not in keep:
+                del DACOS_PROMPTS[name]
 
     ensure_dirs()
 
@@ -912,6 +1093,10 @@ def main():
     rq = args.rq
     if rq == "summary":
         rebuild_summaries()
+    if rq == "2":
+        run_rq2(dry=args.dry, prompts=tuple(p.strip() for p in (args.prompts or "scanner").split(",")))
+    if rq == "3b":
+        run_rq3_baselines()
     if rq is None or rq == "3":
         run_rq3(dry=args.dry)
     if rq is None or rq == "4":
