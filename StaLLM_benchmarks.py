@@ -884,6 +884,55 @@ def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None,
     return tasks
 
 
+def load_feature_locations_csv_tasks(
+    path: str,
+    *,
+    repo_zip: Optional[str] = None,
+    project: str = "",
+    language: str = "",
+    descriptions: Optional[dict[str, str]] = None,
+    extensions: Optional[Iterable[str]] = None,
+) -> list[MaintenanceTask]:
+    """Load a `featureName;file;startLine;...` feature-location export (e.g. eShopOnContainers).
+
+    Gold locations are normalized to files, optionally restricted to `extensions`.
+    `descriptions` maps a feature name to a natural-language description used in
+    the query; without it the query only names the feature.
+    """
+
+    exts = tuple(e.lower() for e in extensions or [])
+    with open(path, newline="", encoding="utf-8", errors="ignore") as f:
+        sample = f.read(2048)
+        f.seek(0)
+        delimiter = ";" if sample.count(";") > sample.count(",") else ","
+        rows = list(csv.DictReader(f, delimiter=delimiter))
+    by_feature: dict[str, set[str]] = defaultdict(set)
+    for row in rows:
+        feature = str(row.get("featureName") or row.get("feature") or "").strip()
+        file_path = str(row.get("file") or "").strip()
+        if feature and file_path and (not exts or file_path.lower().endswith(exts)):
+            by_feature[feature].add(file_path)
+
+    tasks: list[MaintenanceTask] = []
+    for feature in sorted(by_feature):
+        description = (descriptions or {}).get(feature, "")
+        query = _feature_query(feature, [description] if description else [])
+        gold = tuple(LocalizationGold(file=f) for f in sorted(by_feature[feature]))
+        tasks.append(MaintenanceTask(
+            task_id=f"{_slug(project or 'project')}-feature-{_slug(feature)}",
+            task_type=MaintenanceTaskType.FEATURE_LOCATION,
+            project=project,
+            query=query,
+            gold_locations=gold,
+            repo_zip=repo_zip,
+            language=language,
+            candidate_level="file",
+            metadata={"benchmark": f"{project} feature location", "feature": feature.upper(),
+                      "source": path},
+        ))
+    return tasks
+
+
 def load_bench4bl_bug_tasks(path: str, *, repo_zip_by_project: Optional[dict[str, str]] = None,
                             default_repo_zip: Optional[str] = None) -> list[MaintenanceTask]:
     """Load Bench4BL-style bug localization records.

@@ -44,6 +44,7 @@ from StaLLM_benchmarks import (
     load_mlcq_smell_samples,
     run_dacos_smell_benchmark,
     load_argouml_feature_tasks,
+    load_feature_locations_csv_tasks,
     DACOS_PROMPT_TEMPLATE,
 )
 from StaLLM_tasks import (
@@ -75,6 +76,31 @@ DACOS_FILES    = DATA / "DACOS" / "files.zip"
 MLCQ_CSV       = DATA / "MLCQ" / "MLCQCodeSmellSamples.csv"
 ARGOUML_GT     = DATA / "Feature Location-ArgoUML"
 ARGOUML_ZIP    = DATA / "ArgoUML" / "ArgoUML.zip"
+ESHOP_FL_CSV   = DATA / "eShopFL" / "eShopOnContainers-feature-locations.csv"
+ESHOP_FL_ZIP   = DATA / "eShopFL" / "eShopOnContainers.zip"
+
+# One-sentence functional descriptions of the eShopOnContainers features (the
+# benchmark only provides names); written from the project's architecture
+# documentation and used verbatim as the feature-location queries.
+ESHOP_FEATURE_DESCRIPTIONS = {
+    "Catalog": "Manages the product catalog: catalog items, brands and types, product pictures, "
+               "and the item information and stock shown in the storefront.",
+    "Basket": "Keeps each buyer's shopping basket: adding and removing items, updating quantities, "
+              "and checking out the basket to start an order.",
+    "Order": "Handles the ordering process: creating an order at checkout, tracking its status through "
+             "stock confirmation, payment and shipment, and cancelling orders.",
+    "Identity": "Authenticates users and issues access tokens: login and logout, user registration and "
+                "account management, and protecting the services and gateways with tokens.",
+    "Payment": "Processes the payment of an order once its stock is confirmed and publishes whether "
+               "the payment succeeded or failed.",
+}
+
+# Feature-location systems for RQ4 (--system); "argouml" keeps the historical paths.
+SYSTEMS = {
+    "argouml": {"zip": ARGOUML_ZIP, "ext": ".java", "out": OUT, "suffix": ""},
+    "eshop": {"zip": ESHOP_FL_ZIP, "ext": ".cs", "out": OUT / "eshop", "suffix": "_eshop"},
+}
+SYSTEM = "argouml"
 
 # ── Experiment config ─────────────────────────────────────────────────────────
 RQ3_SLOTS   = ["AZ1"]          # models to run for RQ3
@@ -321,7 +347,7 @@ _BM25_CACHE: dict[str, _BM25Index] = {}
 
 
 def _bm25_index(paths: list[str]) -> _BM25Index:
-    key = str(ARGOUML_ZIP)
+    key = str(SYSTEMS[SYSTEM]["zip"])
     if key not in _BM25_CACHE:
         print(f"  Building BM25 index over {len(paths)} files …")
         _BM25_CACHE[key] = _BM25Index(key, paths)
@@ -334,7 +360,8 @@ def rq4_candidates(policy: str, task, all_candidates: list[str]) -> list[str]:
     if policy == "alphabetical":
         return list(all_candidates)
     if policy == "keyword_sorted":
-        return list_repo_candidates(str(ARGOUML_ZIP), allowed_exts=[".java"], feature_hint=feature)
+        cfg = SYSTEMS[SYSTEM]
+        return list_repo_candidates(str(cfg["zip"]), allowed_exts=[cfg["ext"]], feature_hint=feature)
     if policy == "bm25":
         return _bm25_index(all_candidates).rank(task.query)
     raise ValueError(f"Unknown candidate policy: {policy}")
@@ -352,6 +379,11 @@ RQ4_CONDITIONS = {
 # Terms that name each feature; masked in the query so neither BM25 nor the LLM
 # can rely on lexical overlap between the feature name and package/class names.
 FEATURE_MASK_TERMS = {
+    "CATALOG": r"catalog(?:ue)?s?",
+    "BASKET": r"baskets?",
+    "ORDER": r"order(?:s|ing)?",
+    "IDENTITY": r"identit(?:y|ies)",
+    "PAYMENT": r"payments?",
     "ACTIVITYDIAGRAM": r"activit(?:y|ies)",
     "COGNITIVE": r"critics?|cognitive",
     "COLLABORATIONDIAGRAM": r"collaborations?",
@@ -447,8 +479,10 @@ def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: 
                 **{k: round(v, 4) for k, v in m.items()},
             })
     name = "summary_rq4_baselines_all.csv" if include_compound else "summary_rq4_baselines.csv"
-    _write_csv(OUT / name, rows)
-    print(f"\n[RQ4] Non-LLM baselines → {OUT / name}")
+    out_root = SYSTEMS[SYSTEM]["out"]
+    out_root.mkdir(parents=True, exist_ok=True)
+    _write_csv(out_root / name, rows)
+    print(f"\n[RQ4] Non-LLM baselines → {out_root / name}")
     for method in sorted({r["method"] for r in rows}):
         sub = [r for r in rows if r["method"] == method]
         agg = {k: sum(r[k] for r in sub) / len(sub) for k in ("hit@1", "hit@5", "mrr", "map")}
@@ -457,33 +491,38 @@ def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: 
 
 def run_rq4(dry: bool = False, *, include_compound: bool = False,
             conditions: Optional[list[str]] = None):
+    cfg = SYSTEMS[SYSTEM]
     print("\n" + "="*60)
-    scope = "all feature scenarios" if include_compound else "8 core single features"
-    print(f"RQ4 — Feature Location (ArgoUML SPL, {scope})")
+    scope = "all feature scenarios" if include_compound else "single features"
+    print(f"RQ4 — Feature Location ({SYSTEM}, {scope})")
     print("="*60)
 
-    if not ARGOUML_GT.exists():
-        print(f"[error] Ground truth not found: {ARGOUML_GT}")
-        return
-    if not ARGOUML_ZIP.exists():
-        print(f"[error] Repository ZIP not found: {ARGOUML_ZIP}")
-        return
-
-    tasks = load_argouml_feature_tasks(
-        str(ARGOUML_GT),
-        repo_zip=str(ARGOUML_ZIP),
-        single_only=not include_compound,
-    )
+    if SYSTEM == "eshop":
+        tasks = load_feature_locations_csv_tasks(
+            str(ESHOP_FL_CSV), repo_zip=str(ESHOP_FL_ZIP), project="eShopOnContainers",
+            language="C#", descriptions=ESHOP_FEATURE_DESCRIPTIONS, extensions=[".cs"],
+        )
+    else:
+        if not ARGOUML_GT.exists() or not ARGOUML_ZIP.exists():
+            print(f"[error] ArgoUML benchmark data not found under {DATA}")
+            return
+        tasks = load_argouml_feature_tasks(
+            str(ARGOUML_GT),
+            repo_zip=str(ARGOUML_ZIP),
+            single_only=not include_compound,
+        )
     print(f"Loaded {len(tasks)} feature tasks")
 
-    all_candidates = list_repo_candidates(str(ARGOUML_ZIP), allowed_exts=[".java"])
-    print(f"  {len(all_candidates)} total Java files → budget = {CANDIDATE_BUDGET}")
+    all_candidates = list_repo_candidates(str(cfg["zip"]), allowed_exts=[cfg["ext"]])
+    print(f"  {len(all_candidates)} candidate {cfg['ext']} files → budget = {CANDIDATE_BUDGET}")
 
     masked = [mask_feature_task(t) for t in tasks]
     run_rq4_baselines(tasks, all_candidates, include_compound, masked_tasks=masked)
 
     for label in conditions or list(RQ4_CONDITIONS):
         policy, out_dir = RQ4_CONDITIONS[label]
+        out_dir = SYSTEMS[SYSTEM]["out"] / out_dir.name
+        out_dir.mkdir(parents=True, exist_ok=True)
         print(f"\n--- Condition: {label} candidate ordering ---")
         _run_rq4_condition(masked if label == "bm25_masked" else tasks,
                            all_candidates, RQ4_SLOTS, out_dir,
@@ -1003,6 +1042,23 @@ def _rounded(m: dict, keys: tuple) -> dict:
     return {k: round(m[k], 4) if isinstance(m.get(k), float) else m.get(k) for k in keys if k in m}
 
 
+def _rebuild_rq4_summary(out_root: Path, conditions: dict) -> list[dict]:
+    rq4_all = []
+    for label, (_, out_dir) in conditions.items():
+        for f in sorted((out_root / out_dir.name).glob("rq4_*.json")):
+            d = json.loads(f.read_text())
+            rq4_all.append({"slot": d.get("slot"), "prompt": d.get("prompt_style"),
+                            "candidate_order": d.get("candidate_order", label),
+                            "feature": d.get("feature"), "gold_count": d.get("gold_count"),
+                            "gold_visible": d.get("gold_visible", ""), "run": d.get("run", 1),
+                            **_rounded(d.get("metrics", {}), _METRIC_KEYS_RANK),
+                            "total_tokens": d.get("usage", {}).get("total_tokens")})
+    if rq4_all:
+        _write_csv(out_root / "summary_rq4_all.csv", rq4_all)
+        _write_csv(out_root / "summary_rq4.csv", [r for r in rq4_all if "_and_" not in str(r["feature"])])
+    return rq4_all
+
+
 def rebuild_summaries() -> None:
     """Rewrite summary CSVs from every result file, so parallel/partial runs stay consistent."""
     rq3 = []
@@ -1014,18 +1070,8 @@ def rebuild_summaries() -> None:
                     "elapsed_s": d.get("elapsed_s")})
     _write_csv(OUT / "summary_rq3.csv", rq3)
 
-    rq4_all = []
-    for label, (_, out_dir) in RQ4_CONDITIONS.items():
-        for f in sorted(out_dir.glob("rq4_*.json")):
-            d = json.loads(f.read_text())
-            rq4_all.append({"slot": d.get("slot"), "prompt": d.get("prompt_style"),
-                            "candidate_order": d.get("candidate_order", label),
-                            "feature": d.get("feature"), "gold_count": d.get("gold_count"),
-                            "gold_visible": d.get("gold_visible", ""), "run": d.get("run", 1),
-                            **_rounded(d.get("metrics", {}), _METRIC_KEYS_RANK),
-                            "total_tokens": d.get("usage", {}).get("total_tokens")})
-    _write_csv(OUT / "summary_rq4_all.csv", rq4_all)
-    _write_csv(OUT / "summary_rq4.csv", [r for r in rq4_all if "_and_" not in str(r["feature"])])
+    for system, cfg in SYSTEMS.items():
+        _rebuild_rq4_summary(cfg["out"], RQ4_CONDITIONS)
 
     ho = []
     for f in sorted(OUT_5_HO.glob("rq5ho_*.json")):
@@ -1034,7 +1080,7 @@ def rebuild_summaries() -> None:
                    "dataset": d.get("dataset"), **_rounded(d.get("metrics", {}), _METRIC_KEYS_BIN)})
     if ho:
         _write_csv(OUT / "summary_rq5_heldout.csv", ho)
-    print(f"[summaries] rq3={len(rq3)} rq4={len(rq4_all)} rq5_heldout={len(ho)} rows → {OUT}")
+    print(f"[summaries] rq3={len(rq3)} rq5_heldout={len(ho)} rows → {OUT}")
 
 
 # ── CSV writer ────────────────────────────────────────────────────────────────
@@ -1056,7 +1102,7 @@ def _write_csv(path: Path, rows: list[dict]):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS
+    global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
     parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
@@ -1070,6 +1116,8 @@ def main():
     parser.add_argument("--slots", help="Comma-separated model slots (default: AZ1).")
     parser.add_argument("--runs", type=int, default=RUNS, help="Repeated runs per configuration.")
     parser.add_argument("--workers", type=int, default=WORKERS, help="Concurrent requests for hosted slots.")
+    parser.add_argument("--system", choices=list(SYSTEMS), default="argouml",
+                        help="RQ4 feature-location system.")
     parser.add_argument("--prompts", help="RQ3: comma-separated prompt names (default: all).")
     parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
                                              f"(default: {','.join(RQ4_CONDITIONS)}).")
@@ -1077,7 +1125,7 @@ def main():
 
     if args.slots:
         RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]
-    RUNS, WORKERS = args.runs, args.workers
+    RUNS, WORKERS, SYSTEM = args.runs, args.workers, args.system
     conditions = [c.strip() for c in args.conditions.split(",")] if args.conditions else None
     if args.prompts:
         keep = {p.strip() for p in args.prompts.split(",")}
