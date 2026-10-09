@@ -383,6 +383,149 @@ def fig_rq5(results_dir: Path, out_dir: Path) -> None:
     _save(fig, out_dir / "fig_rq5_autoresearch.pdf")
 
 
+# ── Journal v2 figures (multi-model, baselines, held-out) ────────────────────
+
+SLOT_STYLE = {  # validated categorical slots 1-3 (all-pairs); shapes as secondary encoding
+    "AZ1": ("gpt-4o", "#2a78d6", "o"),
+    "AZ2": ("gpt-4.1", "#eb6834", "s"),
+    "AZ3": ("o3", "#1baf7a", "^"),
+    "AZ4": ("qwen2.5-coder 14B", "#4a3aa7", "D"),
+}
+BASELINE_INK = "#52514e"
+ORDER_LABELS = {
+    "alphabetical": "Alpha-\nbetical",
+    "keyword_sorted": "Keyword-\nsorted",
+    "bm25_sorted": "BM25-\nsorted",
+    "bm25_masked": "Name-\nmasked",
+}
+ORDER_BASELINE = {"keyword_sorted": "keyword_sorted_only", "bm25_sorted": "bm25_only",
+                  "bm25_masked": "bm25_masked_only"}
+
+
+def _style_axis(ax) -> None:
+    ax.grid(axis="y", color=LIGHT_GRID, linewidth=0.6)
+    ax.set_axisbelow(True)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+
+
+def fig_rq4_conditions(stats_dir: Path, out_dir: Path, metric: str = "mrr") -> None:
+    panels = [("ArgoUML (8 features)", stats_dir / "rq4_conditions.csv"),
+              ("eShopOnContainers (5 features)", stats_dir / "rq4_conditions_eshop.csv")]
+    panels = [(t, _read_csv(p)) for t, p in panels]
+    panels = [(t, rows) for t, rows in panels if rows]
+    if not panels:
+        return
+    fig, axes = plt.subplots(1, len(panels), figsize=(7.0, 3.0), sharey=True)
+    axes = np.atleast_1d(axes)
+    orders = list(ORDER_LABELS)
+    slots = [s for s in SLOT_STYLE if any(r["slot"] == s for _, rows in panels for r in rows)]
+    for ax, (title, rows) in zip(axes, panels):
+        for j, slot in enumerate(slots):
+            name, color, marker = SLOT_STYLE[slot]
+            xs, ys = [], []
+            for i, order in enumerate(orders):
+                vals = [_float(r, metric) for r in rows
+                        if r["method"] == "LLM" and r["slot"] == slot and r["ordering"] == order]
+                if vals:  # mean over the two prompts
+                    xs.append(i + (j - (len(slots) - 1) / 2) * 0.14)
+                    ys.append(sum(vals) / len(vals))
+            ax.plot(xs, ys, linestyle="none", marker=marker, markersize=6, color=color,
+                    markeredgecolor="#fcfcfb", markeredgewidth=0.8, label=f"LLM: {name}")
+        for i, order in enumerate(orders):
+            base = next((r for r in rows if r["method"] == ORDER_BASELINE.get(order)), None)
+            if base:
+                ax.hlines(_float(base, metric), i - 0.32, i + 0.32, colors=BASELINE_INK,
+                          linestyles=(0, (2, 1.5)), linewidth=1.2,
+                          label="Same ranking without LLM" if i == 1 else None)
+        ax.set_xticks(range(len(orders)))
+        ax.set_xticklabels([ORDER_LABELS[o] for o in orders], fontsize=7.5)
+        ax.set_xlim(-0.5, len(orders) - 0.5)
+        ax.set_ylim(0, 1.05)
+        ax.set_title(title)
+        _style_axis(ax)
+    axes[0].set_ylabel("MRR" if metric == "mrr" else metric.upper())
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=3, frameon=False,
+               bbox_to_anchor=(0.5, -0.01), fontsize=7.5)
+    fig.tight_layout(rect=(0, 0.16, 1, 1))
+    path = out_dir / f"fig_rq4_conditions_{metric}.pdf"
+    fig.savefig(path)
+    plt.close(fig)
+    print(f"  saved {path}")
+
+
+def fig_rq3_models(stats_dir: Path, results_dir: Path, out_dir: Path, metric: str = "kappa") -> None:
+    rows = [r for r in _read_csv(stats_dir / "rq3_by_slot.csv") if r["prompt"] == "binary_oracle_baseline"]
+    base = _read_csv(results_dir / "summary_rq3_baselines.csv")
+    if not rows:
+        return
+    datasets = ["DACOS", "MLCQ"]
+    fig, ax = plt.subplots(figsize=(3.5, 2.5))
+    slots = [s for s in SLOT_STYLE if any(r["slot"] == s for r in rows)]
+    for j, slot in enumerate(slots):
+        name, color, marker = SLOT_STYLE[slot]
+        xs, ys = [], []
+        for i, ds in enumerate(datasets):
+            r = next((r for r in rows if r["slot"] == slot and r["dataset"] == ds), None)
+            if r:
+                xs.append(i + (j - (len(slots) - 1) / 2) * 0.12)
+                ys.append(_float(r, metric))
+        ax.plot(xs, ys, linestyle="none", marker=marker, markersize=6, color=color,
+                markeredgecolor="#fcfcfb", markeredgewidth=0.8, label=name)
+    for i, ds in enumerate(datasets):
+        h = next((r for r in base if r["dataset"] == ds and r["method"] == "metric_heuristic"), None)
+        if h:
+            ax.hlines(_float(h, metric), i - 0.3, i + 0.3, colors=BASELINE_INK,
+                      linestyles=(0, (2, 1.5)), linewidth=1.2,
+                      label="Metric heuristic (no LLM)" if i == 0 else None)
+    ax.set_xticks(range(len(datasets)))
+    ax.set_xticklabels(datasets)
+    ax.set_xlim(-0.5, len(datasets) - 0.5)
+    ax.set_ylim(0, 0.6)
+    ax.set_ylabel("Cohen's $\\kappa$" if metric == "kappa" else metric)
+    _style_axis(ax)
+    ax.legend(frameon=False, fontsize=6.5, loc="upper center", ncol=2, bbox_to_anchor=(0.5, 1.02))
+    ax.set_ylim(0, 0.65)
+    _save(fig, out_dir / f"fig_rq3_models_{metric}.pdf")
+
+
+def fig_rq5_heldout(results_dir: Path, out_dir: Path) -> None:
+    sel = {r["prompt"]: _float(r, "f1") for r in _read_csv(results_dir / "summary_rq5.csv")
+           if r["dataset"] == "DACOS"}
+    test = {r["prompt"]: _float(r, "f1") for r in _read_csv(results_dir / "summary_rq5_heldout.csv")}
+    mlcq = {r["prompt"]: _float(r, "f1") for r in _read_csv(results_dir / "summary_rq5.csv")
+            if r["dataset"] == "MLCQ" and r["source"] in ("RQ3_baseline", "RQ5_generated")}
+    prompts = [p for p in ("binary_oracle_baseline", "conservative_evidence", "definition_driven",
+                           "threshold_guided") if p in sel and p in test]
+    if not prompts:
+        return
+    labels = {"binary_oracle_baseline": "Baseline", "conservative_evidence": "Conservative",
+              "definition_driven": "Def.-driven", "threshold_guided": "Threshold-guided\n(generated)"}
+    stages = ["DACOS\nselection", "DACOS\nheld-out test", "MLCQ"]
+    fig, ax = plt.subplots(figsize=(3.5, 2.6))
+    # spread end labels so close MLCQ values stay legible
+    ends = sorted(prompts, key=lambda p: mlcq.get(p, 0))
+    label_y, last = {}, -1.0
+    for p in ends:
+        y = max(mlcq.get(p, 0), last + 0.014)
+        label_y[p], last = y, y
+    for p in prompts:
+        ys = [sel[p], test[p], mlcq.get(p, np.nan)]
+        gen = p == "threshold_guided"
+        color = "#eb6834" if gen else "#a3a29b"
+        ax.plot(range(3), ys, color=color, linewidth=2 if gen else 1.2,
+                marker="o", markersize=5, markeredgecolor="#fcfcfb", zorder=3 if gen else 2)
+        ax.annotate(labels[p], (2, ys[2]), xytext=(2.08, label_y[p]), textcoords="data",
+                    va="center", fontsize=6.5, color="#0b0b0b" if gen else BASELINE_INK)
+    ax.set_xticks(range(3))
+    ax.set_xticklabels(stages, fontsize=7.5)
+    ax.set_xlim(-0.2, 2.95)
+    ax.set_ylabel("F$_1$")
+    _style_axis(ax)
+    _save(fig, out_dir / "fig_rq5_heldout.pdf")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate StaLLM paper figures from experiment summaries.")
     parser.add_argument("--results-dir", type=Path, default=DEFAULT_RESULTS)
@@ -397,20 +540,11 @@ def main() -> None:
 
     _configure_style()
     print("Generating figures from summaries...")
-    fig_rq3(args.results_dir, args.out_dir)
-
-    rq4_summary = args.rq4_summary
-    if rq4_summary is None:
-        rq4_summary = args.results_dir / "summary_rq4_all.csv"
-        if not rq4_summary.exists():
-            rq4_summary = args.results_dir / "summary_rq4.csv"
-    rq4_rows = _read_csv(rq4_summary)
-    if rq4_rows:
-        fig_rq4_hit1(rq4_rows, args.out_dir)
-        fig_rq4_map(rq4_rows, args.out_dir)
-        fig_rq4_aggregate(rq4_rows, args.out_dir)
-        fig_rq4_single_vs_compound(rq4_rows, args.out_dir)
-    fig_rq5(args.results_dir, args.out_dir)
+    stats_dir = args.results_dir / "stats"
+    fig_rq3_models(stats_dir, args.results_dir, args.out_dir)
+    for metric in ("mrr", "map"):
+        fig_rq4_conditions(stats_dir, args.out_dir, metric)
+    fig_rq5_heldout(args.results_dir, args.out_dir)
     print("Done.")
 
 
