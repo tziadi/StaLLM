@@ -9,9 +9,11 @@ import math
 import os
 import random
 import re
+import time
 import urllib.request
 import zipfile
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Optional
@@ -578,30 +580,42 @@ def run_dacos_smell_benchmark(
     *,
     prompt_template: str = DACOS_PROMPT_TEMPLATE,
     max_samples: Optional[int] = None,
+    workers: int = 1,
+    retries: int = 4,
 ) -> dict[str, Any]:
-    """Run a binary LLM smell classifier over DACOS/DACOSX samples."""
+    """Run a binary LLM smell classifier over DACOS/DACOSX samples.
 
-    rows = []
-    usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
-    for idx, sample in enumerate(samples, start=1):
-        if max_samples and idx > max_samples:
-            break
+    `workers > 1` issues requests concurrently; row order is preserved.
+    """
+
+    selected = list(samples)
+    if max_samples:
+        selected = selected[:max_samples]
+
+    def _classify(sample: SmellSample) -> tuple[dict[str, Any], dict[str, Any]]:
         prompt = _safe_dacos_format(prompt_template, {
             "smell": sample.smell,
             "language": sample.language,
             "code": sample.code[:12000],
         })
-        content, meta = llm.chat(
-            messages=[
-                {"role": "system", "content": "You classify code smells against a human oracle. Return strict JSON only."},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0,
-            max_tokens=700,
-            return_meta=True,
-        )
+        for attempt in range(retries + 1):
+            try:
+                content, meta = llm.chat(
+                    messages=[
+                        {"role": "system", "content": "You classify code smells against a human oracle. Return strict JSON only."},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0,
+                    max_tokens=700,
+                    return_meta=True,
+                )
+                break
+            except Exception:
+                if attempt == retries:
+                    raise
+                time.sleep(2 ** (attempt + 2))
         pred, confidence, rationale = _parse_dacos_prediction(content)
-        rows.append({
+        row = {
             "sample_id": sample.sample_id,
             "smell": sample.smell,
             "gold": bool(sample.label),
@@ -609,9 +623,20 @@ def run_dacos_smell_benchmark(
             "confidence": confidence,
             "rationale": rationale,
             "raw_response": content,
-        })
+        }
+        return row, meta or {}
+
+    if workers > 1:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            outputs = list(pool.map(_classify, selected))
+    else:
+        outputs = [_classify(sample) for sample in selected]
+
+    rows = [row for row, _ in outputs]
+    usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    for _, meta in outputs:
         for key in usage:
-            usage[key] += int((meta or {}).get(key, 0))
+            usage[key] += int(meta.get(key, 0))
 
     metrics = _binary_metrics(rows)
     return {"rows": rows, "metrics": metrics, "usage": usage}
@@ -627,7 +652,10 @@ def _parse_dacos_prediction(raw: Any) -> tuple[bool, Optional[float], str]:
         data = json.loads(text)
     except Exception:
         match = re.search(r"\{.*\}", text, flags=re.DOTALL)
-        data = json.loads(match.group(0)) if match else {}
+        try:
+            data = json.loads(match.group(0)) if match else {}
+        except Exception:
+            data = {}
     present = _to_bool_or_none((data or {}).get("present") if isinstance(data, dict) else None)
     confidence = None
     if isinstance(data, dict):

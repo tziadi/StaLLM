@@ -22,7 +22,9 @@ and output/paper_results/summary_rq4.csv after each RQ finishes.
 import argparse
 import csv
 import json
+import math
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -46,7 +48,10 @@ from StaLLM_benchmarks import (
 )
 from StaLLM_tasks import (
     LOCATION_PROMPT_TEMPLATES,
+    RankedLocation,
     list_repo_candidates,
+    paths_match,
+    ranking_metrics,
     run_location_task,
     run_location_task_method,
     summarize_location_results,
@@ -59,7 +64,9 @@ OUT_3      = OUT / "rq3"
 OUT_4      = OUT / "rq4"           # alphabetical candidate order (baseline)
 OUT_4_KW   = OUT / "rq4_sorted"    # keyword pre-sorted candidates (main condition)
 OUT_4_MTH  = OUT / "rq4_method"    # method-level evaluation (keyword-sorted)
+OUT_4_BM25 = OUT / "rq4_bm25"      # BM25-ranked candidates (no feature-name heuristic)
 OUT_5      = OUT / "rq5"           # AutoResearch: generated prompt variants
+OUT_5_HO   = OUT_5 / "heldout"     # RQ5 held-out DACOS test split
 
 DACOS_MAIN     = DATA / "DACOS" / "DACOSMain.sql"
 DACOS_EXT      = DATA / "DACOS" / "DACOSExtended.sql"
@@ -74,6 +81,8 @@ RQ4_SLOTS   = ["AZ1"]          # models to run for RQ4
 MAX_SAMPLES = 200               # DACOS samples per prompt (cost control)
 CANDIDATE_BUDGET = 600          # ArgoUML candidate files sent to LLM
 FL_TOP_K    = 10                # ranking depth
+RUNS        = 1                 # repeated runs per configuration (--runs)
+WORKERS     = 4                 # concurrent requests for hosted slots (--workers)
 
 DACOS_PROMPTS = {
     "binary_oracle_baseline": DACOS_PROMPT_TEMPLATE,
@@ -124,13 +133,23 @@ def ensure_dirs():
     OUT_4_KW.mkdir(parents=True, exist_ok=True)
     OUT_4_MTH.mkdir(parents=True, exist_ok=True)
     OUT_5.mkdir(parents=True, exist_ok=True)
+    OUT_4_BM25.mkdir(parents=True, exist_ok=True)
+    OUT_5_HO.mkdir(parents=True, exist_ok=True)
 
 
-def run_key(rq: str, slot: str, prompt: str, dataset: str = "") -> str:
+def run_key(rq: str, slot: str, prompt: str, dataset: str = "", run: int = 1) -> str:
     parts = [rq, slot, prompt]
     if dataset:
         parts.append(dataset)
+    if run > 1:
+        parts.append(f"r{run}")
     return "_".join(parts).replace(" ", "_")
+
+
+def slot_workers(slot: str) -> int:
+    """Local Ollama slots run sequentially; hosted slots use WORKERS."""
+    provider = os.getenv(f"{slot}_PROVIDER", "").lower()
+    return 1 if provider == "ollama" else WORKERS
 
 
 def result_path(rq: str, key: str, out_dir: Optional[Path] = None) -> Path:
@@ -201,10 +220,13 @@ def run_rq3(dry: bool = False):
     rows_summary = []
     for slot in RQ3_SLOTS:
         llm = None if dry else build_llm_from_slot_lazy(slot)
-        for prompt_name, prompt_tpl in DACOS_PROMPTS.items():
-            for ds_name, samples in datasets.items():
-                key = run_key("rq3", slot, prompt_name, ds_name)
-                print(f"\n  [{slot}] [{prompt_name}] [{ds_name}]  ({len(samples)} samples)")
+        for run, prompt_name, ds_name in [
+            (r, p, d) for r in range(1, RUNS + 1) for p in DACOS_PROMPTS for d in datasets
+        ]:
+                prompt_tpl = DACOS_PROMPTS[prompt_name]
+                samples = datasets[ds_name]
+                key = run_key("rq3", slot, prompt_name, ds_name, run)
+                print(f"\n  [{slot}] [{prompt_name}] [{ds_name}] run {run}  ({len(samples)} samples)")
                 if already_done("rq3", key):
                     data = json.loads(result_path("rq3", key).read_text())
                     m = data.get("metrics", {})
@@ -217,10 +239,12 @@ def run_rq3(dry: bool = False):
                         samples, llm,
                         prompt_template=prompt_tpl,
                         max_samples=MAX_SAMPLES,
+                        workers=slot_workers(slot),
                     )
                     data["slot"] = slot
                     data["prompt"] = prompt_name
                     data["dataset"] = ds_name
+                    data["run"] = run
                     data["elapsed_s"] = round(time.time() - t0, 1)
                     save_result("rq3", key, data)
                     m = data.get("metrics", {})
@@ -232,11 +256,95 @@ def run_rq3(dry: bool = False):
                 })
 
     if rows_summary:
-        _write_csv(OUT / "summary_rq3.csv", rows_summary)
-        print(f"\n[RQ3] Summary → {OUT / 'summary_rq3.csv'}")
+        rebuild_summaries()
 
 
 # ── RQ4 : Feature location (ArgoUML SPL) ─────────────────────────────────────
+
+_CAMEL_RE = re.compile(r"[A-Z]+(?=[A-Z][a-z])|[A-Z]?[a-z]+|[A-Z]+|\d+")
+_BM25_STOP = {
+    "the", "a", "an", "of", "to", "and", "or", "in", "is", "are", "be", "by", "for",
+    "with", "that", "this", "as", "on", "it", "they", "their", "can", "used", "use",
+    "feature", "description", "java", "org", "argouml", "import", "public", "private",
+    "protected", "return", "new", "void", "class", "static", "final", "if", "else",
+    "null", "true", "false", "this", "string", "int", "boolean",
+}
+
+
+def _bm25_tokens(text: str) -> list[str]:
+    out = []
+    for word in re.findall(r"[A-Za-z][A-Za-z0-9]*", text):
+        for part in _CAMEL_RE.findall(word):
+            tok = part.lower()
+            if len(tok) > 2 and tok not in _BM25_STOP:
+                out.append(tok)
+    return out
+
+
+class _BM25Index:
+    """Minimal Okapi BM25 over the Java files of a repository ZIP (path + content)."""
+
+    def __init__(self, repo_zip: str, paths: list[str], k1: float = 1.2, b: float = 0.75):
+        import zipfile
+        from collections import Counter
+        self.paths, self.k1, self.b = paths, k1, b
+        self.tf: list[Counter] = []
+        with zipfile.ZipFile(repo_zip) as zf:
+            for path in paths:
+                try:
+                    text = zf.read(path).decode("utf-8", errors="replace")
+                except KeyError:
+                    text = ""
+                self.tf.append(Counter(_bm25_tokens(path + "\n" + text)))
+        self.lens = [sum(c.values()) for c in self.tf]
+        self.avg = sum(self.lens) / max(1, len(self.lens))
+        df: Counter = Counter()
+        for c in self.tf:
+            df.update(c.keys())
+        n = len(paths)
+        self.idf = {t: math.log(1 + (n - f + 0.5) / (f + 0.5)) for t, f in df.items()}
+
+    def rank(self, query: str) -> list[str]:
+        q = set(_bm25_tokens(query))
+        scores = []
+        for i, c in enumerate(self.tf):
+            norm = self.k1 * (1 - self.b + self.b * self.lens[i] / self.avg)
+            score = sum(self.idf[t] * c[t] * (self.k1 + 1) / (c[t] + norm) for t in q if t in c)
+            scores.append((score, self.paths[i]))
+        scores.sort(key=lambda x: (-x[0], x[1]))
+        return [p for _, p in scores]
+
+
+_BM25_CACHE: dict[str, _BM25Index] = {}
+
+
+def _bm25_index(paths: list[str]) -> _BM25Index:
+    key = str(ARGOUML_ZIP)
+    if key not in _BM25_CACHE:
+        print(f"  Building BM25 index over {len(paths)} files …")
+        _BM25_CACHE[key] = _BM25Index(key, paths)
+    return _BM25_CACHE[key]
+
+
+def rq4_candidates(policy: str, task, all_candidates: list[str]) -> list[str]:
+    """Full ordered candidate list for a candidate-ordering policy."""
+    feature = task.metadata.get("feature", task.task_id)
+    if policy == "alphabetical":
+        return list(all_candidates)
+    if policy == "keyword_sorted":
+        return list_repo_candidates(str(ARGOUML_ZIP), allowed_exts=[".java"], feature_hint=feature)
+    if policy == "bm25":
+        return _bm25_index(all_candidates).rank(task.query)
+    raise ValueError(f"Unknown candidate policy: {policy}")
+
+
+RQ4_CONDITIONS = {
+    # label: (candidate policy, output dir)
+    "alphabetical": ("alphabetical", OUT_4),
+    "keyword_sorted": ("keyword_sorted", OUT_4_KW),
+    "bm25_sorted": ("bm25", OUT_4_BM25),
+}
+
 
 def _run_rq4_condition(
     tasks: list,
@@ -245,65 +353,77 @@ def _run_rq4_condition(
     out_dir: Path,
     label: str,
     dry: bool,
-    use_feature_hint: bool,
+    policy: str,
 ):
-    """Run one RQ4 condition (alphabetical vs. keyword-sorted candidates)."""
+    """Run one RQ4 candidate-ordering condition for every slot, prompt and run."""
 
-    rows_summary = []
     for slot in slots:
         llm = None if dry else build_llm_from_slot_lazy(slot)
-        for prompt_style, _ in FL_PROMPTS.items():
-            task_results = []
-            for task in tasks:
-                feature = task.metadata.get("feature", task.task_id)
-                key = run_key("rq4", slot, prompt_style, feature)
-                print(f"\n  [{slot}] [{prompt_style}] {feature}  ({len(task.gold_locations)} gold files)")
-                if already_done("rq4", key, out_dir):
-                    data = json.loads(result_path("rq4", key, out_dir).read_text())
-                else:
+        for run in range(1, RUNS + 1):
+            for prompt_style in FL_PROMPTS:
+                for task in tasks:
+                    feature = task.metadata.get("feature", task.task_id)
+                    key = run_key("rq4", slot, prompt_style, feature, run)
+                    print(f"\n  [{slot}] [{prompt_style}] [{label}] {feature} run {run}")
+                    if already_done("rq4", key, out_dir):
+                        continue
                     if dry:
                         print("    [dry-run] would call LLM here")
                         continue
-                    if use_feature_hint:
-                        from StaLLM_tasks import list_repo_candidates as _lrc
-                        sorted_cands = _lrc(str(ARGOUML_ZIP), allowed_exts=[".java"], feature_hint=feature)
-                        candidates = sorted_cands[:CANDIDATE_BUDGET]
-                    else:
-                        candidates = all_candidates[:CANDIDATE_BUDGET]
+                    candidates = rq4_candidates(policy, task, all_candidates)[:CANDIDATE_BUDGET]
+                    gold = [g.normalized_file for g in task.gold_locations]
+                    visible = sum(1 for g in gold if any(paths_match(c, g) for c in candidates))
                     t0 = time.time()
-                    data = run_location_task(
-                        task, candidates, llm,
-                        top_k=FL_TOP_K,
-                        prompt_style=prompt_style,
-                    )
+                    for attempt in range(5):
+                        try:
+                            data = run_location_task(
+                                task, candidates, llm,
+                                top_k=FL_TOP_K,
+                                prompt_style=prompt_style,
+                            )
+                            break
+                        except Exception as exc:
+                            if attempt == 4:
+                                raise
+                            print(f"    [retry] {type(exc).__name__}: {str(exc)[:120]}")
+                            time.sleep(2 ** (attempt + 2))
                     data["slot"] = slot
                     data["feature"] = feature
                     data["gold_count"] = len(task.gold_locations)
+                    data["gold_visible"] = visible
                     data["candidate_order"] = label
+                    data["run"] = run
                     data["elapsed_s"] = round(time.time() - t0, 1)
                     save_result("rq4", key, data, out_dir)
-                m = data.get("metrics", {})
-                print(f"    {fmt_metrics(m)}")
-                task_results.append(data)
-
-            if task_results:
-                agg = summarize_location_results(task_results)
-                print(f"\n  [{slot}] [{prompt_style}] AGGREGATE: {fmt_metrics(agg)}")
-                for res in task_results:
-                    m = res.get("metrics", {})
-                    rows_summary.append({
-                        "slot": slot,
-                        "prompt": prompt_style,
-                        "candidate_order": label,
-                        "feature": res.get("feature", ""),
-                        "gold_count": res.get("gold_count", ""),
-                        **{k: round(v, 4) if isinstance(v, float) else v
-                           for k, v in m.items()},
-                    })
-    return rows_summary
+                    print(f"    {fmt_metrics(data.get('metrics', {}))}")
 
 
-def run_rq4(dry: bool = False, *, include_compound: bool = False):
+def run_rq4_baselines(tasks: list, all_candidates: list[str], include_compound: bool) -> None:
+    """Non-LLM rankings: the top-k of each candidate-ordering policy, scored directly."""
+
+    rows = []
+    for policy in ("keyword_sorted", "bm25"):
+        for task in tasks:
+            ranked = rq4_candidates(policy, task, all_candidates)[:FL_TOP_K]
+            preds = [RankedLocation(file=f, rank=i) for i, f in enumerate(ranked, start=1)]
+            m = ranking_metrics(preds, task.gold_locations, ks=(1, 5, 10))
+            rows.append({
+                "method": f"{policy}_only",
+                "feature": task.metadata.get("feature", task.task_id),
+                "gold_count": len(task.gold_locations),
+                **{k: round(v, 4) for k, v in m.items()},
+            })
+    name = "summary_rq4_baselines_all.csv" if include_compound else "summary_rq4_baselines.csv"
+    _write_csv(OUT / name, rows)
+    print(f"\n[RQ4] Non-LLM baselines → {OUT / name}")
+    for method in ("keyword_sorted_only", "bm25_only"):
+        sub = [r for r in rows if r["method"] == method]
+        agg = {k: sum(r[k] for r in sub) / len(sub) for k in ("hit@1", "hit@5", "mrr", "map")}
+        print(f"  {method:22s} {fmt_metrics(agg)}")
+
+
+def run_rq4(dry: bool = False, *, include_compound: bool = False,
+            conditions: Optional[list[str]] = None):
     print("\n" + "="*60)
     scope = "all feature scenarios" if include_compound else "8 core single features"
     print(f"RQ4 — Feature Location (ArgoUML SPL, {scope})")
@@ -323,28 +443,18 @@ def run_rq4(dry: bool = False, *, include_compound: bool = False):
     )
     print(f"Loaded {len(tasks)} feature tasks")
 
-    print(f"Building alphabetical candidate list from {ARGOUML_ZIP.name} …")
     all_candidates = list_repo_candidates(str(ARGOUML_ZIP), allowed_exts=[".java"])
     print(f"  {len(all_candidates)} total Java files → budget = {CANDIDATE_BUDGET}")
 
-    rows_all = []
+    run_rq4_baselines(tasks, all_candidates, include_compound)
 
-    print("\n--- Condition A: alphabetical order (no-guidance baseline) ---")
-    rows_all += _run_rq4_condition(
-        tasks, all_candidates, RQ4_SLOTS, OUT_4,
-        label="alphabetical", dry=dry, use_feature_hint=False,
-    )
+    for label in conditions or list(RQ4_CONDITIONS):
+        policy, out_dir = RQ4_CONDITIONS[label]
+        print(f"\n--- Condition: {label} candidate ordering ---")
+        _run_rq4_condition(tasks, all_candidates, RQ4_SLOTS, out_dir,
+                           label=label, dry=dry, policy=policy)
 
-    print("\n--- Condition B: keyword pre-sorted candidates ---")
-    rows_all += _run_rq4_condition(
-        tasks, all_candidates, RQ4_SLOTS, OUT_4_KW,
-        label="keyword_sorted", dry=dry, use_feature_hint=True,
-    )
-
-    if rows_all:
-        summary_name = "summary_rq4_all.csv" if include_compound else "summary_rq4.csv"
-        _write_csv(OUT / summary_name, rows_all)
-        print(f"\n[RQ4] Combined summary → {OUT / summary_name}")
+    rebuild_summaries()
 
 
 # ── RQ4-method : Method-level feature location ────────────────────────────────
@@ -650,6 +760,108 @@ def run_rq5(dry: bool = False):
     print(f"\n[RQ5] Summary → {OUT / 'summary_rq5.csv'}")
 
 
+# ── RQ5 held-out : selection/test split on DACOS ─────────────────────────────
+
+def _rq5_best_generated() -> Optional[dict]:
+    """Best generated prompt on the DACOS selection split (as chosen in RQ5)."""
+    best = None
+    for f in sorted(OUT_5.glob("rq5_DACOS_*.json")):
+        d = json.loads(f.read_text())
+        if best is None or d["metrics"]["f1"] > best["metrics"]["f1"]:
+            best = d
+    return best
+
+
+def load_dacos_heldout() -> list:
+    """DACOS samples disjoint (by DACOS sample id) from the RQ3/RQ5 selection split."""
+    files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
+    selection = load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES)
+    used = {s.sample_id.split(":")[0] for s in selection}
+    pool = load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES * 3)
+    test = [s for s in pool if s.sample_id.split(":")[0] not in used]
+    return test[:MAX_SAMPLES]
+
+
+def run_rq5_heldout(dry: bool = False):
+    print("\n" + "="*60)
+    print("RQ5-HO — Manual vs. selected generated prompt on held-out DACOS")
+    print("="*60)
+    best = _rq5_best_generated()
+    if best is None:
+        print("[error] No RQ5 selection results found — run --rq 5 first")
+        return
+    test = load_dacos_heldout()
+    pos = sum(1 for s in test if s.label)
+    print(f"Held-out DACOS: {len(test)} samples ({pos} positive); best generated = {best['prompt']}")
+
+    prompts = dict(DACOS_PROMPTS)
+    prompts[best["prompt"]] = best["template"]
+    for slot in RQ3_SLOTS:
+        llm = None if dry else build_llm_from_slot_lazy(slot)
+        for name, template in prompts.items():
+            out = OUT_5_HO / f"rq5ho_{slot}_{name}.json"
+            if out.exists():
+                print(f"  [skip] {out.name}")
+                continue
+            if dry:
+                print(f"  [dry-run] would evaluate {slot} {name}")
+                continue
+            t0 = time.time()
+            data = run_dacos_smell_benchmark(test, llm, prompt_template=template,
+                                             workers=slot_workers(slot))
+            data.update({"slot": slot, "prompt": name, "dataset": "DACOS_heldout",
+                         "source": "RQ5_generated" if name == best["prompt"] else "RQ3_manual",
+                         "elapsed_s": round(time.time() - t0, 1)})
+            out.write_text(json.dumps(data, indent=2, default=str))
+            print(f"  {slot} {name}: {fmt_metrics(data['metrics'])}")
+    rebuild_summaries()
+
+
+# ── Summaries (rebuilt from all saved JSON results) ──────────────────────────
+
+_METRIC_KEYS_BIN = ("precision", "recall", "f1", "accuracy", "kappa", "f1_ci_lo", "f1_ci_hi",
+                    "kappa_ci_lo", "kappa_ci_hi", "tp", "fp", "fn", "tn", "samples")
+_METRIC_KEYS_RANK = ("hit@1", "recall@1", "hit@5", "recall@5", "hit@10", "recall@10", "mrr", "map")
+
+
+def _rounded(m: dict, keys: tuple) -> dict:
+    return {k: round(m[k], 4) if isinstance(m.get(k), float) else m.get(k) for k in keys if k in m}
+
+
+def rebuild_summaries() -> None:
+    """Rewrite summary CSVs from every result file, so parallel/partial runs stay consistent."""
+    rq3 = []
+    for f in sorted(OUT_3.glob("rq3_*.json")):
+        d = json.loads(f.read_text())
+        rq3.append({"slot": d.get("slot"), "prompt": d.get("prompt"), "dataset": d.get("dataset"),
+                    "run": d.get("run", 1), **_rounded(d.get("metrics", {}), _METRIC_KEYS_BIN),
+                    "total_tokens": d.get("usage", {}).get("total_tokens"),
+                    "elapsed_s": d.get("elapsed_s")})
+    _write_csv(OUT / "summary_rq3.csv", rq3)
+
+    rq4_all = []
+    for label, (_, out_dir) in RQ4_CONDITIONS.items():
+        for f in sorted(out_dir.glob("rq4_*.json")):
+            d = json.loads(f.read_text())
+            rq4_all.append({"slot": d.get("slot"), "prompt": d.get("prompt_style"),
+                            "candidate_order": d.get("candidate_order", label),
+                            "feature": d.get("feature"), "gold_count": d.get("gold_count"),
+                            "gold_visible": d.get("gold_visible", ""), "run": d.get("run", 1),
+                            **_rounded(d.get("metrics", {}), _METRIC_KEYS_RANK),
+                            "total_tokens": d.get("usage", {}).get("total_tokens")})
+    _write_csv(OUT / "summary_rq4_all.csv", rq4_all)
+    _write_csv(OUT / "summary_rq4.csv", [r for r in rq4_all if "_and_" not in str(r["feature"])])
+
+    ho = []
+    for f in sorted(OUT_5_HO.glob("rq5ho_*.json")):
+        d = json.loads(f.read_text())
+        ho.append({"slot": d.get("slot"), "source": d.get("source"), "prompt": d.get("prompt"),
+                   "dataset": d.get("dataset"), **_rounded(d.get("metrics", {}), _METRIC_KEYS_BIN)})
+    if ho:
+        _write_csv(OUT / "summary_rq5_heldout.csv", ho)
+    print(f"[summaries] rq3={len(rq3)} rq4={len(rq4_all)} rq5_heldout={len(ho)} rows → {OUT}")
+
+
 # ── CSV writer ────────────────────────────────────────────────────────────────
 
 def _write_csv(path: Path, rows: list[dict]):
@@ -669,15 +881,28 @@ def _write_csv(path: Path, rows: list[dict]):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
-    parser.add_argument("--rq", choices=["3", "4", "4m", "5"], help="Run only this RQ. 4m=method-level, 5=AutoResearch.")
+    parser.add_argument("--rq", choices=["3", "4", "4m", "5", "5h", "summary"],
+                        help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
+                             "5h=RQ5 held-out DACOS test, summary=rebuild CSVs only.")
     parser.add_argument("--dry", action="store_true", help="Dry run — print plan without calling the LLM")
     parser.add_argument(
         "--include-compound",
         action="store_true",
         help="For RQ4, include compound ArgoUML scenarios and write summary_rq4_all.csv.",
     )
+    parser.add_argument("--slots", help="Comma-separated model slots (default: AZ1).")
+    parser.add_argument("--runs", type=int, default=RUNS, help="Repeated runs per configuration.")
+    parser.add_argument("--workers", type=int, default=WORKERS, help="Concurrent requests for hosted slots.")
+    parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
+                                             f"(default: {','.join(RQ4_CONDITIONS)}).")
     args = parser.parse_args()
+
+    if args.slots:
+        RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]
+    RUNS, WORKERS = args.runs, args.workers
+    conditions = [c.strip() for c in args.conditions.split(",")] if args.conditions else None
 
     ensure_dirs()
 
@@ -685,14 +910,18 @@ def main():
         print("[DRY RUN] No API calls will be made.\n")
 
     rq = args.rq
+    if rq == "summary":
+        rebuild_summaries()
     if rq is None or rq == "3":
         run_rq3(dry=args.dry)
     if rq is None or rq == "4":
-        run_rq4(dry=args.dry, include_compound=args.include_compound)
+        run_rq4(dry=args.dry, include_compound=args.include_compound, conditions=conditions)
     if rq is None or rq == "4m":
         run_rq4_method(dry=args.dry)
     if rq == "5":
         run_rq5(dry=args.dry)
+    if rq == "5h":
+        run_rq5_heldout(dry=args.dry)
 
     print("\nDone.")
 
