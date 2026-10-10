@@ -909,6 +909,7 @@ def run_rq3_baselines():
 ESHOP_ZIP = DATA / "eShopOnWeb" / "Catalog.zip"
 ESHOP_CSV = DATA / "eShopOnWeb" / "eShopOnContainers-sonarqube-quality-analysis.csv"
 OUT_2 = OUT / "rq2"
+NUMBER_LINES = False   # --number-lines: prefix code lines with their number (results in rq2_numbered/)
 
 
 class _CountingLLM:
@@ -959,10 +960,10 @@ def run_rq2(dry: bool = False, prompts: tuple[str, ...] = ("scanner",)):
         _, summary_u, metrics, usage = run_experiment(
             str(ESHOP_ZIP), str(ESHOP_CSV), mode=prompt, top_k=20, pos_ratio=1.0,
             preset="Lenient", user_require_type=False, user_use_line_span=True,
-            user_use_cols_single=False, llm=llm,
+            user_use_cols_single=False, llm=llm, number_lines=NUMBER_LINES,
         )
         data = {
-            "slot": slot, "prompt": prompt, "run": run, "zip": ESHOP_ZIP.name,
+            "slot": slot, "prompt": prompt, "run": run, "zip": ESHOP_ZIP.name, "number_lines": NUMBER_LINES,
             "model": llm.model_label(), "num_ctx": getattr(llm.cfg, "num_ctx", None),
             "files": len(summary_u), "llm_calls": llm.calls, "llm_errors": llm.errors,
             "elapsed_s": round(time.time() - t0, 1), "usage": usage,
@@ -1102,7 +1103,7 @@ def _write_csv(path: Path, rows: list[dict]):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM
+    global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM, NUMBER_LINES, OUT_2
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
     parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
@@ -1119,6 +1120,8 @@ def main():
     parser.add_argument("--system", choices=list(SYSTEMS), default="argouml",
                         help="RQ4 feature-location system.")
     parser.add_argument("--prompts", help="RQ3: comma-separated prompt names (default: all).")
+    parser.add_argument("--number-lines", action="store_true",
+                        help="RQ1/RQ2: prefix code lines with their number; results go to rq2_numbered/.")
     parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
                                              f"(default: {','.join(RQ4_CONDITIONS)}).")
     args = parser.parse_args()
@@ -1126,6 +1129,8 @@ def main():
     if args.slots:
         RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]
     RUNS, WORKERS, SYSTEM = args.runs, args.workers, args.system
+    if args.number_lines:
+        NUMBER_LINES, OUT_2 = True, OUT / "rq2_numbered"
     conditions = [c.strip() for c in args.conditions.split(",")] if args.conditions else None
     if args.prompts:
         keep = {p.strip() for p in args.prompts.split(",")}

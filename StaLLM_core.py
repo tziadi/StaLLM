@@ -420,11 +420,16 @@ def analyze_with_llm(
     language: str,
     llm: ChatModel,
     prompt_templates: Optional[Dict[str, str]] = None,
+    number_lines: bool = False,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
     strategies = prompt_templates or load_strategies()
     template = strategies.get(mode) or strategies.get("baseline") or "Language: {language}\nCode:\n{code}\nReturn JSON array."
     code_snippet = code[:20000]
-    base_prompt = _safe_prompt_format(template, {"language": language, "code": code_snippet})
+    # With number_lines, each line is prefixed with its 1-based number so that the
+    # model does not have to count lines to report a location.
+    shown_code = ("\n".join(f"{i:>4}| {line}" for i, line in enumerate(code_snippet.split("\n"), start=1))
+                  if number_lines else code_snippet)
+    base_prompt = _safe_prompt_format(template, {"language": language, "code": shown_code})
 
     rules_footer = (
         "\n\nOutput rules (MANDATORY):\n"
@@ -433,6 +438,9 @@ def analyze_with_llm(
         "\"line\" (int) OR (\"startLine\" (int), \"endLine\" (int)).\n"
         "3) No prose, no markdown, no code fences. If no findings: return []."
     )
+    if number_lines:
+        rules_footer += ("\n4) Each code line above is prefixed with its line number and '| '; "
+                         "report locations with those numbers.")
     prompt = base_prompt + rules_footer
 
     meta = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
@@ -1064,6 +1072,7 @@ def run_experiment(
     llm: Optional[ChatModel] = None,
     prompt_templates: Optional[Dict[str, str]] = None,
     _ctx: Optional[ExperimentContext] = None,
+    number_lines: bool = False,
 ):
     if _ctx is not None:
         language, exts, gt_spans, summary_U, diag = _ctx
@@ -1097,7 +1106,8 @@ def run_experiment(
             code_by_file[base] = code
 
             # analyze_with_llm handles its own errors; usage["source"] records provenance
-            smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates)
+            smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates,
+                                             number_lines=number_lines)
             source_counts[usage.get("source", "llm")] = source_counts.get(usage.get("source", "llm"), 0) + 1
 
             for smell in smells or []:
@@ -1271,6 +1281,7 @@ def run_experiment(
         "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
         "type_breakdown": type_breakdown,
         "file_sources": source_counts,
+        "number_lines": bool(number_lines),
         # Per-file spans and sizes, so that span-level results can be re-scored
         # offline (e.g. against a random-placement baseline) without new calls.
         "spans_by_file": {
