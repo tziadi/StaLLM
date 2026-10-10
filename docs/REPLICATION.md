@@ -1,8 +1,8 @@
 # StaLLM journal paper — replication package
 
 This package regenerates every table and figure of the IST journal paper
-*A Multi-Activity, Multi-Oracle Evaluation Framework for Large Language Models
-in Software Maintenance*, and re-runs the experiments if model access is
+*What Are We Measuring? Controls for Evaluating Large Language Models in
+Software Maintenance*, and re-runs the experiments if model access is
 available.
 
 ## Contents
