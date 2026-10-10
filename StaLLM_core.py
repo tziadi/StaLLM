@@ -968,9 +968,54 @@ def _align_gt_to_zip(gt_spans: pd.DataFrame, zip_df: pd.DataFrame) -> Tuple[pd.D
             "gt_spans_matched": int(len(gt)), "gt_spans_dropped": int(n_all - len(gt))}
     return gt, zdf, diag
 
+def _detect_line_offset(gt_spans: pd.DataFrame, zip_path: str, max_offset: int = 2,
+                        sample: int = 600) -> Dict[str, Any]:
+    """Check oracle line numbers against the archived source.
+
+    For single-line records with columns, an offset k "fits" when line
+    startLine+k is long enough to contain the reported column range and the
+    range is not blank. Some SonarQube exports write 0-based lines; the
+    offset is applied only when one non-zero offset fits at least 95% of the
+    records while the reported lines fit fewer than half of them.
+    """
+    rows = gt_spans[(gt_spans["startLine"] == gt_spans["endLine"])
+                    & gt_spans["startColumn"].notna() & gt_spans["endColumn"].notna()]
+    if len(rows) > sample:
+        rows = rows.sample(n=sample, random_state=1)
+    if rows.empty:
+        return {"line_offset": 0, "checked": 0}
+    fits = {k: 0 for k in range(-max_offset, max_offset + 1)}
+    with zipfile.ZipFile(zip_path, "r") as z:
+        names = {n.lower(): n for n in z.namelist()}
+        cache: Dict[str, List[str]] = {}
+        for _, r in rows.iterrows():
+            key = r["basename"]
+            if key not in names:
+                continue
+            if key not in cache:
+                cache[key] = z.read(names[key]).decode("utf-8-sig", "ignore").splitlines()
+            lines, sc, ec = cache[key], int(r["startColumn"]), int(r["endColumn"])
+            for k in fits:
+                i = int(r["startLine"]) + k
+                if 1 <= i <= len(lines) and len(lines[i - 1]) >= ec and lines[i - 1][sc:ec].strip():
+                    fits[k] += 1
+    n = len(rows)
+    rate = {k: v / n for k, v in fits.items()}
+    best = max((k for k in rate if k != 0), key=lambda k: rate[k])
+    offset = best if rate[best] >= 0.95 and rate[0] < 0.5 else 0
+    return {"line_offset": offset, "checked": n, "fit_rate": {str(k): round(v, 3) for k, v in rate.items()}}
+
+
 def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optional[List[str]],
                     top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any], pd.DataFrame]:
     gt_spans, zip_df, align = _align_gt_to_zip(gt_spans, _zip_listing(zip_path, allowed_exts))
+    if align.get("mode") == "path":
+        lines_check = _detect_line_offset(gt_spans, zip_path)
+        align.update(lines_check)
+        if lines_check["line_offset"]:
+            gt_spans = gt_spans.copy()
+            gt_spans["startLine"] += lines_check["line_offset"]
+            gt_spans["endLine"] += lines_check["line_offset"]
     gt_counts = gt_spans.groupby("basename").size().rename("gt_lines").reset_index()
 
     summary = zip_df.merge(gt_counts, on="basename", how="left")

@@ -6,11 +6,12 @@ Run with:  python -m unittest discover tests
 import os
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 import pandas as pd
 
-from StaLLM_core import _align_gt_to_zip, _build_universe, load_ground_truth_spans
+from StaLLM_core import _align_gt_to_zip, _build_universe, _detect_line_offset, load_ground_truth_spans
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_ZIP = ROOT / "data/apps/eShopOnWeb/Catalog.zip"
@@ -56,6 +57,26 @@ class AlignmentTest(unittest.TestCase):
         self.assertEqual(len(aligned), 2)
 
 
+class LineOffsetTest(unittest.TestCase):
+    SOURCE = "using System;\n\npublic class A\n{\n    public int Field = 1;\n}\n"
+
+    def _check(self, reported_lines):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "a.zip")
+            with zipfile.ZipFile(path, "w") as z:
+                z.writestr("src/A.cs", self.SOURCE)
+            gt = pd.DataFrame({"basename": ["src/a.cs"] * 2, "startLine": reported_lines,
+                               "endLine": reported_lines, "startColumn": [13, 15], "endColumn": [14, 25]})
+            return _detect_line_offset(gt, path)
+
+    def test_zero_based_export_is_detected(self):
+        # "class A" is on line 3 and the field on line 5; a 0-based export reports 2 and 4.
+        self.assertEqual(self._check([2, 4])["line_offset"], 1)
+
+    def test_correct_lines_are_kept(self):
+        self.assertEqual(self._check([3, 5])["line_offset"], 0)
+
+
 class LoaderTest(unittest.TestCase):
     def test_rows_without_line_are_dropped(self):
         with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as f:
@@ -81,12 +102,15 @@ class CatalogRegressionTest(unittest.TestCase):
         universe, diag, aligned = _build_universe(str(CATALOG_ZIP), gt, [".cs"], 20, 1.0)
         self.assertEqual(diag["gt_alignment"]["mode"], "path")
         self.assertEqual(diag["gt_alignment"]["gt_prefix"], "services")
+        self.assertEqual(diag["gt_alignment"]["line_offset"], 1)
         self.assertEqual(len(aligned), 72)
         self.assertEqual(diag["positives"], 13)
         self.assertEqual(diag["negatives"], 7)
         self.assertEqual(int(universe["gt_lines"].sum()), 72)
         program = universe[universe["basename"] == "catalog/catalog.api/program.cs"]
         self.assertEqual(int(program["gt_lines"].iloc[0]), 10)
+        lines = sorted(aligned[aligned["basename"] == "catalog/catalog.api/program.cs"]["startLine"])
+        self.assertEqual(lines[0], 87)   # hard-coded URI, after the +1 correction
 
 
 if __name__ == "__main__":

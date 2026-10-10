@@ -366,12 +366,42 @@ def analyze_rq3_baselines(md: list[str]) -> None:
 RANDOM_DRAWS = 1000
 
 
-def _span_f1(spans_by_file: dict[str, Any], preds_by_file: dict[str, list], match) -> float:
+def _span_counts(spans_by_file: dict[str, Any], preds_by_file: dict[str, list], match) -> tuple[int, int, int]:
     tp = fp = fn = 0
     for b, f in spans_by_file.items():
         a, p_, n = match(preds_by_file.get(b, []), [{"startLine": s, "endLine": e} for s, e in f["gt"]])
         tp, fp, fn = tp + a, fp + p_, fn + n
+    return tp, fp, fn
+
+
+def _span_f1(spans_by_file: dict[str, Any], preds_by_file: dict[str, list], match) -> float:
+    tp, fp, fn = _span_counts(spans_by_file, preds_by_file, match)
     return 2 * tp / (2 * tp + fp + fn) if tp else 0.0
+
+
+RQ12_ZIP = Path("data/apps/eShopOnWeb/Catalog.zip")
+RQ12_CSV = Path("data/apps/eShopOnWeb/eShopOnContainers-sonarqube-quality-analysis.csv")
+RQ12_DIRS = {"original": OUT / "rq2", "numbered": OUT / "rq2_numbered"}
+
+
+def _rq12_oracle() -> dict[str, list[list[int]]]:
+    """Oracle spans per file of the RQ1/RQ2 universe, built by the current pipeline
+    (path matching and line-offset check). Runs are re-scored against it, so runs
+    recorded before a correction are evaluated against the same oracle."""
+    from StaLLM_core import _build_universe, load_ground_truth_spans
+    gt = load_ground_truth_spans(str(RQ12_CSV), allowed_exts=[".cs"])
+    universe, _, aligned = _build_universe(str(RQ12_ZIP), gt, [".cs"], 20, 1.0)
+    keys = set(universe["basename"])
+    oracle: dict[str, list[list[int]]] = {k: [] for k in keys}
+    for _, r in aligned[aligned["basename"].isin(keys)].iterrows():
+        oracle[r["basename"]].append([int(r["startLine"]), int(r["endLine"])])
+    return oracle
+
+
+def _rescored_spans(spans_by_file: dict[str, Any], oracle: dict[str, list[list[int]]]) -> dict[str, Any]:
+    if set(spans_by_file) != set(oracle):
+        raise ValueError("run universe differs from the current RQ1/RQ2 universe")
+    return {b: dict(f, gt=oracle[b]) for b, f in spans_by_file.items()}
 
 
 def random_placement_f1(spans_by_file: dict[str, Any], rng: random.Random, match,
@@ -399,45 +429,53 @@ def analyze_rq12(md: list[str]) -> None:
                            [dict(x, startColumn=None, endColumn=None, type=None) for x in g],
                            require_type=False, use_cols_single=False, preset="Lenient")
 
-    files = sorted((OUT / "rq2").glob("rq2_*.json"))
-    if not files:
-        return
     groups: dict[tuple, list] = defaultdict(list)
-    for f in files:
-        d = _load(f)
-        groups[(d["slot"], d["prompt"])].append(d)
+    for protocol, folder in RQ12_DIRS.items():
+        for f in sorted(folder.glob("rq2_*.json")):
+            d = _load(f)
+            groups[(protocol, d["slot"], d["prompt"])].append(d)
+    if not groups:
+        return
+    oracle = _rq12_oracle()
     rows = []
-    for (slot, prompt), runs in sorted(groups.items()):
-        f1 = [d["metrics"]["f1"] for d in runs]
-        row = {"slot": slot, "prompt": prompt, "runs": len(runs),
+    for (protocol, slot, prompt), runs in sorted(groups.items()):
+        spans = [_rescored_spans(d["metrics"]["spans_by_file"], oracle) for d in runs]
+        counts = [_span_counts(s, {b: [{"startLine": x, "endLine": y} for x, y in v["pred"]]
+                                   for b, v in s.items()}, match) for s in spans]
+        prec = [tp / (tp + fp) if tp + fp else 0.0 for tp, fp, _ in counts]
+        rec = [tp / (tp + fn) if tp + fn else 0.0 for tp, _, fn in counts]
+        f1 = [2 * tp / (2 * tp + fp + fn) if tp else 0.0 for tp, fp, fn in counts]
+        retry = [d["metrics"].get("file_sources", {}).get("llm_retry", 0) for d in runs]
+        row = {"protocol": protocol, "slot": slot, "prompt": prompt, "runs": len(runs),
                "model": runs[0].get("model"),
-               "precision": _r(statistics.mean(d["metrics"]["precision"] for d in runs)),
-               "recall": _r(statistics.mean(d["metrics"]["recall"] for d in runs)),
+               "precision": _r(statistics.mean(prec)), "recall": _r(statistics.mean(rec)),
                "f1_mean": _r(statistics.mean(f1)),
                "f1_sd": _r(statistics.stdev(f1)) if len(f1) > 1 else 0.0,
+               "f1_as_recorded": _r(statistics.mean(d["metrics"]["f1"] for d in runs)),
+               "retry_files_mean": _r(statistics.mean(retry), 1),
                "llm_errors": sum(d.get("llm_errors", 0) for d in runs),
                "time_s": _r(statistics.median(d["elapsed_s"] for d in runs), 1)}
-        if all("spans_by_file" in d["metrics"] for d in runs):
-            for tag, shuffle in (("random", False), ("random_files", True)):
-                rng = random.Random(42)
-                draws = sorted(
-                    statistics.mean(random_placement_f1(d["metrics"]["spans_by_file"], rng, match, shuffle)
-                                    for d in runs)
-                    for _ in range(RANDOM_DRAWS))
-                row.update({f"f1_{tag}_mean": _r(statistics.mean(draws)),
-                            f"f1_{tag}_ci": f"[{_r(draws[int(0.025 * RANDOM_DRAWS)])}, "
-                                            f"{_r(draws[int(0.975 * RANDOM_DRAWS) - 1])}]",
-                            f"p_{tag}": _r((1 + sum(x >= statistics.mean(f1) for x in draws)) / (1 + RANDOM_DRAWS), 4)})
+        for tag, shuffle in (("random", False), ("random_files", True)):
+            rng = random.Random(42)
+            draws = sorted(statistics.mean(random_placement_f1(s, rng, match, shuffle) for s in spans)
+                           for _ in range(RANDOM_DRAWS))
+            row.update({f"f1_{tag}_mean": _r(statistics.mean(draws)),
+                        f"f1_{tag}_ci": f"[{_r(draws[int(0.025 * RANDOM_DRAWS)])}, "
+                                        f"{_r(draws[int(0.975 * RANDOM_DRAWS) - 1])}]",
+                        f"p_{tag}": _r((1 + sum(x >= statistics.mean(f1) for x in draws)) / (1 + RANDOM_DRAWS), 4)})
         rows.append(row)
     _write_csv(STATS / "rq12_rerun.csv", rows)
-    md.append("## RQ1/RQ2 — span-level reruns (eShop Catalog, path-matched oracle, Top-k=20, Lenient)\n")
+    md.append("## RQ1/RQ2 — span-level runs re-scored against the current oracle "
+              "(eShop Catalog, path matching, line offset checked, Top-k=20, Lenient)\n")
+    md.append("*protocol: original = raw code; numbered = code lines prefixed with their number. "
+              "f1_as_recorded = F1 computed at run time (before later oracle corrections).*\n")
     md.append("*Random placement: same number and lengths of spans, uniformly random lines in the same file; "
               "random files: also a uniformly random file of the universe. p = share of draws reaching the LLM F1.*\n")
-    md.append("| Slot | Model | Prompt | runs | P | R | F1 mean ± sd | random placement [95%] | p "
+    md.append("| Protocol | Slot | Model | Prompt | runs | P | R | F1 mean ± sd | random placement [95%] | p "
               "| random files [95%] | p | LLM errors | median time (s) |\n"
-              "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+              "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
-        md.append(f"| {r['slot']} | {r['model']} | {r['prompt']} | {r['runs']} | {r['precision']} | {r['recall']} "
+        md.append(f"| {r['protocol']} | {r['slot']} | {r['model']} | {r['prompt']} | {r['runs']} | {r['precision']} | {r['recall']} "
                   f"| {r['f1_mean']} ± {r['f1_sd']} | {r.get('f1_random_mean', '-')} {r.get('f1_random_ci', '')} "
                   f"| {r.get('p_random', '-')} | {r.get('f1_random_files_mean', '-')} {r.get('f1_random_files_ci', '')} "
                   f"| {r.get('p_random_files', '-')} | {r['llm_errors']} | {r['time_s']} |")
