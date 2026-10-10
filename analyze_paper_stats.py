@@ -255,11 +255,21 @@ def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: st
             continue
         for f, v in fm.items():
             by_slot[(key[0], key[2])][f].append(v["p@10"])
+    family = []
     for (slot, ordering), fv in sorted(by_slot.items()):
         base = baselines[matched[ordering]]
         feats = sorted(fv.keys() & base.keys())
-        tests.append(_wilcoxon_row(f"{slot}/prompts-averaged/{ordering}", matched[ordering], "p@10",
-                                   [statistics.mean(fv[f]) for f in feats], [base[f]["p@10"] for f in feats]))
+        family.append(_wilcoxon_row(f"{slot}/prompts-averaged/{ordering}", matched[ordering], "p@10",
+                                    [statistics.mean(fv[f]) for f in feats], [base[f]["p@10"] for f in feats]))
+    # Holm adjustment within this family (every model x ordering vs. its matched list)
+    n_max = max((x["n"] for x in family), default=0)
+    slot_of = lambda r: r["a"].split("/")[0]
+    full = {s for s in {slot_of(r) for r in family}
+            if sum(1 for r in family if slot_of(r) == s and r["n"] == n_max) == len(matched)}
+    complete = [r for r in family if slot_of(r) in full]
+    for r, adj in zip(complete, holm([r["p"] for r in complete])):
+        r["p_holm"] = _r(adj, 4)
+    tests.extend(family)
     for slot, prompt in {(k[0], k[1]) for k in feat_means}:
         for o1, o2 in itertools.combinations(RQ4_DIRS, 2):
             k1, k2 = (slot, prompt, o1), (slot, prompt, o2)
