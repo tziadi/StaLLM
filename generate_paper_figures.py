@@ -67,6 +67,9 @@ PAPER_CMAP = LinearSegmentedColormap.from_list("stallm_blue_orange", ["#F7F7F7",
 def _configure_style() -> None:
     plt.rcParams.update({
         "font.family": "serif",
+        # same face as the manuscript text (Times); STIX as fallback for math
+        "font.serif": ["Times New Roman", "Times", "STIX Two Text", "DejaVu Serif"],
+        "mathtext.fontset": "stix",
         "font.size": 9,
         "axes.titlesize": 8.8,
         "axes.labelsize": 9,
