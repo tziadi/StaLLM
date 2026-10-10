@@ -215,6 +215,40 @@ are written under `output/autoresearch/<run-id>/`. See
 
 ---
 
+## 🧪 Built-in controls, end-to-end demo and tests
+
+**End-to-end demo (no credentials needed).** One configuration file drives a
+span-level evaluation through the whole pipeline (oracle alignment and line
+check, universe sampling, model calls, matching, metrics) and applies the
+chance controls:
+
+```bash
+python examples/demo_end_to_end.py examples/demo_config.json   # -> output/demo/demo_report.md
+```
+
+`"model": "replay:<run.json>"` answers with the spans recorded in a previous
+run (it reproduces that run exactly); `"model": "AZ1"` uses a configured slot.
+
+**Controls and the tasks they apply to**
+
+| Control | Span-level findings | Smell classification | Feature location | Needs new model calls |
+|---|---|---|---|---|
+| Random placement / random file | yes (generic for any span task) | n/a | n/a | no |
+| Oracle substitution | possible with a second span oracle | yes (human labels vs. metric heuristic) | possible with a second mapping | no |
+| Non-LLM baselines | random placement plays this role | always-present, threshold heuristic | keyword, BM25 | no |
+| Masking of lexical cues | n/a | n/a | yes (feature name) | yes |
+| Held-out selection | any prompt search | yes (AutoResearch) | any prompt search | yes (test split) |
+
+**Oracle checks.** `python validate_oracle.py` writes
+`output/paper_results/stats/oracle_validation.md` (file-name vs path matching,
+line-offset check, manual inspection sample).
+
+**Tests.** `python -m unittest discover -s tests` (oracle alignment and line
+offset, random-placement invariants, offline re-scoring of every recorded run,
+statistics, end-to-end replay).
+
+---
+
 ## 🧭 Review Board & Code Evidence
 
 After each run, StaLLM shows a **Review board** that explains the score file by file.  

@@ -81,6 +81,27 @@ class RandomPlacementTest(unittest.TestCase):
             self.assertAlmostEqual(aps._span_f1(spans, preds, _lenient), m["f1"], places=9, msg=f)
 
 
+class EndToEndReplayTest(unittest.TestCase):
+    RUN = ROOT / "output/paper_results/rq2/rq2_AZ3_scanner.json"
+
+    @unittest.skipUnless(RUN.exists(), "no recorded run")
+    def test_replay_reproduces_rescored_f1(self):
+        import os
+        import sys
+        sys.path.insert(0, str(ROOT / "examples"))
+        from demo_end_to_end import ReplayModel
+        from StaLLM_core import run_experiment
+        os.environ["STALLM_HEURISTIC_FALLBACK"] = "0"
+        archive = ROOT / "data/apps/eShopOnWeb/Catalog.zip"
+        oracle = ROOT / "data/apps/eShopOnWeb/eShopOnContainers-sonarqube-quality-analysis.csv"
+        _, _, metrics, _ = run_experiment(str(archive), str(oracle), mode="scanner", top_k=20, pos_ratio=1.0,
+                                          preset="Lenient", user_require_type=False, user_use_cols_single=False,
+                                          llm=ReplayModel(self.RUN, archive))
+        spans = aps._rescored_spans(json.loads(self.RUN.read_text())["metrics"]["spans_by_file"], aps._rq12_oracle())
+        preds = {b: [{"startLine": s, "endLine": e} for s, e in v["pred"]] for b, v in spans.items()}
+        self.assertAlmostEqual(metrics["f1"], aps._span_f1(spans, preds, _lenient), places=9)
+
+
 class StatsTest(unittest.TestCase):
     def test_mcnemar_exact_matches_binomial(self):
         a = {i: i < 50 for i in range(100)}
