@@ -78,72 +78,74 @@
 
 ## RQ4 — feature location, ArgoUML (8 single features) (mean over features, runs averaged)
 
-| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP |
-|---|---|---|---|---|---|---|---|---|---|
-| LLM | AZ1 | baseline | alphabetical | 3 | 0.5 | 0.833 | 0.035 | 0.603 | 0.026 |
-| LLM | AZ1 | baseline | bm25_masked | 3 | 0.75 | 0.875 | 0.061 | 0.812 | 0.054 |
-| LLM | AZ1 | baseline | bm25_sorted | 3 | 1.0 | 1.0 | 0.112 | 1.0 | 0.104 |
-| LLM | AZ1 | baseline | keyword_sorted | 3 | 0.875 | 1.0 | 0.103 | 0.938 | 0.098 |
-| LLM | AZ1 | feature_evidence | alphabetical | 3 | 0.5 | 0.667 | 0.038 | 0.584 | 0.031 |
-| LLM | AZ1 | feature_evidence | bm25_masked | 3 | 0.75 | 0.875 | 0.054 | 0.788 | 0.047 |
-| LLM | AZ1 | feature_evidence | bm25_sorted | 3 | 0.875 | 1.0 | 0.108 | 0.938 | 0.1 |
-| LLM | AZ1 | feature_evidence | keyword_sorted | 3 | 0.875 | 0.958 | 0.103 | 0.917 | 0.099 |
-| LLM | AZ2 | baseline | alphabetical | 1 | 0.5 | 0.75 | 0.043 | 0.556 | 0.038 |
-| LLM | AZ2 | baseline | bm25_masked | 1 | 0.875 | 1.0 | 0.076 | 0.938 | 0.065 |
-| LLM | AZ2 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.122 | 1.0 | 0.114 |
-| LLM | AZ2 | baseline | keyword_sorted | 1 | 0.75 | 0.875 | 0.096 | 0.833 | 0.08 |
-| LLM | AZ2 | feature_evidence | alphabetical | 1 | 0.5 | 0.5 | 0.037 | 0.512 | 0.036 |
-| LLM | AZ2 | feature_evidence | bm25_masked | 1 | 0.875 | 1.0 | 0.077 | 0.938 | 0.068 |
-| LLM | AZ2 | feature_evidence | bm25_sorted | 1 | 0.875 | 1.0 | 0.12 | 0.938 | 0.113 |
-| LLM | AZ2 | feature_evidence | keyword_sorted | 1 | 0.875 | 1.0 | 0.103 | 0.938 | 0.099 |
-| LLM | AZ3 | baseline | alphabetical | 1 | 0.625 | 0.875 | 0.041 | 0.698 | 0.036 |
-| LLM | AZ3 | baseline | bm25_masked | 1 | 1.0 | 1.0 | 0.078 | 1.0 | 0.07 |
-| LLM | AZ3 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.108 | 1.0 | 0.105 |
-| LLM | AZ3 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.109 | 1.0 | 0.107 |
-| LLM | AZ3 | feature_evidence | alphabetical | 1 | 0.25 | 0.75 | 0.042 | 0.431 | 0.03 |
-| LLM | AZ3 | feature_evidence | bm25_masked | 1 | 0.875 | 1.0 | 0.074 | 0.917 | 0.067 |
-| LLM | AZ3 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.119 | 1.0 | 0.114 |
-| LLM | AZ3 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.106 | 1.0 | 0.104 |
-| LLM | AZ4 | baseline | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.302 | 0.007 |
-| LLM | AZ4 | baseline | keyword_sorted | 1 | 0.667 | 1.0 | 0.091 | 0.833 | 0.085 |
-| LLM | AZ4 | feature_evidence | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.281 | 0.009 |
-| keyword_sorted_only | - | - | - | 1 | 1.0 | 1.0 | 0.093 | 1.0 | 0.09 |
-| bm25_only | - | - | - | 1 | 0.5 | 0.875 | 0.026 | 0.592 | 0.012 |
-| bm25_masked_only | - | - | - | 1 | 0.375 | 0.5 | 0.016 | 0.473 | 0.008 |
+| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP | P@10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| LLM | AZ1 | baseline | alphabetical | 3 | 0.5 | 0.833 | 0.035 | 0.603 | 0.026 | 0.371 |
+| LLM | AZ1 | baseline | bm25_masked | 3 | 0.75 | 0.875 | 0.061 | 0.812 | 0.054 | 0.562 |
+| LLM | AZ1 | baseline | bm25_sorted | 3 | 1.0 | 1.0 | 0.112 | 1.0 | 0.104 | 0.8 |
+| LLM | AZ1 | baseline | keyword_sorted | 3 | 0.875 | 1.0 | 0.103 | 0.938 | 0.098 | 0.717 |
+| LLM | AZ1 | feature_evidence | alphabetical | 3 | 0.5 | 0.667 | 0.038 | 0.584 | 0.031 | 0.392 |
+| LLM | AZ1 | feature_evidence | bm25_masked | 3 | 0.75 | 0.875 | 0.054 | 0.788 | 0.047 | 0.479 |
+| LLM | AZ1 | feature_evidence | bm25_sorted | 3 | 0.875 | 1.0 | 0.108 | 0.938 | 0.1 | 0.8 |
+| LLM | AZ1 | feature_evidence | keyword_sorted | 3 | 0.875 | 0.958 | 0.103 | 0.917 | 0.099 | 0.683 |
+| LLM | AZ2 | baseline | alphabetical | 1 | 0.5 | 0.75 | 0.043 | 0.556 | 0.038 | 0.425 |
+| LLM | AZ2 | baseline | bm25_masked | 1 | 0.875 | 1.0 | 0.076 | 0.938 | 0.065 | 0.637 |
+| LLM | AZ2 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.122 | 1.0 | 0.114 | 0.838 |
+| LLM | AZ2 | baseline | keyword_sorted | 1 | 0.75 | 0.875 | 0.096 | 0.833 | 0.08 | 0.637 |
+| LLM | AZ2 | feature_evidence | alphabetical | 1 | 0.5 | 0.5 | 0.037 | 0.512 | 0.036 | 0.35 |
+| LLM | AZ2 | feature_evidence | bm25_masked | 1 | 0.875 | 1.0 | 0.077 | 0.938 | 0.068 | 0.637 |
+| LLM | AZ2 | feature_evidence | bm25_sorted | 1 | 0.875 | 1.0 | 0.12 | 0.938 | 0.113 | 0.8 |
+| LLM | AZ2 | feature_evidence | keyword_sorted | 1 | 0.875 | 1.0 | 0.103 | 0.938 | 0.099 | 0.688 |
+| LLM | AZ3 | baseline | alphabetical | 1 | 0.625 | 0.875 | 0.041 | 0.698 | 0.036 | 0.4 |
+| LLM | AZ3 | baseline | bm25_masked | 1 | 1.0 | 1.0 | 0.078 | 1.0 | 0.07 | 0.65 |
+| LLM | AZ3 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.108 | 1.0 | 0.105 | 0.75 |
+| LLM | AZ3 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.109 | 1.0 | 0.107 | 0.738 |
+| LLM | AZ3 | feature_evidence | alphabetical | 1 | 0.25 | 0.75 | 0.042 | 0.431 | 0.03 | 0.375 |
+| LLM | AZ3 | feature_evidence | bm25_masked | 1 | 0.875 | 1.0 | 0.074 | 0.917 | 0.067 | 0.625 |
+| LLM | AZ3 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.119 | 1.0 | 0.114 | 0.838 |
+| LLM | AZ3 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.106 | 1.0 | 0.104 | 0.713 |
+| LLM | AZ4 | baseline | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.302 | 0.007 | 0.188 |
+| LLM | AZ4 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.091 | 1.0 | 0.091 | 0.867 |
+| LLM | AZ4 | baseline | keyword_sorted | 1 | 0.75 | 1.0 | 0.093 | 0.875 | 0.089 | 0.65 |
+| LLM | AZ4 | feature_evidence | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.281 | 0.009 | 0.188 |
+| LLM | AZ4 | feature_evidence | keyword_sorted | 1 | 0.875 | 1.0 | 0.103 | 0.938 | 0.101 | 0.7 |
+| keyword_sorted_only | - | - | - | 1 | 1.0 | 1.0 | 0.093 | 1.0 | 0.09 | 0.613 |
+| bm25_only | - | - | - | 1 | 0.5 | 0.875 | 0.026 | 0.592 | 0.012 | 0.237 |
+| bm25_masked_only | - | - | - | 1 | 0.375 | 0.5 | 0.016 | 0.473 | 0.008 | 0.163 |
 
 *Paired Wilcoxon tests across features are in `rq4_wilcoxon.csv` (with n=8 features the minimum two-sided p is 0.0078; with n=5 it is 0.0625, so eShop comparisons are descriptive only).*
 
 ## RQ4 — feature location, eShopOnContainers (5 features) (mean over features, runs averaged)
 
-| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP |
-|---|---|---|---|---|---|---|---|---|---|
-| LLM | AZ1 | baseline | alphabetical | 3 | 1.0 | 1.0 | 0.223 | 1.0 | 0.223 |
-| LLM | AZ1 | baseline | bm25_masked | 3 | 0.8 | 0.8 | 0.104 | 0.8 | 0.104 |
-| LLM | AZ1 | baseline | bm25_sorted | 3 | 1.0 | 1.0 | 0.214 | 1.0 | 0.214 |
-| LLM | AZ1 | baseline | keyword_sorted | 3 | 1.0 | 1.0 | 0.193 | 1.0 | 0.193 |
-| LLM | AZ1 | feature_evidence | alphabetical | 3 | 1.0 | 1.0 | 0.222 | 1.0 | 0.221 |
-| LLM | AZ1 | feature_evidence | bm25_masked | 3 | 0.8 | 0.8 | 0.097 | 0.8 | 0.096 |
-| LLM | AZ1 | feature_evidence | bm25_sorted | 3 | 1.0 | 1.0 | 0.213 | 1.0 | 0.213 |
-| LLM | AZ1 | feature_evidence | keyword_sorted | 3 | 1.0 | 1.0 | 0.197 | 1.0 | 0.196 |
-| LLM | AZ2 | baseline | alphabetical | 1 | 1.0 | 1.0 | 0.26 | 1.0 | 0.26 |
-| LLM | AZ2 | baseline | bm25_masked | 1 | 0.8 | 0.8 | 0.104 | 0.8 | 0.104 |
-| LLM | AZ2 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.204 |
-| LLM | AZ2 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.215 |
-| LLM | AZ2 | feature_evidence | alphabetical | 1 | 1.0 | 1.0 | 0.257 | 1.0 | 0.255 |
-| LLM | AZ2 | feature_evidence | bm25_masked | 1 | 0.8 | 1.0 | 0.167 | 0.84 | 0.122 |
-| LLM | AZ2 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.19 | 1.0 | 0.189 |
-| LLM | AZ2 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.171 | 1.0 | 0.171 |
-| LLM | AZ3 | baseline | alphabetical | 1 | 1.0 | 1.0 | 0.234 | 1.0 | 0.234 |
-| LLM | AZ3 | baseline | bm25_masked | 1 | 1.0 | 1.0 | 0.227 | 1.0 | 0.227 |
-| LLM | AZ3 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.234 | 1.0 | 0.215 |
-| LLM | AZ3 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.227 | 1.0 | 0.227 |
-| LLM | AZ3 | feature_evidence | alphabetical | 1 | 1.0 | 1.0 | 0.256 | 1.0 | 0.256 |
-| LLM | AZ3 | feature_evidence | bm25_masked | 1 | 1.0 | 1.0 | 0.208 | 1.0 | 0.197 |
-| LLM | AZ3 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.237 | 1.0 | 0.237 |
-| LLM | AZ3 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.215 |
-| keyword_sorted_only | - | - | - | 1 | 0.4 | 0.8 | 0.044 | 0.567 | 0.025 |
-| bm25_only | - | - | - | 1 | 0.8 | 1.0 | 0.178 | 0.867 | 0.151 |
-| bm25_masked_only | - | - | - | 1 | 0.8 | 1.0 | 0.092 | 0.867 | 0.08 |
+| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP | P@10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| LLM | AZ1 | baseline | alphabetical | 3 | 1.0 | 1.0 | 0.223 | 1.0 | 0.223 | 0.907 |
+| LLM | AZ1 | baseline | bm25_masked | 3 | 0.8 | 0.8 | 0.104 | 0.8 | 0.104 | 0.8 |
+| LLM | AZ1 | baseline | bm25_sorted | 3 | 1.0 | 1.0 | 0.214 | 1.0 | 0.214 | 0.893 |
+| LLM | AZ1 | baseline | keyword_sorted | 3 | 1.0 | 1.0 | 0.193 | 1.0 | 0.193 | 0.88 |
+| LLM | AZ1 | feature_evidence | alphabetical | 3 | 1.0 | 1.0 | 0.222 | 1.0 | 0.221 | 0.9 |
+| LLM | AZ1 | feature_evidence | bm25_masked | 3 | 0.8 | 0.8 | 0.097 | 0.8 | 0.096 | 0.753 |
+| LLM | AZ1 | feature_evidence | bm25_sorted | 3 | 1.0 | 1.0 | 0.213 | 1.0 | 0.213 | 0.887 |
+| LLM | AZ1 | feature_evidence | keyword_sorted | 3 | 1.0 | 1.0 | 0.197 | 1.0 | 0.196 | 0.867 |
+| LLM | AZ2 | baseline | alphabetical | 1 | 1.0 | 1.0 | 0.26 | 1.0 | 0.26 | 0.94 |
+| LLM | AZ2 | baseline | bm25_masked | 1 | 0.8 | 0.8 | 0.104 | 0.8 | 0.104 | 0.8 |
+| LLM | AZ2 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.204 | 0.9 |
+| LLM | AZ2 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.215 | 0.9 |
+| LLM | AZ2 | feature_evidence | alphabetical | 1 | 1.0 | 1.0 | 0.257 | 1.0 | 0.255 | 0.92 |
+| LLM | AZ2 | feature_evidence | bm25_masked | 1 | 0.8 | 1.0 | 0.167 | 0.84 | 0.122 | 0.84 |
+| LLM | AZ2 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.19 | 1.0 | 0.189 | 0.86 |
+| LLM | AZ2 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.171 | 1.0 | 0.171 | 0.86 |
+| LLM | AZ3 | baseline | alphabetical | 1 | 1.0 | 1.0 | 0.234 | 1.0 | 0.234 | 0.9 |
+| LLM | AZ3 | baseline | bm25_masked | 1 | 1.0 | 1.0 | 0.227 | 1.0 | 0.227 | 0.86 |
+| LLM | AZ3 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.234 | 1.0 | 0.215 | 0.9 |
+| LLM | AZ3 | baseline | keyword_sorted | 1 | 1.0 | 1.0 | 0.227 | 1.0 | 0.227 | 0.86 |
+| LLM | AZ3 | feature_evidence | alphabetical | 1 | 1.0 | 1.0 | 0.256 | 1.0 | 0.256 | 0.92 |
+| LLM | AZ3 | feature_evidence | bm25_masked | 1 | 1.0 | 1.0 | 0.208 | 1.0 | 0.197 | 0.86 |
+| LLM | AZ3 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.237 | 1.0 | 0.237 | 0.92 |
+| LLM | AZ3 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.215 | 1.0 | 0.215 | 0.9 |
+| keyword_sorted_only | - | - | - | 1 | 0.4 | 0.8 | 0.044 | 0.567 | 0.025 | 0.38 |
+| bm25_only | - | - | - | 1 | 0.8 | 1.0 | 0.178 | 0.867 | 0.151 | 0.76 |
+| bm25_masked_only | - | - | - | 1 | 0.8 | 1.0 | 0.092 | 0.867 | 0.08 | 0.54 |
 
 *Paired Wilcoxon tests across features are in `rq4_wilcoxon_eshop.csv` (with n=8 features the minimum two-sided p is 0.0078; with n=5 it is 0.0625, so eShop comparisons are descriptive only).*
 

@@ -180,7 +180,15 @@ def analyze_rq3(results: list[dict[str, Any]], md: list[str]) -> None:
 
 # ── RQ4 ──────────────────────────────────────────────────────────────────────
 
-METRICS4 = ("hit@1", "hit@5", "recall@10", "mrr", "map")
+METRICS4 = ("hit@1", "hit@5", "recall@10", "mrr", "map", "p@10")
+
+
+def _p_at_10(metrics: dict[str, float], gold_count: int) -> float:
+    """Precision@10, i.e. the share of the ten returned files that are gold.
+    Unlike Recall@10 and MAP it is not bounded by 10/|gold| (gold sets have
+    9-237 files), so it reaches 1 for a perfect top ten."""
+    hits = round(metrics["recall@10"] * gold_count)
+    return min(hits, 10) / 10
 
 
 def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: str = "") -> None:
@@ -191,6 +199,7 @@ def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: st
             if "_and_" in d.get("feature", ""):
                 continue
             key = (d["slot"], d["prompt_style"], label)
+            d["metrics"]["p@10"] = _p_at_10(d["metrics"], d["gold_count"])
             for m in METRICS4:
                 per_feature[key][(d["feature"], m)].append(d["metrics"][m])
 
@@ -209,7 +218,9 @@ def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: st
     if base_path.exists():
         with open(base_path, newline="") as f:
             for r in csv.DictReader(f):
-                baselines[r["method"]][r["feature"]] = {m: float(r[m]) for m in METRICS4}
+                vals = {m: float(r[m]) for m in METRICS4 if m in r}
+                vals["p@10"] = _p_at_10(vals, int(r["gold_count"]))
+                baselines[r["method"]][r["feature"]] = vals
         for method, fm in baselines.items():
             rows.append({"method": method, "slot": "-", "prompt": "-", "ordering": "-",
                          "features": len(fm), "runs": 1,
@@ -217,8 +228,8 @@ def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: st
     _write_csv(STATS / f"rq4_conditions{tag}.csv", rows)
 
     md.append(f"## RQ4 — feature location, {title} (mean over features, runs averaged)\n")
-    md.append("| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP |\n"
-              "|---|---|---|---|---|---|---|---|---|---|")
+    md.append("| Method | Slot | Prompt | Ordering | runs | Hit@1 | Hit@5 | R@10 | MRR | MAP | P@10 |\n"
+              "|---|---|---|---|---|---|---|---|---|---|---|")
     for r in rows:
         md.append(f"| {r['method']} | {r['slot']} | {r['prompt']} | {r['ordering']} | {r['runs']} | "
                   + " | ".join(str(r[m]) for m in METRICS4) + " |")
@@ -228,12 +239,27 @@ def analyze_rq4(md: list[str], root: Path = OUT, title: str = "ArgoUML", tag: st
     tests = []
     kw = baselines.get("keyword_sorted_only", {})
     for key, fm in feat_means.items():
-        for m in ("mrr", "map", "recall@10"):
+        for m in ("mrr", "map", "recall@10", "p@10"):
             if kw:
                 feats = sorted(fm.keys() & kw.keys())
                 a = [fm[f][m] for f in feats]
                 b = [kw[f][m] for f in feats]
                 tests.append(_wilcoxon_row(f"{key[0]}/{key[1]}/{key[2]}", "keyword_sorted_only", m, a, b))
+    # Each LLM re-ranking vs. the same candidate list used without a model
+    matched = {"bm25_sorted": "bm25_only", "bm25_masked": "bm25_masked_only",
+               "keyword_sorted": "keyword_sorted_only"}
+    by_slot: dict[tuple, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    for key, fm in feat_means.items():
+        base = baselines.get(matched.get(key[2], ""), {})
+        if not base:
+            continue
+        for f, v in fm.items():
+            by_slot[(key[0], key[2])][f].append(v["p@10"])
+    for (slot, ordering), fv in sorted(by_slot.items()):
+        base = baselines[matched[ordering]]
+        feats = sorted(fv.keys() & base.keys())
+        tests.append(_wilcoxon_row(f"{slot}/prompts-averaged/{ordering}", matched[ordering], "p@10",
+                                   [statistics.mean(fv[f]) for f in feats], [base[f]["p@10"] for f in feats]))
     for slot, prompt in {(k[0], k[1]) for k in feat_means}:
         for o1, o2 in itertools.combinations(RQ4_DIRS, 2):
             k1, k2 = (slot, prompt, o1), (slot, prompt, o2)
