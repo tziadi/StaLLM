@@ -105,9 +105,10 @@
 | LLM | AZ3 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.119 | 1.0 | 0.114 | 0.838 |
 | LLM | AZ3 | feature_evidence | keyword_sorted | 1 | 1.0 | 1.0 | 0.106 | 1.0 | 0.104 | 0.713 |
 | LLM | AZ4 | baseline | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.302 | 0.007 | 0.188 |
-| LLM | AZ4 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.121 | 1.0 | 0.12 | 0.914 |
+| LLM | AZ4 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.13 | 1.0 | 0.129 | 0.925 |
 | LLM | AZ4 | baseline | keyword_sorted | 1 | 0.75 | 1.0 | 0.093 | 0.875 | 0.089 | 0.65 |
 | LLM | AZ4 | feature_evidence | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.281 | 0.009 | 0.188 |
+| LLM | AZ4 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.144 | 1.0 | 0.138 | 0.875 |
 | LLM | AZ4 | feature_evidence | keyword_sorted | 1 | 0.875 | 1.0 | 0.103 | 0.938 | 0.101 | 0.7 |
 | keyword_sorted_only | - | - | - | 1 | 1.0 | 1.0 | 0.093 | 1.0 | 0.09 | 0.613 |
 | bm25_only | - | - | - | 1 | 0.5 | 0.875 | 0.026 | 0.592 | 0.012 | 0.237 |
@@ -172,6 +173,7 @@
 | numbered | AZ1 | azure:gpt-4o-Tewfik | hybrid | 3 | 0.103 | 0.329 | 0.156 ± 0.012 | 0.158 [0.137, 0.178] | 0.5744 | 0.122 [0.099, 0.146] | 0.002 | 0 | 111.2 |
 | numbered | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.071 | 0.204 | 0.105 ± 0.024 | 0.154 [0.129, 0.179] | 1.0 | 0.116 [0.093, 0.139] | 0.8282 | 0 | 72.1 |
 | numbered | AZ2 | azure:gpt-4.1-features | scanner | 3 | 0.153 | 0.176 | 0.163 ± 0.067 | 0.13 [0.099, 0.164] | 0.03 | 0.116 [0.083, 0.15] | 0.009 | 0 | 81.8 |
+| numbered | AZ3 | azure:o3-features | scanner | 3 | 0.186 | 0.282 | 0.224 ± 0.028 | 0.168 [0.138, 0.196] | 0.001 | 0.117 [0.086, 0.149] | 0.001 | 2 | 335.1 |
 | original | AZ1 | azure:gpt-4o-Tewfik | baseline | 3 | 0.116 | 0.171 | 0.138 ± 0.031 | 0.155 [0.123, 0.187] | 0.8342 | 0.112 [0.082, 0.146] | 0.0629 | 0 | 64.0 |
 | original | AZ1 | azure:gpt-4o-Tewfik | hybrid | 3 | 0.073 | 0.227 | 0.11 ± 0.032 | 0.15 [0.129, 0.173] | 1.0 | 0.115 [0.091, 0.138] | 0.6543 | 0 | 103.1 |
 | original | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.07 | 0.194 | 0.102 ± 0.021 | 0.165 [0.142, 0.19] | 1.0 | 0.122 [0.098, 0.147] | 0.9491 | 0 | 81.2 |
