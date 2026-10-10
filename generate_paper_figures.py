@@ -421,6 +421,9 @@ def fig_rq4_conditions(stats_dir: Path, out_dir: Path, metric: str = "mrr") -> N
     orders = list(ORDER_LABELS)
     slots = [s for s in SLOT_STYLE if any(r["slot"] == s for _, rows in panels for r in rows)]
     for ax, (title, rows) in zip(axes, panels):
+        # skip conditions still running (fewer features than the system has)
+        n_feat = max(int(r["features"]) for r in rows if r["method"] == "LLM")
+        rows = [r for r in rows if r["method"] != "LLM" or int(r["features"]) == n_feat]
         for j, slot in enumerate(slots):
             name, color, marker = SLOT_STYLE[slot]
             xs, ys = [], []
@@ -444,12 +447,12 @@ def fig_rq4_conditions(stats_dir: Path, out_dir: Path, metric: str = "mrr") -> N
         ax.set_ylim(0, 1.05)
         ax.set_title(title)
         _style_axis(ax)
-    axes[0].set_ylabel("MRR" if metric == "mrr" else metric.upper())
+    axes[0].set_ylabel({"mrr": "MRR", "p@10": "Precision@10"}.get(metric, metric.upper()))
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=3, frameon=False,
                bbox_to_anchor=(0.5, -0.01), fontsize=7.5)
     fig.tight_layout(rect=(0, 0.16, 1, 1))
-    path = out_dir / f"fig_rq4_conditions_{metric}.pdf"
+    path = out_dir / f"fig_rq4_conditions_{metric.replace('@', '')}.pdf"
     fig.savefig(path)
     plt.close(fig)
     print(f"  saved {path}")
@@ -542,7 +545,7 @@ def main() -> None:
     print("Generating figures from summaries...")
     stats_dir = args.results_dir / "stats"
     fig_rq3_models(stats_dir, args.results_dir, args.out_dir)
-    for metric in ("mrr", "map"):
+    for metric in ("mrr", "p@10"):
         fig_rq4_conditions(stats_dir, args.out_dir, metric)
     fig_rq5_heldout(args.results_dir, args.out_dir)
     print("Done.")
