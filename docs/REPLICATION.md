@@ -1,8 +1,8 @@
 # StaLLM journal paper — replication package
 
 This package regenerates every table and figure of the IST journal paper
-*What Are We Measuring? Controls for Evaluating Large Language Models in
-Software Maintenance*, and re-runs the experiments if model access is
+*StaLLM: A Benchmark with Built-in Controls for Evaluating Large Language
+Models on Software Maintenance Tasks*, and re-runs the experiments if model access is
 available.
 
 ## Contents
