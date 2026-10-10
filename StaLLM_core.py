@@ -677,9 +677,8 @@ def load_ground_truth_spans(static_csv: str, allowed_exts: Optional[List[str]] =
 
     out["startLine"] = df[c_start].apply(_to_int_or_pos_none) if c_start else None
     out["endLine"]   = df[c_end].apply(_to_int_or_pos_none) if c_end else None
-    if out["startLine"] is not None:
-        out["startLine"] = out["startLine"].ffill()   # pandas 2.x safe
-
+    # File-level findings without a line cannot be matched to a span; they are
+    # dropped below (dropna on startLine) rather than given the previous row's line.
     out["endLine"]   = out["endLine"].fillna(out["startLine"])
     out["startLine"] = out["startLine"].fillna(out["endLine"])
 

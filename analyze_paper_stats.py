@@ -70,7 +70,7 @@ def _correct(rows: list[dict[str, Any]]) -> dict[str, bool]:
 
 
 def mcnemar_exact(a: dict[str, bool], b: dict[str, bool]) -> tuple[int, int, float]:
-    """Exact McNemar test on paired per-sample correctness. Returns (b_only, a_only, p)."""
+    """Exact McNemar test on paired per-sample correctness. Returns (a_only, b_only, p)."""
     ids = a.keys() & b.keys()
     a_only = sum(1 for i in ids if a[i] and not b[i])
     b_only = sum(1 for i in ids if b[i] and not a[i])
