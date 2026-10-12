@@ -55,7 +55,8 @@ Each folder contains the **source ZIP** and the **static analyzer CSV** (typical
 
 ```
 StaLLM/
-│── StatLLM_app.py          # Streamlit interface (Experiments, DB, Prompts, Batch)
+│── StaLLM_app.py           # Streamlit workbench (entry point, navigation, task pages)
+│── stallm_ui/              # Theme, benchmark/controls pages, run history, run manifests
 │── StaLLM_core.py          # Core pipeline (LLM calls, metrics, usage/cost aggregation)
 │── StaLLM_tasks.py         # Shared internal activity model for feature/bug localization extensions
 │── StaLLM_benchmarks.py    # Feature/bug localization benchmark adapters
@@ -152,7 +153,23 @@ They are normalized internally to **$/1K** for cost calculation.
 ./.venv/bin/streamlit run StaLLM_app.py
 ```
 
-### Workflow (Run Experiments tab)
+### Workbench layout
+
+The sidebar groups the pages in three sections:
+
+| Section | Page | What it does |
+|---|---|---|
+| Benchmark | **Overview** | Tasks, oracles, metrics and controls of the benchmark at a glance. |
+| | **Benchmark Results** | Stored results for RQ1–RQ5 read from `output/paper_results/` (nothing is recomputed): CI plots, chance and non-LLM baselines, McNemar / Wilcoxon tests with Holm correction, sensitivity analyses. Every table exports to CSV and LaTeX. |
+| | **Built-in Controls** | Verdict of each control (C1 random placement, C2 oracle substitution, C3 non-LLM baselines and masking, C4 held-out selection), computed from the stored statistics. |
+| Experiments | **Run Tasks** | Interactive runs (code smells against an analyzer or a human oracle, feature and bug location). Span-level runs export a **run manifest** (code version, environment, prompt hashes, oracle, matching settings, scores). |
+| | **Batch Runs** | Sweeps over projects, strategies and Top-K. |
+| | **Prompt Optimisation** | AutoResearch loop with train/held-out split. |
+| Resources | **Prompt Library**, **Run History**, **Evaluation Protocol**, **About & Citation** | Prompt repository; stored runs aggregated per configuration (mean, SD, 95% t-interval); matching rules; provenance and BibTeX. |
+
+Populate the Benchmark pages with `python run_paper_experiments.py` followed by `python analyze_paper_stats.py` (see [docs/REPLICATION.md](docs/REPLICATION.md)). The UI code lives in `stallm_ui/` (theme, benchmark pages, run history, reproducibility helpers).
+
+### Workflow (Run Tasks page, analyzer oracle)
 
 **Execution modes:**
 1. **Single prompt** — run one prompt strategy on one LLM.  
@@ -160,7 +177,7 @@ They are normalized internally to **$/1K** for cost calculation.
 3. **Compare LLM models** — fix **one prompt strategy** and select **multiple LLMs** to compare side-by-side.
 
 **Fast demo path:**
-1. Click **Load demo config** in the sidebar.
+1. Click **Load demo config** in the configuration panel.
 2. Keep **Use bundled demo dataset** enabled, or choose another bundled dataset.
 3. Confirm the **Preflight checks** are green.
 4. Run the analysis and inspect the **Review board** plus **Code evidence viewer**.
@@ -184,10 +201,10 @@ They are normalized internally to **$/1K** for cost calculation.
    - For comparison modes, **tables, charts, and review boards per strategy or per model**.
    - An **Export HTML report** button for sharing standalone run/comparison reports.
 
-### Other tabs
-- **Stored Results (DB)**: browse historical runs (includes *LLM used*, tokens, cost).  
-- **Manage Prompts**: edit/create strategies, persisted to `strategies.json`.  
-- **Batch Experiments**: sweep projects/strategies/top-K; CSV exports under `output/apps/<project>/` + DB logging.
+### Other pages
+- **Run History**: filter stored runs by project, model and strategy; aggregated table and CSV/LaTeX export.  
+- **Prompt Library**: edit/create prompt templates per maintenance activity, persisted to `prompt_repository.json`.  
+- **Batch Runs**: sweep projects/strategies/top-K; CSV exports under `output/apps/<project>/` + DB logging.
 
 ### Human smell oracle: DACOS/DACOSX and MLCQ
 

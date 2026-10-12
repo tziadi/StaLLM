@@ -1,6 +1,6 @@
-# StaLLM_UI.py
-# Pro UI: Inter/JetBrains Mono fonts, premium hero, glass cards, KPI chips,
-# code viewer with line numbers + highlights, strictness guide, Top-K/Positive illustration.
+# StaLLM_app.py
+# Streamlit research workbench for the StaLLM benchmark: benchmark overview,
+# stored results per RQ, built-in controls, interactive task runs and prompt tooling.
 import base64
 import json
 import re
@@ -17,7 +17,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-CHART_FONT = "Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+CHART_FONT = "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
 
 alt.renderers.set_embed_options(
     actions=False,
@@ -49,6 +49,10 @@ from StaLLM_benchmarks import (
     run_dacos_smell_benchmark,
 )
 from StaLLM_tasks import LOCATION_PROMPT_TEMPLATES, list_repo_candidates, paths_match, run_location_task
+from stallm_ui.theme import BRAND_NAME, inject_theme, page_header, register_chart_theme
+from stallm_ui.reproducibility import git_info, manifest_download
+from stallm_ui import paper_results
+from stallm_ui.history import render_run_history
 from StaLLM_autoresearch import (
     PromptCandidate,
     evaluate_code_smell,
@@ -93,14 +97,10 @@ def _load_dotenv_robust(path: Path, override: bool = False) -> None:
 # Init
 # =========================
 APP_DIR = Path(__file__).resolve().parent
-BRAND_NAME = "StarLLM"
-BRAND_LOGO_PATH = APP_DIR / "assets" / "starllm-logo.svg"
-BRAND_LOGO_DATA_URI = "data:image/svg+xml;base64," + base64.b64encode(
-    BRAND_LOGO_PATH.read_bytes()
-).decode("ascii")
+BRAND_LOGO_PATH = APP_DIR / "assets" / "stallm-logo.svg"
 
 st.set_page_config(
-    page_title=f"{BRAND_NAME}: Static Analysis meets LLMs",
+    page_title=BRAND_NAME,
     page_icon=str(BRAND_LOGO_PATH),
     layout="wide",
 )
@@ -110,488 +110,10 @@ init_db()
 RESULTS_SCHEMA_VERSION = 2
 
 # =========================
-# Styles (UI) — English + Pro look
+# Styles
 # =========================
-st.markdown( """ <style> /* Fonts */ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap'); :root{ --text:#0e1220; --muted:#667085; --border:rgba(14,18,32,.12); --card-bg:rgba(255,255,255,.55); --glass:linear-gradient(180deg, rgba(255,255,255,.80), rgba(255,255,255,.60)); --accent:#7c3aed; --accent2:#06b6d4; --accent3:#22c55e; --warn:#f59e0b; --danger:#ef4444; --hl: rgba(252, 211, 77, .35); --ring: 0 8px 22px rgba(35, 38, 47, .10), 0 2px 6px rgba(35, 38, 47, .06); } #MainMenu, footer, header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"], .stDeployButton { visibility:hidden !important; height:0 !important; display:none !important; } html, body, .stApp { background:#f6f7fb !important; color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; } .stApp { padding-top: 10px; } @media (prefers-color-scheme: dark){ :root{ --text:#e6e9ef; --muted:#a3afc6; --border:rgba(255,255,255,.09); --card-bg:rgba(20,24,35,.55); --glass:linear-gradient(180deg, rgba(20,24,35,.75), rgba(20,24,35,.55)); --hl: rgba(234, 179, 8, .20); } html, body, .stApp{ background: radial-gradient(1200px 600px at 10% -10%, rgba(124,58,237,.16), transparent), radial-gradient(1000px 500px at 110% -20%, rgba(6,182,212,.12), transparent), #0b1220 !important; } } /* HERO */ .hero{ position:relative; border:1px solid var(--border); border-radius:22px; padding:28px 24px; overflow:hidden; margin-bottom:14px; background: radial-gradient(900px 220px at -10% -20%, rgba(124,58,237,.18), transparent 55%), radial-gradient(700px 220px at 110% -10%, rgba(6,182,212,.15), transparent 55%), var(--glass); box-shadow: var(--ring); } .hero-brand{ display:flex; align-items:center; gap:14px; margin-bottom:8px; } .hero-logo{ width:48px; height:48px; border-radius:13px; box-shadow:0 10px 24px rgba(15,23,42,.18); flex:0 0 auto; } .hero h1{ margin:0; font-weight:800; letter-spacing:.2px; } .hero p{ margin:0; color:var(--muted); font-size:1.0rem; } .badges{ margin-top:8px; } .badge{ display:inline-flex; align-items:center; gap:.45rem; padding:.38rem .70rem; border:1px solid var(--border); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg, rgba(124,58,237,.10), rgba(6,182,212,.10)); margin-right:.45rem; } /* KPI CARDS */ .kpi{ background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:14px 16px; box-shadow: var(--ring); min-height:72px; display:flex; flex-direction:column; justify-content:center; overflow:hidden; } .kpi-label{ color:var(--muted); font-size:.85rem; margin-bottom:.25rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;} .kpi-value{ font-size:1.6rem; font-weight:800; letter-spacing:.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;} .kpi-ok{ box-shadow:0 0 0 1px rgba(34,197,94,.28) inset; } .kpi-warn{ box-shadow:0 0 0 1px rgba(245,158,11,.28) inset; } .kpi-bad{ box-shadow:0 0 0 1px rgba(239,68,68,.28) inset; } /* CODE BOX with line numbers + highlight */ .codebox{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; border:1px solid var(--border); border-radius:14px; overflow:hidden; background: var(--glass); box-shadow: var(--ring); } .codebox table{ border-collapse: collapse; width:100%; } .codebox td{ vertical-align: top; padding: 0; } .codebox .gutter{ width: 3.2em; background: rgba(2,6,23,.05); color: var(--muted); text-align: right; user-select:none; } .codebox .code{ white-space: pre; } .codebox .line{ padding: 2px 10px; border-bottom: 1px solid rgba(2,6,23,.06); } .codebox .ln{ padding: 2px 8px; border-bottom: 1px solid rgba(2,6,23,.08); } .codebox .hl{ background: var(--hl); } .codebox .gt{ background:#fff7ed; box-shadow:inset 3px 0 #f97316; } .codebox .llm{ background:#eff6ff; box-shadow:inset 3px 0 #2563eb; } .codebox .both{ background:#ecfdf5; box-shadow:inset 3px 0 #16a34a; } .code-legend{ display:flex; gap:8px; margin:.4rem 0 .6rem; flex-wrap:wrap; } .legend-chip{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 8px; font-size:12px; font-weight:750; border:1px solid #d9e0ea; background:#fff; color:#344054; } .legend-dot{ width:8px; height:8px; border-radius:999px; margin-right:6px; } .dot-gt{ background:#f97316; } .dot-llm{ background:#2563eb; } .dot-both{ background:#16a34a; } /* SECTION CARD */ .section{ background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:18px 18px; margin:10px 0 16px; box-shadow: var(--ring); } /* BUTTONS */ .stButton > button { background: linear-gradient(90deg, var(--accent), var(--accent2)) !important; color: white !important; border-radius: 12px; font-size: 16px; font-weight: 800; padding: 0.70em 1.25em; border: none; letter-spacing:.2px; box-shadow: 0 10px 18px rgba(124,58,237,.20), 0 6px 14px rgba(6,182,212,.12); } .stButton > button:focus { outline: none; box-shadow: 0 0 0 2px rgba(124,58,237,.45); } /* TABLE polish */ .stDataFrame thead tr th { background:#eef2ff !important; color:#0f172a !important; font-weight:700; text-align:center; } .stDataFrame tbody tr:nth-child(even) { background-color: rgba(2, 6, 23, .03); } .pro-table-wrap{ border:1px solid rgba(15,23,42,.10); border-radius:12px; overflow:auto; background:#fff; box-shadow:0 10px 24px rgba(15,23,42,.06); margin:.6rem 0 1rem; } .pro-table{ width:100%; border-collapse:separate; border-spacing:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size:13px; line-height:1.35; color:#111827; } .pro-table th{ position:sticky; top:0; z-index:1; background:#f8fafc; color:#475569; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:800; padding:11px 12px; border-bottom:1px solid #e5e7eb; white-space:nowrap; } .pro-table td{ padding:10px 12px; border-bottom:1px solid #eef2f7; vertical-align:middle; } .pro-table tr:hover td{ background:#f8fbff; } .pro-table td.num{ text-align:right; font-variant-numeric:tabular-nums; color:#0f172a; font-weight:650; } .pro-table .file-cell{ font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px; color:#1f2937; max-width:620px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .verdict-badge{ display:inline-flex; align-items:center; border-radius:999px; padding:4px 9px; font-size:12px; font-weight:800; border:1px solid transparent; white-space:nowrap; } .verdict-matched{ color:#166534; background:#dcfce7; border-color:#bbf7d0; } .verdict-partial,.verdict-mismatch{ color:#92400e; background:#fef3c7; border-color:#fde68a; } .verdict-missed{ color:#991b1b; background:#fee2e2; border-color:#fecaca; } .verdict-extra{ color:#6d28d9; background:#ede9fe; border-color:#ddd6fe; } .verdict-true_negative{ color:#334155; background:#e2e8f0; border-color:#cbd5e1; } .issue-pill{ display:inline-flex; border-radius:7px; padding:4px 7px; background:#f1f5f9; color:#334155; font-weight:650; white-space:nowrap; } .metric-bar{ min-width:92px; } .metric-bar-track{ height:7px; border-radius:999px; background:#e5e7eb; overflow:hidden; } .metric-bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,#22c55e,#06b6d4); } .metric-bar-label{ margin-top:3px; color:#475569; font-size:11px; font-variant-numeric:tabular-nums; text-align:right; } .muted{ color:var(--muted); } .pill{ display:inline-flex; align-items:center; gap:.45rem; padding:.32rem .65rem; border:1px solid var(--border); color:var(--text); border-radius:999px; font-size:.78rem; font-weight:600; background:linear-gradient(90deg,#ede9fe,#cffafe); margin:.20rem .35rem .55rem 0; } .footnote{ color:var(--muted); font-size:.85rem; margin-top:8px; } </style> """, unsafe_allow_html=True, )
-
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-
-:root{
-  --ui-bg:#ffffff;
-  --ui-bg-soft:#f8fafc;
-  --ui-border:#d9e0ea;
-  --ui-border-strong:#cbd5e1;
-  --ui-text:#101828;
-  --ui-muted:#667085;
-  --ui-focus:#2563eb;
-  --ui-shadow:0 8px 20px rgba(15,23,42,.06);
-  --brand-font:Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --brand-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-/* Global typography rhythm */
-.stApp,
-.stApp *,
-.stApp button,
-.stApp input,
-.stApp textarea,
-.stApp select,
-.stApp [data-baseweb],
-.stApp [data-baseweb] *,
-.stApp [data-testid],
-.stApp [data-testid] *,
-.stApp [role],
-.stApp [role] *{
-  font-family:var(--brand-font) !important;
-  letter-spacing:0;
-}
-.stApp h1,.stApp h2,.stApp h3,.stApp h4{
-  color:var(--ui-text);
-  font-family:var(--brand-font) !important;
-  font-weight:800;
-  letter-spacing:-.01em;
-}
-.stApp h1{
-  font-size:clamp(1.7rem, 2.4vw, 2.5rem);
-}
-.stApp h2{
-  font-size:1.35rem;
-}
-.stApp h3{
-  font-size:1.08rem;
-}
-.stMarkdown p, .stCaptionContainer, [data-testid="stCaptionContainer"]{
-  color:var(--ui-muted);
-  font-family:var(--brand-font) !important;
-  line-height:1.55;
-}
-.stMarkdown strong,
-.stMarkdown b{
-  color:#172033;
-  font-weight:800;
-}
-.stApp code,
-.stApp pre,
-.stApp kbd,
-.stApp samp,
-.stCode,
-.stCode *,
-.codebox,
-.codebox *,
-.file-cell{
-  font-family:var(--brand-mono) !important;
-}
-
-/* DataFrames: professional shell around every Streamlit table */
-[data-testid="stDataFrame"], .stDataFrame{
-  border:1px solid var(--ui-border) !important;
-  border-radius:12px !important;
-  overflow:hidden !important;
-  background:var(--ui-bg) !important;
-  box-shadow:var(--ui-shadow) !important;
-}
-[data-testid="stDataFrame"] *{
-  font-family:var(--brand-font) !important;
-  font-size:13px !important;
-}
-[data-testid="stDataFrame"] [role="columnheader"],
-[data-testid="stDataFrame"] thead th{
-  background:var(--ui-bg-soft) !important;
-  color:#475467 !important;
-  font-weight:800 !important;
-  text-transform:uppercase !important;
-  letter-spacing:.045em !important;
-  font-size:11px !important;
-  border-bottom:1px solid var(--ui-border) !important;
-}
-[data-testid="stDataFrame"] [role="gridcell"],
-[data-testid="stDataFrame"] tbody td{
-  color:#1d2939 !important;
-  font-weight:500 !important;
-  border-color:#eef2f6 !important;
-}
-
-/* Forms and fields */
-[data-testid="stTextInput"] label,
-[data-testid="stTextArea"] label,
-[data-testid="stSelectbox"] label,
-[data-testid="stMultiSelect"] label,
-[data-testid="stFileUploader"] label,
-[data-testid="stCheckbox"] label,
-[data-testid="stRadio"] label,
-[data-testid="stSlider"] label{
-  color:#344054 !important;
-  font-size:13px !important;
-  font-weight:750 !important;
-}
-[data-testid="stTextInput"] input,
-[data-testid="stTextArea"] textarea,
-[data-baseweb="select"] > div,
-[data-testid="stMultiSelect"] [data-baseweb="select"] > div{
-  border:1px solid var(--ui-border) !important;
-  border-radius:10px !important;
-  background:var(--ui-bg) !important;
-  color:var(--ui-text) !important;
-  box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-  min-height:40px !important;
-}
-[data-testid="stTextArea"] textarea{
-  font-family:var(--brand-mono) !important;
-  font-size:12.5px !important;
-  line-height:1.55 !important;
-}
-[data-testid="stTextInput"] input:focus,
-[data-testid="stTextArea"] textarea:focus,
-[data-baseweb="select"] > div:focus-within{
-  border-color:var(--ui-focus) !important;
-  box-shadow:0 0 0 3px rgba(37,99,235,.14) !important;
-}
-
-/* Uploaders */
-[data-testid="stFileUploader"] section{
-  border:1px dashed var(--ui-border-strong) !important;
-  border-radius:12px !important;
-  background:linear-gradient(180deg,#fff,#f8fafc) !important;
-  box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-}
-[data-testid="stFileUploader"] button{
-  border-radius:9px !important;
-  border:1px solid var(--ui-border-strong) !important;
-  background:#fff !important;
-  color:#344054 !important;
-  font-weight:750 !important;
-}
-
-/* Tabs, expanders, radios */
-[data-testid="stTabs"] [role="tablist"]{
-  gap:4px;
-  border-bottom:1px solid var(--ui-border);
-}
-[data-testid="stTabs"] [role="tab"]{
-  color:#475467;
-  font-weight:750;
-  border-radius:9px 9px 0 0;
-  padding:10px 14px;
-}
-[data-testid="stTabs"] [aria-selected="true"]{
-  color:#1d4ed8 !important;
-  background:#eff6ff;
-}
-[data-testid="stExpander"]{
-  border:1px solid var(--ui-border) !important;
-  border-radius:12px !important;
-  overflow:hidden !important;
-  background:#fff !important;
-  box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-}
-[data-testid="stRadio"] label p,
-[data-testid="stCheckbox"] label p{
-  color:#344054 !important;
-  font-weight:650 !important;
-}
-
-/* Sliders */
-[data-testid="stSlider"] [data-baseweb="slider"] div{
-  font-family:var(--brand-font) !important;
-}
-
-/* Alerts */
-[data-testid="stAlert"]{
-  border-radius:12px !important;
-  border:1px solid rgba(15,23,42,.08) !important;
-  box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-}
-
-/* Buttons: keep primary action vivid, make utility buttons quieter */
-.stDownloadButton button,
-[data-testid="baseButton-secondary"]{
-  border-radius:10px !important;
-  border:1px solid var(--ui-border-strong) !important;
-  background:#fff !important;
-  color:#344054 !important;
-  font-weight:800 !important;
-  box-shadow:0 1px 2px rgba(16,24,40,.04) !important;
-}
-.stDownloadButton button:hover,
-[data-testid="baseButton-secondary"]:hover{
-  border-color:#94a3b8 !important;
-  background:#f8fafc !important;
-}
-.stButton > button,
-.stButton > button *,
-[data-testid="baseButton-primary"],
-[data-testid="baseButton-primary"] *{
-  color:#ffffff !important;
-  text-shadow:0 1px 1px rgba(15,23,42,.22) !important;
-}
-.stButton > button p,
-[data-testid="baseButton-primary"] p{
-  color:#ffffff !important;
-}
-
-/* Sidebar polish */
-[data-testid="stSidebar"]{
-  background:linear-gradient(180deg,#ffffff,#f8fafc) !important;
-  border-right:1px solid var(--ui-border) !important;
-}
-[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p{
-  color:#475467;
-}
-
-/* Brand typography overrides for Streamlit/BaseWeb defaults */
-[data-testid="stSidebar"] *,
-[data-testid="stTabs"] *,
-[data-testid="stExpander"] *,
-[data-testid="stAlert"] *,
-[data-testid="stMetric"] *,
-[data-testid="stPopover"] *,
-[data-testid="stTooltipHoverTarget"] *,
-[data-baseweb="popover"] *,
-[data-baseweb="menu"] *,
-[data-baseweb="select"] *,
-[data-baseweb="tag"] *,
-[data-baseweb="slider"] *,
-[data-baseweb="checkbox"] *,
-[data-baseweb="radio"] *{
-  font-family:var(--brand-font) !important;
-}
-[data-testid="stSidebar"]{
-  font-size:13px;
-}
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3{
-  letter-spacing:-.01em;
-}
-[data-testid="stTabs"] [role="tab"] p,
-[data-testid="stRadio"] label p,
-[data-testid="stCheckbox"] label p,
-[data-testid="stSelectbox"] label p,
-[data-testid="stMultiSelect"] label p,
-[data-testid="stTextInput"] label p,
-[data-testid="stTextArea"] label p,
-[data-testid="stFileUploader"] label p{
-  font-family:var(--brand-font) !important;
-}
-.hero h1,
-.hero p,
-.badge,
-.pill,
-.kpi,
-.kpi *,
-.section,
-.section *,
-.pro-table,
-.pro-table *{
-  font-family:var(--brand-font) !important;
-}
-.pro-table .file-cell,
-.codebox,
-.codebox *,
-textarea{
-  font-family:var(--brand-mono) !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* Enterprise app shell */
-.block-container{
-  padding-top:1.1rem !important;
-  max-width:100% !important;
-}
-.app-topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  margin:-18px -46px 18px;
-  padding:13px 28px;
-  background:#1f497d;
-  border-bottom:1px solid rgba(255,255,255,.14);
-  color:#fff;
-  box-shadow:0 10px 24px rgba(15,23,42,.14);
-}
-.app-topbar-left,.app-topbar-right{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.app-brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:850;
-  font-size:18px;
-  letter-spacing:-.01em;
-}
-.app-brand img{
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  box-shadow:0 4px 10px rgba(0,0,0,.18);
-}
-.nav-chip,.status-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  min-height:30px;
-  padding:6px 11px;
-  border-radius:7px;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.16);
-  color:#eaf2ff;
-  font-size:13px;
-  font-weight:750;
-}
-.nav-chip.active{
-  background:#3f7fbd;
-  color:#fff;
-  box-shadow:inset 0 -2px 0 rgba(255,255,255,.18);
-}
-.status-chip{
-  background:#2a5d91;
-  color:#dbeafe;
-}
-.status-dot{
-  width:8px;
-  height:8px;
-  border-radius:999px;
-  background:#22c55e;
-  box-shadow:0 0 0 3px rgba(34,197,94,.16);
-}
-[data-testid="stSidebar"]{
-  background:#f3f6fa !important;
-  border-right:1px solid #d9e2ec !important;
-}
-[data-testid="stSidebar"] > div:first-child{
-  padding-top:1.15rem;
-}
-[data-testid="stSidebar"] [data-testid="stVerticalBlock"]{
-  gap:.75rem;
-}
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3{
-  color:#0f172a !important;
-}
-[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h3{
-  margin:0;
-  padding:10px 12px;
-  border-radius:8px 8px 0 0;
-  background:#244f82;
-  color:#fff !important;
-  font-size:15px;
-}
-[data-testid="stTabs"]{
-  margin-top:0;
-}
-[data-testid="stTabs"] [role="tablist"]{
-  background:#244f82;
-  padding:7px 8px;
-  border-radius:0;
-  border:none;
-  gap:6px;
-  margin:0 -46px 16px;
-}
-[data-testid="stTabs"] [role="tab"]{
-  border-radius:7px;
-  color:#dbeafe !important;
-  padding:8px 13px;
-  border:1px solid transparent;
-}
-[data-testid="stTabs"] [role="tab"] p{
-  color:inherit !important;
-  font-weight:800;
-}
-[data-testid="stTabs"] [aria-selected="true"]{
-  background:#3f7fbd !important;
-  color:#ffffff !important;
-  border-color:rgba(255,255,255,.22);
-}
-.hero{
-  border-radius:8px !important;
-  box-shadow:0 8px 18px rgba(15,23,42,.08) !important;
-  background:#ffffff !important;
-}
-.section{
-  border-radius:8px !important;
-  background:#ffffff !important;
-  box-shadow:0 8px 18px rgba(15,23,42,.06) !important;
-}
-.stButton > button{
-  background:#1f497d !important;
-  border:1px solid #1f497d !important;
-  color:#ffffff !important;
-  border-radius:7px !important;
-  box-shadow:0 8px 16px rgba(31,73,125,.18) !important;
-}
-.stButton > button:hover{
-  background:#183b66 !important;
-  border-color:#183b66 !important;
-  color:#ffffff !important;
-}
-.stButton > button:focus{
-  box-shadow:0 0 0 3px rgba(31,73,125,.22), 0 8px 16px rgba(31,73,125,.18) !important;
-}
-[data-testid="baseButton-primary"]{
-  background:#1f497d !important;
-  border-color:#1f497d !important;
-}
-[data-testid="baseButton-primary"]:hover{
-  background:#183b66 !important;
-  border-color:#183b66 !important;
-}
-[data-testid="stAlert"]{
-  border-radius:8px !important;
-}
-@media (max-width: 900px){
-  .app-topbar{
-    margin-left:-22px;
-    margin-right:-22px;
-    align-items:flex-start;
-    flex-direction:column;
-  }
-  [data-testid="stTabs"] [role="tablist"]{
-    margin-left:-22px;
-    margin-right:-22px;
-    overflow:auto;
-  }
-}
-
-/* Right-side settings panel */
-section[data-testid="stSidebar"]{ display:none !important; }
-.right-settings{
-  border:1px solid #d9e2ec;
-  border-radius:8px;
-  background:#f8fafc;
-  box-shadow:0 10px 24px rgba(15,23,42,.08);
-  padding:0 14px 14px;
-}
-.right-settings-title{
-  margin:0 -14px 12px;
-  padding:11px 13px;
-  border-radius:8px 8px 0 0;
-  background:#1f497d;
-  color:#fff;
-  font-weight:850;
-  font-size:15px;
-}
-@media (min-width: 901px){
-  .block-container{
-    padding-right:2.4rem !important;
-    padding-left:2.4rem !important;
-  }
-  .app-topbar{
-    margin-right:-46px;
-  }
-}
-</style>
-""", unsafe_allow_html=True)
+inject_theme()
+register_chart_theme()
 
 
 # =========================
@@ -635,7 +157,7 @@ def _df_to_latex(df: pd.DataFrame, caption: str = "", label: str = "") -> str:
 
 
 def _latex_button(df: pd.DataFrame, caption: str, label: str, key: str) -> None:
-    with st.expander("📋 Export as LaTeX", expanded=False):
+    with st.expander("Export as LaTeX", expanded=False):
         st.code(_df_to_latex(df, caption=caption, label=label), language="latex")
 
 METRIC_INFO = {
@@ -998,19 +520,20 @@ def _render_wide_metric_chart(
     )
     st.altair_chart(chart, use_container_width=True)
 
-def render_code_with_highlight(title: str, code: str, hl_ranges: list[tuple[int,int]]):
+def render_code_with_highlight(title: str, code: str, hl_ranges: list[tuple[int,int]], first_line: int = 1):
     """
-    Render code with 1-based line numbers and highlight ranges inclusive.
-    hl_ranges: list of (start,end) inclusive; use (n,n) for single line.
+    Render code with line numbers starting at ``first_line`` and highlight ranges inclusive.
+    hl_ranges: list of (start,end) inclusive, in file line numbers; use (n,n) for single line.
     """
     lines = code.splitlines()
+    last_line = first_line + len(lines) - 1
     hl_set = set()
     for a,b in hl_ranges:
         if a > b: a,b = b,a
-        for i in range(max(1,a), min(len(lines), b)+1):
+        for i in range(max(first_line,a), min(last_line, b)+1):
             hl_set.add(i)
     rows_html = []
-    for idx, txt in enumerate(lines, start=1):
+    for idx, txt in enumerate(lines, start=first_line):
         safe = txt.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;")
         cls = "line hl" if idx in hl_set else "line"
         rows_html.append(
@@ -1171,7 +694,7 @@ def _preflight_inputs(zip_name: str | None, zip_bytes: bytes | None,
     return ok, report
 
 def _render_preflight(report: dict[str, Any]) -> None:
-    st.markdown("### 🧪 Preflight checks")
+    st.markdown("### Preflight checks")
     rows = []
     for label, key in [
         ("Project ZIP", "zip"),
@@ -1318,7 +841,7 @@ def _render_code_evidence_viewer(diagnostics: list[dict[str, Any]], key_prefix: 
     if not evidence_items:
         return
 
-    st.markdown("### 🔎 Code evidence viewer")
+    st.markdown("### Code evidence viewer")
     st.caption("Pick a file to inspect the ground-truth context and LLM context side by side.")
     labels = [
         f"{item.get('bucket', 'file')} · {item.get('file')} · TP {item.get('tp', 0)} / FP {item.get('fp', 0)} / FN {item.get('fn', 0)}"
@@ -1640,7 +1163,7 @@ def _render_review_board(metrics: dict[str, Any], key_prefix: str = "review") ->
     df["_error_total"] = df["FP"] + df["FN"]
     df = df.sort_values(["_severity", "_error_total", "File"], ascending=[True, False, True])
 
-    st.markdown("### 🧭 Review board")
+    st.markdown("### Review board")
     st.caption("File-by-file diagnostic over the sampled universe U. TP/FP/FN are span-level counts; verdicts group files for fast inspection.")
     st.info(_review_summary(df))
 
@@ -1773,7 +1296,7 @@ def _render_comparison_review_boards(metrics_df: pd.DataFrame, label: str) -> No
     if not has_context:
         st.warning("These cached results do not contain code excerpts yet. Rerun the analysis to populate Code context blocks.")
 
-    st.markdown("### 🧭 Review board by prompt/model")
+    st.markdown("### Review board by prompt/model")
     st.caption(f"Pick one {label} below. The board, filters, error mix, and file details update for that selected {label}.")
 
     summary_cols = [c for c in ["precision", "recall", "f1", "tp", "fp", "fn", "time_s", "total_tokens", "usd_cost"] if c in metrics_df.columns]
@@ -1810,15 +1333,15 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
             language=str(_row.get("language", "?")),
             model_label=str(_row.get("model", "?")),
         )
-    st.markdown("### 📁 Universe U (files considered)")
+    st.markdown("### Universe U (files considered)")
     _render_pro_dataframe(summary_U)
 
-    st.markdown("### 📐 Comparison Metrics (All Strategies)")
+    st.markdown("### Comparison Metrics (All Strategies)")
     _view = _metrics_table_view(metrics_df)
     _render_pro_dataframe(_view)
     _latex_button(_view.reset_index(), caption="Prompt comparison: precision, recall, F1", label="tab:prompt_comparison", key="latex_prompt_cmp")
 
-    st.markdown("### 📈 Precision / Recall / F1 by Strategy")
+    st.markdown("### Precision / Recall / F1 by Strategy")
     _render_wide_metric_chart(
         metrics_df,
         ["precision", "recall", "f1"],
@@ -1830,7 +1353,7 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
     _render_comparison_review_boards(metrics_df, "strategy")
 
     if "type_breakdown" in metrics_df.columns:
-        with st.expander("📊 Breakdown by smell type (best strategy)", expanded=False):
+        with st.expander("Breakdown by smell type (best strategy)", expanded=False):
             best_idx = metrics_df["f1"].idxmax() if "f1" in metrics_df.columns else metrics_df.index[0]
             breakdown = metrics_df.loc[best_idx, "type_breakdown"]
             if isinstance(breakdown, list):
@@ -1842,9 +1365,9 @@ def _render_prompt_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Da
         key="download_prompt_comparison_report",
     )
 
-    st.markdown("## 🤖 LLM-based Findings per Strategy")
+    st.markdown("## LLM-based Findings per Strategy")
     for p, sample in (samples or {}).items():
-        with st.expander(f"🔹 {p} (sample)"):
+        with st.expander(f"{p} (sample)"):
             st.json(sample)
 
 def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.DataFrame, samples: dict[str, Any]) -> None:
@@ -1856,13 +1379,13 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
             language=str(_row.get("language", "?")),
             model_label=f"{len(metrics_df)} models compared",
         )
-    st.markdown("### 📁 Universe U (files considered)")
+    st.markdown("### Universe U (files considered)")
     _render_pro_dataframe(summary_U)
-    st.markdown("### 📐 Metrics per Model")
+    st.markdown("### Metrics per Model")
     _view_m = _metrics_table_view(metrics_df)
     _render_pro_dataframe(_view_m)
     _latex_button(_view_m.reset_index(), caption="Model comparison: precision, recall, F1", label="tab:model_comparison", key="latex_model_cmp")
-    st.markdown("### 📈 Precision / Recall / F1 by Model")
+    st.markdown("### Precision / Recall / F1 by Model")
     _render_wide_metric_chart(
         metrics_df,
         ["precision", "recall", "f1"],
@@ -1870,7 +1393,7 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
         value_label="Score",
         value_format=".2%",
     )
-    st.markdown("### 💰 Tokens & Cost by Model")
+    st.markdown("### Tokens & Cost by Model")
     _render_wide_metric_chart(
         metrics_df,
         ["prompt_tokens", "completion_tokens", "total_tokens"],
@@ -1892,9 +1415,9 @@ def _render_model_comparison_results(summary_U: pd.DataFrame, metrics_df: pd.Dat
         file_name="stallm_model_comparison_report.html",
         key="download_model_comparison_report",
     )
-    st.markdown("## 🤖 Samples per Model")
+    st.markdown("## Samples per Model")
     for model_label, sample in (samples or {}).items():
-        with st.expander(f"🔹 {model_label} (sample)"):
+        with st.expander(f"{model_label} (sample)"):
             st.json(sample)
 
 def _render_matching_config_badge(metrics: dict[str, Any], *, preset: str, language: str, model_label: str) -> None:
@@ -1907,11 +1430,11 @@ def _render_matching_config_badge(metrics: dict[str, Any], *, preset: str, langu
     col_label  = "col-aware"  if use_cols    else "line-only"
     st.markdown(
         f"<div style='margin:.5rem 0 .75rem;display:flex;flex-wrap:wrap;gap:7px;font-size:13px;'>"
-        f"<span class='pill'>🌐 {escape(language)}</span>"
-        f"<span class='pill'>🤖 {escape(model_label)}</span>"
-        f"<span class='pill'>⚖️ Preset: {escape(preset)}</span>"
-        f"<span class='pill'>🔍 Matching: {type_label}, {col_label}</span>"
-        f"<span class='pill'>📂 Universe: {top_k} files ({positives}+ / {negatives}−)</span>"
+        f"<span class='pill'>{escape(language)}</span>"
+        f"<span class='pill'>{escape(model_label)}</span>"
+        f"<span class='pill'>Preset: {escape(preset)}</span>"
+        f"<span class='pill'>Matching: {type_label}, {col_label}</span>"
+        f"<span class='pill'>Universe: {top_k} files ({positives}+ / {negatives}−)</span>"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -1925,7 +1448,7 @@ def _render_type_breakdown(type_breakdown: list[dict], *, use_expander: bool = T
     df["Recall"]    = df["Recall"].map(lambda v: f"{v:.1%}")
     df["F1"]        = df["F1"].map(lambda v: f"{v:.1%}")
     if use_expander:
-        with st.expander("📊 Breakdown by smell type", expanded=True):
+        with st.expander("Breakdown by smell type", expanded=True):
             _render_pro_dataframe(df, hide_index=True)
             _latex_button(df, caption="Per-type precision, recall, and F1", label="tab:type_breakdown", key="latex_type_breakdown")
     else:
@@ -1934,8 +1457,9 @@ def _render_type_breakdown(type_breakdown: list[dict], *, use_expander: bool = T
 
 
 def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any], usage_totals: dict[str, Any],
-                               *, prompt_label: str, language: str, model_label: str, preset: str) -> None:
-    st.markdown("### 📁 Universe U (files considered)")
+                               *, prompt_label: str, language: str, model_label: str, preset: str,
+                               experiment: dict[str, Any] | None = None) -> None:
+    st.markdown("### Universe U (files considered)")
     _render_pro_dataframe(summary_U)
     st.caption("`is_positive=True` → the file has ≥1 GT span. `gt_lines` = number of GT rows for that file.")
 
@@ -1969,7 +1493,7 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
     with t3: kpi("Total tokens", f"{usage_totals.get('total_tokens', 0):,}")
     with t4: kpi("USD cost", f"${float(usage_totals.get('usd_cost', 0.0)):.6f}", "warn")
 
-    with st.expander("🔬 Diagnostics (mapping & sampling)"):
+    with st.expander("Diagnostics (mapping & sampling)"):
         diag = metrics.get("diagnostics", {})
         st.json(diag)
         cov = float(diag.get("mapping_coverage", 0.0))
@@ -1991,40 +1515,14 @@ def _render_single_run_results(summary_U: pd.DataFrame, metrics: dict[str, Any],
         file_name="stallm_run_report.html",
         key="download_single_run_report",
     )
-
-# =========================
-# HERO
-# =========================
-st.markdown(f"""
-<div class="app-topbar">
-  <div class="app-topbar-left">
-    <div class="app-brand">
-      <img src="{BRAND_LOGO_DATA_URI}" alt="StarLLM logo" />
-      <span>StarLLM</span>
-    </div>
-    <span class="nav-chip active">Maintenance Lab</span>
-    <span class="nav-chip">Prompt Benchmarks</span>
-    <span class="nav-chip">Model Comparison</span>
-  </div>
-  <div class="app-topbar-right">
-    <span class="status-chip"><span class="status-dot"></span> Branch: feature/autoresearch-benchmark</span>
-    <span class="status-chip">ArgoUML FL ready</span>
-  </div>
-</div>
-<div class="hero">
-  <div class="hero-brand">
-    <img class="hero-logo" src="{BRAND_LOGO_DATA_URI}" alt="StarLLM logo" />
-    <h1>StarLLM: Static Analysis meets LLMs</h1>
-  </div>
-  <p>LLM-guided code-smell detection with span-level evaluation, token/cost accounting, and crisp benchmarking workflows.</p>
-  <div class="badges">
-    <span class="badge">Span-level scoring</span>
-    <span class="badge">Universe sampling (Top-K)</span>
-    <span class="badge">IoU + line tolerance</span>
-    <span class="badge">Prompt/Model comparison</span>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    if experiment:
+        manifest_download(
+            experiment,
+            {k: metrics.get(k) for k in ("precision", "recall", "f1", "tp", "fp", "fn", "time_s", "top_k_total_files")}
+            | {"usage": usage_totals},
+            key="manifest_single_run",
+            file_stem="stallm_span_run",
+        )
 
 # =========================
 # LLM builders (enhanced with Ollama host + connectivity test)
@@ -2039,7 +1537,7 @@ def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
                                       help="Select a slot configured in your .env")
         slot = keys[labels.index(choice)]
         llm_obj = build_llm_from_slot(slot)
-        st.markdown(f"<span class='pill'>🧠 <b>Model</b> {llm_obj.model_label()}</span>", unsafe_allow_html=True)
+        st.markdown(f"<span class='pill'><b>Model</b> {llm_obj.model_label()}</span>", unsafe_allow_html=True)
         return llm_obj
 
     target.markdown("**Manual configuration (no .env slots detected)**")
@@ -2058,7 +1556,7 @@ def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
         if not api_key_env:
             api_key_env = target.text_input("Azure API Key (paste if .env missing)", value="", type="password")
             if api_key_env: os.environ["AZURE_OPENAI_API_KEY"] = api_key_env
-        st.markdown(f"<span class='pill'>🧠 <b>Model</b> azure:{deployment or 'deployment'}</span>", unsafe_allow_html=True)
+        st.markdown(f"<span class='pill'><b>Model</b> azure:{deployment or 'deployment'}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="azure-openai", model=deployment, api_base=api_base, api_version=api_version, api_key=api_key_env))
 
     elif prov == "openai":
@@ -2068,7 +1566,7 @@ def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
             api_key_env = target.text_input("OpenAI API Key (paste if .env missing)", value="", type="password")
             if api_key_env: os.environ["OPENAI_API_KEY"] = api_key_env
         base_url = os.getenv("OPENAI_BASE_URL") or None
-        st.markdown(f"<span class='pill'>🧠 <b>Model</b> openai:{model}</span>", unsafe_allow_html=True)
+        st.markdown(f"<span class='pill'><b>Model</b> openai:{model}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="openai", model=model, api_base=base_url, api_key=api_key_env))
 
     else:
@@ -2076,7 +1574,7 @@ def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
         default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
         host = target.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
                                      help="e.g., http://localhost:11434 or http://192.168.1.100:11434")
-        if target.button("🔍 Test Connection", key=f"test_conn_{sidebar_prefix}"):
+        if target.button("Test Connection", key=f"test_conn_{sidebar_prefix}"):
             with target.spinner("Testing connection..."):
                 ok, msg = test_ollama_connectivity(host)
                 (target.success if ok else target.error)(msg)
@@ -2084,14 +1582,14 @@ def build_llm(sidebar_prefix: str = "", target=None) -> ChatModel:
         try:
             models_for_host = available_models("ollama", host)
             if not models_for_host:
-                target.warning("⚠️ No models returned by host. Falling back to env list.")
+                target.warning("No models returned by host. Falling back to env list.")
                 models_for_host = available_models("ollama", None)
         except Exception as e:
-            target.warning(f"⚠️ Could not list models from host: {e}")
+            target.warning(f"Could not list models from host: {e}")
             models_for_host = available_models("ollama", None)
 
         model = target.selectbox(f"{sidebar_prefix}Model", models_for_host or mdl_list, index=0)
-        st.markdown(f"<span class='pill'>🧠 <b>Model</b> ollama:{model}@{host.replace('http://','').replace('https://','')}</span>", unsafe_allow_html=True)
+        st.markdown(f"<span class='pill'><b>Model</b> ollama:{model}@{host.replace('http://','').replace('https://','')}</span>", unsafe_allow_html=True)
         return ChatModel(LLMConfig(provider="ollama", model=model, api_base=host))
 
 def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[ChatModel]:
@@ -2109,7 +1607,7 @@ def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[Cha
             cm = build_llm_from_slot(slot)
             llms.append(cm)
         if llms:
-            pills = " ".join(f"<span class='pill'>🧠 <b>Model</b> {cm.model_label()}</span>" for cm in llms)
+            pills = " ".join(f"<span class='pill'><b>Model</b> {cm.model_label()}</span>" for cm in llms)
             st.markdown(pills, unsafe_allow_html=True)
         return llms
 
@@ -2119,7 +1617,7 @@ def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[Cha
         default_host = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
         host = target.text_input(f"{sidebar_prefix}Ollama Host", value=default_host,
                                      help="Ollama server URL for model comparison", key="cmp_ollama_host")
-        if target.button("🔍 Test Connection", key="test_conn_cmp"):
+        if target.button("Test Connection", key="test_conn_cmp"):
             with target.spinner("Testing connection..."):
                 ok, msg = test_ollama_connectivity(host)
                 (target.success if ok else target.error)(msg)
@@ -2152,181 +1650,10 @@ def build_llms_for_comparison(sidebar_prefix: str = "", target=None) -> list[Cha
                 llms.append(ChatModel(LLMConfig(provider="openai", model=m, api_base=base_url, api_key=api_key_env)))
 
     if llms:
-        pills = " ".join(f"<span class='pill'>🧠 <b>Model</b> {cm.model_label()}</span>" for cm in llms)
+        pills = " ".join(f"<span class='pill'><b>Model</b> {cm.model_label()}</span>" for cm in llms)
         st.markdown(pills, unsafe_allow_html=True)
     return llms
 
-# =========================
-# Navigation
-# =========================
-PAGES = [
-    "🧭 Maintenance",
-    "⚙️ Run Experiments",
-    "🧪 AutoResearch",
-    "📝 Manage Prompts",
-    "🗃️ Results",
-    "🔄 Batch",
-    "📘 Guide",
-]
-PAGE_LABELS = {
-    "🧭 Maintenance":    "Maintenance Activities",
-    "⚙️ Run Experiments": "Run Experiments",
-    "🧪 AutoResearch":   "AutoResearch",
-    "📝 Manage Prompts": "Manage Prompts",
-    "🗃️ Results":        "Stored Results (DB)",
-    "🔄 Batch":          "Batch Experiments",
-    "📘 Guide":          "Guide & Examples",
-}
-
-if "workspace_page" not in st.session_state:
-    st.session_state.workspace_page = PAGES[0]
-page = st.session_state.workspace_page
-_active_idx = PAGES.index(page)
-
-# CSS class-based styles — applied via JS below
-st.markdown(f"""
-<style>
-.stallm-nav-bar {{
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 14px !important;
-    padding: 5px !important;
-    gap: 4px !important;
-    box-shadow: 0 1px 4px rgba(15,23,42,.06), 0 4px 12px rgba(15,23,42,.04) !important;
-    margin-bottom: 4px !important;
-}}
-@media (prefers-color-scheme: dark) {{
-    .stallm-nav-bar {{ background: #1e293b !important; border-color: rgba(255,255,255,.09) !important; }}
-}}
-.stallm-nav-bar .stButton > button {{
-    height: 38px !important;
-    min-height: 38px !important;
-    max-height: 38px !important;
-    padding: 0 8px !important;
-    font-size: 13px !important;
-    font-weight: 700 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    background: transparent !important;
-    color: #1e293b !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 9px !important;
-    transition: background .12s, color .12s !important;
-    letter-spacing: .01em !important;
-}}
-.stallm-nav-bar .stButton > button:hover {{
-    background: #eff6ff !important;
-    color: #2563eb !important;
-}}
-@media (prefers-color-scheme: dark) {{
-    .stallm-nav-bar .stButton > button {{ color: #e2e8f0 !important; }}
-    .stallm-nav-bar .stButton > button:hover {{ background: rgba(37,99,235,.15) !important; color: #93c5fd !important; }}
-}}
-.stallm-nav-bar div[data-testid="column"]:nth-child({_active_idx + 1}) .stButton > button {{
-    background: #2563eb !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    box-shadow: 0 2px 8px rgba(37,99,235,.35) !important;
-}}
-.stallm-nav-bar div[data-testid="column"]:nth-child({_active_idx + 1}) .stButton > button:hover {{
-    background: #1d4ed8 !important;
-}}
-</style>
-""", unsafe_allow_html=True)
-
-# Anchor marker so JS can find the nav block
-st.markdown('<div id="stallm-nav-anchor"></div>', unsafe_allow_html=True)
-
-# st.button nav — Streamlit rerun only, no browser reload
-_nav_cols = st.columns(len(PAGES))
-for _i, _pg in enumerate(PAGES):
-    with _nav_cols[_i]:
-        if st.button(_pg, key=f"nav_{_i}", use_container_width=True):
-            st.session_state.workspace_page = _pg
-            st.rerun()
-
-# JS: find the stHorizontalBlock next to the anchor, then apply inline styles
-# directly on each button — inline styles beat every CSS !important rule.
-import streamlit.components.v1 as _components
-_components.html(f"""
-<script>
-(function() {{
-  var ACTIVE = {_active_idx};
-  var N      = {len(PAGES)};
-
-  function styleNav() {{
-    var doc    = window.parent.document;
-    var anchor = doc.getElementById('stallm-nav-anchor');
-    if (!anchor) return;
-
-    // Walk up to find the stHorizontalBlock sibling
-    var navBlock = null;
-    var node = anchor;
-    for (var d = 0; d < 10; d++) {{
-      var par  = node.parentElement;
-      if (!par) break;
-      var kids = Array.from(par.children);
-      var idx  = kids.indexOf(node);
-      for (var j = idx + 1; j < kids.length; j++) {{
-        if (kids[j].getAttribute('data-testid') === 'stHorizontalBlock') {{
-          navBlock = kids[j]; break;
-        }}
-      }}
-      if (navBlock) break;
-      node = par;
-    }}
-    if (!navBlock) return;
-
-    // Style the container
-    Object.assign(navBlock.style, {{
-      background:   '#ffffff',
-      border:       '1px solid #e2e8f0',
-      borderRadius: '14px',
-      padding:      '5px',
-      gap:          '4px',
-      boxShadow:    '0 1px 4px rgba(15,23,42,.06),0 4px 12px rgba(15,23,42,.04)',
-      marginBottom: '4px'
-    }});
-
-    // Style each button
-    var cols = navBlock.querySelectorAll('[data-testid="column"]');
-    cols.forEach(function(col, i) {{
-      var btn = col.querySelector('button');
-      if (!btn) return;
-      var isActive = (i === ACTIVE);
-      Object.assign(btn.style, {{
-        height:         '38px',
-        minHeight:      '38px',
-        maxHeight:      '38px',
-        padding:        '0 8px',
-        fontSize:       '13px',
-        fontWeight:     isActive ? '700' : '600',
-        whiteSpace:     'nowrap',
-        overflow:       'hidden',
-        textOverflow:   'ellipsis',
-        background:     isActive ? '#2563eb' : 'transparent',
-        color:          isActive ? '#ffffff' : '#1e293b',
-        border:         'none',
-        boxShadow:      isActive ? '0 2px 8px rgba(37,99,235,.35)' : 'none',
-        borderRadius:   '9px',
-        transition:     'background .12s,color .12s',
-        letterSpacing:  '.01em'
-      }});
-    }});
-  }}
-
-  styleNav();
-  var timer = null;
-  var ob = new MutationObserver(function() {{
-    clearTimeout(timer);
-    timer = setTimeout(styleNav, 80);
-  }});
-  ob.observe(window.parent.document.body, {{ childList: true, subtree: true }});
-}})();
-</script>
-""", height=0, scrolling=False)
 
 
 def _run_multilanguage_benchmark(
@@ -2388,7 +1715,7 @@ def _run_multilanguage_benchmark(
 
 
 def _render_multilanguage_results(all_rows: list[dict]) -> None:
-    st.markdown("### 🌐 Multi-language Benchmark")
+    st.markdown("### Multi-language Benchmark")
     df = pd.DataFrame(all_rows)
     df_display = df.copy()
     df_display["Precision"] = df_display["Precision"].map(lambda v: f"{v:.1%}")
@@ -2409,7 +1736,7 @@ def _render_multilanguage_results(all_rows: list[dict]) -> None:
 def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None):
     sidebar_target = settings_target or (st.sidebar if render_sidebar else st.container())
     if render_sidebar and settings_target is None:
-        st.sidebar.header("⚙️ Settings")
+        st.sidebar.header("Settings")
     if "run_top_k" not in st.session_state:
         st.session_state.run_top_k = 20
     if "run_pos_ratio" not in st.session_state:
@@ -2419,7 +1746,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
     if "use_bundled_demo" not in st.session_state:
         st.session_state.use_bundled_demo = False
 
-    if sidebar_target.button("⚡ Load demo config"):
+    if sidebar_target.button("Load demo config"):
         st.session_state.use_bundled_demo = True
         st.session_state.run_top_k = 5
         st.session_state.run_pos_ratio = 0.6
@@ -2447,15 +1774,15 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
     selected_prompt_names: list[str] = []
     if mode_run == "Single prompt":
         if not strategies:
-            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
+            st.error("No strategies available. Please add one in ‘Manage Prompts’.")
             return
-        prompt_mode = sidebar_target.selectbox("🧩 Select LLM Prompt Strategy", list(strategies.keys()))
+        prompt_mode = sidebar_target.selectbox("Select LLM Prompt Strategy", list(strategies.keys()))
         selected_prompt_names = [prompt_mode]
         if render_sidebar:
             _sidebar_prompt_preview("View selected prompt", strategies, prompt_mode, target=sidebar_target)
     elif mode_run == "Compare selected prompts":
         selected_modes = sidebar_target.multiselect(
-            "🧩 Select Prompt Strategies to Compare",
+            "Select Prompt Strategies to Compare",
             list(strategies.keys()),
             default=[k for k in ["baseline", "scanner", "hybrid"] if k in strategies],
         )
@@ -2464,9 +1791,9 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             _sidebar_prompt_preview("View selected prompts", strategies, selected_modes, target=sidebar_target)
     else:
         if not strategies:
-            st.error("⚠️ No strategies available. Please add one in ‘Manage Prompts’.")
+            st.error("No strategies available. Please add one in ‘Manage Prompts’.")
             return
-        prompt_mode = sidebar_target.selectbox("🧩 Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
+        prompt_mode = sidebar_target.selectbox("Fixed Prompt Strategy (for model comparison)", list(strategies.keys()))
         selected_prompt_names = [prompt_mode]
         if render_sidebar:
             _sidebar_prompt_preview("View fixed prompt", strategies, prompt_mode, target=sidebar_target)
@@ -2512,9 +1839,9 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
     else:
         colu1, colu2 = st.columns([1,1])
         with colu1:
-            uploaded_zip = st.file_uploader("📦 Project (ZIP)", type="zip", help="ZIP with source files.")
+            uploaded_zip = st.file_uploader("Project (ZIP)", type="zip", help="ZIP with source files.")
         with colu2:
-            uploaded_static = st.file_uploader("📑 Static Analyzer CSV (Ground Truth)", type="csv",
+            uploaded_static = st.file_uploader("Static Analyzer CSV (Ground Truth)", type="csv",
                                                help="GT spans: file, startLine, endLine[, columns, type].")
 
         zip_bytes = uploaded_zip.getvalue() if uploaded_zip is not None else None
@@ -2549,7 +1876,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
             caps = None
 
         if caps:
-            st.markdown("### ✅ Detected GT capabilities")
+            st.markdown("### Detected GT capabilities")
             sample = caps.get("sample", {})
             c1, c2, c3 = st.columns(3)
 
@@ -2586,7 +1913,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
     # Multi-language benchmark
     if demo_sets and len(demo_sets) > 1 and mode_run == "Compare selected prompts":
         st.markdown("---")
-        ml_clicked = st.button("🌐 Run on all datasets (multi-language benchmark)", help="Runs the selected prompts on every available demo dataset and aggregates results in one table.")
+        ml_clicked = st.button("Run on all datasets (multi-language benchmark)", help="Runs the selected prompts on every available demo dataset and aggregates results in one table.")
         if ml_clicked:
             if not preflight_ok:
                 st.warning("Fix the configuration issues before running.")
@@ -2598,10 +1925,10 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
         st.markdown("---")
 
     # Run
-    run_clicked = st.button("🚀 Run Analysis")
+    run_clicked = st.button("Run analysis", type="primary")
     if run_clicked:
         if not (zip_bytes and csv_bytes):
-            st.warning("📥 Please select demo data or upload both files (ZIP + CSV).")
+            st.warning("Please select demo data or upload both files (ZIP + CSV).")
             return
         if not preflight_ok:
             st.warning("Resolve the preflight checks before running the analysis.")
@@ -2613,18 +1940,18 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
 
             language = detect_language_from_zip(zip_path)
             exts = find_exts_for_language(language)
-            st.markdown(f"### 🌐 Detected Language: **{language}**")
+            st.markdown(f"### Detected Language: **{language}**")
             st.caption("Span-level evaluation with a mixed universe U (positives + negatives).")
 
             # sanity read GT
             try:
                 _ = load_ground_truth_spans(csv_path, allowed_exts=exts)
             except Exception as e:
-                st.error(f"⚠️ Error reading Static Analyzer CSV: {e}")
+                st.error(f"Error reading Static Analyzer CSV: {e}")
                 return
 
             if mode_run == "Single prompt":
-                st.markdown(f"### 🤖 Running LLM analysis with `{prompt_mode}` strategy…")
+                st.markdown(f"### Running LLM analysis with `{prompt_mode}` strategy…")
                 start = time.time()
                 try:
                     with st.spinner(f"⏳ Running `{prompt_mode}`…"):
@@ -2660,11 +1987,20 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                         total_tokens=int(usage_totals.get("total_tokens", 0)),
                         usd_cost=float(usage_totals.get("usd_cost", 0.0)),
                     )
-                    st.success("✅ Run saved to database.")
+                    st.success("Run saved to database.")
                 except Exception:
                     pass
 
                 prompt_label = f"{prompt_mode}@span"
+                experiment = {
+                    "task": "static-analysis finding recovery (span level)",
+                    "project": zip_name, "oracle": csv_name, "language": language,
+                    "model": llm.model_label(), "prompt_strategy": prompt_mode,
+                    "prompts": {prompt_mode: str(strategies.get(prompt_mode, ""))},
+                    "universe": {"top_k": top_k, "positive_ratio": pos_ratio},
+                    "matching": {"preset": preset, "require_type": user_require_type,
+                                 "use_line_span": user_use_line_span, "use_columns_single_line": user_use_cols_single},
+                }
                 st.session_state.last_single_run = {
                     "summary_U": summary_U,
                     "metrics": metrics,
@@ -2673,6 +2009,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                     "language": language,
                     "model_label": llm.model_label(),
                     "preset": preset,
+                    "experiment": experiment,
                     "schema_version": RESULTS_SCHEMA_VERSION,
                 }
                 _render_single_run_results(
@@ -2683,15 +2020,16 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                     language=language,
                     model_label=llm.model_label(),
                     preset=preset,
+                    experiment=experiment,
                 )
 
                 st.caption(f"⏱️ Completed in {elapsed:.1f}s • Model: {llm.model_label()} • Preset: {preset}")
 
             elif mode_run == "Compare selected prompts":
                 if not selected_modes:
-                    st.warning("⚠️ Please select at least one prompt strategy.")
+                    st.warning("Please select at least one prompt strategy.")
                     return
-                st.markdown("### 🔄 Running Multiple Prompt Strategies (span-level)")
+                st.markdown("### Running Multiple Prompt Strategies (span-level)")
                 progress = st.progress(0); status_text = st.empty(); timer_text = st.empty()
                 try:
                     summary_U, metrics_df, samples = run_selected_experiments(
@@ -2718,9 +2056,9 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
 
             else:
                 if not llms_to_compare:
-                    st.warning("⚠️ Please select at least one LLM to compare.")
+                    st.warning("Please select at least one LLM to compare.")
                     return
-                st.markdown(f"### 🔄 Comparing LLM models (strategy: `{prompt_mode}`, span-level)")
+                st.markdown(f"### Comparing LLM models (strategy: `{prompt_mode}`, span-level)")
                 progress = st.progress(0); status_text = st.empty(); timer_text = st.empty()
                 try:
                     summary_U, metrics_df, samples = run_selected_models_experiments(
@@ -2757,6 +2095,7 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
                     language=cached["language"],
                     model_label=cached["model_label"],
                     preset=cached["preset"],
+                    experiment=cached.get("experiment"),
                 )
             else:
                 st.info("Cached single-run results are from an older format. Rerun the analysis to enable Code context.")
@@ -2782,8 +2121,6 @@ def render_tab_run_experiments(render_sidebar: bool = True, settings_target=None
 # Tab 1 : Maintenance Activities (Feature/Bug Location)
 # ==========================================================
 def render_tab_maintenance_tasks(settings_target=None):
-    st.markdown("## 🧭 Maintenance Activities")
-    st.caption("Experimental branch: feature location and bug localization use file-level ranking metrics.")
 
     settings = settings_target or st.sidebar
     activity = settings.selectbox(
@@ -2821,7 +2158,7 @@ def render_tab_maintenance_tasks(settings_target=None):
         st.session_state.setdefault("fl_gt_path", default_gt)
         st.session_state.setdefault("fl_repo_zip", default_zip)
         st.session_state.setdefault("fl_top_k", 10)
-        if settings.button("⚡ Load demo config", key="fl_load_demo_config"):
+        if settings.button("Load demo config", key="fl_load_demo_config"):
             st.session_state.fl_gt_path = default_gt
             st.session_state.fl_repo_zip = default_zip
             st.session_state.fl_top_k = 10
@@ -3330,7 +2667,7 @@ def _render_dacos_comparison_results(results: list[dict[str, Any]], *, compare_b
     if prompt_names_in_table:
         templates_from_results = {r.get("prompt", ""): r.get("template", "") for r in results if r.get("template")}
         templates_builtin = _dacos_prompt_templates()
-        with st.expander("🔍 Inspect prompt template", expanded=False):
+        with st.expander("Inspect prompt template", expanded=False):
             selected_for_preview = st.selectbox(
                 "Select prompt to preview",
                 prompt_names_in_table,
@@ -3663,7 +3000,7 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
             st.caption(f"95% CI [{m['mrr_ci_lo']:.3f}–{m['mrr_ci_hi']:.3f}]")
     with c4: kpi("Gold files", str(len(task.gold_locations)), "warn")
 
-    st.markdown("### 📐 Location Metrics")
+    st.markdown("### Location Metrics")
     summary_display = summary_df.copy()
     for col in ["Hit@1", "Hit@5", "Hit@10", "Recall@10", "MRR", "MAP"]:
         if col in summary_display.columns:
@@ -3694,7 +3031,7 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
         if row.get("task_id")
     })
     if all_task_ids:
-        st.markdown("### 📊 Breakdown by Feature Scenario")
+        st.markdown("### Breakdown by Feature Scenario")
         feature_rows = []
         for feat_id in all_task_ids:
             row_dict: dict[str, Any] = {"Feature": feat_id}
@@ -3736,76 +3073,32 @@ def _render_location_results(results: list[dict[str, Any]], task: Any) -> None:
     with st.expander("Raw LLM response", expanded=False):
         st.code(result.get("raw_response", ""), language="json")
 
-if page in ("🧭 Maintenance", "⚙️ Run Experiments"):
+def render_page_tasks():
+    page_header(
+        "Run Tasks",
+        "Configure a model slot, a prompt strategy and a reference oracle, then run a maintenance task. "
+        "Results can be inspected file by file and exported with a provenance manifest.",
+        eyebrow="Experiments",
+    )
     main_col, settings_col = st.columns([3.2, 1.05], gap="large")
     with settings_col:
-        st.markdown('<div class="right-settings-title">Settings</div>', unsafe_allow_html=True)
+        st.markdown('<div class="right-settings-title">Configuration</div>', unsafe_allow_html=True)
         settings_box = st.container()
     with main_col:
-        if page == "🧭 Maintenance":
-            render_tab_maintenance_tasks(settings_target=settings_box)
-        else:
-            render_tab_run_experiments(render_sidebar=True, settings_target=settings_box)
+        render_tab_maintenance_tasks(settings_target=settings_box)
 
 # ==========================================================
 # Tab 3 : Results DB
 # ==========================================================
 def render_tab_results_db():
-    st.markdown("## 🗃️ Stored Experiment Results (Database)")
-    session = Session()
-    try:
-        results = session.query(SmellDetectionResult).all()
-    except Exception as e:
-        st.error(f"DB error: {e}")
-        session.close()
-        return
-
-    if not results:
-        st.info("ℹ️ No results stored in the database.")
-        session.close()
-        return
-
-    df = pd.DataFrame([{
-        "Project": r.project, "Language": r.language, "Filename": r.filename,
-        "Strategy": r.strategy, "Precision": r.precision, "Recall": r.recall,
-        "F1 Score": r.f1, "Top-K (files in U)": r.top_k, "Time (s)": r.time_elapsed,
-        "LLM Used": r.llm_used, "Prompt tokens": r.prompt_tokens,
-        "Completion tokens": r.completion_tokens, "Total tokens": r.total_tokens,
-        "USD cost": r.usd_cost, "Timestamp": r.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-    } for r in results])
-    _render_pro_dataframe(df, hide_index=True)
-
-    try:
-        pivot_df = df.pivot_table(index="Project", columns=["LLM Used","Strategy"], values="F1 Score", aggfunc="mean").sort_index(axis=1)
-        if isinstance(pivot_df.columns, pd.MultiIndex):
-            pivot_df.columns = [f"{(llm or 'Unknown')} · {(strategy or 'n/a')}" for (llm,strategy) in pivot_df.columns.to_list()]
-        else:
-            pivot_df.columns = pivot_df.columns.astype(str)
-        pivot_df = pivot_df.fillna(0)
-        st.markdown("### 📈 Global Comparison (F1 across Projects • by LLM & Strategy)")
-        global_chart_df = (
-            pivot_df.reset_index()
-            .melt(id_vars="Project", var_name="LLM / Strategy", value_name="F1 Score")
-        )
-        _render_bar_chart(
-            global_chart_df,
-            x="Project",
-            y="F1 Score",
-            color="LLM / Strategy",
-            y_title="F1 Score",
-            value_format=".2%",
-            height=360,
-        )
-    except Exception:
-        st.info("Pivot not available (insufficient data).")
-    session.close()
+    render_run_history()
 
 # ==========================================================
 # Tab 3 : Manage Prompts
 # ==========================================================
 def render_tab_manage_prompts():
-    st.markdown("## 📝 Prompt Repository")
-    st.caption("Manage prompts as a real repository: one category per maintenance activity, with tags, descriptions, and reusable templates.")
+    page_header("Prompt Library", "Versioned prompt templates, one category per maintenance activity, with tags "
+                "and descriptions. Templates saved here are available to every task runner.", eyebrow="Resources")
 
     repo = _load_prompt_repository()
     task_options = list(PROMPT_TASKS.keys())
@@ -3838,7 +3131,7 @@ def render_tab_manage_prompts():
         new_name = st.text_input("Template id", key=f"new_prompt_name_{task_key}")
         new_tags = st.text_input("Tags", value="json", help="Comma-separated tags.", key=f"new_prompt_tags_{task_key}")
         new_prompt = st.text_area("Template", height=180, key=f"new_prompt_text_{task_key}")
-        if st.button("➕ Add to repository", key=f"add_prompt_{task_key}", use_container_width=True):
+        if st.button("Add to repository", key=f"add_prompt_{task_key}", use_container_width=True):
             clean_name = re.sub(r"[^A-Za-z0-9_-]+", "_", new_name.strip()).strip("_")
             if not clean_name:
                 st.error("Provide a template id.")
@@ -3881,7 +3174,7 @@ def render_tab_manage_prompts():
 
         b1, b2, b3 = st.columns([1, 1, 1])
         with b1:
-            if st.button("💾 Save template", key=f"save_prompt_{task_key}", type="primary", use_container_width=True):
+            if st.button("Save template", key=f"save_prompt_{task_key}", type="primary", use_container_width=True):
                 clean_name = re.sub(r"[^A-Za-z0-9_-]+", "_", edited_name.strip()).strip("_")
                 if not clean_name:
                     st.error("Template id cannot be empty.")
@@ -3901,7 +3194,7 @@ def render_tab_manage_prompts():
                 st.success(f"Prompt `{clean_name}` saved.")
                 st.rerun()
         with b2:
-            if st.button("📄 Duplicate", key=f"duplicate_prompt_{task_key}", use_container_width=True):
+            if st.button("Duplicate", key=f"duplicate_prompt_{task_key}", use_container_width=True):
                 base = f"{selected_prompt}_copy"
                 candidate = base
                 i = 2
@@ -3914,7 +3207,7 @@ def render_tab_manage_prompts():
                 st.success(f"Prompt duplicated as `{candidate}`.")
                 st.rerun()
         with b3:
-            if st.button("🗑️ Delete", key=f"delete_prompt_{task_key}", use_container_width=True):
+            if st.button("Delete", key=f"delete_prompt_{task_key}", use_container_width=True):
                 if len(prompts) <= 1:
                     st.error("Keep at least one prompt in the category.")
                 else:
@@ -3945,8 +3238,9 @@ def _stratified_split(samples: list, test_ratio: float = 0.3, seed: int = 42) ->
 
 
 def render_tab_autoresearch():
-    st.markdown("## 🧪 AutoResearch")
-    st.caption("Compare prompt candidates on a fixed StarLLM benchmark, then keep the prompt that performs best under the chosen research objective.")
+    page_header("Prompt Optimisation", "Generate prompt variants with an LLM, score them on a fixed benchmark "
+                "split and keep the best one under the chosen objective. Confirm the winner on a held-out split "
+                "before reporting it (control C4).", eyebrow="Experiments")
 
     settings, main = st.columns([1.05, 2.4], gap="large")
     with settings:
@@ -3955,7 +3249,7 @@ def render_tab_autoresearch():
             "Benchmark activity",
             ["Feature location", "Code smell detection"],
             index=0,
-            help="Choose the StarLLM benchmark surface to optimize prompts against.",
+            help="Choose the StaLLM benchmark surface to optimize prompts against.",
         )
         task_key = "feature_location" if task_label == "Feature location" else "code_smell_detection"
         code_smell_oracle = "Analyzer reference (SonarQube CSV)"
@@ -4156,7 +3450,7 @@ def render_tab_autoresearch():
                 5,
                 1,
                 key="ar_smell_top_k",
-                help="How many source files StarLLM samples for this quick benchmark run.",
+                help="How many source files StaLLM samples for this quick benchmark run.",
             )
             pos_ratio = st.slider(
                 "Known-issue share",
@@ -4221,7 +3515,7 @@ def render_tab_autoresearch():
                 f"""
                 <div class="section">
                   <b>What this run measures</b>
-                  <p class="muted">Each prompt receives the same feature-location scenarios and candidate file list. StarLLM asks the LLM to rank source files, then scores whether relevant files appear early in the ranking.</p>
+                  <p class="muted">Each prompt receives the same feature-location scenarios and candidate file list. StaLLM asks the LLM to rank source files, then scores whether relevant files appear early in the ranking.</p>
                   <div class="badges">
                     <span class="badge"><b>Dataset</b> {escape(Path(args.gt_path).name)}</span>
                     <span class="badge"><b>Scenarios</b> {int(args.max_tasks)}</span>
@@ -4237,7 +3531,7 @@ def render_tab_autoresearch():
                 f"""
                 <div class="section">
                   <b>What this run measures</b>
-                  <p class="muted">Each prompt receives the same human-labeled smell snippets. StarLLM asks the LLM for a present/absent decision, then scores agreement with the human oracle.</p>
+                  <p class="muted">Each prompt receives the same human-labeled smell snippets. StaLLM asks the LLM for a present/absent decision, then scores agreement with the human oracle.</p>
                   <div class="badges">
                     <span class="badge"><b>Dataset</b> {escape(str(args.dataset_name))}</span>
                     <span class="badge"><b>Samples</b> {int(len(args.samples))}</span>
@@ -4253,7 +3547,7 @@ def render_tab_autoresearch():
                 f"""
                 <div class="section">
                   <b>What this run measures</b>
-                  <p class="muted">Each prompt analyzes the same sampled files and is compared against the static analyzer CSV. StarLLM scores how well the LLM findings match the ground-truth issue locations.</p>
+                  <p class="muted">Each prompt analyzes the same sampled files and is compared against the static analyzer CSV. StaLLM scores how well the LLM findings match the ground-truth issue locations.</p>
                   <div class="badges">
                     <span class="badge"><b>Project</b> {escape(Path(args.repo_zip).stem)}</span>
                     <span class="badge"><b>Sampled files</b> {int(args.top_k)}</span>
@@ -4480,7 +3774,7 @@ def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: s
     improvement = float(best.get("score", 0.0)) - float(seed.get("score", 0.0))
 
     st.markdown(
-        "<div class='section'><b>Loop behavior</b><p class='muted'>StarLLM benchmarks the seed prompt, generates competing mutations from the best prompt so far, and accepts only the winning mutation when it improves the selected objective.</p></div>",
+        "<div class='section'><b>Loop behavior</b><p class='muted'>StaLLM benchmarks the seed prompt, generates competing mutations from the best prompt so far, and accepts only the winning mutation when it improves the selected objective.</p></div>",
         unsafe_allow_html=True,
     )
     c1, c2, c3, c4 = st.columns(4)
@@ -4518,7 +3812,7 @@ def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: s
     if "template" in history_df.columns:
         prompt_options = history_df["prompt"].dropna().unique().tolist()
         if prompt_options:
-            with st.expander("🔍 Inspect prompt template", expanded=False):
+            with st.expander("Inspect prompt template", expanded=False):
                 selected_prompt = st.selectbox(
                     "Select prompt to inspect",
                     prompt_options,
@@ -4565,7 +3859,7 @@ def _render_autoresearch_loop_results(result_df: pd.DataFrame, primary_metric: s
         st.altair_chart(slope, use_container_width=True)
 
 def _render_autoresearch_holdout(holdout_result: dict[str, Any], primary_metric: str, *, n_train: int, n_test: int) -> None:
-    st.markdown("### 🧪 Holdout Evaluation (test set)")
+    st.markdown("### Holdout Evaluation (test set)")
     st.caption(f"The best prompt was re-evaluated on the **held-out test set** ({n_test} samples, never seen during optimization). Train set: {n_train} samples.")
     score = float(holdout_result.get("score", 0.0))
     train_score = float(holdout_result.get("score", 0.0))
@@ -4585,7 +3879,7 @@ def _render_autoresearch_holdout(holdout_result: dict[str, Any], primary_metric:
     with c4:
         kpi("Cohen's κ (test)", f"{kappa:.3f}", "ok")
     st.info(f"**Interpretation:** Train F1 = {_format_metric(primary_metric, holdout_result.get('score', 0.0))} · Holdout F1 = {pct(f1)}. "
-            f"{'⚠️ Gap suggests overfitting on train set.' if abs(holdout_result.get('score', 0.0) - f1) > 0.10 else '✅ Train/test scores are consistent.'}")
+            f"{'Gap suggests overfitting on train set.' if abs(holdout_result.get('score', 0.0) - f1) > 0.10 else 'Train/test scores are consistent.'}")
 
 
 def _render_autoresearch_promote_button(cached: dict[str, Any]) -> None:
@@ -4595,7 +3889,7 @@ def _render_autoresearch_promote_button(cached: dict[str, Any]) -> None:
     if not best_template or task_key not in PROMPT_TASKS:
         return
     with st.expander("Promote best prompt", expanded=False):
-        st.caption("Save the best prompt from this AutoResearch run into the StarLLM prompt repository.")
+        st.caption("Save the best prompt from this AutoResearch run into the StaLLM prompt repository.")
         clean_default = re.sub(r"[^A-Za-z0-9_-]+", "_", f"{best_name}_promoted").strip("_").lower()
         target_name = st.text_input("Repository prompt id", value=clean_default, key=f"promote_{task_key}_{best_name}")
         if st.button("Save best prompt to repository", key=f"promote_btn_{task_key}_{best_name}", type="primary"):
@@ -4745,7 +4039,7 @@ Localization benchmark guidance:
 - Put the most likely correct file first, then diversify related files.
 """
     prompt = f"""
-Generate {int(count)} improved prompt templates for StarLLM AutoResearch.
+Generate {int(count)} improved prompt templates for StaLLM AutoResearch.
 
 Task: {task_label}
 Optimization objective: {objective}
@@ -4820,32 +4114,26 @@ Seed template:
         raise ValueError("No usable prompt variants were generated. Try another seed prompt or objective.")
     return out
 
-if page == "📝 Manage Prompts":
-    render_tab_manage_prompts()
-
-if page == "🧪 AutoResearch":
-    render_tab_autoresearch()
 
 # ==========================================================
 # Tab 4 : Results DB
 # ==========================================================
-if page == "🗃️ Results":
-    render_tab_results_db()
 
 # ==========================================================
 # Tab 5 : Batch Experiments (span-level)
 # ==========================================================
 def render_tab_batch():
-    st.markdown("## 🔄 Batch Experiments (span-level)")
-    data_dir = st.text_input("📂 Data folder", "data/apps/")
-    output_dir = st.text_input("📂 Output folder", "output/apps/")
+    page_header("Batch Runs", "Run span-level experiments over every project in a data folder, for several "
+                "prompt strategies and universe sizes, and write the results to CSV.", eyebrow="Experiments")
+    data_dir = st.text_input("Data folder", "data/apps/")
+    output_dir = st.text_input("Output folder", "output/apps/")
     strategies = _prompt_templates_for_task("code_smell_detection")
-    selected_strategies = st.multiselect("🧩 Select strategies", list(strategies.keys()), default=list(strategies.keys()))
+    selected_strategies = st.multiselect("Select strategies", list(strategies.keys()), default=list(strategies.keys()))
     top_k_values = st.multiselect("Top-K values (files in U)", [10,20,30,50], default=[20,30])
     pos_ratio = st.slider("Positive ratio in U", 0.0, 1.0, 0.5, 0.05, key="batch_pos_ratio")
     preset_b = st.selectbox("Evaluation strictness", ["Lenient","Balanced","Strict"], index=1, key="batch_preset")
 
-    st.markdown("### 🤖 LLM for Batch")
+    st.markdown("### LLM for Batch")
     registry = load_llm_registry()
     if registry:
         keys = list(registry.keys())
@@ -4859,7 +4147,7 @@ def render_tab_batch():
             default_host_b = os.getenv("OLLAMA_HOST") or "http://localhost:11434"
             host_b = st.text_input("Ollama Host (batch)", value=default_host_b, key="batch_ollama_host",
                                    help="Ollama server URL for batch processing")
-            if st.button("🔍 Test Connection", key="test_conn_batch"):
+            if st.button("Test Connection", key="test_conn_batch"):
                 with st.spinner("Testing connection..."):
                     ok, msg = test_ollama_connectivity(host_b)
                     (st.success if ok else st.error)(msg)
@@ -4889,9 +4177,9 @@ def render_tab_batch():
             base_url_b = os.getenv("OPENAI_BASE_URL") or None
             llm_batch = ChatModel(LLMConfig(provider="openai", model=mdl_b, api_base=base_url_b, api_key=api_key_env_b))
 
-    if st.button("🚀 Run Batch Analysis"):
+    if st.button("Run batch", type="primary"):
         if not selected_strategies:
-            st.warning("⚠️ Please select at least one strategy.")
+            st.warning("Please select at least one strategy.")
             return
 
         projects = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
@@ -4901,14 +4189,14 @@ def render_tab_batch():
             zip_files = [str(project_dir / f) for f in os.listdir(project_dir) if f.endswith(".zip")]
             csv_files = [str(project_dir / f) for f in os.listdir(project_dir) if f.endswith(".csv")]
             if not zip_files or not csv_files:
-                st.warning(f"❌ Missing files for {project} (need at least one .zip and one .csv)")
+                st.warning(f"Missing files for {project} (need at least one .zip and one .csv)")
                 continue
             csv_path = csv_files[0]
             proj_out = Path(output_dir, project); proj_out.mkdir(parents=True, exist_ok=True)
             all_results = []
             for zip_path in zip_files:
                 app_name = Path(zip_path).stem
-                st.write(f"🔍 Analyzing ZIP: {app_name}")
+                st.write(f"Analyzing ZIP: {app_name}")
                 for k in top_k_values:
                     summary_U, metrics_df, samples = run_selected_experiments(
                         zip_path, csv_path, selected_strategies,
@@ -4916,21 +4204,21 @@ def render_tab_batch():
                     )
                     (proj_out / f"{app_name}_results_top{k}.csv").write_text(metrics_df.to_csv())
                     md = metrics_df.copy(); md["Project"]=project; md["ZIP"]=app_name; md["Top-K"]=int(k)
-                    all_results.append(md); st.success(f"✅ {project}/{app_name} done (Top-K={k})")
+                    all_results.append(md); st.success(f"{project}/{app_name} done (Top-K={k})")
             if all_results:
                 import pandas as _pd
                 global_df = _pd.concat(all_results)
                 (proj_out / "global_results.csv").write_text(global_df.to_csv())
-                st.info(f"📁 Global results saved for {project}: {proj_out/'global_results.csv'}")
+                st.info(f"Global results saved for {project}: {proj_out/'global_results.csv'}")
 
-if page == "🔄 Batch":
-    render_tab_batch()
 
 # ==========================================================
 # Tab 6 : Guide & Examples (English, with visuals)
 # ==========================================================
 def render_tab_guide():
-    st.markdown("## 📘 How to Read the Metrics (Span-Level, with Negatives)")
+    page_header("Evaluation Protocol", "How span-level predictions are matched to the oracle, how the file "
+                "universe is sampled and how scores are computed.", eyebrow="Resources")
+    st.markdown("## Span-level metrics with negative files")
     st.markdown("""
 **What we evaluate**  
 LLM **code-smell spans** vs. a **ground truth (GT)** CSV containing `(file, startLine, endLine, startColumn, endColumn, rule/type)`.
@@ -4947,7 +4235,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 """)
 
     # --- Strictness block (table + example with line numbers)
-    st.markdown("### 🎛️ Evaluation strictness")
+    st.markdown("### Evaluation strictness")
     strict_df = pd.DataFrame(
         {"IoU min": [0.10, 0.25, 0.50],
          "Line tolerance δ": [3, 2, 1]},
@@ -4959,35 +4247,35 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
                "If both are single-line and columns exist (and enabled), apply the same rule on columns.")
 
     # Mini example
-    st.markdown("#### 🧪 Mini example (A.java)")
-    code_eval = """ 18:   // …
- 19:   // …
- 20:   int sum = 0;                 // GT start
- 21:   for (int i=0; i<n; i++) {
- 22:       sum += arr[i];
- 23:       // ...
- 24:       // ...
- 25:       // ...
- 26:       // ...
- 27:       // ...
- 28:       // ...
- 29:       // ...
- 30:       // ...
- 31:       // ...
- 32:       // ...
- 33:       // ...
- 34:       // ...
- 35:       // ...
- 36:       // ...
- 37:       // ...
- 38:       // ...
- 39:       // ...
- 40:   }                            // GT end
- 41:   // …
- 42:   if (sum > 1000) {
- 43:       sum -= 1000;
- 44:   }"""
-    render_code_with_highlight("A.java — GT: 20–40", code_eval, [(20,40)])
+    st.markdown("#### Mini example (A.java)")
+    code_eval = """  // …
+  // …
+  int sum = 0;                 // GT start
+  for (int i=0; i<n; i++) {
+      sum += arr[i];
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+      // ...
+  }                            // GT end
+  // …
+  if (sum > 1000) {
+      sum -= 1000;
+  }"""
+    render_code_with_highlight("A.java — GT: 20–40", code_eval, [(20,40)], first_line=18)
 
     st.markdown("""
 **GT**: 20–40  
@@ -4998,7 +4286,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 """)
 
     # --- Java code examples with highlight (A/B/C)
-    st.markdown("### 🧩 Illustrative Example (code & CSV)")
+    st.markdown("### Illustrative Example (code & CSV)")
     code_a = """public class A {
     // Long Method starting around line 10 to ~70
     public int compute(int[] arr) {                // ← GT: Long Method (10–70)
@@ -5029,7 +4317,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     // No ground-truth smells in this example file
     public String echo(String s) { return s; }
 }"""
-    st.markdown("#### 🔎 Code excerpts (line numbers & highlighted spans)")
+    st.markdown("#### Code excerpts (line numbers & highlighted spans)")
     ca, cb, cc = st.columns(3)
     with ca:
         render_code_with_highlight("A.java (Long Method 10–70; Magic Number 42)", code_a, [(10,70),(42,42)])
@@ -5039,7 +4327,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
         render_code_with_highlight("C.java (no GT)", code_c, [])
 
     # --- GT CSV sample
-    st.markdown("#### 📑 Ground-Truth CSV (sample)")
+    st.markdown("#### Ground-Truth CSV (sample)")
     gt_df = pd.DataFrame([
         {"file":"a.java", "startLine":10, "endLine":70, "type":"Long Method", "description":"Method too long"},
         {"file":"a.java", "startLine":42, "endLine":42, "type":"Magic Number", "description":"Use named constant"},
@@ -5049,7 +4337,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     st.caption("GT total = 3 spans (A:2, B:1, C:0).")
 
     # --- Preds (to show type ON/OFF)
-    st.markdown("#### 🤖 Predicted findings (illustration)")
+    st.markdown("#### Predicted findings (illustration)")
     preds_noisy = pd.DataFrame([
         {"file":"a.java","startLine":12,"endLine":68,"type":"Long Method","desc":"big method"},        # match
         {"file":"b.java","startLine":16,"endLine":20,"type":"Deeply Nested Ifs","desc":"nested ifs"},  # match
@@ -5083,7 +4371,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 
     # --- Top-K & Positive ratio illustration widget
     st.markdown("---")
-    st.markdown("### 🖼️ Universe U configuration (Top-K & Positive ratio) — illustration")
+    st.markdown("### Universe U configuration (Top-K & Positive ratio) — illustration")
     st.caption("Toy widget that emulates U sampling to make the Run-tab sliders intuitive.")
     colA, colB = st.columns(2)
     with colA:
@@ -5100,7 +4388,7 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
     st.markdown(f"- Positives in repository: **{P_available}** (A.java, B.java)")
     st.markdown(f"- Negatives in repository: **{N_available}** (C.java)")
     st.markdown(f"- Requested U: **Top-K = {demo_topk}**, **Positive ratio = {demo_pos_ratio:.2f}**")
-    st.markdown(f"➡️ Sampled **U**: **positives = {want_pos}**, **negatives = {want_neg}**, **total = {total_u}**")
+    st.markdown(f"Sampled **U**: **positives = {want_pos}**, **negatives = {want_neg}**, **total = {total_u}**")
 
     comp_df = pd.DataFrame({
         "Type": ["positives (>=1 GT)", "negatives (0 GT)"],
@@ -5110,5 +4398,27 @@ TP, FP, FN → Precision = TP/(TP+FP), Recall = TP/(TP+FN), F1 = 2PR/(P+R).
 
     st.markdown("<div class='footnote'>In real runs, positives are selected by highest GT count; negatives are random. This widget only illustrates the knobs.</div>", unsafe_allow_html=True)
 
-if page == "📘 Guide":
-    render_tab_guide()
+
+# ==========================================================
+# Navigation
+# ==========================================================
+st.logo(str(APP_DIR / "assets" / "stallm-wordmark.svg"), icon_image=str(BRAND_LOGO_PATH))
+navigation = st.navigation({
+    "Benchmark": [
+        st.Page(paper_results.render_overview, title="Overview", default=True),
+        st.Page(paper_results.render_benchmark_results, title="Benchmark Results", url_path="results"),
+        st.Page(paper_results.render_controls, title="Built-in Controls", url_path="controls"),
+    ],
+    "Experiments": [
+        st.Page(render_page_tasks, title="Run Tasks", url_path="run"),
+        st.Page(render_tab_batch, title="Batch Runs", url_path="batch"),
+        st.Page(render_tab_autoresearch, title="Prompt Optimisation", url_path="autoresearch"),
+    ],
+    "Resources": [
+        st.Page(render_tab_manage_prompts, title="Prompt Library", url_path="prompts"),
+        st.Page(render_tab_results_db, title="Run History", url_path="history"),
+        st.Page(render_tab_guide, title="Evaluation Protocol", url_path="protocol"),
+        st.Page(paper_results.render_about, title="About & Citation", url_path="about"),
+    ],
+})
+navigation.run()
