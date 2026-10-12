@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "This file is the main controller for the Basket API, likely handling core basket-related operations such as adding, removing, and updating items.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "This file likely contains the implementation for managing basket data in a Redis database, which is central to the basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "This file defines the structure of a customer's basket, which is a key component of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "This file defines the structure of individual items in the basket, which is essential for managing basket contents.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "This file likely handles the checkout process for the basket, which is a critical part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "This file likely provides gRPC services related to the basket, which may include operations like adding or removing items.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "This file is a controller in the mobile API gateway, likely responsible for handling basket-related requests from mobile clients.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "This file is a controller in the web API gateway, likely responsible for handling basket-related requests from web clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "This file likely handles events related to the checkout process, which is a key part of the basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Exceptions/BasketDomainException.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "This file defines exceptions specific to the basket domain, which may be relevant for error handling in basket operations.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "baseline",
+  "raw_response": "```json\n[\n  {\"rank\": 1, \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\", \"confidence\": 0.95, \"rationale\": \"This file is the main controller for the Basket API, likely handling core basket-related operations such as adding, removing, and updating items.\"},\n  {\"rank\": 2, \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\", \"confidence\": 0.9, \"rationale\": \"This file likely contains the implementation for managing basket data in a Redis database, which is central to the basket feature.\"},\n  {\"rank\": 3, \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\", \"confidence\": 0.85, \"rationale\": \"This file defines the structure of a customer's basket, which is a key component of the feature.\"},\n  {\"rank\": 4, \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\", \"confidence\": 0.8, \"rationale\": \"This file defines the structure of individual items in the basket, which is essential for managing basket contents.\"},\n  {\"rank\": 5, \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\", \"confidence\": 0.75, \"rationale\": \"This file likely handles the checkout process for the basket, which is a critical part of the feature.\"},\n  {\"rank\": 6, \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\", \"confidence\": 0.7, \"rationale\": \"This file likely provides gRPC services related to the basket, which may include operations like adding or removing items.\"},\n  {\"rank\": 7, \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\", \"confidence\": 0.65, \"rationale\": \"This file is a controller in the mobile API gateway, likely responsible for handling basket-related requests from mobile clients.\"},\n  {\"rank\": 8, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\", \"confidence\": 0.65, \"rationale\": \"This file is a controller in the web API gateway, likely responsible for handling basket-related requests from web clients.\"},\n  {\"rank\": 9, \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\", \"confidence\": 0.6, \"rationale\": \"This file likely handles events related to the checkout process, which is a key part of the basket feature.\"},\n  {\"rank\": 10, \"file\": \"Services/Basket/Basket.API/Infrastructure/Exceptions/BasketDomainException.cs\", \"confidence\": 0.55, \"rationale\": \"This file defines exceptions specific to the basket domain, which may be relevant for error handling in basket operations.\"}\n]\n```",
+  "usage": {
+    "prompt_tokens": 9329,
+    "completion_tokens": 625,
+    "total_tokens": 9954
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 11.0
+}

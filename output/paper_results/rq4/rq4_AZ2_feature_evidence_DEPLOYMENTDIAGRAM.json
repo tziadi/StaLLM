@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-deploymentdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly references 'NodeInstance', a core concept in deployment diagrams representing hardware nodes. Likely handles notation for node instances in diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java",
+      "rank": 2,
+      "confidence": 0.93,
+      "rationale": "Handles UML-specific notation for node instances, which are central to deployment diagrams. Strong semantic match.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCompInstanceWithoutNode.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Critic class for component instances without nodes, directly referencing deployment diagram concepts (nodes, component instances).",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentWithoutNode.java",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Critic class for components not assigned to nodes, a deployment diagram concern. Indicates logic for mapping software to hardware.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Handles notation for component instances, which are mapped onto nodes in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "UML-specific notation for component instances, directly relevant to deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentInstanceWithoutClassifier.java",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Critic for component instances lacking classifiers, which is a deployment diagram modeling concern.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Explorer rule for navigating from model to node, directly referencing deployment diagram elements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/CmdCreateNode.java",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "UI action for creating nodes, which are hardware elements in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrClassWithoutComponent.java",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Critic for classes without components, which relates to mapping software elements in deployment diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Directly references 'NodeInstance', a core concept in deployment diagrams representing hardware nodes. Likely handles notation for node instances in diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Handles UML-specific notation for node instances, which are central to deployment diagrams. Strong semantic match.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCompInstanceWithoutNode.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Critic class for component instances without nodes, directly referencing deployment diagram concepts (nodes, component instances).\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentWithoutNode.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Critic class for components not assigned to nodes, a deployment diagram concern. Indicates logic for mapping software to hardware.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles notation for component instances, which are mapped onto nodes in deployment diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"UML-specific notation for component instances, directly relevant to deployment diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentInstanceWithoutClassifier.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Critic for component instances lacking classifiers, which is a deployment diagram modeling concern.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Explorer rule for navigating from model to node, directly referencing deployment diagram elements.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/CmdCreateNode.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"UI action for creating nodes, which are hardware elements in deployment diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrClassWithoutComponent.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Critic for classes without components, which relates to mapping software elements in deployment diagrams.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12423,
+    "completion_tokens": 714,
+    "total_tokens": 13137
+  },
+  "slot": "AZ2",
+  "feature": "DEPLOYMENTDIAGRAM",
+  "gold_count": 32,
+  "gold_visible": 4,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 8.1
+}

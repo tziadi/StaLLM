@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Core handler that receives the stock-confirmed event, triggers the actual payment processing, and decides whether to publish success or failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.86,
+      "rationale": "Defines the inbound event that starts the payment workflow; directly tied to the feature semantics.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.83,
+      "rationale": "Outbound integration event published when payment processing succeeds, explicitly representing the positive outcome of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.82,
+      "rationale": "Outbound integration event published when payment processing fails, covering the negative branch of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 5,
+      "confidence": 0.65,
+      "rationale": "Holds configuration (e.g., payment gateway keys) required by the payment processing logic; directly supports the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 6,
+      "confidence": 0.6,
+      "rationale": "Registers payment services, event bus subscriptions, and settings; necessary infrastructure to enable the payment feature at runtime.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.55,
+      "rationale": "Consumes the PaymentSucceeded event to update order status to Paid; refines the feature by completing the workflow on the Ordering side.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.53,
+      "rationale": "Event definition used across services to represent successful payment; supports cross-service part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.52,
+      "rationale": "Handles PaymentFailed events to mark orders accordingly, ensuring the feature\u2019s failure path is completed in Ordering.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Event definition that represents a failed payment; integral to the feature\u2019s error path across services.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.5555555555555556,
+    "hit@10": 1.0,
+    "recall@10": 0.6666666666666666,
+    "mrr": 1.0,
+    "map": 0.6666666666666666
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Core handler that receives the stock-confirmed event, triggers the actual payment processing, and decides whether to publish success or failure.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Defines the inbound event that starts the payment workflow; directly tied to the feature semantics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Outbound integration event published when payment processing succeeds, explicitly representing the positive outcome of the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Outbound integration event published when payment processing fails, covering the negative branch of the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Holds configuration (e.g., payment gateway keys) required by the payment processing logic; directly supports the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Payment/Payment.API/Startup.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Registers payment services, event bus subscriptions, and settings; necessary infrastructure to enable the payment feature at runtime.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Consumes the PaymentSucceeded event to update order status to Paid; refines the feature by completing the workflow on the Ordering side.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.53,\n    \"rationale\": \"Event definition used across services to represent successful payment; supports cross-service part of the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.52,\n    \"rationale\": \"Handles PaymentFailed events to mark orders accordingly, ensuring the feature\u2019s failure path is completed in Ordering.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Event definition that represents a failed payment; integral to the feature\u2019s error path across services.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9347,
+    "completion_tokens": 1423,
+    "total_tokens": 10770
+  },
+  "slot": "AZ3",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 21.1
+}

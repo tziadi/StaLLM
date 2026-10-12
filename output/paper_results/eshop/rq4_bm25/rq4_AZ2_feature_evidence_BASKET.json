@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Basket feature, handling basket operations such as adding/removing items, updating quantities, and checkout. The controller name and location are a perfect semantic match.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Provides gRPC endpoints for basket operations, supporting remote access to basket functionality. The class name and location indicate direct support for the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.96,
+      "rationale": "Represents the data model for a customer's basket, crucial for storing basket items, quantities, and buyer information. The class name is a strong semantic match.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.95,
+      "rationale": "Defines individual items within a basket, supporting add/remove/update operations. The class name and location are directly relevant to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 5,
+      "confidence": 0.93,
+      "rationale": "Handles the checkout process for a basket, which is a key part of the feature's workflow. The class name and location are a strong semantic match.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 6,
+      "confidence": 0.92,
+      "rationale": "Defines the repository interface for basket persistence and retrieval, directly supporting basket operations. The interface name and location are highly relevant.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 7,
+      "confidence": 0.91,
+      "rationale": "Implements basket storage and retrieval using Redis, supporting the persistence of basket data. The class name and location indicate direct support for the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.89,
+      "rationale": "Represents an integration event triggered when a user checks out their basket, directly supporting the checkout aspect of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.88,
+      "rationale": "Handles the event when a user checks out their basket, supporting the transition from basket to order. The handler name and location are relevant.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 10,
+      "confidence": 0.87,
+      "rationale": "Acts as a gateway controller for basket operations in the web BFF, facilitating basket management for buyers. The controller name and location are a semantic match.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.14285714285714285,
+    "mrr": 1.0,
+    "map": 0.14126984126984127
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Basket feature, handling basket operations such as adding/removing items, updating quantities, and checkout. The controller name and location are a perfect semantic match.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Provides gRPC endpoints for basket operations, supporting remote access to basket functionality. The class name and location indicate direct support for the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Represents the data model for a customer's basket, crucial for storing basket items, quantities, and buyer information. The class name is a strong semantic match.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines individual items within a basket, supporting add/remove/update operations. The class name and location are directly relevant to the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Handles the checkout process for a basket, which is a key part of the feature's workflow. The class name and location are a strong semantic match.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Defines the repository interface for basket persistence and retrieval, directly supporting basket operations. The interface name and location are highly relevant.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Implements basket storage and retrieval using Redis, supporting the persistence of basket data. The class name and location indicate direct support for the feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Represents an integration event triggered when a user checks out their basket, directly supporting the checkout aspect of the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Handles the event when a user checks out their basket, supporting the transition from basket to order. The handler name and location are relevant.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Acts as a gateway controller for basket operations in the web BFF, facilitating basket management for buyers. The controller name and location are a semantic match.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 741,
+    "total_tokens": 10094
+  },
+  "slot": "AZ2",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 6.6
+}

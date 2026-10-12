@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Core domain entity that defines the Order aggregate, its lifecycle, status transitions, and business rules for creation, cancellation, payment, shipping.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Primary API surface for creating, retrieving, cancelling, and tracking orders; orchestrates command/query dispatch tied to the ordering workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 3,
+      "confidence": 0.87,
+      "rationale": "Repository implementation that persists and retrieves Order aggregates, directly supporting all ordering operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Handles CreateOrderCommand to build and save a new Order at checkout, initiating the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.83,
+      "rationale": "Updates an Order\u2019s status to Paid after successful payment, a key step in order tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Transitions an Order to Stock-Confirmed once inventory is validated, part of order status workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.78,
+      "rationale": "Implements business logic to cancel existing orders and update their status accordingly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.76,
+      "rationale": "Handles shipping command, marking orders as shipped and finalising the ordering lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 9,
+      "confidence": 0.74,
+      "rationale": "Enumeration/value object that defines all possible order statuses (Created, Paid, Shipped, Cancelled, etc.) used throughout ordering logic.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Provides read-model queries to fetch order details and status, supporting tracking and management of orders.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Core domain entity that defines the Order aggregate, its lifecycle, status transitions, and business rules for creation, cancellation, payment, shipping.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Primary API surface for creating, retrieving, cancelling, and tracking orders; orchestrates command/query dispatch tied to the ordering workflow.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Repository implementation that persists and retrieves Order aggregates, directly supporting all ordering operations.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles CreateOrderCommand to build and save a new Order at checkout, initiating the ordering process.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Updates an Order\u2019s status to Paid after successful payment, a key step in order tracking.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Transitions an Order to Stock-Confirmed once inventory is validated, part of order status workflow.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Implements business logic to cancel existing orders and update their status accordingly.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.76,\n    \"rationale\": \"Handles shipping command, marking orders as shipped and finalising the ordering lifecycle.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Enumeration/value object that defines all possible order statuses (Created, Paid, Shipped, Cancelled, etc.) used throughout ordering logic.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Provides read-model queries to fetch order details and status, supporting tracking and management of orders.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 942,
+    "total_tokens": 10295
+  },
+  "slot": "AZ3",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 15.1
+}

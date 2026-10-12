@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.33,
+      "rationale": "Core logic that reacts to stock confirmation, triggers payment processing, and publishes success/failure events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.1,
+      "rationale": "Event definition consumed by the payment handler to start payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.09,
+      "rationale": "Event published when payment succeeds.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Event published when payment fails.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.07,
+      "rationale": "Handles payment-success event to update order status, part of end-to-end payment flow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.07,
+      "rationale": "Handles payment-failure event to update order status, completes payment workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Event model used across services for payment success.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs",
+      "rank": 8,
+      "confidence": 0.05,
+      "rationale": "Event model used across services for payment failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Holds configuration values required for payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 10,
+      "confidence": 0.03,
+      "rationale": "Registers payment services and event handlers, wiring the payment processing feature.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.6666666666666666,
+    "mrr": 1.0,
+    "map": 0.5728395061728395
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.33,\n    \"rationale\": \"Core logic that reacts to stock confirmation, triggers payment processing, and publishes success/failure events.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.1,\n    \"rationale\": \"Event definition consumed by the payment handler to start payment processing.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Event published when payment succeeds.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Event published when payment fails.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Handles payment-success event to update order status, part of end-to-end payment flow.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Handles payment-failure event to update order status, completes payment workflow.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Event model used across services for payment success.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Event model used across services for payment failure.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Holds configuration values required for payment processing.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Payment/Payment.API/Startup.cs\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Registers payment services and event handlers, wiring the payment processing feature.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9323,
+    "completion_tokens": 1210,
+    "total_tokens": 10533
+  },
+  "slot": "AZ3",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 16.3
+}

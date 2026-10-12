@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Handles the event when an order's stock is confirmed, which is the trigger for processing payment.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Defines the event that signals stock confirmation, which initiates payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Defines the event published when payment succeeds, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.93,
+      "rationale": "Defines the event published when payment fails, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Configures the Payment API, including event subscriptions and service wiring for payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Program.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Entry point for the Payment API, may contain setup logic for payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Contains configuration settings for payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Handles the event when payment succeeds, updating order status accordingly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Handles the event when payment fails, updating order status accordingly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.65,
+      "rationale": "Defines the event for payment success, which is published and consumed by other services.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.5555555555555556,
+    "hit@10": 1.0,
+    "recall@10": 0.7777777777777778,
+    "mrr": 1.0,
+    "map": 0.7777777777777778
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Handles the event when an order's stock is confirmed, which is the trigger for processing payment.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the event that signals stock confirmation, which initiates payment processing.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the event published when payment succeeds, directly related to the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the event published when payment fails, directly related to the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Payment/Payment.API/Startup.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Configures the Payment API, including event subscriptions and service wiring for payment processing.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Payment/Payment.API/Program.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Entry point for the Payment API, may contain setup logic for payment processing.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Contains configuration settings for payment processing.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles the event when payment succeeds, updating order status accordingly.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles the event when payment fails, updating order status accordingly.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Defines the event for payment success, which is published and consumed by other services.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9324,
+    "completion_tokens": 627,
+    "total_tokens": 9951
+  },
+  "slot": "AZ2",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 9.8
+}

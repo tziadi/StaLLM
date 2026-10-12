@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "The file name and package suggest it is responsible for managing events, which aligns with the feature's focus on debug and trace messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "The file is located in a development-related module, which is likely to include debugging and tracing utilities.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "The file name suggests it handles exceptions, which are often logged or traced for debugging purposes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Undo operations often involve detailed event tracking, which could include debug and trace messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "The ProjectBrowser may include functionality for monitoring or debugging project-related events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoStatusEvent.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "The file name indicates it handles status events, which are often logged or traced for debugging purposes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "The status bar may display debug or trace information to the user, making it relevant to the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/ArgoTokenTable.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Token management may involve logging or tracing operations, which could be relevant to debugging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/FindDialog.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "The FindDialog may include functionality for searching logs or traces, which aligns with the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/SystemInfoDialog.java",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "System information dialogs often include debug or trace details for troubleshooting purposes.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.009345794392523364,
+    "hit@10": 1.0,
+    "recall@10": 0.009345794392523364,
+    "mrr": 1.0,
+    "map": 0.006542056074766355
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"The file name and package suggest it is responsible for managing events, which aligns with the feature's focus on debug and trace messages.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"The file is located in a development-related module, which is likely to include debugging and tracing utilities.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"The file name suggests it handles exceptions, which are often logged or traced for debugging purposes.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Undo operations often involve detailed event tracking, which could include debug and trace messages.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"The ProjectBrowser may include functionality for monitoring or debugging project-related events.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoStatusEvent.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"The file name indicates it handles status events, which are often logged or traced for debugging purposes.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"The status bar may display debug or trace information to the user, making it relevant to the feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/persistence/ArgoTokenTable.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Token management may involve logging or tracing operations, which could be relevant to debugging.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/FindDialog.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"The FindDialog may include functionality for searching logs or traces, which aligns with the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/SystemInfoDialog.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"System information dialogs often include debug or trace details for troubleshooting purposes.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 13922,
+    "completion_tokens": 667,
+    "total_tokens": 14589
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 74,
+  "candidate_order": "bm25_masked",
+  "run": 3,
+  "elapsed_s": 9.6
+}

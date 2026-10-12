@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "File name and package directly match the feature ('Sequence Diagram'). Likely the main class for sequence diagram implementation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Class name exactly matches the feature. Likely a core class for sequence diagram representation in the UML diagram package.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java",
+      "rank": 3,
+      "confidence": 0.96,
+      "rationale": "Graph model for sequence diagrams; essential for managing the underlying data structure of sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java",
+      "rank": 4,
+      "confidence": 0.95,
+      "rationale": "Renderer for sequence diagrams, responsible for visual representation. Name and location are a direct match.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java",
+      "rank": 5,
+      "confidence": 0.93,
+      "rationale": "Factory class for sequence diagrams, likely responsible for creating sequence diagram instances.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessage.java",
+      "rank": 6,
+      "confidence": 0.9,
+      "rationale": "Messages are a core element of sequence diagrams. This file likely handles the graphical representation of messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigLifeLine.java",
+      "rank": 7,
+      "confidence": 0.88,
+      "rationale": "Lifelines are a key concept in sequence diagrams, representing objects over time.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java",
+      "rank": 8,
+      "confidence": 0.86,
+      "rationale": "Classifier roles are used in sequence diagrams to represent participants. File is in the sequence diagram package.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java",
+      "rank": 9,
+      "confidence": 0.85,
+      "rationale": "Handles creation of messages, a primary interaction in sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java",
+      "rank": 10,
+      "confidence": 0.83,
+      "rationale": "Module class for sequence diagrams, likely responsible for integrating sequence diagram functionality into the application.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.012658227848101266,
+    "hit@5": 1.0,
+    "recall@5": 0.05063291139240506,
+    "hit@10": 1.0,
+    "recall@10": 0.11392405063291139,
+    "mrr": 1.0,
+    "map": 0.0958358448864778
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\",\n    \"confidence\": 1.0,\n    \"rationale\": \"File name and package directly match the feature ('Sequence Diagram'). Likely the main class for sequence diagram implementation.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Class name exactly matches the feature. Likely a core class for sequence diagram representation in the UML diagram package.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Graph model for sequence diagrams; essential for managing the underlying data structure of sequence diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Renderer for sequence diagrams, responsible for visual representation. Name and location are a direct match.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Factory class for sequence diagrams, likely responsible for creating sequence diagram instances.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessage.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Messages are a core element of sequence diagrams. This file likely handles the graphical representation of messages.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigLifeLine.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Lifelines are a key concept in sequence diagrams, representing objects over time.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Classifier roles are used in sequence diagrams to represent participants. File is in the sequence diagram package.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles creation of messages, a primary interaction in sequence diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Module class for sequence diagrams, likely responsible for integrating sequence diagram functionality into the application.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 14240,
+    "completion_tokens": 743,
+    "total_tokens": 14983
+  },
+  "slot": "AZ2",
+  "feature": "SEQUENCEDIAGRAM",
+  "gold_count": 79,
+  "gold_visible": 33,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 9.3
+}

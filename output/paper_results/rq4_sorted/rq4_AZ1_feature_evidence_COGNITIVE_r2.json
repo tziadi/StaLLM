@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-cognitive",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrTooManyStates.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly implements a design critic for detecting excessive states in UML diagrams, aligning closely with the feature description.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Critic.java",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Core class representing the concept of a design critic, essential for implementing the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/Wizard.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Supports the feature by providing interactive guidance for resolving design issues identified by critics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/ui/CriticBrowserDialog.java",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "UI component for browsing and interacting with design critics, directly supporting the feature's user interface aspect.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrCircularInheritance.java",
+      "rank": 5,
+      "confidence": 0.87,
+      "rationale": "Implements a specific design critic for detecting circular inheritance, showcasing the feature's functionality.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/ui/TableModelCritics.java",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Manages the data model for displaying critics in a table format, supporting the feature's UI and data handling.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrClassMustBeAbstract.java",
+      "rank": 7,
+      "confidence": 0.84,
+      "rationale": "Implements a design critic for enforcing abstract class rules, demonstrating the feature's ability to enforce design guidelines.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/ui/ActionAutoCritique.java",
+      "rank": 8,
+      "confidence": 0.83,
+      "rationale": "Provides an action for automatically running design critics, directly supporting the feature's background execution aspect.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrComponentWithoutNode.java",
+      "rank": 9,
+      "confidence": 0.82,
+      "rationale": "Implements a design critic for detecting components without nodes, showcasing the feature's ability to identify design issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/ui/ActionOpenCritics.java",
+      "rank": 10,
+      "confidence": 0.8,
+      "rationale": "Provides an action for opening the critics interface, supporting the feature's user interaction capabilities.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.012658227848101266,
+    "hit@10": 1.0,
+    "recall@10": 0.02109704641350211,
+    "mrr": 0.5,
+    "map": 0.0130098452883263
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrTooManyStates.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Directly implements a design critic for detecting excessive states in UML diagrams, aligning closely with the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Critic.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Core class representing the concept of a design critic, essential for implementing the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/Wizard.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Supports the feature by providing interactive guidance for resolving design issues identified by critics.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/ui/CriticBrowserDialog.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"UI component for browsing and interacting with design critics, directly supporting the feature's user interface aspect.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrCircularInheritance.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Implements a specific design critic for detecting circular inheritance, showcasing the feature's functionality.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/ui/TableModelCritics.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Manages the data model for displaying critics in a table format, supporting the feature's UI and data handling.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrClassMustBeAbstract.java\",\n    \"confidence\": 0.84,\n    \"rationale\": \"Implements a design critic for enforcing abstract class rules, demonstrating the feature's ability to enforce design guidelines.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/ui/ActionAutoCritique.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Provides an action for automatically running design critics, directly supporting the feature's background execution aspect.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrComponentWithoutNode.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Implements a design critic for detecting components without nodes, showcasing the feature's ability to identify design issues.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/ui/ActionOpenCritics.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Provides an action for opening the critics interface, supporting the feature's user interaction capabilities.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 14077,
+    "completion_tokens": 716,
+    "total_tokens": 14793
+  },
+  "slot": "AZ1",
+  "feature": "COGNITIVE",
+  "gold_count": 237,
+  "gold_visible": 191,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 4.9
+}

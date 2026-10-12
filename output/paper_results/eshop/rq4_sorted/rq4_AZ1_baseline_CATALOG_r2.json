@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central controller for managing catalog-related operations, including items, brands, types, and stock.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the structure of catalog items, which are core to the catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Database context for catalog-related entities, including items, brands, and types.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Represents catalog brands, a key component of the catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Represents catalog types, another essential part of the catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Provides helper methods for catalog items, likely used in catalog-related operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Handles integration events related to the catalog, such as stock updates or price changes.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Configures the database schema for catalog items, ensuring proper storage and retrieval.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Provides gRPC services for catalog-related operations, enabling communication between services.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CatalogController.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Handles catalog-related operations in the web storefront, directly interacting with users.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\", \"confidence\": 0.95, \"rationale\": \"Central controller for managing catalog-related operations, including items, brands, types, and stock.\"},\n  {\"rank\": 2, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\", \"confidence\": 0.9, \"rationale\": \"Defines the structure of catalog items, which are core to the catalog feature.\"},\n  {\"rank\": 3, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\", \"confidence\": 0.85, \"rationale\": \"Database context for catalog-related entities, including items, brands, and types.\"},\n  {\"rank\": 4, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\", \"confidence\": 0.8, \"rationale\": \"Represents catalog brands, a key component of the catalog feature.\"},\n  {\"rank\": 5, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\", \"confidence\": 0.8, \"rationale\": \"Represents catalog types, another essential part of the catalog feature.\"},\n  {\"rank\": 6, \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\", \"confidence\": 0.75, \"rationale\": \"Provides helper methods for catalog items, likely used in catalog-related operations.\"},\n  {\"rank\": 7, \"file\": \"Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs\", \"confidence\": 0.7, \"rationale\": \"Handles integration events related to the catalog, such as stock updates or price changes.\"},\n  {\"rank\": 8, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\", \"confidence\": 0.7, \"rationale\": \"Configures the database schema for catalog items, ensuring proper storage and retrieval.\"},\n  {\"rank\": 9, \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\", \"confidence\": 0.65, \"rationale\": \"Provides gRPC services for catalog-related operations, enabling communication between services.\"},\n  {\"rank\": 10, \"file\": \"Web/WebMVC/Controllers/CatalogController.cs\", \"confidence\": 0.6, \"rationale\": \"Handles catalog-related operations in the web storefront, directly interacting with users.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 536,
+    "total_tokens": 9867
+  },
+  "slot": "AZ1",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 5.7
+}

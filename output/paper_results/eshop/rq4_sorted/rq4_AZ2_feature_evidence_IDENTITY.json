@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements user authentication, login, logout, registration, and account management, matching the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Defines the user model for identity management, central to authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 3,
+      "confidence": 0.95,
+      "rationale": "Provides login functionality, supporting authentication and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 4,
+      "confidence": 0.93,
+      "rationale": "Interface for login services, directly related to authentication and access token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 5,
+      "confidence": 0.92,
+      "rationale": "Handles user profile information, supporting account management and identity features.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 6,
+      "confidence": 0.91,
+      "rationale": "Manages user consent, which is often part of authentication flows and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs",
+      "rank": 7,
+      "confidence": 0.9,
+      "rationale": "Represents the login UI model, directly supporting user authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs",
+      "rank": 8,
+      "confidence": 0.89,
+      "rationale": "Represents the registration UI model, directly supporting user account creation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs",
+      "rank": 9,
+      "confidence": 0.88,
+      "rationale": "Represents the logout UI model, directly supporting user session management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 10,
+      "confidence": 0.87,
+      "rationale": "Contains configuration for identity and authentication, supporting token protection and service security.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements user authentication, login, logout, registration, and account management, matching the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Defines the user model for identity management, central to authentication and account management.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Provides login functionality, supporting authentication and token issuance.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Interface for login services, directly related to authentication and access token issuance.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Handles user profile information, supporting account management and identity features.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Manages user consent, which is often part of authentication flows and token issuance.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Represents the login UI model, directly supporting user authentication.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Represents the registration UI model, directly supporting user account creation.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Represents the logout UI model, directly supporting user session management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Contains configuration for identity and authentication, supporting token protection and service security.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9356,
+    "completion_tokens": 594,
+    "total_tokens": 9950
+  },
+  "slot": "AZ2",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 3.9
+}

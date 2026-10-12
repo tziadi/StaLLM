@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Exposes core basket operations (add, update, remove, checkout) via API endpoints.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Implements persistence logic for storing and retrieving shopping baskets.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Represents the basket aggregate holding items and quantities for a buyer.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 4,
+      "confidence": 0.83,
+      "rationale": "Defines repository operations for adding, updating, removing items and saving baskets.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Represents individual item entries within a shopping basket.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "Data structure sent when a basket is checked out to start an order.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Integration event emitted when checkout is accepted, bridging basket to order flow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Handles order start events to clear or update the buyer's basket after checkout.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "BFF service that calls Basket API to perform basket operations for web clients.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/BasketService.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "MVC client-side service interacting with Basket API for UI actions like add/update/remove items.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\", \"confidence\": 0.95, \"rationale\": \"Exposes core basket operations (add, update, remove, checkout) via API endpoints.\"},\n  {\"rank\": 2, \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\", \"confidence\": 0.9, \"rationale\": \"Implements persistence logic for storing and retrieving shopping baskets.\"},\n  {\"rank\": 3, \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\", \"confidence\": 0.85, \"rationale\": \"Represents the basket aggregate holding items and quantities for a buyer.\"},\n  {\"rank\": 4, \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\", \"confidence\": 0.83, \"rationale\": \"Defines repository operations for adding, updating, removing items and saving baskets.\"},\n  {\"rank\": 5, \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\", \"confidence\": 0.8, \"rationale\": \"Represents individual item entries within a shopping basket.\"},\n  {\"rank\": 6, \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\", \"confidence\": 0.78, \"rationale\": \"Data structure sent when a basket is checked out to start an order.\"},\n  {\"rank\": 7, \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\", \"confidence\": 0.7, \"rationale\": \"Integration event emitted when checkout is accepted, bridging basket to order flow.\"},\n  {\"rank\": 8, \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs\", \"confidence\": 0.65, \"rationale\": \"Handles order start events to clear or update the buyer's basket after checkout.\"},\n  {\"rank\": 9, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs\", \"confidence\": 0.6, \"rationale\": \"BFF service that calls Basket API to perform basket operations for web clients.\"},\n  {\"rank\": 10, \"file\": \"Web/WebMVC/Services/BasketService.cs\", \"confidence\": 0.55, \"rationale\": \"MVC client-side service interacting with Basket API for UI actions like add/update/remove items.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9328,
+    "completion_tokens": 1134,
+    "total_tokens": 10462
+  },
+  "slot": "AZ3",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 17.2
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-deploymentdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java",
+      "rank": 1,
+      "confidence": 0.42,
+      "rationale": "Javadoc for creating a Deployment Diagram explicitly explains what a deployment diagram is, matching the query description.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/UMLDiagram.java",
+      "rank": 2,
+      "confidence": 0.12,
+      "rationale": "Base class for all UML diagrams; likely to mention each specific diagram type including deployment in comments or documentation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java",
+      "rank": 3,
+      "confidence": 0.09,
+      "rationale": "Concrete diagram implementation used by specific diagram actions such as deployment; may reference deployment diagram creation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java",
+      "rank": 4,
+      "confidence": 0.06,
+      "rationale": "Handles visual aspects common to all diagram types, often containing comments/examples that reference deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramSettings.java",
+      "rank": 5,
+      "confidence": 0.05,
+      "rationale": "Centralises per-diagram settings which can include references to deployment diagrams in documentation or constants.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/UmlDiagramRenderer.java",
+      "rank": 6,
+      "confidence": 0.04,
+      "rationale": "Renderer used by various diagram kinds, including deployment; may contain switch logic or comments referencing deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramUndoManager.java",
+      "rank": 7,
+      "confidence": 0.04,
+      "rationale": "Undo manager tied to diagram actions; likely to be aware of deployment diagram edits and to include related terminology.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/GraphChangeAdapter.java",
+      "rank": 8,
+      "confidence": 0.03,
+      "rationale": "Monitors model changes for diagrams; may reference deployment nodes and artifacts in comments.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionAddExistingNode.java",
+      "rank": 9,
+      "confidence": 0.03,
+      "rationale": "Generic action that can add existing nodes to diagrams; deployment diagrams use deployment nodes, so comments may mention them.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionAddExistingEdge.java",
+      "rank": 10,
+      "confidence": 0.03,
+      "rationale": "Similar to node action but for edges; deployment diagrams use communication paths, so documentation could reference deployment.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.03125,
+    "hit@5": 1.0,
+    "recall@5": 0.03125,
+    "hit@10": 1.0,
+    "recall@10": 0.0625,
+    "mrr": 1.0,
+    "map": 0.041666666666666664
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.42,\n    \"rationale\": \"Javadoc for creating a Deployment Diagram explicitly explains what a deployment diagram is, matching the query description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/UMLDiagram.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Base class for all UML diagrams; likely to mention each specific diagram type including deployment in comments or documentation.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Concrete diagram implementation used by specific diagram actions such as deployment; may reference deployment diagram creation.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Handles visual aspects common to all diagram types, often containing comments/examples that reference deployment diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramSettings.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Centralises per-diagram settings which can include references to deployment diagrams in documentation or constants.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/UmlDiagramRenderer.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Renderer used by various diagram kinds, including deployment; may contain switch logic or comments referencing deployment diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramUndoManager.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Undo manager tied to diagram actions; likely to be aware of deployment diagram edits and to include related terminology.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/GraphChangeAdapter.java\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Monitors model changes for diagrams; may reference deployment nodes and artifacts in comments.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionAddExistingNode.java\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Generic action that can add existing nodes to diagrams; deployment diagrams use deployment nodes, so comments may mention them.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionAddExistingEdge.java\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Similar to node action but for edges; deployment diagrams use communication paths, so documentation could reference deployment.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 13638,
+    "completion_tokens": 2385,
+    "total_tokens": 16023
+  },
+  "slot": "AZ3",
+  "feature": "DEPLOYMENTDIAGRAM",
+  "gold_count": 32,
+  "gold_visible": 6,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 42.0
+}

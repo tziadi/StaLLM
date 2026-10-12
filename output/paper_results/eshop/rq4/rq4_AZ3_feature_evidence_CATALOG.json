@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary REST controller exposing endpoints to query and manipulate catalog items, brands, types and pictures; directly implements the Catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Domain model representing a product in the catalog; central to storing and retrieving catalog information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Entity-Framework DB context containing CatalogItem, CatalogBrand and CatalogType sets; persists catalog data and stock.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 4,
+      "confidence": 0.87,
+      "rationale": "Configures CatalogItem persistence (table mapping, fields, constraints); refines how catalog data is stored.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Seeds initial catalog brands, types, items and pictures into the database; supports catalog initialization.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 6,
+      "confidence": 0.84,
+      "rationale": "gRPC service exposing catalog operations to other micro-services; alternate transport layer for Catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Publishes integration events (e.g., price changes, stock updates) originating from catalog changes; supports distributed catalog consistency.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Domain model for catalog brands, an essential facet of catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 9,
+      "confidence": 0.78,
+      "rationale": "Domain model for catalog item types; part of organizing and querying catalog information.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Front-end service that queries the Catalog micro-service and feeds catalog data to the storefront UI; directly supports catalog display to users.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary REST controller exposing endpoints to query and manipulate catalog items, brands, types and pictures; directly implements the Catalog feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Domain model representing a product in the catalog; central to storing and retrieving catalog information.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Entity-Framework DB context containing CatalogItem, CatalogBrand and CatalogType sets; persists catalog data and stock.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Configures CatalogItem persistence (table mapping, fields, constraints); refines how catalog data is stored.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Seeds initial catalog brands, types, items and pictures into the database; supports catalog initialization.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.84,\n    \"rationale\": \"gRPC service exposing catalog operations to other micro-services; alternate transport layer for Catalog feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Publishes integration events (e.g., price changes, stock updates) originating from catalog changes; supports distributed catalog consistency.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Domain model for catalog brands, an essential facet of catalog management.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Domain model for catalog item types; part of organizing and querying catalog information.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Front-end service that queries the Catalog micro-service and feeds catalog data to the storefront UI; directly supports catalog display to users.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 1051,
+    "total_tokens": 10405
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 15.5
+}

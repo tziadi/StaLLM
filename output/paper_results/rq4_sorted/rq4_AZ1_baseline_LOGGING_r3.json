@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "File is located in a logging-specific package and likely handles exceptions, which are often logged.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "File is located in a logging-specific package and may provide timing utilities for logging events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Handles event dispatching, which often involves logging for debugging and tracing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Main entry point of the application, likely to include initialization of logging mechanisms.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/helpers/ApplicationVersion.java",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "May log version information during application startup or debugging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Handles resource loading, which may involve logging for debugging resource-related issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Manages undo operations, which often involve logging for tracking changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Handles exceptions, which are typically logged for debugging purposes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "May display or log status messages for debugging or user feedback.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Central UI component that may log user actions or system events for debugging.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.018691588785046728,
+    "mrr": 1.0,
+    "map": 0.013161993769470404
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\", \"confidence\": 0.95, \"rationale\": \"File is located in a logging-specific package and likely handles exceptions, which are often logged.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.9, \"rationale\": \"File is located in a logging-specific package and may provide timing utilities for logging events.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.85, \"rationale\": \"Handles event dispatching, which often involves logging for debugging and tracing.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.8, \"rationale\": \"Main entry point of the application, likely to include initialization of logging mechanisms.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ApplicationVersion.java\", \"confidence\": 0.75, \"rationale\": \"May log version information during application startup or debugging.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java\", \"confidence\": 0.7, \"rationale\": \"Handles resource loading, which may involve logging for debugging resource-related issues.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.65, \"rationale\": \"Manages undo operations, which often involve logging for tracking changes.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.6, \"rationale\": \"Handles exceptions, which are typically logged for debugging purposes.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\", \"confidence\": 0.55, \"rationale\": \"May display or log status messages for debugging or user feedback.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.5, \"rationale\": \"Central UI component that may log user actions or system events for debugging.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12383,
+    "completion_tokens": 559,
+    "total_tokens": 12942
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 82,
+  "candidate_order": "keyword_sorted",
+  "run": 3,
+  "elapsed_s": 5.6
+}

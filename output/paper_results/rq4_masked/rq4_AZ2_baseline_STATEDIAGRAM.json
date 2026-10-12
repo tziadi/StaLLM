@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-statediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/UMLStateDiagram.java",
+      "rank": 1,
+      "confidence": 0.98,
+      "rationale": "File name directly references 'StateDiagram', which is the UML diagram type used to describe the behavior and states of a system.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/StateDiagramGraphModel.java",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Graph model for state diagrams, likely contains logic for representing states and transitions, matching the query.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/StateMachinesHelper.java",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "State machines are the underlying model for state diagrams; this helper likely manages state transitions and states.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigStateVertex.java",
+      "rank": 4,
+      "confidence": 0.91,
+      "rationale": "Represents state vertices in state diagrams, directly related to the states of an object as events occur.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigTransition.java",
+      "rank": 5,
+      "confidence": 0.89,
+      "rationale": "Handles transitions between states in state diagrams, which are central to describing object behavior.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigSubmachineState.java",
+      "rank": 6,
+      "confidence": 0.87,
+      "rationale": "Submachine states are advanced features of state diagrams, relevant to object state tracking.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigConcurrentRegion.java",
+      "rank": 7,
+      "confidence": 0.85,
+      "rationale": "Concurrent regions are part of state diagrams, representing parallel states of an object.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/StateDiagramRenderer.java",
+      "rank": 8,
+      "confidence": 0.83,
+      "rationale": "Responsible for rendering state diagrams, likely contains logic for visualizing states and transitions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-state2/src/org/argouml/state2/diagram/StateDiagramFactory.java",
+      "rank": 9,
+      "confidence": 0.81,
+      "rationale": "Factory for creating state diagrams, directly related to the diagram type described in the query.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/Model.java",
+      "rank": 10,
+      "confidence": 0.78,
+      "rationale": "Central model class, likely references state machines and diagrams, providing context for object states and events.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.01020408163265306,
+    "hit@5": 1.0,
+    "recall@5": 0.04081632653061224,
+    "hit@10": 1.0,
+    "recall@10": 0.07142857142857142,
+    "mrr": 1.0,
+    "map": 0.06240281827016521
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/UMLStateDiagram.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"File name directly references 'StateDiagram', which is the UML diagram type used to describe the behavior and states of a system.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/StateDiagramGraphModel.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Graph model for state diagrams, likely contains logic for representing states and transitions, matching the query.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/StateMachinesHelper.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"State machines are the underlying model for state diagrams; this helper likely manages state transitions and states.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigStateVertex.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Represents state vertices in state diagrams, directly related to the states of an object as events occur.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigTransition.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Handles transitions between states in state diagrams, which are central to describing object behavior.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigSubmachineState.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Submachine states are advanced features of state diagrams, relevant to object state tracking.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigConcurrentRegion.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Concurrent regions are part of state diagrams, representing parallel states of an object.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/StateDiagramRenderer.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Responsible for rendering state diagrams, likely contains logic for visualizing states and transitions.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-state2/src/org/argouml/state2/diagram/StateDiagramFactory.java\",\n    \"confidence\": 0.81,\n    \"rationale\": \"Factory for creating state diagrams, directly related to the diagram type described in the query.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/Model.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Central model class, likely references state machines and diagrams, providing context for object states and events.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 13820,
+    "completion_tokens": 706,
+    "total_tokens": 14526
+  },
+  "slot": "AZ2",
+  "feature": "STATEDIAGRAM",
+  "gold_count": 98,
+  "gold_visible": 22,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 10.7
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the event when an order's stock is confirmed, which is a prerequisite for processing payment.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the integration event for stock confirmation, directly tied to initiating payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "Represents the event for successful payment, directly related to the feature's outcome.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Represents the event for failed payment, directly related to the feature's outcome.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Handles the event for successful payment, which is a key part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Handles the event for failed payment, which is a key part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Handles the successful payment event in the ordering service, indicating integration with the payment process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.8,
+      "rationale": "Handles the failed payment event in the ordering service, indicating integration with the payment process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Defines the payment method entity, which is essential for processing payments.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Configures the payment method entity, which is relevant to the payment process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.4444444444444444,
+    "mrr": 1.0,
+    "map": 0.4444444444444444
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles the event when an order's stock is confirmed, which is a prerequisite for processing payment.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the integration event for stock confirmation, directly tied to initiating payment processing.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Represents the event for successful payment, directly related to the feature's outcome.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Represents the event for failed payment, directly related to the feature's outcome.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles the event for successful payment, which is a key part of the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles the event for failed payment, which is a key part of the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles the successful payment event in the ordering service, indicating integration with the payment process.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles the failed payment event in the ordering service, indicating integration with the payment process.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Defines the payment method entity, which is essential for processing payments.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Configures the payment method entity, which is relevant to the payment process.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9348,
+    "completion_tokens": 676,
+    "total_tokens": 10024
+  },
+  "slot": "AZ1",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 5.1
+}

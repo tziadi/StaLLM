@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles user authentication, registration, and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Provides login functionality and interacts with the database for user authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Defines the database context for user-related data, including authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Configures authentication services and middleware for the Identity API.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Represents the user entity, including authentication and account details.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Contains configuration settings for identity and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Factories/ApplicationDbContextFactory.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Creates instances of the database context for user authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Defines the interface for login-related services, crucial for authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Manages user consent, which is often tied to authentication and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Program.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Entry point for the Identity API, initializing services related to authentication and tokens.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\", \"confidence\": 0.95, \"rationale\": \"Handles user authentication, registration, and account management.\"},\n  {\"rank\": 2, \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\", \"confidence\": 0.9, \"rationale\": \"Provides login functionality and interacts with the database for user authentication.\"},\n  {\"rank\": 3, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the database context for user-related data, including authentication and account management.\"},\n  {\"rank\": 4, \"file\": \"Services/Identity/Identity.API/Startup.cs\", \"confidence\": 0.8, \"rationale\": \"Configures authentication services and middleware for the Identity API.\"},\n  {\"rank\": 5, \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\", \"confidence\": 0.75, \"rationale\": \"Represents the user entity, including authentication and account details.\"},\n  {\"rank\": 6, \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\", \"confidence\": 0.7, \"rationale\": \"Contains configuration settings for identity and token issuance.\"},\n  {\"rank\": 7, \"file\": \"Services/Identity/Identity.API/Factories/ApplicationDbContextFactory.cs\", \"confidence\": 0.65, \"rationale\": \"Creates instances of the database context for user authentication and account management.\"},\n  {\"rank\": 8, \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\", \"confidence\": 0.6, \"rationale\": \"Defines the interface for login-related services, crucial for authentication.\"},\n  {\"rank\": 9, \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\", \"confidence\": 0.55, \"rationale\": \"Manages user consent, which is often tied to authentication and token issuance.\"},\n  {\"rank\": 10, \"file\": \"Services/Identity/Identity.API/Program.cs\", \"confidence\": 0.5, \"rationale\": \"Entry point for the Identity API, initializing services related to authentication and tokens.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9332,
+    "completion_tokens": 500,
+    "total_tokens": 9832
+  },
+  "slot": "AZ1",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "keyword_sorted",
+  "run": 3,
+  "elapsed_s": 4.2
+}

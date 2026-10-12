@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.93,
+      "rationale": "Core handler that receives stock-confirmed event, executes payment logic, and publishes success or failure events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.87,
+      "rationale": "Defines the success event published after payment is processed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.86,
+      "rationale": "Defines the failure event published when payment processing fails.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.78,
+      "rationale": "Event that triggers the payment processing workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 5,
+      "confidence": 0.63,
+      "rationale": "Configures event bus subscriptions wiring the handler that processes payments.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 6,
+      "confidence": 0.55,
+      "rationale": "Contains configuration values (e.g., payment gateway keys) used during payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.48,
+      "rationale": "Downstream handler that reacts to payment success; relevant as confirmation consumer.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.47,
+      "rationale": "Downstream handler that reacts to payment failure; relevant to completion of payment workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.44,
+      "rationale": "Ordering service\u2019s definition of payment success event ensuring schema consistency.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs",
+      "rank": 10,
+      "confidence": 0.43,
+      "rationale": "Ordering service\u2019s definition of payment failure event ensuring schema consistency.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.5555555555555556,
+    "hit@10": 1.0,
+    "recall@10": 0.6666666666666666,
+    "mrr": 1.0,
+    "map": 0.6666666666666666
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.93, \"rationale\": \"Core handler that receives stock-confirmed event, executes payment logic, and publishes success or failure events.\"},\n  {\"rank\": 2, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.87, \"rationale\": \"Defines the success event published after payment is processed.\"},\n  {\"rank\": 3, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\", \"confidence\": 0.86, \"rationale\": \"Defines the failure event published when payment processing fails.\"},\n  {\"rank\": 4, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.78, \"rationale\": \"Event that triggers the payment processing workflow.\"},\n  {\"rank\": 5, \"file\": \"Services/Payment/Payment.API/Startup.cs\", \"confidence\": 0.63, \"rationale\": \"Configures event bus subscriptions wiring the handler that processes payments.\"},\n  {\"rank\": 6, \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\", \"confidence\": 0.55, \"rationale\": \"Contains configuration values (e.g., payment gateway keys) used during payment processing.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\", \"confidence\": 0.48, \"rationale\": \"Downstream handler that reacts to payment success; relevant as confirmation consumer.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\", \"confidence\": 0.47, \"rationale\": \"Downstream handler that reacts to payment failure; relevant to completion of payment workflow.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.44, \"rationale\": \"Ordering service\u2019s definition of payment success event ensuring schema consistency.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs\", \"confidence\": 0.43, \"rationale\": \"Ordering service\u2019s definition of payment failure event ensuring schema consistency.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9323,
+    "completion_tokens": 1099,
+    "total_tokens": 10422
+  },
+  "slot": "AZ3",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 26.4
+}

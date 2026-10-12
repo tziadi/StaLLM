@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the integration event for stock confirmation and processes order status updates.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Handles the command to set the order status to stock confirmed, directly related to processing orders.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Defines the integration event for stock confirmation, which is central to the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Represents the domain event for stock confirmation, indicating a key part of the process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Handles the domain event for stock confirmation, linking domain logic to application behavior.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Defines the command to update the order status to stock confirmed, relevant to the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Manages integration events, including those related to stock confirmation and order processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.SignalrHub/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Handles stock confirmation events in the SignalR hub, potentially publishing success or failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Defines an integration event for order status changes to stock confirmed, relevant to the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Defines order statuses, including stock confirmed, which is central to the query.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the integration event for stock confirmation and processes order status updates.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\", \"confidence\": 0.9, \"rationale\": \"Handles the command to set the order status to stock confirmed, directly related to processing orders.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the integration event for stock confirmation, which is central to the query.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs\", \"confidence\": 0.8, \"rationale\": \"Represents the domain event for stock confirmation, indicating a key part of the process.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs\", \"confidence\": 0.75, \"rationale\": \"Handles the domain event for stock confirmation, linking domain logic to application behavior.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs\", \"confidence\": 0.7, \"rationale\": \"Defines the command to update the order status to stock confirmed, relevant to the query.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs\", \"confidence\": 0.65, \"rationale\": \"Manages integration events, including those related to stock confirmation and order processing.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.SignalrHub/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.6, \"rationale\": \"Handles stock confirmation events in the SignalR hub, potentially publishing success or failure.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.55, \"rationale\": \"Defines an integration event for order status changes to stock confirmed, relevant to the query.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\", \"confidence\": 0.5, \"rationale\": \"Defines order statuses, including stock confirmed, which is central to the query.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9326,
+    "completion_tokens": 617,
+    "total_tokens": 9943
+  },
+  "slot": "AZ1",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_masked",
+  "run": 2,
+  "elapsed_s": 7.0
+}

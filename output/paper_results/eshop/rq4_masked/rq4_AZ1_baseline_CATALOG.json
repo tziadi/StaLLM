@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central controller for managing catalog items, brands, types, and product pictures.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the structure and properties of catalog items, including stock and item information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Database context for catalog-related entities, including items, brands, and types.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Configures the database schema for catalog items, ensuring proper mapping of item properties.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Seeds initial data for catalog items, brands, and types into the database.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Provides client-side interaction with the catalog API for managing catalog items and related data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Implements gRPC service for catalog-related operations, including item and stock management.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/CatalogItem.cs",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Represents catalog items in the MVC application, including their properties and display information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Handles paginated views of catalog items, useful for storefront display.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/CatalogSettings.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Contains configuration settings for the catalog service, including item and stock management parameters.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\", \"confidence\": 0.95, \"rationale\": \"Central controller for managing catalog items, brands, types, and product pictures.\"},\n  {\"rank\": 2, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\", \"confidence\": 0.90, \"rationale\": \"Defines the structure and properties of catalog items, including stock and item information.\"},\n  {\"rank\": 3, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\", \"confidence\": 0.85, \"rationale\": \"Database context for catalog-related entities, including items, brands, and types.\"},\n  {\"rank\": 4, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\", \"confidence\": 0.80, \"rationale\": \"Configures the database schema for catalog items, ensuring proper mapping of item properties.\"},\n  {\"rank\": 5, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\", \"confidence\": 0.75, \"rationale\": \"Seeds initial data for catalog items, brands, and types into the database.\"},\n  {\"rank\": 6, \"file\": \"Web/WebMVC/Services/CatalogService.cs\", \"confidence\": 0.70, \"rationale\": \"Provides client-side interaction with the catalog API for managing catalog items and related data.\"},\n  {\"rank\": 7, \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\", \"confidence\": 0.65, \"rationale\": \"Implements gRPC service for catalog-related operations, including item and stock management.\"},\n  {\"rank\": 8, \"file\": \"Web/WebMVC/ViewModels/CatalogItem.cs\", \"confidence\": 0.60, \"rationale\": \"Represents catalog items in the MVC application, including their properties and display information.\"},\n  {\"rank\": 9, \"file\": \"Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs\", \"confidence\": 0.55, \"rationale\": \"Handles paginated views of catalog items, useful for storefront display.\"},\n  {\"rank\": 10, \"file\": \"Services/Catalog/Catalog.API/CatalogSettings.cs\", \"confidence\": 0.50, \"rationale\": \"Contains configuration settings for the catalog service, including item and stock management parameters.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9332,
+    "completion_tokens": 536,
+    "total_tokens": 9868
+  },
+  "slot": "AZ1",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 12.6
+}

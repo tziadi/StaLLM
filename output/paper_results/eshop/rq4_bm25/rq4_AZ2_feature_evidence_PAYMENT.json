@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "This handler is in the Payment service and responds to the event when an order's stock is confirmed, which is the trigger for payment processing. It is likely responsible for initiating the payment process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Defines the integration event that signals stock confirmation, which directly triggers payment processing in the Payment service.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Represents the event published when a payment succeeds, directly supporting the feature's requirement to publish payment results.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.93,
+      "rationale": "Represents the event published when a payment fails, directly supporting the feature's requirement to publish payment results.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Defines the event in the Ordering service for payment success, which is part of the overall payment workflow and notification.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Defines the event in the Ordering service for payment failure, which is part of the overall payment workflow and notification.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.82,
+      "rationale": "Handles the payment succeeded event in the Ordering service, updating order status and supporting the payment feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.82,
+      "rationale": "Handles the payment failed event in the Ordering service, updating order status and supporting the payment feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs",
+      "rank": 9,
+      "confidence": 0.8,
+      "rationale": "Represents the payment method domain model, which is essential for processing payments and is directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/Events/BuyerPaymentMethodVerifiedDomainEvent.cs",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Domain event for verifying the buyer's payment method, which is a prerequisite for processing payments.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.4444444444444444,
+    "mrr": 1.0,
+    "map": 0.4444444444444444
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"This handler is in the Payment service and responds to the event when an order's stock is confirmed, which is the trigger for payment processing. It is likely responsible for initiating the payment process.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the integration event that signals stock confirmation, which directly triggers payment processing in the Payment service.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Represents the event published when a payment succeeds, directly supporting the feature's requirement to publish payment results.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Represents the event published when a payment fails, directly supporting the feature's requirement to publish payment results.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Defines the event in the Ordering service for payment success, which is part of the overall payment workflow and notification.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Defines the event in the Ordering service for payment failure, which is part of the overall payment workflow and notification.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Handles the payment succeeded event in the Ordering service, updating order status and supporting the payment feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Handles the payment failed event in the Ordering service, updating order status and supporting the payment feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Represents the payment method domain model, which is essential for processing payments and is directly related to the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.Domain/Events/BuyerPaymentMethodVerifiedDomainEvent.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Domain event for verifying the buyer's payment method, which is a prerequisite for processing payments.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9348,
+    "completion_tokens": 738,
+    "total_tokens": 10086
+  },
+  "slot": "AZ2",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 11.1
+}

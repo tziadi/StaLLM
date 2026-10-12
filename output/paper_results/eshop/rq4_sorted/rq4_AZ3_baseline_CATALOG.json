@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary HTTP controller exposing endpoints to manage catalog items, brands, types, pictures and stock information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.93,
+      "rationale": "Core domain model representing a product in the catalog, including picture, price and stock fields.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Entity Framework DbContext containing DbSets for catalog items, brands and types and manages their persistence.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/PicController.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Controller responsible for handling catalog product pictures, an essential part of catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 5,
+      "confidence": 0.86,
+      "rationale": "gRPC service exposing catalog operations to other micro-services and clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 6,
+      "confidence": 0.84,
+      "rationale": "Domain model for catalog brands which are managed alongside catalog items.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 7,
+      "confidence": 0.83,
+      "rationale": "Domain model for catalog item types, another key entity in catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.8,
+      "rationale": "Configures catalog item persistence (table, columns, relationships) reflecting catalog feature structure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 9,
+      "confidence": 0.78,
+      "rationale": "Seeds initial catalog data (items, brands, types, pictures) crucial for catalog functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/CatalogSettings.cs",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Holds configuration settings (like picture base URL) used throughout catalog feature.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\", \"confidence\": 0.95, \"rationale\": \"Primary HTTP controller exposing endpoints to manage catalog items, brands, types, pictures and stock information.\"},\n  {\"rank\": 2, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\", \"confidence\": 0.93, \"rationale\": \"Core domain model representing a product in the catalog, including picture, price and stock fields.\"},\n  {\"rank\": 3, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\", \"confidence\": 0.9, \"rationale\": \"Entity Framework DbContext containing DbSets for catalog items, brands and types and manages their persistence.\"},\n  {\"rank\": 4, \"file\": \"Services/Catalog/Catalog.API/Controllers/PicController.cs\", \"confidence\": 0.88, \"rationale\": \"Controller responsible for handling catalog product pictures, an essential part of catalog management.\"},\n  {\"rank\": 5, \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\", \"confidence\": 0.86, \"rationale\": \"gRPC service exposing catalog operations to other micro-services and clients.\"},\n  {\"rank\": 6, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\", \"confidence\": 0.84, \"rationale\": \"Domain model for catalog brands which are managed alongside catalog items.\"},\n  {\"rank\": 7, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\", \"confidence\": 0.83, \"rationale\": \"Domain model for catalog item types, another key entity in catalog management.\"},\n  {\"rank\": 8, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\", \"confidence\": 0.8, \"rationale\": \"Configures catalog item persistence (table, columns, relationships) reflecting catalog feature structure.\"},\n  {\"rank\": 9, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\", \"confidence\": 0.78, \"rationale\": \"Seeds initial catalog data (items, brands, types, pictures) crucial for catalog functionality.\"},\n  {\"rank\": 10, \"file\": \"Services/Catalog/Catalog.API/CatalogSettings.cs\", \"confidence\": 0.75, \"rationale\": \"Holds configuration settings (like picture base URL) used throughout catalog feature.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9330,
+    "completion_tokens": 1078,
+    "total_tokens": 10408
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 14.5
+}

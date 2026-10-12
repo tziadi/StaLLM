@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "This is the main controller for basket operations in the Basket API service. It directly handles adding, removing, updating items, and checking out the basket, matching the feature description exactly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Represents the buyer's shopping basket data model, central to storing and manipulating basket contents.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Defines individual items within a basket, supporting add, remove, and update operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 4,
+      "confidence": 0.95,
+      "rationale": "Implements the repository pattern for persisting and retrieving baskets, directly supporting basket operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 5,
+      "confidence": 0.93,
+      "rationale": "Interface for basket repository, defining the contract for basket data access and manipulation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 6,
+      "confidence": 0.92,
+      "rationale": "Represents the checkout process for a basket, directly supporting the 'checking out' aspect of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 7,
+      "confidence": 0.9,
+      "rationale": "Provides gRPC endpoints for basket operations, enabling remote access to basket functionality.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 8,
+      "confidence": 0.88,
+      "rationale": "API Gateway controller for basket operations in the mobile BFF, orchestrating basket-related actions for mobile clients.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 9,
+      "confidence": 0.88,
+      "rationale": "API Gateway controller for basket operations in the web BFF, orchestrating basket-related actions for web clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.85,
+      "rationale": "Integration event triggered when a user checks out their basket, supporting the transition from basket to order.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"This is the main controller for basket operations in the Basket API service. It directly handles adding, removing, updating items, and checking out the basket, matching the feature description exactly.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Represents the buyer's shopping basket data model, central to storing and manipulating basket contents.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Defines individual items within a basket, supporting add, remove, and update operations.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Implements the repository pattern for persisting and retrieving baskets, directly supporting basket operations.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Interface for basket repository, defining the contract for basket data access and manipulation.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Represents the checkout process for a basket, directly supporting the 'checking out' aspect of the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Provides gRPC endpoints for basket operations, enabling remote access to basket functionality.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"API Gateway controller for basket operations in the mobile BFF, orchestrating basket-related actions for mobile clients.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"API Gateway controller for basket operations in the web BFF, orchestrating basket-related actions for web clients.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Integration event triggered when a user checks out their basket, supporting the transition from basket to order.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 661,
+    "total_tokens": 10014
+  },
+  "slot": "AZ2",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 10.2
+}

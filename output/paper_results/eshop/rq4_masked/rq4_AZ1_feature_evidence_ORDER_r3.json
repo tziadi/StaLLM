@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the creation of orders at checkout, directly aligning with the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Central domain model for orders, likely involved in tracking status and other order-related operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles integration events related to user checkout, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Handles stock confirmation for orders, a key part of the feature workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Represents an integration event for stock confirmation, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "Handles order cancellation, which is explicitly mentioned in the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Represents an integration event for payment confirmation, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Handles the transition of order status to 'paid', aligning with the payment aspect of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Handles successful payment events, directly supporting the payment workflow of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs",
+      "rank": 10,
+      "confidence": 0.73,
+      "rationale": "Handles stock rejection events, which are relevant to the feature's stock confirmation process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles the creation of orders at checkout, directly aligning with the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Central domain model for orders, likely involved in tracking status and other order-related operations.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Handles integration events related to user checkout, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Handles stock confirmation for orders, a key part of the feature workflow.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Represents an integration event for stock confirmation, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Handles order cancellation, which is explicitly mentioned in the feature description.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Represents an integration event for payment confirmation, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles the transition of order status to 'paid', aligning with the payment aspect of the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Handles successful payment events, directly supporting the payment workflow of the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Handles stock rejection events, which are relevant to the feature's stock confirmation process.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9358,
+    "completion_tokens": 657,
+    "total_tokens": 10015
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_masked",
+  "run": 3,
+  "elapsed_s": 8.2
+}

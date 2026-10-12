@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-collaborationdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java",
+      "rank": 1,
+      "confidence": 0.26,
+      "rationale": "Central graph model class for Collaboration diagrams; manages the UML elements that the diagram description refers to.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java",
+      "rank": 2,
+      "confidence": 0.22,
+      "rationale": "Responsible for rendering Collaboration diagrams and likely contains documentation/comments describing their purpose.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java",
+      "rank": 3,
+      "confidence": 0.11,
+      "rationale": "UI selection behaviour specific to Collaboration diagrams; strongly tied to their interaction semantics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Explorer rule that links Collaboration model elements to their diagrams; likely mentions diagram role in comments.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java",
+      "rank": 5,
+      "confidence": 0.07,
+      "rationale": "Model helper for Collaboration elements; may document how collaborations relate to sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java",
+      "rank": 6,
+      "confidence": 0.06,
+      "rationale": "Concrete implementation of CollaborationsHelper; contains detailed handling of collaboration structures.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Sequence diagrams are the counterpart referenced in the description; this file may cross-reference Collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java",
+      "rank": 8,
+      "confidence": 0.04,
+      "rationale": "Module descriptor for sequence diagrams; likely discusses relationship with Collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Factory creating sequence diagrams; may contain commentary on alternative diagram types like Collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java",
+      "rank": 10,
+      "confidence": 0.06,
+      "rationale": "General diagram factory that instantiates Collaboration diagrams; links high-level description to implementation.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.020833333333333332,
+    "hit@5": 1.0,
+    "recall@5": 0.08333333333333333,
+    "hit@10": 1.0,
+    "recall@10": 0.10416666666666667,
+    "mrr": 1.0,
+    "map": 0.09375
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\", \"confidence\": 0.26, \"rationale\": \"Central graph model class for Collaboration diagrams; manages the UML elements that the diagram description refers to.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\", \"confidence\": 0.22, \"rationale\": \"Responsible for rendering Collaboration diagrams and likely contains documentation/comments describing their purpose.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java\", \"confidence\": 0.11, \"rationale\": \"UI selection behaviour specific to Collaboration diagrams; strongly tied to their interaction semantics.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.09, \"rationale\": \"Explorer rule that links Collaboration model elements to their diagrams; likely mentions diagram role in comments.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java\", \"confidence\": 0.07, \"rationale\": \"Model helper for Collaboration elements; may document how collaborations relate to sequence diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java\", \"confidence\": 0.06, \"rationale\": \"Concrete implementation of CollaborationsHelper; contains detailed handling of collaboration structures.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\", \"confidence\": 0.05, \"rationale\": \"Sequence diagrams are the counterpart referenced in the description; this file may cross-reference Collaboration diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java\", \"confidence\": 0.04, \"rationale\": \"Module descriptor for sequence diagrams; likely discusses relationship with Collaboration diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java\", \"confidence\": 0.04, \"rationale\": \"Factory creating sequence diagrams; may contain commentary on alternative diagram types like Collaboration diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\", \"confidence\": 0.06, \"rationale\": \"General diagram factory that instantiates Collaboration diagrams; links high-level description to implementation.\"}\n]",
+  "usage": {
+    "prompt_tokens": 14038,
+    "completion_tokens": 2009,
+    "total_tokens": 16047
+  },
+  "slot": "AZ3",
+  "feature": "COLLABORATIONDIAGRAM",
+  "gold_count": 48,
+  "gold_visible": 13,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 25.8
+}

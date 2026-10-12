@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.96,
+      "rationale": "Core handler that receives the StockConfirmed event, executes the payment workflow, and publishes success/failure events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.8,
+      "rationale": "Event definition that triggers the payment processing when stock is confirmed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.75,
+      "rationale": "Event published by the payment handler when the payment succeeds.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.74,
+      "rationale": "Event published by the payment handler when the payment fails.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 5,
+      "confidence": 0.45,
+      "rationale": "Contains configuration settings that the payment handler may use while processing payments.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 6,
+      "confidence": 0.4,
+      "rationale": "Registers event subscriptions and dependencies for the payment processing workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.38,
+      "rationale": "Handles the success event on the Ordering side, completing the order workflow after payment succeeds.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.37,
+      "rationale": "Handles the failure event on the Ordering side, updating order status when payment fails.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.35,
+      "rationale": "Event definition consumed by Ordering service indicating payment success.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs",
+      "rank": 10,
+      "confidence": 0.34,
+      "rationale": "Event definition consumed by Ordering service indicating payment failure.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.5555555555555556,
+    "hit@10": 1.0,
+    "recall@10": 0.6666666666666666,
+    "mrr": 1.0,
+    "map": 0.6666666666666666
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Core handler that receives the StockConfirmed event, executes the payment workflow, and publishes success/failure events.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Event definition that triggers the payment processing when stock is confirmed.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Event published by the payment handler when the payment succeeds.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Event published by the payment handler when the payment fails.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\",\n    \"confidence\": 0.45,\n    \"rationale\": \"Contains configuration settings that the payment handler may use while processing payments.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Payment/Payment.API/Startup.cs\",\n    \"confidence\": 0.4,\n    \"rationale\": \"Registers event subscriptions and dependencies for the payment processing workflow.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.38,\n    \"rationale\": \"Handles the success event on the Ordering side, completing the order workflow after payment succeeds.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.37,\n    \"rationale\": \"Handles the failure event on the Ordering side, updating order status when payment fails.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.35,\n    \"rationale\": \"Event definition consumed by Ordering service indicating payment success.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs\",\n    \"confidence\": 0.34,\n    \"rationale\": \"Event definition consumed by Ordering service indicating payment failure.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9325,
+    "completion_tokens": 1609,
+    "total_tokens": 10934
+  },
+  "slot": "AZ3",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 48.4
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 1,
+      "confidence": 0.19,
+      "rationale": "Application entry point; very likely to initialise and configure the global logging / debug system.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 2,
+      "confidence": 0.14,
+      "rationale": "Central static class referenced across the code-base; typically contains global switches and helpers for enabling debug/trace output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 3,
+      "confidence": 0.11,
+      "rationale": "Core event dispatching component; producing trace output for every model/UI event is common, so logging hooks are expected here.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Global AWT exception handler; converts uncaught exceptions into log entries, connecting debugging facilities with runtime failures.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/Configuration.java",
+      "rank": 5,
+      "confidence": 0.08,
+      "rationale": "Holds persistent application settings; likely stores the user-selected logging level or debug flags.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 6,
+      "confidence": 0.07,
+      "rationale": "Developer module that inspects the event pump; intended for trace/debug visualisation.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoLogPanel.java",
+      "rank": 7,
+      "confidence": 0.06,
+      "rationale": "Explicitly named *Log* panel, provides live view of undo/redo events for debugging.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoManagerWrapper.java",
+      "rank": 8,
+      "confidence": 0.05,
+      "rationale": "Wraps UndoManager adding extra trace/log statements around undoable edits.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/TargetManagerPanel.java",
+      "rank": 9,
+      "confidence": 0.05,
+      "rationale": "Developer panel focused on TargetManager; likely reports internal state changes via debug messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
+      "rank": 10,
+      "confidence": 0.06,
+      "rationale": "Subsystem starter that enables various critics; historically emits trace output during initialisation.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.014018691588785047,
+    "mrr": 1.0,
+    "map": 0.014018691588785047
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.19,\n    \"rationale\": \"Application entry point; very likely to initialise and configure the global logging / debug system.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Central static class referenced across the code-base; typically contains global switches and helpers for enabling debug/trace output.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Core event dispatching component; producing trace output for every model/UI event is common, so logging hooks are expected here.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Global AWT exception handler; converts uncaught exceptions into log entries, connecting debugging facilities with runtime failures.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/Configuration.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Holds persistent application settings; likely stores the user-selected logging level or debug flags.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Developer module that inspects the event pump; intended for trace/debug visualisation.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoLogPanel.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Explicitly named *Log* panel, provides live view of undo/redo events for debugging.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoManagerWrapper.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Wraps UndoManager adding extra trace/log statements around undoable edits.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"modules/dev/src/org/argouml/dev/TargetManagerPanel.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Developer panel focused on TargetManager; likely reports internal state changes via debug messages.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Subsystem starter that enables various critics; historically emits trace output during initialisation.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12403,
+    "completion_tokens": 1697,
+    "total_tokens": 14100
+  },
+  "slot": "AZ3",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 81,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 27.5
+}

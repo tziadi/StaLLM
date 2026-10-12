@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
+      "rank": 1,
+      "confidence": 0.32,
+      "rationale": "Core utility dedicated to catching uncaught AWT exceptions and routing them to the ArgoUML logging infrastructure; directly supports debug/trace output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
+      "rank": 2,
+      "confidence": 0.27,
+      "rationale": "Utility class for timing code sections and emitting elapsed-time information to the logger; frequently used while tracing performance during debugging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 3,
+      "confidence": 0.24,
+      "rationale": "Alternative exception handler located in the application package; integrates with security manager and forwards stack traces to the logging system.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoLogPanel.java",
+      "rank": 4,
+      "confidence": 0.19,
+      "rationale": "Developer panel whose very purpose is to display the undo log; provides UI access to logged undo/redo operations for tracing problems.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoManagerWrapper.java",
+      "rank": 5,
+      "confidence": 0.17,
+      "rationale": "Wraps the global undo manager to record and expose detailed undo/redo events, feeding data to the UndoLogPanel and contributing log information.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 6,
+      "confidence": 0.15,
+      "rationale": "Inspector panel for the event pump; enables developers to trace and view internal events, effectively acting as a live event log.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/ModeInspectorPanel.java",
+      "rank": 7,
+      "confidence": 0.13,
+      "rationale": "Displays current GEF modes for diagnostic purposes; assists developers in logging and tracing UI interaction states.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/TargetManagerPanel.java",
+      "rank": 8,
+      "confidence": 0.12,
+      "rationale": "Diagnostic panel exposing TargetManager state changes; used to observe and log target selection events during debugging.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java",
+      "rank": 9,
+      "confidence": 0.1,
+      "rationale": "Builds caller lists for stack inspection; supports creation of detailed call traces helpful in logging runtime behaviour.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 10,
+      "confidence": 0.09,
+      "rationale": "Initialises the developer tools (including the various *Log* panels); indirectly enables logging and tracing facilities within the development module.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.004672897196261682,
+    "hit@10": 1.0,
+    "recall@10": 0.004672897196261682,
+    "mrr": 1.0,
+    "map": 0.004672897196261682
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n    \"confidence\": 0.32,\n    \"rationale\": \"Core utility dedicated to catching uncaught AWT exceptions and routing them to the ArgoUML logging infrastructure; directly supports debug/trace output.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n    \"confidence\": 0.27,\n    \"rationale\": \"Utility class for timing code sections and emitting elapsed-time information to the logger; frequently used while tracing performance during debugging.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.24,\n    \"rationale\": \"Alternative exception handler located in the application package; integrates with security manager and forwards stack traces to the logging system.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoLogPanel.java\",\n    \"confidence\": 0.19,\n    \"rationale\": \"Developer panel whose very purpose is to display the undo log; provides UI access to logged undo/redo operations for tracing problems.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoManagerWrapper.java\",\n    \"confidence\": 0.17,\n    \"rationale\": \"Wraps the global undo manager to record and expose detailed undo/redo events, feeding data to the UndoLogPanel and contributing log information.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.15,\n    \"rationale\": \"Inspector panel for the event pump; enables developers to trace and view internal events, effectively acting as a live event log.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"modules/dev/src/org/argouml/dev/ModeInspectorPanel.java\",\n    \"confidence\": 0.13,\n    \"rationale\": \"Displays current GEF modes for diagnostic purposes; assists developers in logging and tracing UI interaction states.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/TargetManagerPanel.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Diagnostic panel exposing TargetManager state changes; used to observe and log target selection events during debugging.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"Builds caller lists for stack inspection; supports creation of detailed call traces helpful in logging runtime behaviour.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Initialises the developer tools (including the various *Log* panels); indirectly enables logging and tracing facilities within the development module.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12406,
+    "completion_tokens": 1361,
+    "total_tokens": 13767
+  },
+  "slot": "AZ3",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 82,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 17.9
+}

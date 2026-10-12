@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Centralized event handling mechanism likely includes debug and trace message functionality.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "UndoManager may use debug messages to track state changes and operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "ExceptionDialog likely logs debug and trace messages for error handling.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Main entry point of the application may include debug initialization or logging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/UIUtils.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Utility class for UI may include debug messages for UI-related events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/FindDialog.java",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "FindDialog may use debug messages to trace user interactions and search operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/SaveSwingWorker.java",
+      "rank": 7,
+      "confidence": 0.6,
+      "rationale": "SaveSwingWorker likely uses debug messages to trace save operations and progress.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/SystemInfoDialog.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "SystemInfoDialog may log debug messages related to system state and diagnostics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFigUtil.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Utility class for diagrams may include debug messages for diagram-related operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 10,
+      "confidence": 0.45,
+      "rationale": "ConfigurationHandler may use debug messages to trace configuration changes and issues.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.009345794392523364,
+    "hit@10": 1.0,
+    "recall@10": 0.014018691588785047,
+    "mrr": 1.0,
+    "map": 0.008411214953271028
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.95, \"rationale\": \"Centralized event handling mechanism likely includes debug and trace message functionality.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.85, \"rationale\": \"UndoManager may use debug messages to track state changes and operations.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.8, \"rationale\": \"ExceptionDialog likely logs debug and trace messages for error handling.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.75, \"rationale\": \"Main entry point of the application may include debug initialization or logging.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/util/UIUtils.java\", \"confidence\": 0.7, \"rationale\": \"Utility class for UI may include debug messages for UI-related events.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/FindDialog.java\", \"confidence\": 0.65, \"rationale\": \"FindDialog may use debug messages to trace user interactions and search operations.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/SaveSwingWorker.java\", \"confidence\": 0.6, \"rationale\": \"SaveSwingWorker likely uses debug messages to trace save operations and progress.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/SystemInfoDialog.java\", \"confidence\": 0.55, \"rationale\": \"SystemInfoDialog may log debug messages related to system state and diagnostics.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFigUtil.java\", \"confidence\": 0.5, \"rationale\": \"Utility class for diagrams may include debug messages for diagram-related operations.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.45, \"rationale\": \"ConfigurationHandler may use debug messages to trace configuration changes and issues.\"}\n]",
+  "usage": {
+    "prompt_tokens": 13898,
+    "completion_tokens": 552,
+    "total_tokens": 14450
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 74,
+  "candidate_order": "bm25_masked",
+  "run": 2,
+  "elapsed_s": 7.5
+}

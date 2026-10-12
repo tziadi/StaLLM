@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-deploymentdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java",
+      "rank": 1,
+      "confidence": 0.28,
+      "rationale": "Only candidate whose name explicitly refers to a Deployment Diagram; provides the UI action that creates or opens such diagrams, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/target/classes/org/argouml/uml/ui/ActionDeploymentDiagram.java",
+      "rank": 2,
+      "confidence": 0.23,
+      "rationale": "Compiled counterpart of the source file above; included because the feature is implemented both in source and built artefacts.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java",
+      "rank": 3,
+      "confidence": 0.15,
+      "rationale": "Explorer rule that navigates from a Deployment (and other) diagram to its Node elements; relevant because nodes are the primary hardware elements shown in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/target/classes/org/argouml/ui/explorer/rules/GoDiagramToNode.java",
+      "rank": 4,
+      "confidence": 0.13,
+      "rationale": "Compiled version of the navigation rule linking diagrams to nodes; directly supports browsing the run-time architecture represented by deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrNodeInsideElement.java",
+      "rank": 5,
+      "confidence": 0.12,
+      "rationale": "Critic concerned with placement of Node elements inside other model elements; helps maintain correctness of deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/target/classes/org/argouml/uml/cognitive/critics/CrNodeInsideElement.java",
+      "rank": 6,
+      "confidence": 0.11,
+      "rationale": "Compiled form of the critic that analyses Node usage; part of the cognitive support for deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrNodesOverlap.java",
+      "rank": 7,
+      "confidence": 0.1,
+      "rationale": "Critic that detects overlapping Node figures on a diagram, improving the visual quality of deployment diagrams that contain hardware nodes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/target/classes/org/argouml/uml/cognitive/critics/CrNodesOverlap.java",
+      "rank": 8,
+      "confidence": 0.09,
+      "rationale": "Compiled version of the overlap critic; contributes operational support for deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedNode.java",
+      "rank": 9,
+      "confidence": 0.08,
+      "rationale": "Layout helper for Node figures within diagrams; relevant for arranging hardware nodes in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/target/classes/org/argouml/uml/diagram/layout/LayoutedNode.java",
+      "rank": 10,
+      "confidence": 0.07,
+      "rationale": "Compiled counterpart of LayoutedNode, affecting runtime behaviour when users manipulate nodes on deployment diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.03125,
+    "hit@5": 1.0,
+    "recall@5": 0.03125,
+    "hit@10": 1.0,
+    "recall@10": 0.03125,
+    "mrr": 1.0,
+    "map": 0.03125
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Only candidate whose name explicitly refers to a Deployment Diagram; provides the UI action that creates or opens such diagrams, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/target/classes/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.23,\n    \"rationale\": \"Compiled counterpart of the source file above; included because the feature is implemented both in source and built artefacts.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java\",\n    \"confidence\": 0.15,\n    \"rationale\": \"Explorer rule that navigates from a Deployment (and other) diagram to its Node elements; relevant because nodes are the primary hardware elements shown in deployment diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/target/classes/org/argouml/ui/explorer/rules/GoDiagramToNode.java\",\n    \"confidence\": 0.13,\n    \"rationale\": \"Compiled version of the navigation rule linking diagrams to nodes; directly supports browsing the run-time architecture represented by deployment diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrNodeInsideElement.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Critic concerned with placement of Node elements inside other model elements; helps maintain correctness of deployment diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/target/classes/org/argouml/uml/cognitive/critics/CrNodeInsideElement.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Compiled form of the critic that analyses Node usage; part of the cognitive support for deployment diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrNodesOverlap.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"Critic that detects overlapping Node figures on a diagram, improving the visual quality of deployment diagrams that contain hardware nodes.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/target/classes/org/argouml/uml/cognitive/critics/CrNodesOverlap.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Compiled version of the overlap critic; contributes operational support for deployment diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedNode.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Layout helper for Node figures within diagrams; relevant for arranging hardware nodes in deployment diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/target/classes/org/argouml/uml/diagram/layout/LayoutedNode.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Compiled counterpart of LayoutedNode, affecting runtime behaviour when users manipulate nodes on deployment diagrams.\"\n  }\n]\n",
+  "usage": {
+    "prompt_tokens": 13662,
+    "completion_tokens": 1475,
+    "total_tokens": 15137
+  },
+  "slot": "AZ3",
+  "feature": "DEPLOYMENTDIAGRAM",
+  "gold_count": 32,
+  "gold_visible": 6,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 21.5
+}

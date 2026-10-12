@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles user authentication, login, logout, and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the user model used for authentication and identity management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Configures identity services and middleware for authentication and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Manages database interactions for identity-related data, including users and tokens.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Provides login functionality and interacts with the database for user authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Represents the data structure for user login operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Represents the data structure for user registration operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Contains configuration settings related to identity and authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Defines the interface for login-related services, supporting authentication workflows.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Seeds initial identity-related data, such as default users and roles, into the database.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\", \"confidence\": 0.95, \"rationale\": \"Handles user authentication, login, logout, and account management.\"},\n  {\"rank\": 2, \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\", \"confidence\": 0.90, \"rationale\": \"Defines the user model used for authentication and identity management.\"},\n  {\"rank\": 3, \"file\": \"Services/Identity/Identity.API/Startup.cs\", \"confidence\": 0.85, \"rationale\": \"Configures identity services and middleware for authentication and token issuance.\"},\n  {\"rank\": 4, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\", \"confidence\": 0.80, \"rationale\": \"Manages database interactions for identity-related data, including users and tokens.\"},\n  {\"rank\": 5, \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\", \"confidence\": 0.75, \"rationale\": \"Provides login functionality and interacts with the database for user authentication.\"},\n  {\"rank\": 6, \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs\", \"confidence\": 0.70, \"rationale\": \"Represents the data structure for user login operations.\"},\n  {\"rank\": 7, \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs\", \"confidence\": 0.70, \"rationale\": \"Represents the data structure for user registration operations.\"},\n  {\"rank\": 8, \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\", \"confidence\": 0.65, \"rationale\": \"Contains configuration settings related to identity and authentication.\"},\n  {\"rank\": 9, \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\", \"confidence\": 0.65, \"rationale\": \"Defines the interface for login-related services, supporting authentication workflows.\"},\n  {\"rank\": 10, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs\", \"confidence\": 0.60, \"rationale\": \"Seeds initial identity-related data, such as default users and roles, into the database.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9332,
+    "completion_tokens": 505,
+    "total_tokens": 9837
+  },
+  "slot": "AZ1",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 6.4
+}

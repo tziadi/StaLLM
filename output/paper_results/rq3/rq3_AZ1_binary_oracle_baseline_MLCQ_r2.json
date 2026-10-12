@@ -1,0 +1,1830 @@
+{
+  "rows": [
+    {
+      "sample_id": "526",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines a static utility class with constants and a private constructor, which does not exhibit behavior indicative of feature envy. There is no evidence of excessive interaction with another class's data or methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines a static utility class with constants and a private constructor, which does not exhibit behavior indicative of feature envy. There is no evidence of excessive interaction with another class's data or methods.\"\n}"
+    },
+    {
+      "sample_id": "527",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a private constructor with no logic or statements beyond a comment, making it very short and not indicative of a long_method smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is a private constructor with no logic or statements beyond a comment, making it very short and not indicative of a long_method smell.\"\n}"
+    },
+    {
+      "sample_id": "528",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class contains a large number of fields, methods, and responsibilities, indicating it may be a god class. It handles multiple concerns such as buffer management, memory allocation, partitioning, and serialization.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains a large number of fields, methods, and responsibilities, indicating it may be a god class. It handles multiple concerns such as buffer management, memory allocation, partitioning, and serialization.\"\n}\n```"
+    },
+    {
+      "sample_id": "529",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class contains significant logic and behavior, including methods for writing data, managing buffers, and handling exceptions. It is not a simple data container.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class contains significant logic and behavior, including methods for writing data, managing buffers, and handling exceptions. It is not a simple data container.\"\n}\n```"
+    },
+    {
+      "sample_id": "530",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit clear evidence of feature envy, as the methods primarily interact with their own class's fields and do not excessively rely on methods or fields of other classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit clear evidence of feature envy, as the methods primarily interact with their own class's fields and do not excessively rely on methods or fields of other classes.\"\n}"
+    },
+    {
+      "sample_id": "531",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet are short and focused, with no evidence of excessive length or complexity that would indicate a 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet are short and focused, with no evidence of excessive length or complexity that would indicate a 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "532",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet are concise and focused on specific tasks, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet are concise and focused on specific tasks, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "533",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The methods heavily rely on the WritableUtils utility class for operations, suggesting that the class may be more focused on interacting with external utilities than its own data, which is indicative of feature envy.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods heavily rely on the WritableUtils utility class for operations, suggesting that the class may be more focused on interacting with external utilities than its own data, which is indicative of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "534",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.85,
+      "rationale": "The class contains behavior (e.g., constructors, overridden methods, and logic) and is not a simple container for data. This suggests it is not a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.85,\n  \"rationale\": \"The class contains behavior (e.g., constructors, overridden methods, and logic) and is not a simple container for data. This suggests it is not a data class.\"\n}"
+    },
+    {
+      "sample_id": "535",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not exhibit clear signs of being a god class. It has a focused purpose related to parsing, limited responsibilities, and does not appear overly large or complex.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not exhibit clear signs of being a god class. It has a focused purpose related to parsing, limited responsibilities, and does not appear overly large or complex.\"\n}"
+    },
+    {
+      "sample_id": "536",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is cohesive, with methods and fields focused on managing request security. It does not exhibit excessive responsibilities or unrelated functionalities typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is cohesive, with methods and fields focused on managing request security. It does not exhibit excessive responsibilities or unrelated functionalities typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "537",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant business logic in its methods (e.g., `checkForInsecureComponentEventRequest`, `checkForInsecurePageRenderRequest`, `needsRedirect`, `isSecure`, and `checkPageSecurity`). This indicates it is not a simple data container, which is a key characteristic of the 'data_class' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant business logic in its methods (e.g., `checkForInsecureComponentEventRequest`, `checkForInsecurePageRenderRequest`, `needsRedirect`, `isSecure`, and `checkPageSecurity`). This indicates it is not a simple data container, which is a key characteristic of the 'data_class' smell.\"\n}"
+    },
+    {
+      "sample_id": "538",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is abstract, has a clear and focused responsibility related to conditional rendering, and does not exhibit excessive complexity or an overwhelming number of responsibilities. It does not meet the criteria for a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is abstract, has a clear and focused responsibility related to conditional rendering, and does not exhibit excessive complexity or an overwhelming number of responsibilities. It does not meet the criteria for a god class.\"\n}"
+    },
+    {
+      "sample_id": "539",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (e.g., 'test()', 'beginRender()', 'beforeRenderBody()', 'afterRender()') and is not a simple data container. It does not match the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (e.g., 'test()', 'beginRender()', 'beforeRenderBody()', 'afterRender()') and is not a simple data container. It does not match the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "540",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet contains a method with a single throw statement and no significant complexity or excessive length. There is insufficient evidence to classify it as a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet contains a method with a single throw statement and no significant complexity or excessive length. There is insufficient evidence to classify it as a long method.\"\n}"
+    },
+    {
+      "sample_id": "541",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit evidence of feature envy, as it does not excessively interact with methods or fields of another class. The focus is on method signatures and exceptions, with no clear indication of inappropriate delegation or external class dependency.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit evidence of feature envy, as it does not excessively interact with methods or fields of another class. The focus is on method signatures and exceptions, with no clear indication of inappropriate delegation or external class dependency.\"\n}"
+    },
+    {
+      "sample_id": "542",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as the methods primarily operate on their own class's data and do not excessively interact with external objects or classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as the methods primarily operate on their own class's data and do not excessively interact with external objects or classes.\"\n}"
+    },
+    {
+      "sample_id": "543",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "544",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and focused, with no evidence of excessive length or complexity that would indicate a long_method smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and focused, with no evidence of excessive length or complexity that would indicate a long_method smell.\"\n}"
+    },
+    {
+      "sample_id": "545",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as the methods primarily operate on the class's own fields (size and insns) without excessive interaction with external objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as the methods primarily operate on the class's own fields (size and insns) without excessive interaction with external objects.\"\n}"
+    },
+    {
+      "sample_id": "546",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit clear signs of a god class, as it defines abstract classes with specific purposes and does not show excessive responsibilities or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit clear signs of a god class, as it defines abstract classes with specific purposes and does not show excessive responsibilities or complexity.\"\n}"
+    },
+    {
+      "sample_id": "547",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The classes 'ElementPropertyChangedEvent' and 'ElementPropertyEvent' primarily consist of fields and constructors without significant behavior, indicating they are likely data classes.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The classes 'ElementPropertyChangedEvent' and 'ElementPropertyEvent' primarily consist of fields and constructors without significant behavior, indicating they are likely data classes.\"\n}"
+    },
+    {
+      "sample_id": "548",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily delegate calls to a superclass without exhibiting behavior that excessively manipulates or depends on another class's data or methods, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily delegate calls to a superclass without exhibiting behavior that excessively manipulates or depends on another class's data or methods, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "549",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and primarily delegate functionality to a superclass. There is no evidence of excessive length or complexity characteristic of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and primarily delegate functionality to a superclass. There is no evidence of excessive length or complexity characteristic of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "552",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.7,
+      "rationale": "The provided code snippet does not exhibit clear evidence of the 'long_method' smell. The methods shown are relatively short and focused, with no excessive length or complexity. However, the snippet is incomplete, so the decision is conservative.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.7,\n  \"rationale\": \"The provided code snippet does not exhibit clear evidence of the 'long_method' smell. The methods shown are relatively short and focused, with no excessive length or complexity. However, the snippet is incomplete, so the decision is conservative.\"\n}"
+    },
+    {
+      "sample_id": "553",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.7,
+      "rationale": "The code does not exhibit strong evidence of feature envy. The methods primarily operate on their own class's data and do not excessively rely on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.7,\n  \"rationale\": \"The code does not exhibit strong evidence of feature envy. The methods primarily operate on their own class's data and do not excessively rely on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "554",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The class exhibits characteristics of a god class, including a large number of fields, constants, and methods, as well as handling multiple responsibilities such as HTTP requests, logging, and data transformation. This violates the Single Responsibility Principle and suggests the presence of the god_class smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The class exhibits characteristics of a god class, including a large number of fields, constants, and methods, as well as handling multiple responsibilities such as HTTP requests, logging, and data transformation. This violates the Single Responsibility Principle and suggests the presence of the god_class smell.\"\n}"
+    },
+    {
+      "sample_id": "555",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant business logic in its methods, such as interacting with external services, processing data, and handling errors. This indicates it is not a simple data container, which is a key characteristic of a data_class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant business logic in its methods, such as interacting with external services, processing data, and handling errors. This indicates it is not a simple data container, which is a key characteristic of a data_class smell.\"\n}"
+    },
+    {
+      "sample_id": "556",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet defines two small, focused inner classes with specific responsibilities, which does not align with the characteristics of a god class. There is no evidence of excessive complexity or an overwhelming number of responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet defines two small, focused inner classes with specific responsibilities, which does not align with the characteristics of a god class. There is no evidence of excessive complexity or an overwhelming number of responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "557",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided classes contain behavior (e.g., the addElement method) and are not simple containers for data. This indicates they are not data classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided classes contain behavior (e.g., the addElement method) and are not simple containers for data. This indicates they are not data classes.\"\n}"
+    },
+    {
+      "sample_id": "558",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and fields. It contains a small number of methods and classes with focused functionality.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and fields. It contains a small number of methods and classes with focused functionality.\"\n}"
+    },
+    {
+      "sample_id": "559",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'ChannelConfigException' primarily contains data (a serialVersionUID and a constructor) without significant behavior, which aligns with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ChannelConfigException' primarily contains data (a serialVersionUID and a constructor) without significant behavior, which aligns with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "562",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and straightforward, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and straightforward, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "563",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit feature envy as it primarily interacts with its own fields and methods without excessive reliance on external objects or methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit feature envy as it primarily interacts with its own fields and methods without excessive reliance on external objects or methods.\"\n}"
+    },
+    {
+      "sample_id": "564",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code does not exhibit clear signs of feature envy, as it primarily interacts with its own methods and objects without excessive reliance on external classes or objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code does not exhibit clear signs of feature envy, as it primarily interacts with its own methods and objects without excessive reliance on external classes or objects.\"\n}"
+    },
+    {
+      "sample_id": "565",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'DynamicExpression' is relatively short and focused, with no excessive complexity or length. It does not meet the typical criteria for a 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'DynamicExpression' is relatively short and focused, with no excessive complexity or length. It does not meet the typical criteria for a 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "566",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as methods primarily operate on their own class's data or perform static operations without excessive reliance on external objects or classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as methods primarily operate on their own class's data or perform static operations without excessive reliance on external objects or classes.\"\n}"
+    },
+    {
+      "sample_id": "567",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The longest method, 'adjustRelativePath', is moderately sized and contains clear, focused logic. It does not exhibit excessive length or complexity indicative of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The longest method, 'adjustRelativePath', is moderately sized and contains clear, focused logic. It does not exhibit excessive length or complexity indicative of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "568",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with clear responsibilities and does not exhibit excessive complexity or centralization of functionality typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with clear responsibilities and does not exhibit excessive complexity or centralization of functionality typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "569",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface, not a concrete class, and does not exhibit characteristics of a data class such as primarily storing data with minimal behavior. It focuses on defining behavior through methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface, not a concrete class, and does not exhibit characteristics of a data class such as primarily storing data with minimal behavior. It focuses on defining behavior through methods.\"\n}"
+    },
+    {
+      "sample_id": "570",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code primarily operates on its own fields (factory, global) and does not excessively interact with methods or fields of other classes, which is a key characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code primarily operates on its own fields (factory, global) and does not excessively interact with methods or fields of other classes, which is a key characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "571",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods provided are short and focused, with no excessive length or complexity. They adhere to common patterns for hashCode and equals implementations.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods provided are short and focused, with no excessive length or complexity. They adhere to common patterns for hashCode and equals implementations.\"\n}"
+    },
+    {
+      "sample_id": "572",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet does not show evidence of a long method. The methods shown are relatively short and concise.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided code snippet does not show evidence of a long method. The methods shown are relatively short and concise.\"\n}"
+    },
+    {
+      "sample_id": "573",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'endAccess' demonstrates feature envy by directly accessing and invoking methods on 'manager' and casting it to 'ClusterManagerBase', indicating a reliance on another class's functionality.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'endAccess' demonstrates feature envy by directly accessing and invoking methods on 'manager' and casting it to 'ClusterManagerBase', indicating a reliance on another class's functionality.\"\n}"
+    },
+    {
+      "sample_id": "574",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are concise, perform limited operations, and do not exhibit excessive length or complexity indicative of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are concise, perform limited operations, and do not exhibit excessive length or complexity indicative of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "575",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily manipulate their own class's fields and do not exhibit excessive interaction with external objects or classes, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily manipulate their own class's fields and do not exhibit excessive interaction with external objects or classes, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "576",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short, focused, and perform distinct tasks. There is no evidence of a long method exceeding reasonable length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short, focused, and perform distinct tasks. There is no evidence of a long method exceeding reasonable length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "577",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getText' primarily operates on its own parameter 'text' and does not excessively interact with other objects or classes, which is characteristic of feature envy. There is no strong evidence of the smell in this snippet.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getText' primarily operates on its own parameter 'text' and does not excessively interact with other objects or classes, which is characteristic of feature envy. There is no strong evidence of the smell in this snippet.\"\n}"
+    },
+    {
+      "sample_id": "578",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, focused on handling a single event, and delegates functionality to the MainFrame class. It does not exhibit characteristics of a god class, such as excessive responsibilities or large size.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, focused on handling a single event, and delegates functionality to the MainFrame class. It does not exhibit characteristics of a god class, such as excessive responsibilities or large size.\"\n}"
+    },
+    {
+      "sample_id": "579",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (actionPerformed method) and is not a simple container for data. It does not exhibit characteristics of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (actionPerformed method) and is not a simple container for data. It does not exhibit characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "580",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided method implementations are relatively short and do not exhibit characteristics of a long method. The evidence is insufficient to classify this as a long_method smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided method implementations are relatively short and do not exhibit characteristics of a long method. The evidence is insufficient to classify this as a long_method smell.\"\n}"
+    },
+    {
+      "sample_id": "581",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code does not exhibit strong evidence of feature envy, as the methods primarily interact with their own class's fields and methods, rather than excessively relying on another class's functionality.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code does not exhibit strong evidence of feature envy, as the methods primarily interact with their own class's fields and methods, rather than excessively relying on another class's functionality.\"\n}"
+    },
+    {
+      "sample_id": "582",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is focused on a single responsibility: widening the left side of an annotation. It does not exhibit excessive complexity, nor does it manage multiple unrelated functionalities, which are typical characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is focused on a single responsibility: widening the left side of an annotation. It does not exhibit excessive complexity, nor does it manage multiple unrelated functionalities, which are typical characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "583",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (methods like 'run' and 'wideLeftAnnotationSide') and is not solely a container for data. It does not exhibit characteristics of a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (methods like 'run' and 'wideLeftAnnotationSide') and is not solely a container for data. It does not exhibit characteristics of a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "586",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The class primarily holds data (error_message) and provides minimal behavior, which aligns with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class primarily holds data (error_message) and provides minimal behavior, which aligns with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "587",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, focused, and has a single responsibility related to error handling. It does not exhibit characteristics of a god class, such as excessive complexity or managing multiple unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, focused, and has a single responsibility related to error handling. It does not exhibit characteristics of a god class, such as excessive complexity or managing multiple unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "588",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with clear, focused responsibilities and does not exhibit characteristics of a god class, such as excessive complexity, large size, or managing multiple unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with clear, focused responsibilities and does not exhibit characteristics of a god class, such as excessive complexity, large size, or managing multiple unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "589",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface, not a class, and primarily specifies behavior through method signatures rather than encapsulating data. Data classes typically focus on storing data with minimal behavior, which is not evident here.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface, not a class, and primarily specifies behavior through method signatures rather than encapsulating data. Data classes typically focus on storing data with minimal behavior, which is not evident here.\"\n}"
+    },
+    {
+      "sample_id": "590",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet primarily access their own class's fields without excessive interaction with other classes, which does not indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet primarily access their own class's fields without excessive interaction with other classes, which does not indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "591",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and focused, each performing a single, simple operation. There is no evidence of excessive length or complexity indicative of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and focused, each performing a single, simple operation. There is no evidence of excessive length or complexity indicative of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "592",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The class 'JobSchedulerService' exhibits characteristics of a god class, such as having a large number of fields, methods, and responsibilities. It handles job scheduling, execution, metrics, logging, and listener management, which indicates a lack of single responsibility. However, the confidence is not higher due to the absence of explicit evidence of excessive coupling or direct violations of cohesion.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class 'JobSchedulerService' exhibits characteristics of a god class, such as having a large number of fields, methods, and responsibilities. It handles job scheduling, execution, metrics, logging, and listener management, which indicates a lack of single responsibility. However, the confidence is not higher due to the absence of explicit evidence of excessive coupling or direct violations of cohesion.\"\n}"
+    },
+    {
+      "sample_id": "593",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior and logic, such as scheduling jobs, managing semaphores, and handling job execution. It is not a simple data container, which is a key characteristic of the 'data_class' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior and logic, such as scheduling jobs, managing semaphores, and handling job execution. It is not a simple data container, which is a key characteristic of the 'data_class' smell.\"\n}"
+    },
+    {
+      "sample_id": "596",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with no implementation details, which does not exhibit characteristics of a god class such as excessive responsibilities or large size.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with no implementation details, which does not exhibit characteristics of a god class such as excessive responsibilities or large size.\"\n}"
+    },
+    {
+      "sample_id": "597",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface, not a class, and does not contain fields or methods typical of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface, not a class, and does not contain fields or methods typical of a data class.\"\n}"
+    },
+    {
+      "sample_id": "598",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is abstract and serves as an adapter for GraphicsConfiguration, with limited functionality and no excessive responsibilities or complexity indicative of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is abstract and serves as an adapter for GraphicsConfiguration, with limited functionality and no excessive responsibilities or complexity indicative of a god class.\"\n}"
+    },
+    {
+      "sample_id": "599",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (methods) and is not a simple container for data. It overrides methods from a superclass, indicating it is designed for functionality rather than just holding data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (methods) and is not a simple container for data. It overrides methods from a superclass, indicating it is designed for functionality rather than just holding data.\"\n}"
+    },
+    {
+      "sample_id": "600",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is focused on implementing the ShortArrayFS interface and related functionality without excessive responsibilities or unrelated methods, which does not align with the characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is focused on implementing the ShortArrayFS interface and related functionality without excessive responsibilities or unrelated methods, which does not align with the characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "601",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior, including methods for array manipulation and interaction with other components, which goes beyond the passive data storage characteristic of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior, including methods for array manipulation and interaction with other components, which goes beyond the passive data storage characteristic of a data class.\"\n}"
+    },
+    {
+      "sample_id": "602",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a resource bundle for error messages and does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and attributes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a resource bundle for error messages and does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and attributes.\"\n}"
+    },
+    {
+      "sample_id": "603",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a container for data (error messages) without significant behavior or logic, matching the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a container for data (error messages) without significant behavior or logic, matching the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "604",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'splitText' is very short and does not exhibit characteristics of a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'splitText' is very short and does not exhibit characteristics of a long method.\"\n}"
+    },
+    {
+      "sample_id": "605",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not exhibit behavior indicative of feature envy, as it does not excessively interact with or depend on another class's data or methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not exhibit behavior indicative of feature envy, as it does not excessively interact with or depend on another class's data or methods.\"\n}"
+    },
+    {
+      "sample_id": "606",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class ExsltBase is abstract and provides utility methods for subclasses. It does not exhibit excessive responsibilities or complexity typically associated with a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ExsltBase is abstract and provides utility methods for subclasses. It does not exhibit excessive responsibilities or complexity typically associated with a god class.\"\n}"
+    },
+    {
+      "sample_id": "607",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains utility methods and does not primarily serve as a container for data fields. It lacks attributes and getters/setters typical of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains utility methods and does not primarily serve as a container for data fields. It lacks attributes and getters/setters typical of a data class.\"\n}"
+    },
+    {
+      "sample_id": "608",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'hasAttribute' is short and concise, with minimal lines of code and no evidence of excessive complexity or length.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'hasAttribute' is short and concise, with minimal lines of code and no evidence of excessive complexity or length.\"\n}"
+    },
+    {
+      "sample_id": "609",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and focused, each performing a single operation. There is no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and focused, each performing a single operation. There is no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "610",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily operate on their own parameters and do not excessively interact with other objects' data or methods, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods primarily operate on their own parameters and do not excessively interact with other objects' data or methods, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "611",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet primarily defines classes related to serialization and deserialization schemes, which involve behavior and logic. It does not exhibit characteristics of a data class, such as being a simple container for data with minimal or no behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet primarily defines classes related to serialization and deserialization schemes, which involve behavior and logic. It does not exhibit characteristics of a data class, such as being a simple container for data with minimal or no behavior.\"\n}"
+    },
+    {
+      "sample_id": "612",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'validateToken' is significantly longer than the others, contains multiple nested conditionals, and performs several distinct operations, which aligns with the characteristics of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'validateToken' is significantly longer than the others, contains multiple nested conditionals, and performs several distinct operations, which aligns with the characteristics of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "613",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily operate on their own parameters and local variables, with no strong evidence of excessive interaction with external classes' data or behavior. The code does not exhibit clear signs of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods primarily operate on their own parameters and local variables, with no strong evidence of excessive interaction with external classes' data or behavior. The code does not exhibit clear signs of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "614",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The class ZooInspectorPanel exhibits characteristics of a god class, such as managing multiple responsibilities (UI layout, event handling, connection management, and node viewer updates) and interacting with numerous other components. However, the evidence is not definitive, as the class could be part of a larger design pattern mitigating its complexity.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class ZooInspectorPanel exhibits characteristics of a god class, such as managing multiple responsibilities (UI layout, event handling, connection management, and node viewer updates) and interacting with numerous other components. However, the evidence is not definitive, as the class could be part of a larger design pattern mitigating its complexity.\"\n}"
+    },
+    {
+      "sample_id": "615",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class ZooInspectorPanel contains significant behavior, including event handling, UI management, and interaction with other components. It is not a simple data container, which is characteristic of the data_class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ZooInspectorPanel contains significant behavior, including event handling, UI management, and interaction with other components. It is not a simple data container, which is characteristic of the data_class smell.\"\n}"
+    },
+    {
+      "sample_id": "616",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet are short, focused, and do not exhibit excessive length or complexity, which are typical characteristics of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet are short, focused, and do not exhibit excessive length or complexity, which are typical characteristics of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "617",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods interact with external objects (System and internalProperties) but do not excessively rely on the internals of another class, which is characteristic of feature envy. The evidence for feature envy is weak.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods interact with external objects (System and internalProperties) but do not excessively rely on the internals of another class, which is characteristic of feature envy. The evidence for feature envy is weak.\"\n}"
+    },
+    {
+      "sample_id": "618",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is focused on a single responsibility: managing and comparing Spark version information. It does not exhibit excessive responsibilities or complexity typically associated with a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is focused on a single responsibility: managing and comparing Spark version information. It does not exhibit excessive responsibilities or complexity typically associated with a god class.\"\n}"
+    },
+    {
+      "sample_id": "619",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior methods (e.g., comparison logic, version parsing) and is not a pure data container. This suggests it is not a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior methods (e.g., comparison logic, version parsing) and is not a pure data container. This suggests it is not a data class.\"\n}"
+    },
+    {
+      "sample_id": "620",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not show evidence of a long method; the methods are short and concise.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not show evidence of a long method; the methods are short and concise.\"\n}"
+    },
+    {
+      "sample_id": "621",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not show evidence of excessive interaction with another class's methods or data, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not show evidence of excessive interaction with another class's methods or data, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "622",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code does not exhibit strong evidence of feature envy. Most of the operations are performed on local data or objects directly related to the class, and there is no clear over-reliance on methods or data from external classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code does not exhibit strong evidence of feature envy. Most of the operations are performed on local data or objects directly related to the class, and there is no clear over-reliance on methods or data from external classes.\"\n}"
+    },
+    {
+      "sample_id": "623",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'JsonGenerator' is excessively long, contains multiple nested loops, and handles numerous responsibilities, which aligns with the characteristics of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'JsonGenerator' is excessively long, contains multiple nested loops, and handles numerous responsibilities, which aligns with the characteristics of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "624",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not exhibit characteristics of a data class, as it includes constructors and methods that perform specific operations rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not exhibit characteristics of a data class, as it includes constructors and methods that perform specific operations rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "625",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet defines small, focused classes and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet defines small, focused classes and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.\"\n}"
+    },
+    {
+      "sample_id": "634",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is final, contains no methods or fields, and does not exhibit characteristics of a god class such as excessive responsibilities or high complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is final, contains no methods or fields, and does not exhibit characteristics of a god class such as excessive responsibilities or high complexity.\"\n}"
+    },
+    {
+      "sample_id": "635",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'PivotalNetworkInParams' is a final class with no methods or behavior, suggesting it may only serve as a container for data, which aligns with the 'data_class' smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'PivotalNetworkInParams' is a final class with no methods or behavior, suggesting it may only serve as a container for data, which aligns with the 'data_class' smell.\"\n}"
+    },
+    {
+      "sample_id": "636",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and focused, each performing a single operation. There is no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and focused, each performing a single operation. There is no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "637",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The methods heavily rely on accessing multiple properties of another object (getConnectionContext, getRootV3, getTokenProvider), suggesting that the class may be more interested in the features of another class than its own.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods heavily rely on accessing multiple properties of another object (getConnectionContext, getRootV3, getTokenProvider), suggesting that the class may be more interested in the features of another class than its own.\"\n}"
+    },
+    {
+      "sample_id": "638",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short and primarily consist of constructor calls or delegations, which do not indicate the presence of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short and primarily consist of constructor calls or delegations, which do not indicate the presence of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "639",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code primarily focuses on constructor chaining and object initialization without exhibiting behavior that excessively manipulates or depends on external objects' data or methods, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code primarily focuses on constructor chaining and object initialization without exhibiting behavior that excessively manipulates or depends on external objects' data or methods, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "640",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceSubstitution' is concise, has a clear purpose, and contains minimal logic. It does not exhibit characteristics of a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceSubstitution' is concise, has a clear purpose, and contains minimal logic. It does not exhibit characteristics of a long method.\"\n}"
+    },
+    {
+      "sample_id": "641",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit clear signs of feature envy, as the method primarily operates on its own parameters and does not excessively rely on methods or properties of external objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit clear signs of feature envy, as the method primarily operates on its own parameters and does not excessively rely on methods or properties of external objects.\"\n}"
+    },
+    {
+      "sample_id": "642",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (constructors and exception-specific functionality) beyond just storing data, which does not align with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (constructors and exception-specific functionality) beyond just storing data, which does not align with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "643",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is focused on representing an exception with specific attributes and does not exhibit excessive responsibilities or complexity typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is focused on representing an exception with specific attributes and does not exhibit excessive responsibilities or complexity typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "644",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is focused on a single responsibility: representing and deserializing application instance responses. It does not exhibit excessive complexity or manage multiple unrelated functionalities typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is focused on a single responsibility: representing and deserializing application instance responses. It does not exhibit excessive complexity or manage multiple unrelated functionalities typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "645",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily consists of data fields and lacks significant behavior, aligning with the characteristics of a data class. It uses annotations and immutable structures to define and manage data.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily consists of data fields and lacks significant behavior, aligning with the characteristics of a data class. It uses annotations and immutable structures to define and manage data.\"\n}"
+    },
+    {
+      "sample_id": "648",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'from' is incomplete but appears concise and focused on a single responsibility, suggesting it is not excessively long.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'from' is incomplete but appears concise and focused on a single responsibility, suggesting it is not excessively long.\"\n}"
+    },
+    {
+      "sample_id": "649",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as it primarily operates on its own data and does not excessively interact with external objects or classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as it primarily operates on its own data and does not excessively interact with external objects or classes.\"\n}"
+    },
+    {
+      "sample_id": "650",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The class 'IncludeAllLaunchConfigurationScope' appears to primarily store data and provide minimal behavior, which aligns with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class 'IncludeAllLaunchConfigurationScope' appears to primarily store data and provide minimal behavior, which aligns with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "651",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet defines small, focused classes with specific responsibilities, which does not align with the characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet defines small, focused classes with specific responsibilities, which does not align with the characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "652",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class DimsDataList, while containing many methods, does not exhibit clear signs of being a god class. It primarily focuses on managing a list of DimsData objects and related operations, without taking on excessive responsibilities or unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class DimsDataList, while containing many methods, does not exhibit clear signs of being a god class. It primarily focuses on managing a list of DimsData objects and related operations, without taking on excessive responsibilities or unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "653",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class contains behavior and logic beyond simple data storage, such as methods for manipulating and processing data (e.g., setTwoAxesOnly, reverseImage, toSliceArray). This indicates it is not a pure data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class contains behavior and logic beyond simple data storage, such as methods for manipulating and processing data (e.g., setTwoAxesOnly, reverseImage, toSliceArray). This indicates it is not a pure data class.\"\n}"
+    },
+    {
+      "sample_id": "654",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and focused, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "655",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily interact with their own class members and do not excessively rely on external objects or classes, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods primarily interact with their own class members and do not excessively rely on external objects or classes, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "656",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, focused on a single responsibility, and does not exhibit characteristics of a god class such as excessive complexity or managing multiple unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, focused on a single responsibility, and does not exhibit characteristics of a god class such as excessive complexity or managing multiple unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "657",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (applyEvent method) and is not solely a container for data, which contradicts the definition of a data class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (applyEvent method) and is not solely a container for data, which contradicts the definition of a data class smell.\"\n}"
+    },
+    {
+      "sample_id": "658",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the class are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the class are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "659",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code does not exhibit feature envy as the methods primarily operate on its own fields and do not excessively interact with other classes' methods or fields.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code does not exhibit feature envy as the methods primarily operate on its own fields and do not excessively interact with other classes' methods or fields.\"\n}"
+    },
+    {
+      "sample_id": "660",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class is complex but does not exhibit clear signs of being a god class. Responsibilities are related to signal enforcement, and the code is modularized with helper methods and nested classes. No excessive unrelated responsibilities are evident.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class is complex but does not exhibit clear signs of being a god class. Responsibilities are related to signal enforcement, and the code is modularized with helper methods and nested classes. No excessive unrelated responsibilities are evident.\"\n}"
+    },
+    {
+      "sample_id": "661",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior and logic, such as enforcement mechanisms, caching, and message publishing. It is not a simple data container, which is a key characteristic of the 'data_class' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior and logic, such as enforcement mechanisms, caching, and message publishing. It is not a simple data container, which is a key characteristic of the 'data_class' smell.\"\n}"
+    },
+    {
+      "sample_id": "662",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and fields. It appears to be a utility-focused implementation with clear, single-purpose functionality.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit characteristics of a god class, such as excessive responsibilities or a large number of methods and fields. It appears to be a utility-focused implementation with clear, single-purpose functionality.\"\n}"
+    },
+    {
+      "sample_id": "663",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit characteristics of a data class, as it primarily defines utility functions and inner classes implementing functional behavior rather than encapsulating data with minimal behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit characteristics of a data class, as it primarily defines utility functions and inner classes implementing functional behavior rather than encapsulating data with minimal behavior.\"\n}"
+    },
+    {
+      "sample_id": "666",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are concise and do not exhibit excessive length or complexity, which are typical indicators of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are concise and do not exhibit excessive length or complexity, which are typical indicators of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "667",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit feature envy as it primarily operates on its own fields and methods without excessive interaction with external objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit feature envy as it primarily operates on its own fields and methods without excessive interaction with external objects.\"\n}"
+    },
+    {
+      "sample_id": "668",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with a single method and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with a single method and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.\"\n}"
+    },
+    {
+      "sample_id": "669",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface with no behavior other than a single method for data conversion, which is indicative of a data class smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface with no behavior other than a single method for data conversion, which is indicative of a data class smell.\"\n}"
+    },
+    {
+      "sample_id": "670",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the class are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the class are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "671",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily operates on its own fields and does not excessively interact with methods or fields of other classes, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily operates on its own fields and does not excessively interact with methods or fields of other classes, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "674",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "675",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet primarily return hardcoded values without interacting excessively with other classes or objects, which does not indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet primarily return hardcoded values without interacting excessively with other classes or objects, which does not indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "676",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines a simple interface with a few methods and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines a simple interface with a few methods and does not exhibit characteristics of a god class, such as excessive responsibilities or large size.\"\n}"
+    },
+    {
+      "sample_id": "677",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class is annotated with @DTO and primarily consists of getter and setter methods without any significant behavior, which is characteristic of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is annotated with @DTO and primarily consists of getter and setter methods without any significant behavior, which is characteristic of a data class.\"\n}"
+    },
+    {
+      "sample_id": "678",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods in the provided code snippet are relatively short and focused, with no single method exhibiting excessive length or complexity. There is insufficient evidence to classify any method as a 'long_method'.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods in the provided code snippet are relatively short and focused, with no single method exhibiting excessive length or complexity. There is insufficient evidence to classify any method as a 'long_method'.\"\n}"
+    },
+    {
+      "sample_id": "679",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The methods heavily interact with the Element and Elements classes, suggesting that they rely more on their functionality than their own class's behavior, which is indicative of feature envy.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods heavily interact with the Element and Elements classes, suggesting that they rely more on their functionality than their own class's behavior, which is indicative of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "680",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, focused on a single responsibility (handling machine stopped events), and does not exhibit excessive complexity or manage multiple unrelated functionalities typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, focused on a single responsibility (handling machine stopped events), and does not exhibit excessive complexity or manage multiple unrelated functionalities typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "681",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (methods like getAssociatedType, dispatch, and event handling logic) in addition to data (the machine field). This indicates it is not a pure data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (methods like getAssociatedType, dispatch, and event handling logic) in addition to data (the machine field). This indicates it is not a pure data class.\"\n}"
+    },
+    {
+      "sample_id": "682",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and concise, including the overridden toString method. There is no evidence of excessive length or complexity that would indicate the presence of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and concise, including the overridden toString method. There is no evidence of excessive length or complexity that would indicate the presence of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "683",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet primarily accesses and manipulates its own fields without showing evidence of excessive interaction with external objects, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet primarily accesses and manipulates its own fields without showing evidence of excessive interaction with external objects, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "686",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code does not exhibit strong evidence of feature envy, as the methods primarily interact with their own class's fields or parameters without excessive reliance on external objects' behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code does not exhibit strong evidence of feature envy, as the methods primarily interact with their own class's fields or parameters without excessive reliance on external objects' behavior.\"\n}"
+    },
+    {
+      "sample_id": "687",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "688",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GoIntoAction is focused on a single responsibility related to managing 'Go Into' actions in the project explorer. It does not exhibit excessive complexity, nor does it centralize unrelated functionalities, which are typical characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GoIntoAction is focused on a single responsibility related to managing 'Go Into' actions in the project explorer. It does not exhibit excessive complexity, nor does it centralize unrelated functionalities, which are typical characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "689",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GoIntoAction contains significant behavior, including methods for updating UI state and handling user actions. It is not a simple data container, which is a key characteristic of the data_class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GoIntoAction contains significant behavior, including methods for updating UI state and handling user actions. It is not a simple data container, which is a key characteristic of the data_class smell.\"\n}"
+    },
+    {
+      "sample_id": "690",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'Ipam' is small, focused, and has a clear single responsibility. It primarily serves as a data container with basic getter, setter, and utility methods. There is no evidence of excessive responsibilities or complexity indicative of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'Ipam' is small, focused, and has a clear single responsibility. It primarily serves as a data container with basic getter, setter, and utility methods. There is no evidence of excessive responsibilities or complexity indicative of a god class.\"\n}"
+    },
+    {
+      "sample_id": "691",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'Ipam' primarily consists of fields, getters, setters, and utility methods (e.g., equals, hashCode, toString) without significant behavior or logic, which is characteristic of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'Ipam' primarily consists of fields, getters, setters, and utility methods (e.g., equals, hashCode, toString) without significant behavior or logic, which is characteristic of a data class.\"\n}"
+    },
+    {
+      "sample_id": "692",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code snippet are short and focused, with no evidence of excessive length or complexity.\"}"
+    },
+    {
+      "sample_id": "693",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as the methods primarily operate on the class's own fields and do not excessively interact with external objects.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code does not exhibit feature envy as the methods primarily operate on the class's own fields and do not excessively interact with external objects.\"}"
+    },
+    {
+      "sample_id": "694",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is cohesive, has a single responsibility (partitioning a document), and its methods and fields are tightly related to this purpose. There is no evidence of excessive responsibilities or unrelated functionality that would indicate a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is cohesive, has a single responsibility (partitioning a document), and its methods and fields are tightly related to this purpose. There is no evidence of excessive responsibilities or unrelated functionality that would indicate a god class.\"\n}"
+    },
+    {
+      "sample_id": "695",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior methods such as 'onDocumentChanged', 'initialize', and 'computePartitioning', which indicate it is not a pure data class. While it has fields and accessors, the presence of significant logic reduces the likelihood of the data_class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior methods such as 'onDocumentChanged', 'initialize', and 'computePartitioning', which indicate it is not a pure data class. While it has fields and accessors, the presence of significant logic reduces the likelihood of the data_class smell.\"\n}"
+    },
+    {
+      "sample_id": "696",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceWith' is concise, focused, and does not exhibit excessive length or complexity. It performs a clear sequence of operations with no evidence of being a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceWith' is concise, focused, and does not exhibit excessive length or complexity. It performs a clear sequence of operations with no evidence of being a long method.\"\n}"
+    },
+    {
+      "sample_id": "697",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method primarily operates on its own class's state and methods, with minimal interaction with external objects or unrelated classes. There is insufficient evidence of excessive reliance on another class's functionality to indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method primarily operates on its own class's state and methods, with minimal interaction with external objects or unrelated classes. There is insufficient evidence of excessive reliance on another class's functionality to indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "698",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getEvent' is short and concise, containing only a single return statement. There is no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getEvent' is short and concise, containing only a single return statement. There is no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "699",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not show evidence of excessive interaction with another class's methods or data, which is characteristic of feature envy. It primarily accesses its own fields.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not show evidence of excessive interaction with another class's methods or data, which is characteristic of feature envy. It primarily accesses its own fields.\"\n}"
+    },
+    {
+      "sample_id": "700",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are short and concise, adhering to typical standards for method size. No evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are short and concise, adhering to typical standards for method size. No evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "701",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit behavior where methods excessively interact with other classes' data or methods. It primarily operates on its own fields and delegates to a handler.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit behavior where methods excessively interact with other classes' data or methods. It primarily operates on its own fields and delegates to a handler.\"\n}"
+    },
+    {
+      "sample_id": "702",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, focused on a single responsibility, and does not exhibit excessive complexity or manage multiple unrelated functionalities, which are typical characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, focused on a single responsibility, and does not exhibit excessive complexity or manage multiple unrelated functionalities, which are typical characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "703",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior through overridden methods and is not solely a container for data. This suggests it is not a data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior through overridden methods and is not solely a container for data. This suggests it is not a data class.\"\n}"
+    },
+    {
+      "sample_id": "704",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class primarily serves as a factory implementation with a clear and focused purpose. While it contains many methods, they are cohesive and related to object creation, which does not align with the characteristics of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class primarily serves as a factory implementation with a clear and focused purpose. While it contains many methods, they are cohesive and related to object creation, which does not align with the characteristics of a god class.\"\n}"
+    },
+    {
+      "sample_id": "705",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class `MetaDataFactoryImpl` is not a data class as it contains significant logic, including factory methods for creating various objects, exception handling, and type conversions. Data classes are typically characterized by having only fields and getter/setter methods without significant logic.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `MetaDataFactoryImpl` is not a data class as it contains significant logic, including factory methods for creating various objects, exception handling, and type conversions. Data classes are typically characterized by having only fields and getter/setter methods without significant logic.\"\n}"
+    },
+    {
+      "sample_id": "706",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GExpressionsHelper is small, focused on utility methods, and does not exhibit excessive responsibilities or complexity typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GExpressionsHelper is small, focused on utility methods, and does not exhibit excessive responsibilities or complexity typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "707",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains utility methods and does not primarily serve as a container for data fields without behavior, which is characteristic of a data class smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains utility methods and does not primarily serve as a container for data fields without behavior, which is characteristic of a data class smell.\"\n}"
+    },
+    {
+      "sample_id": "708",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit characteristics of a god class, as responsibilities are distributed across multiple classes, and no single class appears overly large or excessively complex. Each class has a focused purpose, such as handling dimensions or creating content parts.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit characteristics of a god class, as responsibilities are distributed across multiple classes, and no single class appears overly large or excessively complex. Each class has a focused purpose, such as handling dimensions or creating content parts.\"\n}"
+    },
+    {
+      "sample_id": "709",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit characteristics of a data class. It contains significant logic, including methods for creating visuals, refreshing visuals, and handling content anchorages and children. While the `Dimension` class is used as a data holder, the surrounding code is not structured as a simple data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit characteristics of a data class. It contains significant logic, including methods for creating visuals, refreshing visuals, and handling content anchorages and children. While the `Dimension` class is used as a data holder, the surrounding code is not structured as a simple data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "710",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet does not exhibit characteristics of a long method. The methods shown are relatively short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.8, \"rationale\": \"The provided code snippet does not exhibit characteristics of a long method. The methods shown are relatively short and focused, with no evidence of excessive length or complexity.\"}"
+    },
+    {
+      "sample_id": "711",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit clear evidence of feature envy, as it primarily involves method structure and grammar rule handling without excessive interaction with external objects or classes.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.8, \"rationale\": \"The code snippet does not exhibit clear evidence of feature envy, as it primarily involves method structure and grammar rule handling without excessive interaction with external objects or classes.\"}"
+    },
+    {
+      "sample_id": "712",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided method 'rule__MdCategory__Group_4_0__1__Impl' is relatively short and does not exhibit characteristics of a long method. It contains a single logical operation and minimal complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided method 'rule__MdCategory__Group_4_0__1__Impl' is relatively short and does not exhibit characteristics of a long method. It contains a single logical operation and minimal complexity.\"\n}"
+    },
+    {
+      "sample_id": "713",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.7,
+      "rationale": "The code snippet primarily involves grammar rule processing and does not exhibit evidence of feature envy, as it does not excessively interact with another class's data or methods.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.7,\n  \"rationale\": \"The code snippet primarily involves grammar rule processing and does not exhibit evidence of feature envy, as it does not excessively interact with another class's data or methods.\"\n}"
+    },
+    {
+      "sample_id": "714",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class NodeOrderer is focused on a single responsibility: ordering nodes in a tree structure. While it contains multiple methods and some complexity, it does not exhibit excessive responsibilities or behaviors characteristic of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class NodeOrderer is focused on a single responsibility: ordering nodes in a tree structure. While it contains multiple methods and some complexity, it does not exhibit excessive responsibilities or behaviors characteristic of a god class.\"\n}"
+    },
+    {
+      "sample_id": "715",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'NodeOrderer' contains behavior and logic, such as methods for processing and ordering nodes, which indicates it is not a simple data container. This suggests it does not exhibit the characteristics of a data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'NodeOrderer' contains behavior and logic, such as methods for processing and ordering nodes, which indicates it is not a simple data container. This suggests it does not exhibit the characteristics of a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "716",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'generatePositions' is relatively short and focused, with no evidence of excessive length or complexity. It adheres to the target smell criteria for 'long_method'.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'generatePositions' is relatively short and focused, with no evidence of excessive length or complexity. It adheres to the target smell criteria for 'long_method'.\"\n}"
+    },
+    {
+      "sample_id": "717",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code primarily interacts with its own fields and parameters, with no strong evidence of excessive reliance on another class's methods or data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code primarily interacts with its own fields and parameters, with no strong evidence of excessive reliance on another class's methods or data.\"\n}"
+    },
+    {
+      "sample_id": "718",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is cohesive, with all methods and fields focused on cryptographic configuration properties. It does not exhibit excessive responsibilities or unrelated functionalities typical of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is cohesive, with all methods and fields focused on cryptographic configuration properties. It does not exhibit excessive responsibilities or unrelated functionalities typical of a god class.\"\n}"
+    },
+    {
+      "sample_id": "719",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily consists of fields with corresponding getters and setters, and minimal additional behavior. While it includes a few utility methods (e.g., isAppropriateForCreating, isAppropriateForValidating), these are simple checks and do not add significant functionality beyond data storage and retrieval. This aligns with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily consists of fields with corresponding getters and setters, and minimal additional behavior. While it includes a few utility methods (e.g., isAppropriateForCreating, isAppropriateForValidating), these are simple checks and do not add significant functionality beyond data storage and retrieval. This aligns with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "720",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet access fields of their own class without excessive interaction with external objects, which does not indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet access fields of their own class without excessive interaction with external objects, which does not indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "721",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the snippet are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the snippet are short and focused, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "722",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method 'get' is moderately sized and performs clear, focused operations without excessive complexity or length. Evidence for 'long_method' is weak.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'get' is moderately sized and performs clear, focused operations without excessive complexity or length. Evidence for 'long_method' is weak.\"\n}"
+    },
+    {
+      "sample_id": "723",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code primarily operates on its own class's methods and fields, with no strong evidence of excessive interaction with external classes' data or behavior, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code primarily operates on its own class's methods and fields, with no strong evidence of excessive interaction with external classes' data or behavior, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "724",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not contain any method that is excessively long or complex. The methods shown are concise and focused on single responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not contain any method that is excessively long or complex. The methods shown are concise and focused on single responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "725",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as it primarily accesses its own fields and methods without excessive interaction with external objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as it primarily accesses its own fields and methods without excessive interaction with external objects.\"\n}"
+    },
+    {
+      "sample_id": "726",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet is incomplete and does not show evidence of a long method. The visible methods are short and concise.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet is incomplete and does not show evidence of a long method. The visible methods are short and concise.\"\n}"
+    },
+    {
+      "sample_id": "727",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit behavior where methods excessively interact with another class's data or methods, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit behavior where methods excessively interact with another class's data or methods, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "728",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods shown are short and concise, with minimal lines of code and clear functionality.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods shown are short and concise, with minimal lines of code and clear functionality.\"\n}"
+    },
+    {
+      "sample_id": "729",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'displayWarning' heavily relies on the 'notificationMessage' object and its 'showNotification' method, suggesting it may be more concerned with the behavior of 'notificationMessage' than its own class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'displayWarning' heavily relies on the 'notificationMessage' object and its 'showNotification' method, suggesting it may be more concerned with the behavior of 'notificationMessage' than its own class.\"\n}"
+    },
+    {
+      "sample_id": "730",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The 'Build' class primarily contains fields with getters and setters, and lacks significant behavior or logic, which aligns with the characteristics of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The 'Build' class primarily contains fields with getters and setters, and lacks significant behavior or logic, which aligns with the characteristics of a data class.\"\n}"
+    },
+    {
+      "sample_id": "731",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not exhibit characteristics of a god class, as it contains a small number of methods and fields, and responsibilities appear limited and cohesive.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not exhibit characteristics of a god class, as it contains a small number of methods and fields, and responsibilities appear limited and cohesive.\"\n}"
+    },
+    {
+      "sample_id": "732",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains behavior (e.g., validation logic, equality checks, deep copy, and visitor pattern implementation) in addition to data fields, which indicates it is not a pure data class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains behavior (e.g., validation logic, equality checks, deep copy, and visitor pattern implementation) in addition to data fields, which indicates it is not a pure data class.\"\n}"
+    },
+    {
+      "sample_id": "733",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.85,
+      "rationale": "The class 'Subchannel' does not exhibit characteristics of a god class. It has a clear and focused responsibility related to reactor subchannels, with well-defined fields and methods. The class does not appear overly large or excessively complex, and its methods are cohesive and relevant to its purpose.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.85,\n  \"rationale\": \"The class 'Subchannel' does not exhibit characteristics of a god class. It has a clear and focused responsibility related to reactor subchannels, with well-defined fields and methods. The class does not appear overly large or excessively complex, and its methods are cohesive and relevant to its purpose.\"\n}"
+    },
+    {
+      "sample_id": "736",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit evidence of feature envy, as the methods and fields appear to operate on the class's own data rather than excessively interacting with external objects or classes.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit evidence of feature envy, as the methods and fields appear to operate on the class's own data rather than excessively interacting with external objects or classes.\"\n}"
+    },
+    {
+      "sample_id": "737",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet contains multiple constructors, but none of them are excessively long or complex. There is no clear evidence of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet contains multiple constructors, but none of them are excessively long or complex. There is no clear evidence of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "738",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The methods primarily interact with their own class members (_callback, _shutdownOut, _info) and do not excessively rely on external objects or methods, which is characteristic of feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The methods primarily interact with their own class members (_callback, _shutdownOut, _info) and do not excessively rely on external objects or methods, which is characteristic of feature envy.\"\n}"
+    },
+    {
+      "sample_id": "739",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and concise, with no evidence of excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and concise, with no evidence of excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "740",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet contains short methods with clear and focused functionality. There is no evidence of a long method that would indicate the target smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet contains short methods with clear and focused functionality. There is no evidence of a long method that would indicate the target smell.\"\n}"
+    },
+    {
+      "sample_id": "741",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code snippet does not exhibit clear evidence of feature envy, as the methods primarily operate on their own class's fields and do not excessively interact with another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code snippet does not exhibit clear evidence of feature envy, as the methods primarily operate on their own class's fields and do not excessively interact with another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "742",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code does not exhibit feature envy as it primarily operates on its own parameters and does not excessively rely on methods or properties of external objects.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code does not exhibit feature envy as it primarily operates on its own parameters and does not excessively rely on methods or properties of external objects.\"\n}"
+    },
+    {
+      "sample_id": "743",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'resolveGenericRef' is long, contains multiple nested conditionals, and handles complex logic, which aligns with the characteristics of the 'long_method' smell.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'resolveGenericRef' is long, contains multiple nested conditionals, and handles complex logic, which aligns with the characteristics of the 'long_method' smell.\"\n}"
+    },
+    {
+      "sample_id": "744",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are short and do not exhibit characteristics of a long method. Each method performs a single, simple operation.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are short and do not exhibit characteristics of a long method. Each method performs a single, simple operation.\"\n}"
+    },
+    {
+      "sample_id": "745",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The code primarily sets and unsets fields without excessive interaction with external objects or methods, which does not strongly indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The code primarily sets and unsets fields without excessive interaction with external objects or methods, which does not strongly indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "746",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is small, has a clear and focused purpose, and contains only basic getters and setters. There is no evidence of excessive responsibilities or complexity indicative of a god class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is small, has a clear and focused purpose, and contains only basic getters and setters. There is no evidence of excessive responsibilities or complexity indicative of a god class.\"\n}"
+    },
+    {
+      "sample_id": "747",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class TestTopic primarily consists of private fields with corresponding getter and setter methods, and lacks any significant behavior or logic, which is characteristic of a data class.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class TestTopic primarily consists of private fields with corresponding getter and setter methods, and lacks any significant behavior or logic, which is characteristic of a data class.\"\n}"
+    },
+    {
+      "sample_id": "748",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method primarily operates on its own class's data and delegates to another method within the same class. There is no strong evidence of excessive interaction with external classes' data or behavior, which would indicate feature envy.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method primarily operates on its own class's data and delegates to another method within the same class. There is no strong evidence of excessive interaction with external classes' data or behavior, which would indicate feature envy.\"\n}"
+    },
+    {
+      "sample_id": "749",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'hasPermission' is concise, with a single line of logic delegating to another method. There is no evidence of excessive length or complexity in this snippet.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'hasPermission' is concise, with a single line of logic delegating to another method. There is no evidence of excessive length or complexity in this snippet.\"\n}"
+    },
+    {
+      "sample_id": "750",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code snippet are short and perform simple getter and setter operations, which do not exhibit characteristics of a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code snippet are short and perform simple getter and setter operations, which do not exhibit characteristics of a long method.\"\n}"
+    },
+    {
+      "sample_id": "751",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet consists of simple getter and setter methods that operate on the class's own fields. There is no evidence of excessive interaction with another class's data or methods, which is characteristic of the feature envy smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet consists of simple getter and setter methods that operate on the class's own fields. There is no evidence of excessive interaction with another class's data or methods, which is characteristic of the feature envy smell.\"\n}"
+    }
+  ],
+  "metrics": {
+    "precision": 0.52,
+    "recall": 0.3611111111111111,
+    "f1": 0.42622950819672134,
+    "accuracy": 0.825,
+    "kappa": 0.32692307692307676,
+    "f1_ci_lo": 0.25925925925925924,
+    "f1_ci_hi": 0.5675675675675677,
+    "kappa_ci_lo": 0.14772727272727285,
+    "kappa_ci_hi": 0.491790461297889,
+    "tp": 13,
+    "fp": 12,
+    "fn": 23,
+    "tn": 152,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 111708,
+    "completion_tokens": 11277,
+    "total_tokens": 122985
+  },
+  "slot": "AZ1",
+  "prompt": "binary_oracle_baseline",
+  "dataset": "MLCQ",
+  "run": 2,
+  "elapsed_s": 92.5
+}

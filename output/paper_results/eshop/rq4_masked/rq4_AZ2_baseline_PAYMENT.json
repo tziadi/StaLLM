@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the event when an order's stock is confirmed and likely processes the next step and publishes success/failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Defines the integration event for stock confirmation, which is central to the described process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.89,
+      "rationale": "Handles command to set order status to stock confirmed, likely triggers subsequent processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs",
+      "rank": 4,
+      "confidence": 0.87,
+      "rationale": "Handles domain event for order status change to stock confirmed, may initiate further actions.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Defines event for stock rejection, relevant for publishing failure outcome.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "Handles event when stock is rejected, likely publishes failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs",
+      "rank": 7,
+      "confidence": 0.81,
+      "rationale": "Domain event for stock confirmation, may be used in processing logic.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Command to set order status to stock confirmed, part of the workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs",
+      "rank": 9,
+      "confidence": 0.76,
+      "rationale": "Service responsible for publishing integration events, likely involved in success/failure notification.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs",
+      "rank": 10,
+      "confidence": 0.74,
+      "rationale": "Handles command to set order status to stock rejected, relevant for failure processing.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the event when an order's stock is confirmed and likely processes the next step and publishes success/failure.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.92, \"rationale\": \"Defines the integration event for stock confirmation, which is central to the described process.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\", \"confidence\": 0.89, \"rationale\": \"Handles command to set order status to stock confirmed, likely triggers subsequent processing.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs\", \"confidence\": 0.87, \"rationale\": \"Handles domain event for order status change to stock confirmed, may initiate further actions.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Defines event for stock rejection, relevant for publishing failure outcome.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs\", \"confidence\": 0.83, \"rationale\": \"Handles event when stock is rejected, likely publishes failure.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs\", \"confidence\": 0.81, \"rationale\": \"Domain event for stock confirmation, may be used in processing logic.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs\", \"confidence\": 0.78, \"rationale\": \"Command to set order status to stock confirmed, part of the workflow.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs\", \"confidence\": 0.76, \"rationale\": \"Service responsible for publishing integration events, likely involved in success/failure notification.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs\", \"confidence\": 0.74, \"rationale\": \"Handles command to set order status to stock rejected, relevant for failure processing.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9326,
+    "completion_tokens": 602,
+    "total_tokens": 9928
+  },
+  "slot": "AZ2",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 4.6
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly handles user authentication, login, logout, and account management, which are core aspects of the Identity feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Configures services and middleware related to authentication and token issuance, essential for the Identity feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Manages user-related data and integrates with the database for account management and authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Provides login functionality using Entity Framework, directly supporting user authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Contains configuration settings for token issuance and authentication mechanisms.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Defines the user model, which is central to user authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Handles user profile data, which is relevant for managing user accounts and authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Manages user consent for authentication and token issuance, supporting the Identity feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Migrations/20190729091724_InitialMigration.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Initializes database schema for user authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Defines the interface for login services, directly supporting user authentication.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly handles user authentication, login, logout, and account management, which are core aspects of the Identity feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Startup.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Configures services and middleware related to authentication and token issuance, essential for the Identity feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Manages user-related data and integrates with the database for account management and authentication.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Provides login functionality using Entity Framework, directly supporting user authentication.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Contains configuration settings for token issuance and authentication mechanisms.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Defines the user model, which is central to user authentication and account management.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles user profile data, which is relevant for managing user accounts and authentication.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Manages user consent for authentication and token issuance, supporting the Identity feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Identity/Identity.API/Migrations/20190729091724_InitialMigration.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Initializes database schema for user authentication and account management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Defines the interface for login services, directly supporting user authentication.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9356,
+    "completion_tokens": 594,
+    "total_tokens": 9950
+  },
+  "slot": "AZ1",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 9.6
+}

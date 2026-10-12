@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.31,
+      "rationale": "Primary HTTP API that exposes and manages catalog items, brands, types, stock and related data used by storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.22,
+      "rationale": "Entity representing product items including picture URI, price, stock and other item information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.18,
+      "rationale": "EF Core DbContext holding CatalogItem, CatalogBrand and CatalogType sets and persisting stock data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 4,
+      "confidence": 0.11,
+      "rationale": "Database mapping configuration for CatalogItem including picture filename, price, and stock fields.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/PicController.cs",
+      "rank": 5,
+      "confidence": 0.06,
+      "rationale": "Dedicated controller handling product picture retrieval and management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 6,
+      "confidence": 0.03,
+      "rationale": "Seeds initial catalog items, brands, types and pictures for the storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 7,
+      "confidence": 0.03,
+      "rationale": "Utility extension methods related to catalog item picture URLs and data shaping.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 8,
+      "confidence": 0.02,
+      "rationale": "gRPC service exposing catalog items and stock information to other services.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 9,
+      "confidence": 0.02,
+      "rationale": "Frontend service querying catalog API to display items, pictures and stock in storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/CatalogSettings.cs",
+      "rank": 10,
+      "confidence": 0.02,
+      "rationale": "Contains configuration for catalog picture storage locations and other item-related settings.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.31,\n    \"rationale\": \"Primary HTTP API that exposes and manages catalog items, brands, types, stock and related data used by storefront.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.22,\n    \"rationale\": \"Entity representing product items including picture URI, price, stock and other item information.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.18,\n    \"rationale\": \"EF Core DbContext holding CatalogItem, CatalogBrand and CatalogType sets and persisting stock data.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Database mapping configuration for CatalogItem including picture filename, price, and stock fields.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/PicController.cs\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Dedicated controller handling product picture retrieval and management.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Seeds initial catalog items, brands, types and pictures for the storefront.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Utility extension methods related to catalog item picture URLs and data shaping.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.02,\n    \"rationale\": \"gRPC service exposing catalog items and stock information to other services.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.02,\n    \"rationale\": \"Frontend service querying catalog API to display items, pictures and stock in storefront.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Catalog/Catalog.API/CatalogSettings.cs\",\n    \"confidence\": 0.02,\n    \"rationale\": \"Contains configuration for catalog picture storage locations and other item-related settings.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 1254,
+    "total_tokens": 10585
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 19.3
+}

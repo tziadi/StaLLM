@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 1,
+      "confidence": 0.93,
+      "rationale": "Defines the CatalogItem entity representing products, including name, brand, type, picture URI, price, and stock quantities \u2013 core data model for managing items in the storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Exposes REST endpoints for querying and manipulating catalog items, brands, types, and pictures; central API entry point for product management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "EF Core DbContext containing DbSets for CatalogItem, CatalogBrand, CatalogType and picture configurations; manages persistence of product information and stock.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 4,
+      "confidence": 0.83,
+      "rationale": "Client-side service used by the MVC storefront to retrieve catalog items, brands, types, and pictures from the catalog API; bridges UI and product data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Seeds initial catalog data (items, brands, types, pictures, stock) into the database, ensuring the storefront has product information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "Provides gRPC operations for retrieving catalog item details and stock, supporting alternative clients for product management.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CatalogController.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Web MVC controller that orchestrates UI actions related to catalog browsing, item detail display, and pagination in the storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.71,
+      "rationale": "Configures database schema for CatalogItem, including picture filename and stock properties; essential for correct storage of product data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Provides helper extension methods for manipulating CatalogItem instances, such as updating picture URLs, supporting product picture management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "View model used to present pages of catalog items, brands, and types to clients, aligning with storefront display requirements.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the CatalogItem entity representing products, including name, brand, type, picture URI, price, and stock quantities \u2013 core data model for managing items in the storefront.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Exposes REST endpoints for querying and manipulating catalog items, brands, types, and pictures; central API entry point for product management.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"EF Core DbContext containing DbSets for CatalogItem, CatalogBrand, CatalogType and picture configurations; manages persistence of product information and stock.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Client-side service used by the MVC storefront to retrieve catalog items, brands, types, and pictures from the catalog API; bridges UI and product data.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Seeds initial catalog data (items, brands, types, pictures, stock) into the database, ensuring the storefront has product information.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Provides gRPC operations for retrieving catalog item details and stock, supporting alternative clients for product management.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Web/WebMVC/Controllers/CatalogController.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Web MVC controller that orchestrates UI actions related to catalog browsing, item detail display, and pagination in the storefront.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.71,\n    \"rationale\": \"Configures database schema for CatalogItem, including picture filename and stock properties; essential for correct storage of product data.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Provides helper extension methods for manipulating CatalogItem instances, such as updating picture URLs, supporting product picture management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"View model used to present pages of catalog items, brands, and types to clients, aligning with storefront display requirements.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9355,
+    "completion_tokens": 1167,
+    "total_tokens": 10522
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 16.1
+}

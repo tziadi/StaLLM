@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary controller for managing catalog-related operations such as items, brands, and types.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the structure and properties of catalog items, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Represents catalog brands, which are part of the catalog management feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Represents catalog types, another key aspect of catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Database context for catalog-related entities, crucial for data persistence.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Configures the database schema for catalog items, directly tied to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Configures the database schema for catalog brands, supporting catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Configures the database schema for catalog types, supporting catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/IntegrationEvents/Events/ProductPriceChangedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Handles integration events related to product price changes, relevant to catalog updates.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs",
+      "rank": 10,
+      "confidence": 0.65,
+      "rationale": "Supports paginated views of catalog items, relevant for storefront display.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\", \"confidence\": 0.95, \"rationale\": \"Primary controller for managing catalog-related operations such as items, brands, and types.\"},\n  {\"rank\": 2, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\", \"confidence\": 0.90, \"rationale\": \"Defines the structure and properties of catalog items, directly related to the feature.\"},\n  {\"rank\": 3, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\", \"confidence\": 0.85, \"rationale\": \"Represents catalog brands, which are part of the catalog management feature.\"},\n  {\"rank\": 4, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\", \"confidence\": 0.85, \"rationale\": \"Represents catalog types, another key aspect of catalog management.\"},\n  {\"rank\": 5, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\", \"confidence\": 0.80, \"rationale\": \"Database context for catalog-related entities, crucial for data persistence.\"},\n  {\"rank\": 6, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\", \"confidence\": 0.75, \"rationale\": \"Configures the database schema for catalog items, directly tied to the feature.\"},\n  {\"rank\": 7, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs\", \"confidence\": 0.75, \"rationale\": \"Configures the database schema for catalog brands, supporting catalog management.\"},\n  {\"rank\": 8, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs\", \"confidence\": 0.75, \"rationale\": \"Configures the database schema for catalog types, supporting catalog management.\"},\n  {\"rank\": 9, \"file\": \"Services/Catalog/Catalog.API/IntegrationEvents/Events/ProductPriceChangedIntegrationEvent.cs\", \"confidence\": 0.70, \"rationale\": \"Handles integration events related to product price changes, relevant to catalog updates.\"},\n  {\"rank\": 10, \"file\": \"Services/Catalog/Catalog.API/ViewModel/PaginatedItemsViewModel.cs\", \"confidence\": 0.65, \"rationale\": \"Supports paginated views of catalog items, relevant for storefront display.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 545,
+    "total_tokens": 9876
+  },
+  "slot": "AZ1",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "alphabetical",
+  "run": 3,
+  "elapsed_s": 7.1
+}

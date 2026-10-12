@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central domain model for orders, likely contains core logic for order handling.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Handles the creation of orders, directly related to the checkout process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Manages order cancellation, a key part of the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Handles payment status updates, critical for tracking order progress.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Updates stock confirmation status, essential for order tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Repository for order data, likely involved in persistence and retrieval.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 7,
+      "confidence": 0.72,
+      "rationale": "API controller for orders, likely exposes endpoints for order-related operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Handles checkout acceptance events, directly tied to order creation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 9,
+      "confidence": 0.68,
+      "rationale": "Defines order statuses, crucial for tracking order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 10,
+      "confidence": 0.65,
+      "rationale": "Command for creating orders, directly related to the feature query.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\", \"confidence\": 0.95, \"rationale\": \"Central domain model for orders, likely contains core logic for order handling.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\", \"confidence\": 0.90, \"rationale\": \"Handles the creation of orders, directly related to the checkout process.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\", \"confidence\": 0.85, \"rationale\": \"Manages order cancellation, a key part of the order lifecycle.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\", \"confidence\": 0.80, \"rationale\": \"Handles payment status updates, critical for tracking order progress.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\", \"confidence\": 0.78, \"rationale\": \"Updates stock confirmation status, essential for order tracking.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\", \"confidence\": 0.75, \"rationale\": \"Repository for order data, likely involved in persistence and retrieval.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\", \"confidence\": 0.72, \"rationale\": \"API controller for orders, likely exposes endpoints for order-related operations.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\", \"confidence\": 0.70, \"rationale\": \"Handles checkout acceptance events, directly tied to order creation.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\", \"confidence\": 0.68, \"rationale\": \"Defines order statuses, crucial for tracking order lifecycle.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\", \"confidence\": 0.65, \"rationale\": \"Command for creating orders, directly related to the feature query.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9330,
+    "completion_tokens": 534,
+    "total_tokens": 9864
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 10.1
+}

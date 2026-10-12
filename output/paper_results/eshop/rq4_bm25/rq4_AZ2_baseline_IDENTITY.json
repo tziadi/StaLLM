@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Handles user authentication actions such as login, logout, and registration directly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Implements login logic and interacts with user data for authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Defines the interface for login services, central to authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 4,
+      "confidence": 0.92,
+      "rationale": "Contains configuration for identity, token issuance, and protection settings.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 5,
+      "confidence": 0.9,
+      "rationale": "Configures authentication middleware, identity services, and token protection at application startup.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 6,
+      "confidence": 0.88,
+      "rationale": "Represents the user entity, essential for registration and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 7,
+      "confidence": 0.85,
+      "rationale": "Manages user data persistence, including authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs",
+      "rank": 8,
+      "confidence": 0.83,
+      "rationale": "Model for login data, directly used in authentication workflows.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs",
+      "rank": 9,
+      "confidence": 0.82,
+      "rationale": "Model for user registration, part of account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs",
+      "rank": 10,
+      "confidence": 0.8,
+      "rationale": "Model for logout actions, relevant to authentication and session management.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\", \"confidence\": 1.0, \"rationale\": \"Handles user authentication actions such as login, logout, and registration directly.\"},\n  {\"rank\": 2, \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\", \"confidence\": 0.95, \"rationale\": \"Implements login logic and interacts with user data for authentication.\"},\n  {\"rank\": 3, \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\", \"confidence\": 0.93, \"rationale\": \"Defines the interface for login services, central to authentication.\"},\n  {\"rank\": 4, \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\", \"confidence\": 0.92, \"rationale\": \"Contains configuration for identity, token issuance, and protection settings.\"},\n  {\"rank\": 5, \"file\": \"Services/Identity/Identity.API/Startup.cs\", \"confidence\": 0.9, \"rationale\": \"Configures authentication middleware, identity services, and token protection at application startup.\"},\n  {\"rank\": 6, \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\", \"confidence\": 0.88, \"rationale\": \"Represents the user entity, essential for registration and account management.\"},\n  {\"rank\": 7, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\", \"confidence\": 0.85, \"rationale\": \"Manages user data persistence, including authentication and account management.\"},\n  {\"rank\": 8, \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs\", \"confidence\": 0.83, \"rationale\": \"Model for login data, directly used in authentication workflows.\"},\n  {\"rank\": 9, \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs\", \"confidence\": 0.82, \"rationale\": \"Model for user registration, part of account management.\"},\n  {\"rank\": 10, \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs\", \"confidence\": 0.8, \"rationale\": \"Model for logout actions, relevant to authentication and session management.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9332,
+    "completion_tokens": 513,
+    "total_tokens": 9845
+  },
+  "slot": "AZ2",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 9.8
+}

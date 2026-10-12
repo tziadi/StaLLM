@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 0.28,
+      "rationale": "Implements user login, logout, registration, and issues authentication cookies/tokens.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 2,
+      "confidence": 0.17,
+      "rationale": "Configures IdentityServer, authentication schemes, and token generation/protection for services and gateways.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 3,
+      "confidence": 0.11,
+      "rationale": "Service that validates user credentials and produces sign-in results used during token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Defines API resources, clients, and scopes that determine how access tokens are created and validated.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 5,
+      "confidence": 0.07,
+      "rationale": "Supplies user claims for inclusion in JWT tokens, affecting protected resource access.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 6,
+      "confidence": 0.06,
+      "rationale": "Interface describing authentication operations such as password validation and sign-in, core to login feature.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/AccountController.cs",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "MVC front-end controller handling user sign-in/out and registration workflows consuming identity tokens.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 8,
+      "confidence": 0.05,
+      "rationale": "Attaches bearer tokens to outbound gateway calls, enforcing protected access to downstream services.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Adds JWT tokens to HTTP requests from the MVC app, ensuring secured service calls.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 10,
+      "confidence": 0.04,
+      "rationale": "Mobile gateway counterpart that injects access tokens into requests, contributing to token-based protection.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.125,
+    "mrr": 1.0,
+    "map": 0.125
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\", \"confidence\": 0.28, \"rationale\": \"Implements user login, logout, registration, and issues authentication cookies/tokens.\"},\n  {\"rank\": 2, \"file\": \"Services/Identity/Identity.API/Startup.cs\", \"confidence\": 0.17, \"rationale\": \"Configures IdentityServer, authentication schemes, and token generation/protection for services and gateways.\"},\n  {\"rank\": 3, \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\", \"confidence\": 0.11, \"rationale\": \"Service that validates user credentials and produces sign-in results used during token issuance.\"},\n  {\"rank\": 4, \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\", \"confidence\": 0.09, \"rationale\": \"Defines API resources, clients, and scopes that determine how access tokens are created and validated.\"},\n  {\"rank\": 5, \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\", \"confidence\": 0.07, \"rationale\": \"Supplies user claims for inclusion in JWT tokens, affecting protected resource access.\"},\n  {\"rank\": 6, \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\", \"confidence\": 0.06, \"rationale\": \"Interface describing authentication operations such as password validation and sign-in, core to login feature.\"},\n  {\"rank\": 7, \"file\": \"Web/WebMVC/Controllers/AccountController.cs\", \"confidence\": 0.05, \"rationale\": \"MVC front-end controller handling user sign-in/out and registration workflows consuming identity tokens.\"},\n  {\"rank\": 8, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\", \"confidence\": 0.05, \"rationale\": \"Attaches bearer tokens to outbound gateway calls, enforcing protected access to downstream services.\"},\n  {\"rank\": 9, \"file\": \"Web/WebMVC/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\", \"confidence\": 0.04, \"rationale\": \"Adds JWT tokens to HTTP requests from the MVC app, ensuring secured service calls.\"},\n  {\"rank\": 10, \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\", \"confidence\": 0.04, \"rationale\": \"Mobile gateway counterpart that injects access tokens into requests, contributing to token-based protection.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9327,
+    "completion_tokens": 1095,
+    "total_tokens": 10422
+  },
+  "slot": "AZ3",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 14.7
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Central domain model for Order; directly implements order creation, status, and lifecycle logic.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "API controller for order operations; handles order creation, status updates, and cancellation endpoints.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.96,
+      "rationale": "Handles the command to create an order at checkout; directly supports order creation feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 4,
+      "confidence": 0.95,
+      "rationale": "Defines order status enumeration and logic; essential for tracking order progress and state changes.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.93,
+      "rationale": "Handles order cancellation command; directly supports the cancellation aspect of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.92,
+      "rationale": "Handles transition of order status to stock confirmed; supports order tracking through stock confirmation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.91,
+      "rationale": "Handles transition of order status to paid; supports payment tracking in the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.9,
+      "rationale": "Handles order shipment command; directly supports shipment tracking in the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 9,
+      "confidence": 0.89,
+      "rationale": "Repository for order persistence; supports storage and retrieval of order data throughout its lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 10,
+      "confidence": 0.88,
+      "rationale": "Provides query operations for orders; supports tracking and retrieval of order status and details.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Central domain model for Order; directly implements order creation, status, and lifecycle logic.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"API controller for order operations; handles order creation, status updates, and cancellation endpoints.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Handles the command to create an order at checkout; directly supports order creation feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines order status enumeration and logic; essential for tracking order progress and state changes.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Handles order cancellation command; directly supports the cancellation aspect of the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Handles transition of order status to stock confirmed; supports order tracking through stock confirmation.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Handles transition of order status to paid; supports payment tracking in the order lifecycle.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Handles order shipment command; directly supports shipment tracking in the order process.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Repository for order persistence; supports storage and retrieval of order data throughout its lifecycle.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Provides query operations for orders; supports tracking and retrieval of order status and details.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 629,
+    "total_tokens": 9983
+  },
+  "slot": "AZ2",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 4.5
+}

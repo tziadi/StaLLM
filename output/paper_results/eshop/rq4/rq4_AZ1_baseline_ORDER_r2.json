@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the creation of orders, directly related to the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Handles the cancellation of orders, a key part of the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Provides querying capabilities for orders, essential for tracking order status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Handles stock confirmation events, a critical step in the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Handles payment success events, a key milestone in the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Handles shipment events, a crucial part of the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Manages API endpoints for order-related operations, central to the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Defines the core order entity, representing the main data structure for orders.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Handles data persistence for orders, essential for managing order data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Handles checkout acceptance events, marking the start of the ordering process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the creation of orders, directly related to the ordering process.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs\", \"confidence\": 0.9, \"rationale\": \"Handles the cancellation of orders, a key part of the ordering process.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\", \"confidence\": 0.85, \"rationale\": \"Provides querying capabilities for orders, essential for tracking order status.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.8, \"rationale\": \"Handles stock confirmation events, a critical step in the ordering process.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.8, \"rationale\": \"Handles payment success events, a key milestone in the ordering process.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs\", \"confidence\": 0.75, \"rationale\": \"Handles shipment events, a crucial part of the order lifecycle.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\", \"confidence\": 0.7, \"rationale\": \"Manages API endpoints for order-related operations, central to the ordering process.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\", \"confidence\": 0.7, \"rationale\": \"Defines the core order entity, representing the main data structure for orders.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\", \"confidence\": 0.65, \"rationale\": \"Handles data persistence for orders, essential for managing order data.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\", \"confidence\": 0.6, \"rationale\": \"Handles checkout acceptance events, marking the start of the ordering process.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9330,
+    "completion_tokens": 554,
+    "total_tokens": 9884
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "alphabetical",
+  "run": 2,
+  "elapsed_s": 6.0
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the integration event for stock confirmation and processes the order status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Handles the command to update the order status to stock confirmed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Defines the integration event for stock confirmation, which is central to the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Represents the domain event for changing the order status to stock confirmed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Handles the domain event for stock confirmation and updates the order status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Defines the command to set the order status to stock confirmed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Manages the publishing of integration events, including stock confirmation events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Defines the possible statuses of an order, including stock confirmed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Handles the opposite scenario of stock rejection, which is related to stock confirmation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Processes stock rejection events, which are closely related to stock confirmation events.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the integration event for stock confirmation and processes the order status.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\", \"confidence\": 0.9, \"rationale\": \"Handles the command to update the order status to stock confirmed.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the integration event for stock confirmation, which is central to the query.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.Domain/Events/OrderStatusChangedToStockConfirmedDomainEvent.cs\", \"confidence\": 0.8, \"rationale\": \"Represents the domain event for changing the order status to stock confirmed.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/DomainEventHandlers/OrderStockConfirmed/OrderStatusChangedToStockConfirmedDomainEventHandler.cs\", \"confidence\": 0.75, \"rationale\": \"Handles the domain event for stock confirmation and updates the order status.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs\", \"confidence\": 0.7, \"rationale\": \"Defines the command to set the order status to stock confirmed.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs\", \"confidence\": 0.65, \"rationale\": \"Manages the publishing of integration events, including stock confirmation events.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\", \"confidence\": 0.6, \"rationale\": \"Defines the possible statuses of an order, including stock confirmed.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStockRejectedIntegrationEvent.cs\", \"confidence\": 0.55, \"rationale\": \"Handles the opposite scenario of stock rejection, which is related to stock confirmation.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockRejectedIntegrationEventHandler.cs\", \"confidence\": 0.5, \"rationale\": \"Processes stock rejection events, which are closely related to stock confirmation events.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9326,
+    "completion_tokens": 585,
+    "total_tokens": 9911
+  },
+  "slot": "AZ1",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_masked",
+  "run": 3,
+  "elapsed_s": 12.8
+}

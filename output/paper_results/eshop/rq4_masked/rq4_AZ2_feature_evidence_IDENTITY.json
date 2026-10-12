@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements user authentication, login, logout, registration, and account management endpoints. Controller name and location match the feature query exactly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Service class likely handles authentication logic, login, and token issuance. Name and location strongly match the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Interface for login service, directly related to authentication and token issuance. Semantically matches feature requirements.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 4,
+      "confidence": 0.92,
+      "rationale": "Configuration file for identity service, likely defines authentication and token settings. Supports feature implementation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 5,
+      "confidence": 0.91,
+      "rationale": "Represents user entity for authentication and account management. Central to user registration and management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 6,
+      "confidence": 0.9,
+      "rationale": "Startup file for identity API, configures authentication, token protection, and service registration. Directly supports feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs",
+      "rank": 7,
+      "confidence": 0.89,
+      "rationale": "ViewModel for login functionality, directly supports authentication UI and logic.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs",
+      "rank": 8,
+      "confidence": 0.88,
+      "rationale": "ViewModel for user registration, directly supports account creation and management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs",
+      "rank": 9,
+      "confidence": 0.87,
+      "rationale": "ViewModel for logout functionality, directly supports authentication and session management.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 10,
+      "confidence": 0.85,
+      "rationale": "Handles authorization headers for HTTP requests, supporting token-based protection of services and gateways.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.16071428571428573,
+    "mrr": 1.0,
+    "map": 0.16071428571428573
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements user authentication, login, logout, registration, and account management endpoints. Controller name and location match the feature query exactly.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Service class likely handles authentication logic, login, and token issuance. Name and location strongly match the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Interface for login service, directly related to authentication and token issuance. Semantically matches feature requirements.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Configuration file for identity service, likely defines authentication and token settings. Supports feature implementation.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Represents user entity for authentication and account management. Central to user registration and management.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Startup.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Startup file for identity API, configures authentication, token protection, and service registration. Directly supports feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"ViewModel for login functionality, directly supports authentication UI and logic.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"ViewModel for user registration, directly supports account creation and management.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LogoutViewModel.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"ViewModel for logout functionality, directly supports authentication and session management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles authorization headers for HTTP requests, supporting token-based protection of services and gateways.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9352,
+    "completion_tokens": 639,
+    "total_tokens": 9991
+  },
+  "slot": "AZ2",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 6.5
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Primary HTTP API controller exposing endpoints to add, remove, update items and checkout the shopping basket; directly maps to all described actions.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.83,
+      "rationale": "Implements persistence operations for CustomerBasket in Redis, enabling storage and retrieval while items are added, removed, or updated.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.78,
+      "rationale": "Domain model representing a buyer's shopping basket including items and quantities; core data structure manipulated by feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Provides gRPC endpoints for basket operations such as AddItem, RemoveItem, UpdateQuantity, and Checkout, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Mobile BFF controller orchestrating basket actions for mobile clients; translates UI requests into basket service calls.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 6,
+      "confidence": 0.69,
+      "rationale": "Web BFF counterpart handling basket-related HTTP requests from web SPA, forwarding add/update/remove/checkout actions.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 7,
+      "confidence": 0.66,
+      "rationale": "Service used by the mobile BFF to call underlying Basket microservice; contains methods for modifying basket and initiating checkout.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Analogous service for the web BFF enabling add/remove/update and checkout operations against the Basket API.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CartController.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "MVC UI controller managing cart pages; invokes basket services to perform add, remove, quantity updates, and checkout actions.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/BasketService.cs",
+      "rank": 10,
+      "confidence": 0.58,
+      "rationale": "Client-side service used by CartController to communicate with Basket microservice, encapsulating basket manipulation and checkout calls.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Primary HTTP API controller exposing endpoints to add, remove, update items and checkout the shopping basket; directly maps to all described actions.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Implements persistence operations for CustomerBasket in Redis, enabling storage and retrieval while items are added, removed, or updated.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Domain model representing a buyer's shopping basket including items and quantities; core data structure manipulated by feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Provides gRPC endpoints for basket operations such as AddItem, RemoveItem, UpdateQuantity, and Checkout, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.70,\n    \"rationale\": \"Mobile BFF controller orchestrating basket actions for mobile clients; translates UI requests into basket service calls.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.69,\n    \"rationale\": \"Web BFF counterpart handling basket-related HTTP requests from web SPA, forwarding add/update/remove/checkout actions.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs\",\n    \"confidence\": 0.66,\n    \"rationale\": \"Service used by the mobile BFF to call underlying Basket microservice; contains methods for modifying basket and initiating checkout.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Analogous service for the web BFF enabling add/remove/update and checkout operations against the Basket API.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/Controllers/CartController.cs\",\n    \"confidence\": 0.60,\n    \"rationale\": \"MVC UI controller managing cart pages; invokes basket services to perform add, remove, quantity updates, and checkout actions.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Services/BasketService.cs\",\n    \"confidence\": 0.58,\n    \"rationale\": \"Client-side service used by CartController to communicate with Basket microservice, encapsulating basket manipulation and checkout calls.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 1217,
+    "total_tokens": 10570
+  },
+  "slot": "AZ3",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 18.6
+}

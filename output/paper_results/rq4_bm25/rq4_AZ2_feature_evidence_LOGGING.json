@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Designer.java is known to contain debug and trace logging facilities for ArgoUML, including methods for enabling/disabling logging and outputting debug messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Main.java is the application entry point and likely initializes logging or debug facilities, or sets up global handlers for log output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "ExceptionDialog.java is responsible for displaying exceptions, which often includes logging stack traces and debug information for developers.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Argo.java is a central API class and may provide hooks or configuration for logging and debugging across the application.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/ArgoFrame.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "ArgoFrame.java is a utility class that may include logging utilities or methods for outputting debug information, especially related to the main application window.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 6,
+      "confidence": 0.68,
+      "rationale": "ConfigurationHandler.java likely manages configuration options, which may include enabling or configuring logging and debug output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "ConfigurationProperties.java manages application properties, possibly including those for logging levels or debug settings.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/UIUtils.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "UIUtils.java may provide utility methods for displaying or routing debug and log messages in the UI, supporting developer tracing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 9,
+      "confidence": 0.58,
+      "rationale": "ArgoStatusBar.java is likely used to display status messages, including debug or trace information, to the user or developer.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Tools.java is a utility class that may contain helper methods for logging or outputting debug information throughout the application.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.028037383177570093,
+    "mrr": 0.5,
+    "map": 0.016733422340898974
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Designer.java is known to contain debug and trace logging facilities for ArgoUML, including methods for enabling/disabling logging and outputting debug messages.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Main.java is the application entry point and likely initializes logging or debug facilities, or sets up global handlers for log output.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"ExceptionDialog.java is responsible for displaying exceptions, which often includes logging stack traces and debug information for developers.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Argo.java is a central API class and may provide hooks or configuration for logging and debugging across the application.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/util/ArgoFrame.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"ArgoFrame.java is a utility class that may include logging utilities or methods for outputting debug information, especially related to the main application window.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"ConfigurationHandler.java likely manages configuration options, which may include enabling or configuring logging and debug output.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"ConfigurationProperties.java manages application properties, possibly including those for logging levels or debug settings.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/util/UIUtils.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"UIUtils.java may provide utility methods for displaying or routing debug and log messages in the UI, supporting developer tracing.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\",\n    \"confidence\": 0.58,\n    \"rationale\": \"ArgoStatusBar.java is likely used to display status messages, including debug or trace information, to the user or developer.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Tools.java is a utility class that may contain helper methods for logging or outputting debug information throughout the application.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 13882,
+    "completion_tokens": 706,
+    "total_tokens": 14588
+  },
+  "slot": "AZ2",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 122,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 11.1
+}

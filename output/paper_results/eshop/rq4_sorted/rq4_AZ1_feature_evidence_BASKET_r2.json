@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Basket feature by handling API requests related to basket operations such as adding, removing items, and checking out.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Provides the core data storage and retrieval functionality for the Basket feature using Redis, which is essential for basket operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines the structure of a customer's basket, including items and quantities, directly supporting the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Represents individual items in the basket, which is a fundamental part of the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Handles the checkout process for the basket, directly supporting the transition from basket to order.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Handles integration events related to basket checkout, ensuring smooth communication between services during the checkout process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Defines the integration event for basket checkout, supporting the feature's interaction with other services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Services/IIdentityService.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Provides identity-related services that may be used for associating baskets with specific users.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/Basket.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Represents the basket in the MVC web application, supporting the feature's user interface.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/BasketItem.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Represents individual basket items in the MVC web application, supporting the feature's user interface.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.14285714285714285,
+    "mrr": 1.0,
+    "map": 0.13525447215923406
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Basket feature by handling API requests related to basket operations such as adding, removing items, and checking out.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Provides the core data storage and retrieval functionality for the Basket feature using Redis, which is essential for basket operations.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the structure of a customer's basket, including items and quantities, directly supporting the Basket feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Represents individual items in the basket, which is a fundamental part of the Basket feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles the checkout process for the basket, directly supporting the transition from basket to order.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Handles integration events related to basket checkout, ensuring smooth communication between services during the checkout process.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Defines the integration event for basket checkout, supporting the feature's interaction with other services.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Basket/Basket.API/Services/IIdentityService.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Provides identity-related services that may be used for associating baskets with specific users.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/ViewModels/Basket.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Represents the basket in the MVC web application, supporting the feature's user interface.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/ViewModels/BasketItem.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Represents individual basket items in the MVC web application, supporting the feature's user interface.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 640,
+    "total_tokens": 9993
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 4.2
+}

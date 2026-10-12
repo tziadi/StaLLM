@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "This controller directly manages the buyer's basket, including adding/removing items, updating quantities, and initiating checkout, matching the feature description exactly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Represents the data model for a buyer's basket, supporting the storage and manipulation of basket items, which is central to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 3,
+      "confidence": 0.96,
+      "rationale": "Defines individual items within a basket, supporting item addition, removal, and quantity updates.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 4,
+      "confidence": 0.94,
+      "rationale": "Repository interface for basket persistence and retrieval, directly supporting basket operations for buyers.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 5,
+      "confidence": 0.93,
+      "rationale": "Implements basket storage and retrieval logic, enabling the persistence of each buyer's basket and its contents.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 6,
+      "confidence": 0.92,
+      "rationale": "Represents the checkout process for a basket, directly supporting the transition from basket to order.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 7,
+      "confidence": 0.91,
+      "rationale": "API gateway controller for basket operations, facilitating basket management and checkout from the web frontend.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 8,
+      "confidence": 0.91,
+      "rationale": "API gateway controller for basket operations, facilitating basket management and checkout from the mobile frontend.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 9,
+      "confidence": 0.89,
+      "rationale": "gRPC service exposing basket operations, supporting distributed and cross-service basket management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.87,
+      "rationale": "Integration event triggered when a user checks out their basket, directly supporting the checkout and order initiation process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"This controller directly manages the buyer's basket, including adding/removing items, updating quantities, and initiating checkout, matching the feature description exactly.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Represents the data model for a buyer's basket, supporting the storage and manipulation of basket items, which is central to the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Defines individual items within a basket, supporting item addition, removal, and quantity updates.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\",\n    \"confidence\": 0.94,\n    \"rationale\": \"Repository interface for basket persistence and retrieval, directly supporting basket operations for buyers.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Implements basket storage and retrieval logic, enabling the persistence of each buyer's basket and its contents.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Represents the checkout process for a basket, directly supporting the transition from basket to order.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"API gateway controller for basket operations, facilitating basket management and checkout from the web frontend.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"API gateway controller for basket operations, facilitating basket management and checkout from the mobile frontend.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"gRPC service exposing basket operations, supporting distributed and cross-service basket management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Integration event triggered when a user checks out their basket, directly supporting the checkout and order initiation process.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 656,
+    "total_tokens": 10010
+  },
+  "slot": "AZ2",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 6.4
+}
