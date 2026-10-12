@@ -108,7 +108,7 @@
 | LLM | AZ4 | baseline | bm25_sorted | 1 | 1.0 | 1.0 | 0.13 | 1.0 | 0.129 | 0.925 |
 | LLM | AZ4 | baseline | keyword_sorted | 1 | 0.75 | 1.0 | 0.093 | 0.875 | 0.089 | 0.65 |
 | LLM | AZ4 | feature_evidence | alphabetical | 1 | 0.25 | 0.375 | 0.01 | 0.281 | 0.009 | 0.188 |
-| LLM | AZ4 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.144 | 1.0 | 0.138 | 0.875 |
+| LLM | AZ4 | feature_evidence | bm25_sorted | 1 | 1.0 | 1.0 | 0.123 | 1.0 | 0.118 | 0.875 |
 | LLM | AZ4 | feature_evidence | keyword_sorted | 1 | 0.875 | 1.0 | 0.103 | 0.938 | 0.101 | 0.7 |
 | keyword_sorted_only | - | - | - | 1 | 1.0 | 1.0 | 0.093 | 1.0 | 0.09 | 0.613 |
 | bm25_only | - | - | - | 1 | 0.5 | 0.875 | 0.026 | 0.592 | 0.012 | 0.237 |
@@ -179,6 +179,8 @@
 | original | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.07 | 0.194 | 0.102 ± 0.021 | 0.165 [0.142, 0.19] | 1.0 | 0.122 [0.098, 0.147] | 0.9491 | 0 | 81.2 |
 | original | AZ2 | azure:gpt-4.1-features | scanner | 3 | 0.114 | 0.144 | 0.127 ± 0.011 | 0.151 [0.114, 0.187] | 0.9001 | 0.106 [0.073, 0.142] | 0.0919 | 0 | 87.2 |
 | original | AZ3 | azure:o3-features | scanner | 3 | 0.204 | 0.273 | 0.233 ± 0.07 | 0.174 [0.143, 0.206] | 0.001 | 0.131 [0.101, 0.165] | 0.001 | 0 | 580.6 |
+| original | AZ4 | ollama:qwen2.5-coder:14b-instruct@localhost:11434 | scanner | 3 | 0.089 | 0.13 | 0.105 ± 0.006 | 0.116 [0.087, 0.147] | 0.7552 | 0.119 [0.09, 0.151] | 0.8082 | 0 | 1247.8 |
+| original | AZ6 | ollama:deepseek-coder:6.7b-instruct@localhost:11434 | scanner | 3 | 0.036 | 0.069 | 0.047 ± 0.001 | 0.147 [0.117, 0.177] | 1.0 | 0.11 [0.082, 0.139] | 1.0 | 0 | 1221.3 |
 
 ## RQ5 — held-out DACOS test split (disjoint from the selection split)
 
