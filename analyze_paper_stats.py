@@ -431,6 +431,12 @@ def random_placement_f1(spans_by_file: dict[str, Any], rng: random.Random, match
     return _span_f1(spans_by_file, preds, match)
 
 
+def _drop_retry(spans_by_file: dict[str, Any]) -> dict[str, Any]:
+    """Spans as they would be without the empty-answer retry: a file answered by
+    the retry had no prediction in the first answer."""
+    return {b: (dict(f, pred=[]) if f.get("source") == "llm_retry" else f) for b, f in spans_by_file.items()}
+
+
 def analyze_rq12(md: list[str]) -> None:
     from StaLLM_core import _match_file
 
@@ -473,6 +479,19 @@ def analyze_rq12(md: list[str]) -> None:
                         f"f1_{tag}_ci": f"[{_r(draws[int(0.025 * RANDOM_DRAWS)])}, "
                                         f"{_r(draws[int(0.975 * RANDOM_DRAWS) - 1])}]",
                         f"p_{tag}": _r((1 + sum(x >= statistics.mean(f1) for x in draws)) / (1 + RANDOM_DRAWS), 4)})
+        # Without the retry: only for runs that record per-file provenance.
+        if all("source" in f for s in spans for f in s.values()):
+            nr = [_drop_retry(s) for s in spans]
+            nr_counts = [_span_counts(s, {b: [{"startLine": x, "endLine": y} for x, y in v["pred"]]
+                                          for b, v in s.items()}, match) for s in nr]
+            nr_f1 = [2 * tp / (2 * tp + fp + fn) if tp else 0.0 for tp, fp, fn in nr_counts]
+            rng = random.Random(42)
+            draws = [statistics.mean(random_placement_f1(s, rng, match, False) for s in nr)
+                     for _ in range(RANDOM_DRAWS)]
+            row.update({"f1_no_retry_mean": _r(statistics.mean(nr_f1)),
+                        "f1_no_retry_random_mean": _r(statistics.mean(draws)),
+                        "p_no_retry_random": _r((1 + sum(x >= statistics.mean(nr_f1) for x in draws))
+                                                / (1 + RANDOM_DRAWS), 4)})
         rows.append(row)
     _write_csv(STATS / "rq12_rerun.csv", rows)
     md.append("## RQ1/RQ2 — span-level runs re-scored against the current oracle "
@@ -490,6 +509,16 @@ def analyze_rq12(md: list[str]) -> None:
                   f"| {r.get('p_random', '-')} | {r.get('f1_random_files_mean', '-')} {r.get('f1_random_files_ci', '')} "
                   f"| {r.get('p_random_files', '-')} | {r['llm_errors']} | {r['time_s']} |")
     md.append("")
+    nr_rows = [r for r in rows if "f1_no_retry_mean" in r]
+    if nr_rows:
+        md.append("*Without the empty-answer retry (files answered by the retry count as empty); "
+                  "random placement recomputed on the same spans.*\n")
+        md.append("| Protocol | Slot | Prompt | retry files | F1 with retry | F1 without retry "
+                  "| random placement | p |\n|---|---|---|---|---|---|---|---|")
+        for r in nr_rows:
+            md.append(f"| {r['protocol']} | {r['slot']} | {r['prompt']} | {r['retry_files_mean']} | {r['f1_mean']} "
+                      f"| {r['f1_no_retry_mean']} | {r['f1_no_retry_random_mean']} | {r['p_no_retry_random']} |")
+        md.append("")
 
 
 # ── RQ5 held-out ─────────────────────────────────────────────────────────────

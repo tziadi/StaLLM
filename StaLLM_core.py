@@ -1129,6 +1129,7 @@ def run_experiment(
     llm = llm or _default_llm()
     pt_sum = ct_sum = tt_sum = 0
     source_counts: Dict[str, int] = {}
+    source_by_file: Dict[str, str] = {}
     preds_all: List[Dict[str, Any]] = []
     results_all: List[Dict[str, Any]] = []
     code_by_file: Dict[str, str] = {}
@@ -1153,6 +1154,7 @@ def run_experiment(
             smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates,
                                              number_lines=number_lines)
             source_counts[usage.get("source", "llm")] = source_counts.get(usage.get("source", "llm"), 0) + 1
+            source_by_file[base] = usage.get("source", "llm")
 
             for smell in smells or []:
                 item = dict(smell)
@@ -1333,6 +1335,9 @@ def run_experiment(
                 "lines": code_by_file.get(b, "").count("\n") + 1,
                 "pred": [[p["startLine"], p["endLine"]] for p in pred_by_file.get(b, [])],
                 "gt": [[g["startLine"], g["endLine"]] for g in gt_by_file.get(b, [])],
+                # The retry only runs when the first answer was empty, so a file
+                # marked "llm_retry" had no prediction without it.
+                "source": source_by_file.get(b, "llm"),
             }
             for b in sorted(U_bases)
         },
