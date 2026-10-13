@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary HTTP endpoint for basket operations; exposes add, remove, update, and checkout actions directly matching the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Concrete repository that stores and retrieves CustomerBasket data in Redis; core persistence logic for all basket changes.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "gRPC service surface for basket functionality; enables other services (e.g., BFF gateways) to add/update/checkout baskets.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Domain model representing an entire shopping basket, including buyer id and collection of BasketItem objects.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 5,
+      "confidence": 0.86,
+      "rationale": "Domain model for individual items within a basket; supports quantity updates and item data, essential for add/remove operations.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Web BFF component that calls Basket API/Grpc to orchestrate basket operations for the web UI; directly supports basket feature in frontend.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 7,
+      "confidence": 0.78,
+      "rationale": "API Gateway controller exposing basket endpoints to SPA/web clients; delegates to BasketService for core logic.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 8,
+      "confidence": 0.77,
+      "rationale": "Mobile BFF counterpart service managing basket calls for mobile apps; ensures consistent basket behavior across platforms.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Controller layer in mobile BFF exposing basket endpoints; translates mobile requests into service calls.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 10,
+      "confidence": 0.73,
+      "rationale": "Interface defining contract for basket persistence operations; central abstraction used by controllers and services.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary HTTP endpoint for basket operations; exposes add, remove, update, and checkout actions directly matching the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Concrete repository that stores and retrieves CustomerBasket data in Redis; core persistence logic for all basket changes.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"gRPC service surface for basket functionality; enables other services (e.g., BFF gateways) to add/update/checkout baskets.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Domain model representing an entire shopping basket, including buyer id and collection of BasketItem objects.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Domain model for individual items within a basket; supports quantity updates and item data, essential for add/remove operations.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Web BFF component that calls Basket API/Grpc to orchestrate basket operations for the web UI; directly supports basket feature in frontend.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"API Gateway controller exposing basket endpoints to SPA/web clients; delegates to BasketService for core logic.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs\",\n    \"confidence\": 0.77,\n    \"rationale\": \"Mobile BFF counterpart service managing basket calls for mobile apps; ensures consistent basket behavior across platforms.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Controller layer in mobile BFF exposing basket endpoints; translates mobile requests into service calls.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Interface defining contract for basket persistence operations; central abstraction used by controllers and services.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9352,
+    "completion_tokens": 1525,
+    "total_tokens": 10877
+  },
+  "slot": "AZ3",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 53.8
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly manages catalog-related operations, including items, brands, types, and stock information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Defines the structure and properties of catalog items, central to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Represents catalog brands, which are a key part of the product catalog.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 4,
+      "confidence": 0.9,
+      "rationale": "Represents catalog types, essential for categorizing products in the catalog.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Handles database interactions for catalog-related entities, supporting the feature backend.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Provides utility methods for catalog items, aiding in feature refinement and support.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Manages integration events related to the catalog, ensuring synchronization across services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Implements gRPC services for catalog operations, supporting distributed feature access.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CatalogController.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Handles catalog-related actions in the web storefront, directly supporting the feature UI.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/CatalogItem.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Represents catalog items in the web application, connecting the backend to the UI.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly manages catalog-related operations, including items, brands, types, and stock information.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the structure and properties of catalog items, central to the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Represents catalog brands, which are a key part of the product catalog.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Represents catalog types, essential for categorizing products in the catalog.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles database interactions for catalog-related entities, supporting the feature backend.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Provides utility methods for catalog items, aiding in feature refinement and support.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Manages integration events related to the catalog, ensuring synchronization across services.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Implements gRPC services for catalog operations, supporting distributed feature access.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/Controllers/CatalogController.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Handles catalog-related actions in the web storefront, directly supporting the feature UI.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/ViewModels/CatalogItem.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Represents catalog items in the web application, connecting the backend to the UI.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9355,
+    "completion_tokens": 591,
+    "total_tokens": 9946
+  },
+  "slot": "AZ1",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 8.4
+}

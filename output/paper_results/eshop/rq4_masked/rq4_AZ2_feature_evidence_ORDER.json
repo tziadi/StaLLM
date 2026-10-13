@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "This is the core domain model for orders, directly representing and implementing the order process, including creation, status tracking, payment, shipment, and cancellation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Handles the creation of orders at checkout, which is a primary step in the order process described in the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Handles the cancellation of orders, directly supporting the cancellation aspect of the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.95,
+      "rationale": "Handles updating the order status to 'Stock Confirmed', which is a key step in the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.94,
+      "rationale": "Handles updating the order status to 'Paid', directly supporting payment tracking in the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.93,
+      "rationale": "Handles the shipment of orders, which is a critical part of the order process after payment and stock confirmation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 7,
+      "confidence": 0.92,
+      "rationale": "Defines the various statuses an order can have, supporting the tracking of order state throughout its lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.91,
+      "rationale": "Represents the event when an order's status changes to 'Stock Confirmed', supporting integration and status tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.9,
+      "rationale": "Represents the event when an order's status changes to 'Paid', supporting payment tracking and integration.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.89,
+      "rationale": "Represents the event when an order is cancelled, supporting the cancellation and notification aspects of the order process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"This is the core domain model for orders, directly representing and implementing the order process, including creation, status tracking, payment, shipment, and cancellation.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Handles the creation of orders at checkout, which is a primary step in the order process described in the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Handles the cancellation of orders, directly supporting the cancellation aspect of the order process.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles updating the order status to 'Stock Confirmed', which is a key step in the order lifecycle.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.94,\n    \"rationale\": \"Handles updating the order status to 'Paid', directly supporting payment tracking in the order process.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Handles the shipment of orders, which is a critical part of the order process after payment and stock confirmation.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Defines the various statuses an order can have, supporting the tracking of order state throughout its lifecycle.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Represents the event when an order's status changes to 'Stock Confirmed', supporting integration and status tracking.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Represents the event when an order's status changes to 'Paid', supporting payment tracking and integration.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Represents the event when an order is cancelled, supporting the cancellation and notification aspects of the order process.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9358,
+    "completion_tokens": 712,
+    "total_tokens": 10070
+  },
+  "slot": "AZ2",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 7.8
+}

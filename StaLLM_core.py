@@ -1,6 +1,6 @@
 # StaLLM_v2_core.py
-import os, re, json, zipfile, tempfile, time
-from typing import Dict, List, Any, Tuple, Optional
+import os, re, json, zipfile, tempfile, time, random
+from typing import Dict, List, Any, Tuple, Optional, NamedTuple
 from pathlib import Path
 
 import pandas as pd
@@ -420,11 +420,16 @@ def analyze_with_llm(
     language: str,
     llm: ChatModel,
     prompt_templates: Optional[Dict[str, str]] = None,
+    number_lines: bool = False,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
     strategies = prompt_templates or load_strategies()
     template = strategies.get(mode) or strategies.get("baseline") or "Language: {language}\nCode:\n{code}\nReturn JSON array."
     code_snippet = code[:20000]
-    base_prompt = _safe_prompt_format(template, {"language": language, "code": code_snippet})
+    # With number_lines, each line is prefixed with its 1-based number so that the
+    # model does not have to count lines to report a location.
+    shown_code = ("\n".join(f"{i:>4}| {line}" for i, line in enumerate(code_snippet.split("\n"), start=1))
+                  if number_lines else code_snippet)
+    base_prompt = _safe_prompt_format(template, {"language": language, "code": shown_code})
 
     rules_footer = (
         "\n\nOutput rules (MANDATORY):\n"
@@ -433,6 +438,9 @@ def analyze_with_llm(
         "\"line\" (int) OR (\"startLine\" (int), \"endLine\" (int)).\n"
         "3) No prose, no markdown, no code fences. If no findings: return []."
     )
+    if number_lines:
+        rules_footer += ("\n4) Each code line above is prefixed with its line number and '| '; "
+                         "report locations with those numbers.")
     prompt = base_prompt + rules_footer
 
     meta = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
@@ -457,10 +465,15 @@ def analyze_with_llm(
         except Exception:
             raw_list = []
         smells = _coerce_items_schema(raw_list)
-    except Exception:
-        smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
-        return smells, meta
+    except Exception as exc:
+        meta["source"] = "llm_error"
+        meta["error"] = f"{type(exc).__name__}: {str(exc)[:200]}"
+        if _heuristic_fallback_enabled():
+            meta["source"] = "heuristic_fallback"
+            return _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3"))), meta
+        return [], meta
 
+    meta["source"] = "llm"
     # Retry with a nudge if empty (also catch errors)
     if not smells:
         try:
@@ -488,19 +501,26 @@ def analyze_with_llm(
             except Exception:
                 raw_list2 = []
             smells2 = _coerce_items_schema(raw_list2)
-            if smells2:
-                smells = smells2
-                meta = {
-                    "prompt_tokens": meta.get("prompt_tokens", 0) + int(meta2.get("prompt_tokens", 0)),
-                    "completion_tokens": meta.get("completion_tokens", 0) + int(meta2.get("completion_tokens", 0)),
-                    "total_tokens": meta.get("total_tokens", 0) + int(meta2.get("total_tokens", 0)),
-                }
+            meta = {
+                "prompt_tokens": meta.get("prompt_tokens", 0) + int(meta2.get("prompt_tokens", 0)),
+                "completion_tokens": meta.get("completion_tokens", 0) + int(meta2.get("completion_tokens", 0)),
+                "total_tokens": meta.get("total_tokens", 0) + int(meta2.get("total_tokens", 0)),
+                "source": "llm_retry" if smells2 else "llm",
+            }
+            smells = smells2 or smells
         except Exception:
-            smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
+            pass
 
-    if not smells:
+    # Heuristic findings are not LLM output: injecting them silently would mix
+    # two methods in one score, so they are opt-in (STALLM_HEURISTIC_FALLBACK=1).
+    if not smells and _heuristic_fallback_enabled():
+        meta["source"] = "heuristic_fallback"
         smells = _fallback_heuristics(code_snippet, min_findings=int(os.getenv("STALLM_MIN_FINDINGS", "3")))
     return smells, meta
+
+
+def _heuristic_fallback_enabled() -> bool:
+    return os.getenv("STALLM_HEURISTIC_FALLBACK", "0").strip().lower() in {"1", "true", "yes"}
 
 # =========================
 # Type normalization (aliases) for robust matching
@@ -524,10 +544,47 @@ _TYPE_ALIASES = {
     "resourceleak": "resource_leak",
     "missingnullcheck": "missing_null_check",
 }
+
+# SonarQube rule IDs (java:S138, squid:S138, csharpsquid:S138, php:S138, …)
+# S-numbers are consistent across languages for equivalent rules.
+_SONAR_RULE_TO_SMELL: Dict[str, str] = {
+    "s138":   "long_method",           # Method too long
+    "s3776":  "complex_method",        # Cognitive complexity
+    "s1541":  "complex_method",        # Cyclomatic complexity
+    "s6541":  "complex_method",        # Brain method
+    "s107":   "long_parameter_list",   # Too many parameters
+    "s1448":  "god_class",             # Too many methods in class
+    "s1200":  "god_class",             # Too many dependencies
+    "s2436":  "god_class",             # Too many fields
+    "s1135":  "maintainability_note",  # TODO/FIXME
+    "s1854":  "unused_variable",       # Unnecessary assignment
+    "s1481":  "unused_variable",       # Unused local variable
+    "s1068":  "unused_variable",       # Unused private field
+    "s2095":  "resource_leak",         # Resources not closed
+    "s1143":  "resource_leak",         # Return/throw inside finally
+    "s2259":  "missing_null_check",    # Null dereference
+    "s1066":  "deeply_nested_ifs",     # Collapsible if
+    "s1479":  "deeply_nested_ifs",     # Switch cases too many
+    "s109":   "magic_number",          # Magic number
+    "s1192":  "magic_number",          # String literal duplicated
+    "s1301":  "deeply_nested_ifs",     # Switch with single case
+}
+
+# Pattern: optional prefix (java, squid, csharpsquid, php, …) + colon + S + digits
+_SONAR_RULE_RE = re.compile(r"^(?:[a-z]+:)?[Ss](\d+)$", re.IGNORECASE)
+
 def _norm_type(x: Any) -> Optional[str]:
     if x is None:
         return None
-    t = re.sub(r"[^a-z0-9]+", "", str(x).strip().lower())
+    raw = str(x).strip()
+    if not raw:
+        return None
+    # SonarQube rule ID takes priority before stripping special chars
+    m = _SONAR_RULE_RE.match(raw)
+    if m:
+        key = f"s{m.group(1)}"
+        return _SONAR_RULE_TO_SMELL.get(key, key)
+    t = re.sub(r"[^a-z0-9]+", "", raw.lower())
     if not t:
         return None
     return _TYPE_ALIASES.get(t, t)
@@ -620,9 +677,8 @@ def load_ground_truth_spans(static_csv: str, allowed_exts: Optional[List[str]] =
 
     out["startLine"] = df[c_start].apply(_to_int_or_pos_none) if c_start else None
     out["endLine"]   = df[c_end].apply(_to_int_or_pos_none) if c_end else None
-    if out["startLine"] is not None:
-        out["startLine"] = out["startLine"].ffill()   # pandas 2.x safe
-
+    # File-level findings without a line cannot be matched to a span; they are
+    # dropped below (dropna on startLine) rather than given the previous row's line.
     out["endLine"]   = out["endLine"].fillna(out["startLine"])
     out["startLine"] = out["startLine"].fillna(out["endLine"])
 
@@ -694,6 +750,102 @@ def _extract_pred_spans(smells: List[Dict[str, Any]], basename: str) -> List[Dic
     return out
 
 # =========================
+# Statistical utilities
+# =========================
+def _bootstrap_ci_spanwise(
+    file_diagnostics: List[Dict[str, Any]],
+    n: int = 1000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> Dict[str, Tuple[float, float]]:
+    rng = random.Random(seed)
+    k = len(file_diagnostics)
+    if k == 0:
+        return {"precision_ci": (0.0, 0.0), "recall_ci": (0.0, 0.0), "f1_ci": (0.0, 0.0)}
+    p_vals, r_vals, f_vals = [], [], []
+    for _ in range(n):
+        sample = rng.choices(file_diagnostics, k=k)
+        tp = sum(r["tp"] for r in sample)
+        fp = sum(r["fp"] for r in sample)
+        fn = sum(r["fn"] for r in sample)
+        p = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        r = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+        p_vals.append(p); r_vals.append(r); f_vals.append(f)
+    lo_idx = max(0, min(n - 1, int(alpha / 2 * n)))
+    hi_idx = max(0, min(n - 1, int((1 - alpha / 2) * n)))
+    def _ci(vals: List[float]) -> Tuple[float, float]:
+        s = sorted(vals)
+        return (s[lo_idx], s[hi_idx])
+    return {"precision_ci": _ci(p_vals), "recall_ci": _ci(r_vals), "f1_ci": _ci(f_vals)}
+
+
+def _type_breakdown(
+    pred_by_file: Dict[str, List[Dict[str, Any]]],
+    gt_by_file: Dict[str, List[Dict[str, Any]]],
+    U_bases: List[str],
+    *,
+    require_type: bool,
+    use_cols_single: bool,
+    preset: str,
+) -> List[Dict[str, Any]]:
+    """Per-type TP/FP/FN across all files in U."""
+    from collections import defaultdict
+    cfg = _preset_cfg(preset)
+    iou_thr, delta = cfg["iou_thr"], cfg["delta"]
+    tp_by_type: Dict[str, int] = defaultdict(int)
+    fp_by_type: Dict[str, int] = defaultdict(int)
+    fn_by_type: Dict[str, int] = defaultdict(int)
+
+    for b in U_bases:
+        preds = pred_by_file.get(b, [])
+        gts = gt_by_file.get(b, [])
+        pairs = []
+        for i, p in enumerate(preds):
+            for j, g in enumerate(gts):
+                iou_line = _iou_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+                dist_line = _dist_1d(p["startLine"], p["endLine"], g["startLine"], g["endLine"])
+                ok = (iou_line >= iou_thr) or (dist_line <= delta)
+                if ok and use_cols_single:
+                    if (p["startLine"] == p["endLine"] == g["startLine"] == g["endLine"]
+                            and all(x is not None for x in [p.get("startColumn"), p.get("endColumn"),
+                                                             g.get("startColumn"), g.get("endColumn")])):
+                        iou_col = _iou_1d(int(p["startColumn"]), int(p["endColumn"]),
+                                          int(g["startColumn"]), int(g["endColumn"]))
+                        ok = (min(iou_line, iou_col) >= iou_thr) or (dist_line <= delta)
+                if ok:
+                    pairs.append((max(iou_line, 1.0 / (1.0 + dist_line)), i, j))
+        pairs.sort(key=lambda x: x[0], reverse=True)
+        used_p, used_g = set(), set()
+        for _, i, j in pairs:
+            if i in used_p or j in used_g:
+                continue
+            used_p.add(i); used_g.add(j)
+            gt_type = _norm_type(gts[j].get("type")) or "unknown"
+            tp_by_type[gt_type] += 1
+        for i, p in enumerate(preds):
+            if i not in used_p:
+                pt = _norm_type(p.get("type")) or "unknown"
+                fp_by_type[pt] += 1
+        for j, g in enumerate(gts):
+            if j not in used_g:
+                gt_type = _norm_type(g.get("type")) or "unknown"
+                fn_by_type[gt_type] += 1
+
+    all_types = sorted(set(list(tp_by_type) + list(fp_by_type) + list(fn_by_type)))
+    rows = []
+    for t in all_types:
+        tp = tp_by_type[t]; fp = fp_by_type[t]; fn = fn_by_type[t]
+        p = tp / (tp + fp) if (tp + fp) else 0.0
+        r = tp / (tp + fn) if (tp + fn) else 0.0
+        f = 2 * p * r / (p + r) if (p + r) else 0.0
+        rows.append({"type": t, "tp": tp, "fp": fp, "fn": fn,
+                     "precision": round(p, 4), "recall": round(r, 4), "f1": round(f, 4),
+                     "gt_count": tp + fn})
+    return sorted(rows, key=lambda x: x["gt_count"], reverse=True)
+
+
+# =========================
 # Matching (span-level) with type normalization
 # =========================
 def _match_file(preds: List[Dict[str, Any]], gts: List[Dict[str, Any]],
@@ -752,9 +904,118 @@ def _zip_listing(zip_path: str, allowed_exts: Optional[List[str]]) -> pd.DataFra
             rows.append({"relpath": name, "basename": base})
     return pd.DataFrame(rows)
 
+
+def _norm_path(p: str) -> str:
+    return re.sub(r"^(\./|/)+", "", str(p).replace("\\", "/")).lower()
+
+
+def _common_suffix_len(a: List[str], b: List[str]) -> int:
+    n = 0
+    while n < min(len(a), len(b)) and a[-1 - n] == b[-1 - n]:
+        n += 1
+    return n
+
+
+def _align_gt_to_zip(gt_spans: pd.DataFrame, zip_df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, Any]]:
+    """Match oracle rows to archive files by path rather than by file name.
+
+    Matching on the file name alone attaches to e.g. Catalog/Program.cs the
+    findings of every Program.cs in the system. We infer the prefix that maps
+    archive paths to oracle paths (e.g. "catalog/" -> "services/catalog/") from
+    files whose best path match is unambiguous, then require an exact path
+    match. Both frames get their "basename" column replaced by the matched
+    archive path, which is the key used downstream. Falls back to file-name
+    matching when no prefix can be inferred.
+    """
+    gt = gt_spans.copy()
+    zdf = zip_df.copy()
+    gt_paths = {f: _norm_path(f) for f in gt["file"].unique()}
+    by_base: Dict[str, List[str]] = {}
+    for norm in set(gt_paths.values()):
+        by_base.setdefault(norm.rsplit("/", 1)[-1], []).append(norm)
+
+    votes: Dict[Tuple[str, str], int] = {}
+    for rel in zdf["relpath"]:
+        z = _norm_path(rel)
+        zc = z.split("/")
+        scored = sorted(((_common_suffix_len(zc, g.split("/")), g) for g in by_base.get(zc[-1], [])), reverse=True)
+        if not scored or (len(scored) > 1 and scored[0][0] == scored[1][0]):
+            continue
+        n, g = scored[0]
+        gc = g.split("/")
+        key = ("/".join(zc[:len(zc) - n]), "/".join(gc[:len(gc) - n]))
+        votes[key] = votes.get(key, 0) + 1
+
+    if not votes:
+        diag = {"mode": "basename", "gt_spans_matched": int(len(gt)), "gt_spans_dropped": 0}
+        return gt, zdf, diag
+
+    (zp, gp), _ = max(votes.items(), key=lambda kv: kv[1])
+
+    def _to_gt(z: str) -> Optional[str]:
+        if zp and not z.startswith(zp + "/"):
+            return None
+        rest = z[len(zp) + 1:] if zp else z
+        return f"{gp}/{rest}" if gp else rest
+
+    zip_key = {_to_gt(_norm_path(r)): _norm_path(r) for r in zdf["relpath"]}
+    zip_key.pop(None, None)
+    zdf["basename"] = zdf["relpath"].map(_norm_path)
+    gt["basename"] = gt["file"].map(lambda f: zip_key.get(gt_paths[f]))
+    n_all = len(gt)
+    gt = gt.dropna(subset=["basename"]).reset_index(drop=True)
+    diag = {"mode": "path", "zip_prefix": zp, "gt_prefix": gp,
+            "gt_spans_matched": int(len(gt)), "gt_spans_dropped": int(n_all - len(gt))}
+    return gt, zdf, diag
+
+def _detect_line_offset(gt_spans: pd.DataFrame, zip_path: str, max_offset: int = 2,
+                        sample: int = 600) -> Dict[str, Any]:
+    """Check oracle line numbers against the archived source.
+
+    For single-line records with columns, an offset k "fits" when line
+    startLine+k is long enough to contain the reported column range and the
+    range is not blank. Some SonarQube exports write 0-based lines; the
+    offset is applied only when one non-zero offset fits at least 95% of the
+    records while the reported lines fit fewer than half of them.
+    """
+    rows = gt_spans[(gt_spans["startLine"] == gt_spans["endLine"])
+                    & gt_spans["startColumn"].notna() & gt_spans["endColumn"].notna()]
+    if len(rows) > sample:
+        rows = rows.sample(n=sample, random_state=1)
+    if rows.empty:
+        return {"line_offset": 0, "checked": 0}
+    fits = {k: 0 for k in range(-max_offset, max_offset + 1)}
+    with zipfile.ZipFile(zip_path, "r") as z:
+        names = {n.lower(): n for n in z.namelist()}
+        cache: Dict[str, List[str]] = {}
+        for _, r in rows.iterrows():
+            key = r["basename"]
+            if key not in names:
+                continue
+            if key not in cache:
+                cache[key] = z.read(names[key]).decode("utf-8-sig", "ignore").splitlines()
+            lines, sc, ec = cache[key], int(r["startColumn"]), int(r["endColumn"])
+            for k in fits:
+                i = int(r["startLine"]) + k
+                if 1 <= i <= len(lines) and len(lines[i - 1]) >= ec and lines[i - 1][sc:ec].strip():
+                    fits[k] += 1
+    n = len(rows)
+    rate = {k: v / n for k, v in fits.items()}
+    best = max((k for k in rate if k != 0), key=lambda k: rate[k])
+    offset = best if rate[best] >= 0.95 and rate[0] < 0.5 else 0
+    return {"line_offset": offset, "checked": n, "fit_rate": {str(k): round(v, 3) for k, v in rate.items()}}
+
+
 def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optional[List[str]],
-                    top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    zip_df = _zip_listing(zip_path, allowed_exts)
+                    top_k: int, pos_ratio: float) -> Tuple[pd.DataFrame, Dict[str, Any], pd.DataFrame]:
+    gt_spans, zip_df, align = _align_gt_to_zip(gt_spans, _zip_listing(zip_path, allowed_exts))
+    if align.get("mode") == "path":
+        lines_check = _detect_line_offset(gt_spans, zip_path)
+        align.update(lines_check)
+        if lines_check["line_offset"]:
+            gt_spans = gt_spans.copy()
+            gt_spans["startLine"] += lines_check["line_offset"]
+            gt_spans["endLine"] += lines_check["line_offset"]
     gt_counts = gt_spans.groupby("basename").size().rename("gt_lines").reset_index()
 
     summary = zip_df.merge(gt_counts, on="basename", how="left")
@@ -776,9 +1037,10 @@ def _build_universe(zip_path: str, gt_spans: pd.DataFrame, allowed_exts: Optiona
         "mapped_gt_files": int((summary["gt_lines"] > 0).sum()),
         "top_k_total_files": int(len(U)),
         "positives": int(U["is_positive"].sum()),
-        "negatives": int((~U['is_positive']).sum())
+        "negatives": int((~U['is_positive']).sum()),
+        "gt_alignment": align,
     }
-    return U, diag
+    return U, diag, gt_spans
 
 # =========================
 # Cost helpers
@@ -795,6 +1057,29 @@ def _read_rates(llm: ChatModel) -> Tuple[float, float]:
 def _cost_usd(pt: int, ct: int, llm: ChatModel) -> float:
     in_rate, out_rate = _read_rates(llm)
     return (pt / 1000.0) * in_rate + (ct / 1000.0) * out_rate
+
+# =========================
+# Experiment context (shared universe across runs)
+# =========================
+class ExperimentContext(NamedTuple):
+    language: str
+    exts: Optional[List[str]]
+    gt_spans: Any          # pd.DataFrame
+    summary_U: Any         # pd.DataFrame
+    diag: Dict[str, Any]
+
+def _prepare_context(
+    zip_path: str,
+    static_csv: str,
+    top_k: int,
+    pos_ratio: float,
+) -> ExperimentContext:
+    language = detect_language_from_zip(zip_path)
+    exts = find_exts_for_language(language) or None
+    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+    summary_U, diag, gt_spans = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    return ExperimentContext(language=language, exts=exts, gt_spans=gt_spans,
+                             summary_U=summary_U, diag=diag)
 
 # =========================
 # Default LLM
@@ -830,15 +1115,20 @@ def run_experiment(
     user_use_cols_single: Optional[bool] = True,
     llm: Optional[ChatModel] = None,
     prompt_templates: Optional[Dict[str, str]] = None,
+    _ctx: Optional[ExperimentContext] = None,
+    number_lines: bool = False,
 ):
-    language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
-
-    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    if _ctx is not None:
+        language, exts, gt_spans, summary_U, diag = _ctx
+    else:
+        language = detect_language_from_zip(zip_path)
+        exts = find_exts_for_language(language) or None
+        gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
+        summary_U, diag, gt_spans = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
 
     llm = llm or _default_llm()
     pt_sum = ct_sum = tt_sum = 0
+    source_counts: Dict[str, int] = {}
     preds_all: List[Dict[str, Any]] = []
     results_all: List[Dict[str, Any]] = []
     code_by_file: Dict[str, str] = {}
@@ -859,8 +1149,10 @@ def run_experiment(
                 code = ""
             code_by_file[base] = code
 
-            # analyze_with_llm handles its own errors and falls back to heuristics
-            smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates)
+            # analyze_with_llm handles its own errors; usage["source"] records provenance
+            smells, usage = analyze_with_llm(code, mode, language, llm, prompt_templates=prompt_templates,
+                                             number_lines=number_lines)
+            source_counts[usage.get("source", "llm")] = source_counts.get(usage.get("source", "llm"), 0) + 1
 
             for smell in smells or []:
                 item = dict(smell)
@@ -875,7 +1167,7 @@ def run_experiment(
     require_type = bool(user_require_type)
     use_cols_single = bool(user_use_cols_single)
 
-    # Group GT and predictions by basename (limited to U)
+    # Group GT and predictions by file key (archive path, limited to U)
     U_bases = set(summary_U["basename"])
     gt_by_file: Dict[str, List[Dict[str, Any]]] = {}
     for _, g in gt_spans.iterrows():
@@ -1005,6 +1297,11 @@ def run_experiment(
     precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
     recall    = TP / (TP + FN) if (TP + FN) > 0 else 0.0
     f1        = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+    ci        = _bootstrap_ci_spanwise(file_diagnostics)
+    type_breakdown = _type_breakdown(
+        pred_by_file, gt_by_file, list(U_bases),
+        require_type=require_type, use_cols_single=use_cols_single, preset=preset,
+    )
 
     usage_totals = {
         "prompt_tokens": int(pt_sum),
@@ -1015,6 +1312,9 @@ def run_experiment(
 
     metrics = {
         "precision": precision, "recall": recall, "f1": f1,
+        "precision_ci_lo": ci["precision_ci"][0], "precision_ci_hi": ci["precision_ci"][1],
+        "recall_ci_lo": ci["recall_ci"][0], "recall_ci_hi": ci["recall_ci"][1],
+        "f1_ci_lo": ci["f1_ci"][0], "f1_ci_hi": ci["f1_ci"][1],
         "tp": TP, "fp": FP, "fn": FN,
         "language": language,
         "diagnostics": diag,
@@ -1023,6 +1323,19 @@ def run_experiment(
         "require_type": require_type,
         "use_cols_single": use_cols_single,
         "file_diagnostics": sorted(file_diagnostics, key=lambda x: (x["bucket"], x["file"])),
+        "type_breakdown": type_breakdown,
+        "file_sources": source_counts,
+        "number_lines": bool(number_lines),
+        # Per-file spans and sizes, so that span-level results can be re-scored
+        # offline (e.g. against a random-placement baseline) without new calls.
+        "spans_by_file": {
+            b: {
+                "lines": code_by_file.get(b, "").count("\n") + 1,
+                "pred": [[p["startLine"], p["endLine"]] for p in pred_by_file.get(b, [])],
+                "gt": [[g["startLine"], g["endLine"]] for g in gt_by_file.get(b, [])],
+            }
+            for b in sorted(U_bases)
+        },
     }
 
     return results_all, summary_U, metrics, usage_totals
@@ -1049,10 +1362,7 @@ def run_selected_experiments(
     samples_dict = {}
     llm = llm or _default_llm()
 
-    language = detect_language_from_zip(zip_path)
-    exts = find_exts_for_language(language) or None
-    gt_spans = load_ground_truth_spans(static_csv, allowed_exts=exts)
-    summary_U, diag = _build_universe(zip_path, gt_spans, exts, top_k, pos_ratio)
+    ctx = _prepare_context(zip_path, static_csv, top_k, pos_ratio)
 
     for idx, mode in enumerate(selected_modes):
         if status:
@@ -1061,7 +1371,7 @@ def run_selected_experiments(
         results, _, metrics, usage_totals = run_experiment(
             zip_path, static_csv, mode, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
             user_require_type=user_require_type, user_use_line_span=user_use_line_span,
-            user_use_cols_single=user_use_cols_single, llm=llm
+            user_use_cols_single=user_use_cols_single, llm=llm, _ctx=ctx
         )
         elapsed = time.time() - start
         row = dict(metrics)
@@ -1081,7 +1391,7 @@ def run_selected_experiments(
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds for `{mode}`")
 
     metrics_df = pd.DataFrame(all_metrics).set_index("strategy")
-    return summary_U, metrics_df, samples_dict
+    return ctx.summary_U, metrics_df, samples_dict
 
 def run_selected_models_experiments(
     zip_path: str,
@@ -1100,17 +1410,17 @@ def run_selected_models_experiments(
 ):
     rows = []
     samples = {}
-    language = detect_language_from_zip(zip_path)
+    ctx = _prepare_context(zip_path, static_csv, top_k, pos_ratio)
 
     for i, llm in enumerate(llms, 1):
         label = llm.model_label()
         if status:
             status.markdown(f"🔍 `{label}` with strategy `{strategy}`…")
         start = time.time()
-        results, summary_U, metrics, usage_totals = run_experiment(
+        results, _, metrics, usage_totals = run_experiment(
             zip_path, static_csv, strategy, top_k=top_k, pos_ratio=pos_ratio, preset=preset,
             user_require_type=user_require_type, user_use_line_span=user_use_line_span,
-            user_use_cols_single=user_use_cols_single, llm=llm
+            user_use_cols_single=user_use_cols_single, llm=llm, _ctx=ctx
         )
         elapsed = time.time() - start
         rows.append({
@@ -1122,7 +1432,7 @@ def run_selected_models_experiments(
             "fp": metrics.get("fp", 0),
             "fn": metrics.get("fn", 0),
             "time_s": round(elapsed, 2),
-            "language": language,
+            "language": ctx.language,
             "top_k_total_files": metrics.get("top_k_total_files", 0),
             "prompt_tokens": usage_totals.get("prompt_tokens", 0),
             "completion_tokens": usage_totals.get("completion_tokens", 0),
@@ -1136,4 +1446,4 @@ def run_selected_models_experiments(
             timer.markdown(f"🕒 Elapsed: `{elapsed:.2f}` seconds • {label}")
 
     metrics_df = pd.DataFrame(rows).set_index("model")
-    return summary_U, metrics_df, samples
+    return ctx.summary_U, metrics_df, samples

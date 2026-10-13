@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary API controller exposing endpoints to manage and retrieve catalog items, brands, types and pictures.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Core domain model representing catalog items including description, price, picture and stock.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "Entity Framework DbContext defining CatalogItem, CatalogBrand and CatalogType sets and data access.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 4,
+      "confidence": 0.82,
+      "rationale": "MVC front-end service calling catalog API to obtain catalog items and related data shown in storefront.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CatalogController.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Web UI controller orchestrating catalog page display, interacting with CatalogService and view models.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "gRPC implementation providing catalog operations to other microservices and clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Seeds initial catalog brands, types, items and pictures into the database.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Entity Framework mapping configuration for CatalogItem including table schema and relationships.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/Catalog.cs",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "View model used by MVC views to render catalog items and associated information in storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Helper extension methods for manipulating or projecting CatalogItem data for API responses.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary API controller exposing endpoints to manage and retrieve catalog items, brands, types and pictures.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Core domain model representing catalog items including description, price, picture and stock.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Entity Framework DbContext defining CatalogItem, CatalogBrand and CatalogType sets and data access.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"MVC front-end service calling catalog API to obtain catalog items and related data shown in storefront.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Web/WebMVC/Controllers/CatalogController.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Web UI controller orchestrating catalog page display, interacting with CatalogService and view models.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"gRPC implementation providing catalog operations to other microservices and clients.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Seeds initial catalog brands, types, items and pictures into the database.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Entity Framework mapping configuration for CatalogItem including table schema and relationships.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/ViewModels/Catalog.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"View model used by MVC views to render catalog items and associated information in storefront.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Helper extension methods for manipulating or projecting CatalogItem data for API responses.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9330,
+    "completion_tokens": 1063,
+    "total_tokens": 10393
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 19.0
+}

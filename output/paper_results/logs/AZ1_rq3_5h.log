@@ -1,0 +1,95 @@
+
+============================================================
+RQ5-HO — Manual vs. selected generated prompt on held-out DACOS
+============================================================
+Held-out DACOS: 200 samples (27 positive); best generated = threshold_guided
+  AZ1 binary_oracle_baseline: f1=0.390  precision=0.291  recall=0.593  accuracy=0.750
+  AZ1 conservative_evidence: f1=0.409  precision=0.288  recall=0.704  accuracy=0.725
+  AZ1 definition_driven: f1=0.400  precision=0.286  recall=0.667  accuracy=0.730
+  AZ1 threshold_guided: f1=0.377  precision=0.310  recall=0.481  accuracy=0.785
+[summaries] rq3=6 rq4=254 rq5_heldout=4 rows → output/paper_results
+
+Done.
+
+============================================================
+RQ3 — Static vs Human Oracle (DACOS / MLCQ)
+============================================================
+Loading DACOS from data/apps/DACOS/DACOSMain.sql …
+  400 DACOS samples loaded
+Loading MLCQ from data/apps/MLCQ/MLCQCodeSmellSamples.csv …
+  200 MLCQ samples loaded
+
+  [AZ1] [binary_oracle_baseline] [DACOS] run 1  (400 samples)
+  [skip] rq3_AZ1_binary_oracle_baseline_DACOS.json already exists
+    f1=0.458  precision=0.314  recall=0.846  accuracy=0.740
+
+  [AZ1] [binary_oracle_baseline] [MLCQ] run 1  (200 samples)
+  [skip] rq3_AZ1_binary_oracle_baseline_MLCQ.json already exists
+    f1=0.484  precision=0.577  recall=0.417  accuracy=0.840
+
+  [AZ1] [conservative_evidence] [DACOS] run 1  (400 samples)
+  [skip] rq3_AZ1_conservative_evidence_DACOS.json already exists
+    f1=0.400  precision=0.262  recall=0.846  accuracy=0.670
+
+  [AZ1] [conservative_evidence] [MLCQ] run 1  (200 samples)
+  [skip] rq3_AZ1_conservative_evidence_MLCQ.json already exists
+    f1=0.493  precision=0.486  recall=0.500  accuracy=0.815
+
+  [AZ1] [definition_driven] [DACOS] run 1  (400 samples)
+  [skip] rq3_AZ1_definition_driven_DACOS.json already exists
+    f1=0.372  precision=0.241  recall=0.808  accuracy=0.645
+
+  [AZ1] [definition_driven] [MLCQ] run 1  (200 samples)
+  [skip] rq3_AZ1_definition_driven_MLCQ.json already exists
+    f1=0.484  precision=0.390  recall=0.639  accuracy=0.755
+
+  [AZ1] [binary_oracle_baseline] [DACOS] run 2  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_binary_oracle_baseline_DACOS_r2.json
+    f1=0.447  precision=0.309  recall=0.808  accuracy=0.740
+
+  [AZ1] [binary_oracle_baseline] [MLCQ] run 2  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_binary_oracle_baseline_MLCQ_r2.json
+    f1=0.426  precision=0.520  recall=0.361  accuracy=0.825
+
+  [AZ1] [conservative_evidence] [DACOS] run 2  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_conservative_evidence_DACOS_r2.json
+    f1=0.400  precision=0.262  recall=0.846  accuracy=0.670
+
+  [AZ1] [conservative_evidence] [MLCQ] run 2  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_conservative_evidence_MLCQ_r2.json
+    f1=0.541  precision=0.526  recall=0.556  accuracy=0.830
+
+  [AZ1] [definition_driven] [DACOS] run 2  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_definition_driven_DACOS_r2.json
+    f1=0.393  precision=0.259  recall=0.808  accuracy=0.675
+
+  [AZ1] [definition_driven] [MLCQ] run 2  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_definition_driven_MLCQ_r2.json
+    f1=0.510  precision=0.394  recall=0.722  accuracy=0.750
+
+  [AZ1] [binary_oracle_baseline] [DACOS] run 3  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_binary_oracle_baseline_DACOS_r3.json
+    f1=0.442  precision=0.304  recall=0.808  accuracy=0.735
+
+  [AZ1] [binary_oracle_baseline] [MLCQ] run 3  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_binary_oracle_baseline_MLCQ_r3.json
+    f1=0.433  precision=0.542  recall=0.361  accuracy=0.830
+
+  [AZ1] [conservative_evidence] [DACOS] run 3  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_conservative_evidence_DACOS_r3.json
+    f1=0.411  precision=0.272  recall=0.846  accuracy=0.685
+
+  [AZ1] [conservative_evidence] [MLCQ] run 3  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_conservative_evidence_MLCQ_r3.json
+    f1=0.568  precision=0.553  recall=0.583  accuracy=0.840
+
+  [AZ1] [definition_driven] [DACOS] run 3  (400 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_definition_driven_DACOS_r3.json
+    f1=0.382  precision=0.250  recall=0.808  accuracy=0.660
+
+  [AZ1] [definition_driven] [MLCQ] run 3  (200 samples)
+  [saved] output/paper_results/rq3/rq3_AZ1_definition_driven_MLCQ_r3.json
+    f1=0.505  precision=0.397  recall=0.694  accuracy=0.755
+[summaries] rq3=25 rq4=300 rq5_heldout=4 rows → output/paper_results
+
+Done.

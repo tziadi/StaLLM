@@ -1,0 +1,114 @@
+{
+  "task_id": "argouml-feature-collaborationdiagram-and-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "org/argouml/dev/MessageNodeBuilder.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "This method appears to directly handle the construction of a node tree, which is a core component of collaboration and sequence diagrams.",
+      "method": "addNodeTree(DefaultMutableTreeNode, FigClassifierRole)"
+    },
+    {
+      "file": "org/argouml/dev/ModeInspectorPanel.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Retrieving a tree structure is likely relevant to visualizing object interactions in collaboration and sequence diagrams.",
+      "method": "getTree(List)"
+    },
+    {
+      "file": "org/argouml/dev/ModeInspectorPanel.java",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "Adding subtrees is essential for building hierarchical structures, which are key in collaboration and sequence diagrams.",
+      "method": "addSubtree(DefaultMutableTreeNode, List)"
+    },
+    {
+      "file": "org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 4,
+      "confidence": 0.87,
+      "rationale": "This method supports the addition of subtrees, which is critical for defining object interactions in diagrams.",
+      "method": "addSubtree(DefaultMutableTreeNode, List)"
+    },
+    {
+      "file": "org/argouml/dev/figinspector/FigInspectorPanel.java",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Building a tree structure is directly related to organizing and visualizing object interactions in diagrams.",
+      "method": "buildTree(Fig, DefaultMutableTreeNode)"
+    },
+    {
+      "file": "org/argouml/dev/figinspector/FigInspectorPanel.java",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "Adding figures to a tree structure is a fundamental operation for constructing collaboration and sequence diagrams.",
+      "method": "addFig(Fig, DefaultMutableTreeNode, boolean)"
+    },
+    {
+      "file": "org/argouml/dev/figinspector/FigInspectorPanel.java",
+      "rank": 7,
+      "confidence": 0.82,
+      "rationale": "This method supports adding nodes to a tree, which is essential for diagram construction.",
+      "method": "addNode(DefaultMutableTreeNode, Fig)"
+    },
+    {
+      "file": "org/argouml/dev/figinspector/FigInspectorPanel.java",
+      "rank": 8,
+      "confidence": 0.8,
+      "rationale": "Retrieving descriptions of figures is important for understanding and refining roles in collaboration and sequence diagrams.",
+      "method": "getDescr(Fig)"
+    },
+    {
+      "file": "org/argouml/dev/ModeInspectorPanel.java",
+      "rank": 9,
+      "confidence": 0.78,
+      "rationale": "Handling mode changes is relevant for switching between different diagram views or states.",
+      "method": "modeChange(ModeChangeEvent)"
+    },
+    {
+      "file": "org/argouml/dev/figinspector/FigInspectorPanel.java",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Responding to selection changes is important for interactive diagram editing and visualization.",
+      "method": "selectionChanged(GraphSelectionEvent)"
+    }
+  ],
+  "metrics_method": {
+    "hit@1": 0.0,
+    "hit@5": 0.0,
+    "hit@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "metrics_file": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "metrics": {
+    "hit@1": 0.0,
+    "hit@5": 0.0,
+    "hit@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "method_gold_count": 13,
+  "file_gold_count": 14,
+  "method_candidates_count": 654,
+  "prompt_style": "method_level",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"org/argouml/dev/MessageNodeBuilder.java\",\n    \"method\": \"addNodeTree(DefaultMutableTreeNode, FigClassifierRole)\",\n    \"confidence\": 0.95,\n    \"rationale\": \"This method appears to directly handle the construction of a node tree, which is a core component of collaboration and sequence diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"org/argouml/dev/ModeInspectorPanel.java\",\n    \"method\": \"getTree(List)\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Retrieving a tree structure is likely relevant to visualizing object interactions in collaboration and sequence diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"org/argouml/dev/ModeInspectorPanel.java\",\n    \"method\": \"addSubtree(DefaultMutableTreeNode, List)\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Adding subtrees is essential for building hierarchical structures, which are key in collaboration and sequence diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"method\": \"addSubtree(DefaultMutableTreeNode, List)\",\n    \"confidence\": 0.87,\n    \"rationale\": \"This method supports the addition of subtrees, which is critical for defining object interactions in diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"org/argouml/dev/figinspector/FigInspectorPanel.java\",\n    \"method\": \"buildTree(Fig, DefaultMutableTreeNode)\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Building a tree structure is directly related to organizing and visualizing object interactions in diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"org/argouml/dev/figinspector/FigInspectorPanel.java\",\n    \"method\": \"addFig(Fig, DefaultMutableTreeNode, boolean)\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Adding figures to a tree structure is a fundamental operation for constructing collaboration and sequence diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"org/argouml/dev/figinspector/FigInspectorPanel.java\",\n    \"method\": \"addNode(DefaultMutableTreeNode, Fig)\",\n    \"confidence\": 0.82,\n    \"rationale\": \"This method supports adding nodes to a tree, which is essential for diagram construction.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"org/argouml/dev/figinspector/FigInspectorPanel.java\",\n    \"method\": \"getDescr(Fig)\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Retrieving descriptions of figures is important for understanding and refining roles in collaboration and sequence diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"org/argouml/dev/ModeInspectorPanel.java\",\n    \"method\": \"modeChange(ModeChangeEvent)\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handling mode changes is relevant for switching between different diagram views or states.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"org/argouml/dev/figinspector/FigInspectorPanel.java\",\n    \"method\": \"selectionChanged(GraphSelectionEvent)\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Responding to selection changes is important for interactive diagram editing and visualization.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 14580,
+    "completion_tokens": 759,
+    "total_tokens": 15339
+  },
+  "slot": "AZ1",
+  "feature": "COLLABORATIONDIAGRAM_and_SEQUENCEDIAGRAM",
+  "elapsed_s": 7.7
+}

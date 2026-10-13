@@ -64,7 +64,7 @@ sample_id,smell,label,code
 Open:
 
 ```text
-Maintenance Tasks -> Code smell detection -> Human smell oracle (DACOS/DACOSX)
+Maintenance Activities -> Code smell detection -> Human smell oracle (DACOS/DACOSX)
 ```
 
 StarLLM will ask the LLM whether the target smell is present for each sample and

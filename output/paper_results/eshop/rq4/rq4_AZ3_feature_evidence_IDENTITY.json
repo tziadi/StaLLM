@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Bootstraps the Identity microservice, registering IdentityServer, ASP.NET Identity, authentication schemes, and token issuing endpoints\u2014core to authentication and service protection.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 2,
+      "confidence": 0.88,
+      "rationale": "Defines IdentityServer resources, clients, scopes, and token settings; directly controls how access tokens are issued and validated.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 3,
+      "confidence": 0.87,
+      "rationale": "Implements user-facing actions such as login, logout, registration, and account management, mapping exactly to the identity feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 4,
+      "confidence": 0.82,
+      "rationale": "Contains business logic for authenticating users with Entity Framework stores and creating authentication results for token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Supplies user claims to IdentityServer during token creation, directly influencing the content of issued access tokens.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "Entity Framework context that persists user accounts and related identity data; fundamental for registration and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Represents the user entity within ASP.NET Identity; core model underpinning authentication and account operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Handles user consent screens in OAuth flows, an essential part of secure token issuance and scope authorization.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Interface defining the contract for login operations, tying authentication logic to higher-level controllers and services.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Adds JWT bearer tokens to outgoing gateway requests, demonstrating service protection using the issued access tokens.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.16071428571428573,
+    "mrr": 1.0,
+    "map": 0.16071428571428573
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Startup.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Bootstraps the Identity microservice, registering IdentityServer, ASP.NET Identity, authentication schemes, and token issuing endpoints\u2014core to authentication and service protection.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Defines IdentityServer resources, clients, scopes, and token settings; directly controls how access tokens are issued and validated.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Implements user-facing actions such as login, logout, registration, and account management, mapping exactly to the identity feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Contains business logic for authenticating users with Entity Framework stores and creating authentication results for token issuance.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Supplies user claims to IdentityServer during token creation, directly influencing the content of issued access tokens.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Entity Framework context that persists user accounts and related identity data; fundamental for registration and account management.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Represents the user entity within ASP.NET Identity; core model underpinning authentication and account operations.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles user consent screens in OAuth flows, an essential part of secure token issuance and scope authorization.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Interface defining the contract for login operations, tying authentication logic to higher-level controllers and services.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Adds JWT bearer tokens to outgoing gateway requests, demonstrating service protection using the issued access tokens.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9355,
+    "completion_tokens": 1251,
+    "total_tokens": 10606
+  },
+  "slot": "AZ3",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 42.0
+}

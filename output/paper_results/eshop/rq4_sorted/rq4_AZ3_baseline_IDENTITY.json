@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Bootstraps IdentityServer and ASP.NET Core Identity, configuring authentication, tokens, and external clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Implements login, logout, registration, and account management endpoints that issue and revoke tokens.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines identity resources, API scopes, clients, and token settings used for authentication flows.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 4,
+      "confidence": 0.82,
+      "rationale": "Contains the core logic that validates user credentials and issues authentication results.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Entity Framework context where user accounts and identity tables are stored and queried.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "Represents the user entity with fields relevant to authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 7,
+      "confidence": 0.72,
+      "rationale": "Handles user consent for scopes and resources, an essential part of issuing access tokens.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Attaches bearer tokens to outgoing HTTP requests, protecting downstream services with issued tokens.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Services/IdentityService.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Extracts user identity and token information inside the Basket microservice, enforcing authorization.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Infrastructure/Services/IdentityService.cs",
+      "rank": 10,
+      "confidence": 0.58,
+      "rationale": "Provides identity and token-related utilities within the Ordering service to authenticate requests.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.125,
+    "mrr": 1.0,
+    "map": 0.125
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Startup.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Bootstraps IdentityServer and ASP.NET Core Identity, configuring authentication, tokens, and external clients.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Implements login, logout, registration, and account management endpoints that issue and revoke tokens.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines identity resources, API scopes, clients, and token settings used for authentication flows.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Contains the core logic that validates user credentials and issues authentication results.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Entity Framework context where user accounts and identity tables are stored and queried.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Represents the user entity with fields relevant to authentication and account management.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Handles user consent for scopes and resources, an essential part of issuing access tokens.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Attaches bearer tokens to outgoing HTTP requests, protecting downstream services with issued tokens.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/Services/IdentityService.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Extracts user identity and token information inside the Basket microservice, enforcing authorization.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Infrastructure/Services/IdentityService.cs\",\n    \"confidence\": 0.58,\n    \"rationale\": \"Provides identity and token-related utilities within the Ordering service to authenticate requests.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 1264,
+    "total_tokens": 10595
+  },
+  "slot": "AZ3",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 15.2
+}

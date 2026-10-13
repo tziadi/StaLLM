@@ -11,7 +11,7 @@
 - **Streamlit UI** for interactive runs, preflight validation, review-board diagnostics, code evidence inspection, and database-backed history.
 - **Demo-first workflow** with bundled datasets, one-click demo configuration, and HTML report export.
 - **Batch mode** to run large experiment sweeps across projects/strategies/top-K.
-- **Extension branch in progress** for software maintenance localization tasks:
+- **Extension branch in progress** for software maintenance localization activities:
   feature location and bug location using shared ranking metrics.
 - **Human-oracle code-smell benchmarking** via DACOS/DACOSX and MLCQ adapters, so runs
   can be evaluated against human annotations instead of analyzer output only.
@@ -55,9 +55,10 @@ Each folder contains the **source ZIP** and the **static analyzer CSV** (typical
 
 ```
 StaLLM/
-│── StatLLM_app.py          # Streamlit interface (Experiments, DB, Prompts, Batch)
+│── StaLLM_app.py           # Streamlit workbench (entry point, navigation, task pages)
+│── stallm_ui/              # Theme, benchmark/controls pages, run history, run manifests
 │── StaLLM_core.py          # Core pipeline (LLM calls, metrics, usage/cost aggregation)
-│── StaLLM_tasks.py         # Shared task model for feature/bug localization extensions
+│── StaLLM_tasks.py         # Shared internal activity model for feature/bug localization extensions
 │── StaLLM_benchmarks.py    # Feature/bug localization benchmark adapters
 │── StaLLM_llm.py           # LLM wrapper + .env slot registry (Azure/OpenAI/Ollama)
 │── StaLLM_models.py        # SQLAlchemy models + SQLite persistence
@@ -152,7 +153,23 @@ They are normalized internally to **$/1K** for cost calculation.
 ./.venv/bin/streamlit run StaLLM_app.py
 ```
 
-### Workflow (Run Experiments tab)
+### Workbench layout
+
+The sidebar groups the pages in three sections:
+
+| Section | Page | What it does |
+|---|---|---|
+| Benchmark | **Overview** | Tasks, oracles, metrics and controls of the benchmark at a glance. |
+| | **Benchmark Results** | Stored results for RQ1–RQ5 read from `output/paper_results/` (nothing is recomputed): CI plots, chance and non-LLM baselines, McNemar / Wilcoxon tests with Holm correction, sensitivity analyses. Every table exports to CSV and LaTeX. |
+| | **Built-in Controls** | Verdict of each control (C1 random placement, C2 oracle substitution, C3 non-LLM baselines and masking, C4 held-out selection), computed from the stored statistics. |
+| Experiments | **Run Tasks** | Interactive runs (code smells against an analyzer or a human oracle, feature and bug location). Span-level runs export a **run manifest** (code version, environment, prompt hashes, oracle, matching settings, scores). |
+| | **Batch Runs** | Sweeps over projects, strategies and Top-K. |
+| | **Prompt Optimisation** | AutoResearch loop with train/held-out split. |
+| Resources | **Prompt Library**, **Run History**, **Evaluation Protocol**, **About & Citation** | Prompt repository; stored runs aggregated per configuration (mean, SD, 95% t-interval); matching rules; provenance and BibTeX. |
+
+Populate the Benchmark pages with `python run_paper_experiments.py` followed by `python analyze_paper_stats.py` (see [docs/REPLICATION.md](docs/REPLICATION.md)). The UI code lives in `stallm_ui/` (theme, benchmark pages, run history, reproducibility helpers).
+
+### Workflow (Run Tasks page, analyzer oracle)
 
 **Execution modes:**
 1. **Single prompt** — run one prompt strategy on one LLM.  
@@ -160,7 +177,7 @@ They are normalized internally to **$/1K** for cost calculation.
 3. **Compare LLM models** — fix **one prompt strategy** and select **multiple LLMs** to compare side-by-side.
 
 **Fast demo path:**
-1. Click **Load demo config** in the sidebar.
+1. Click **Load demo config** in the configuration panel.
 2. Keep **Use bundled demo dataset** enabled, or choose another bundled dataset.
 3. Confirm the **Preflight checks** are green.
 4. Run the analysis and inspect the **Review board** plus **Code evidence viewer**.
@@ -184,15 +201,15 @@ They are normalized internally to **$/1K** for cost calculation.
    - For comparison modes, **tables, charts, and review boards per strategy or per model**.
    - An **Export HTML report** button for sharing standalone run/comparison reports.
 
-### Other tabs
-- **Stored Results (DB)**: browse historical runs (includes *LLM used*, tokens, cost).  
-- **Manage Prompts**: edit/create strategies, persisted to `strategies.json`.  
-- **Batch Experiments**: sweep projects/strategies/top-K; CSV exports under `output/apps/<project>/` + DB logging.
+### Other pages
+- **Run History**: filter stored runs by project, model and strategy; aggregated table and CSV/LaTeX export.  
+- **Prompt Library**: edit/create prompt templates per maintenance activity, persisted to `prompt_repository.json`.  
+- **Batch Runs**: sweep projects/strategies/top-K; CSV exports under `output/apps/<project>/` + DB logging.
 
 ### Human smell oracle: DACOS/DACOSX and MLCQ
 
 For code-smell detection, StaLLM can evaluate against DACOS/DACOSX or MLCQ human labels
-instead of only measuring agreement with SonarQube. Open **Maintenance Tasks**,
+instead of only measuring agreement with SonarQube. Open **Maintenance Activities**,
 choose **Code smell detection**, then select **Human smell oracle
 (DACOS/DACOSX)**. See `docs/dacos_integration.md` for DACOS setup; for MLCQ,
 place `MLCQCodeSmellSamples.csv` under `data/apps/MLCQ/`.
@@ -212,6 +229,40 @@ after review.
 The CLI uses the same backend as the UI for repeatable terminal runs. Outputs
 are written under `output/autoresearch/<run-id>/`. See
 `docs/autoresearch_protocol.md` for the protocol and guardrails.
+
+---
+
+## 🧪 Built-in controls, end-to-end demo and tests
+
+**End-to-end demo (no credentials needed).** One configuration file drives a
+span-level evaluation through the whole pipeline (oracle alignment and line
+check, universe sampling, model calls, matching, metrics) and applies the
+chance controls:
+
+```bash
+python examples/demo_end_to_end.py examples/demo_config.json   # -> output/demo/demo_report.md
+```
+
+`"model": "replay:<run.json>"` answers with the spans recorded in a previous
+run (it reproduces that run exactly); `"model": "AZ1"` uses a configured slot.
+
+**Controls and the tasks they apply to**
+
+| Control | Span-level findings | Smell classification | Feature location | Needs new model calls |
+|---|---|---|---|---|
+| Random placement / random file | yes (generic for any span task) | n/a | n/a | no |
+| Oracle substitution | possible with a second span oracle | yes (human labels vs. metric heuristic) | possible with a second mapping | no |
+| Non-LLM baselines | random placement plays this role | always-present, threshold heuristic | keyword, BM25 | no |
+| Masking of lexical cues | n/a | n/a | yes (feature name) | yes |
+| Held-out selection | any prompt search | yes (AutoResearch) | any prompt search | yes (test split) |
+
+**Oracle checks.** `python validate_oracle.py` writes
+`output/paper_results/stats/oracle_validation.md` (file-name vs path matching,
+line-offset check, manual inspection sample).
+
+**Tests.** `python -m unittest discover -s tests` (oracle alignment and line
+offset, random-placement invariants, offline re-scoring of every recorded run,
+statistics, end-to-end replay).
 
 ---
 

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Handles the event when an order's stock is confirmed and initiates payment processing, directly matching the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Defines the integration event for stock confirmation, which triggers payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Defines the event published when payment succeeds, part of the feature's publish step.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.93,
+      "rationale": "Defines the event published when payment fails, part of the feature's publish step.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Ordering service's definition of the payment succeeded event, likely consumed after payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Ordering service's definition of the payment failed event, likely consumed after payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Handles the payment succeeded event in the ordering service, part of the payment workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.8,
+      "rationale": "Handles the payment failed event in the ordering service, part of the payment workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Ordering service's definition of the stock confirmed event, which triggers payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Contains configuration for payment processing, which may affect how payments are processed after stock confirmation.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.5555555555555556,
+    "mrr": 1.0,
+    "map": 0.5
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 1.0, \"rationale\": \"Handles the event when an order's stock is confirmed and initiates payment processing, directly matching the feature description.\"},\n  {\"rank\": 2, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.95, \"rationale\": \"Defines the integration event for stock confirmation, which triggers payment processing.\"},\n  {\"rank\": 3, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.93, \"rationale\": \"Defines the event published when payment succeeds, part of the feature's publish step.\"},\n  {\"rank\": 4, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\", \"confidence\": 0.93, \"rationale\": \"Defines the event published when payment fails, part of the feature's publish step.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Ordering service's definition of the payment succeeded event, likely consumed after payment processing.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent .cs\", \"confidence\": 0.85, \"rationale\": \"Ordering service's definition of the payment failed event, likely consumed after payment processing.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\", \"confidence\": 0.8, \"rationale\": \"Handles the payment succeeded event in the ordering service, part of the payment workflow.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\", \"confidence\": 0.8, \"rationale\": \"Handles the payment failed event in the ordering service, part of the payment workflow.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.75, \"rationale\": \"Ordering service's definition of the stock confirmed event, which triggers payment processing.\"},\n  {\"rank\": 10, \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\", \"confidence\": 0.7, \"rationale\": \"Contains configuration for payment processing, which may affect how payments are processed after stock confirmation.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9324,
+    "completion_tokens": 615,
+    "total_tokens": 9939
+  },
+  "slot": "AZ2",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 8.1
+}

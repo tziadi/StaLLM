@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Core logic that listens for the \"OrderStatusChangedToStockConfirmed\" event, triggers the payment workflow, and publishes either success or failure events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.78,
+      "rationale": "Represents the event published when payment processing succeeds; directly supports the feature\u2019s success path.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.78,
+      "rationale": "Represents the event published when payment processing fails; directly supports the feature\u2019s failure path.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.72,
+      "rationale": "Data contract for the incoming stock-confirmed event that triggers payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.55,
+      "rationale": "Consumes the success event to update order status; indirectly tied to publishing of success/failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.55,
+      "rationale": "Consumes the failure event to update order status; indirectly tied to publishing of success/failure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.48,
+      "rationale": "Event definition used by Ordering service to react to payment success; supports the overall payment-result workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.48,
+      "rationale": "Event definition used by Ordering service to react to payment failure; supports the overall payment-result workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/Startup.cs",
+      "rank": 9,
+      "confidence": 0.32,
+      "rationale": "Registers event bus and wiring required for the payment handler to receive stock-confirmed events and publish result events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs",
+      "rank": 10,
+      "confidence": 0.25,
+      "rationale": "Manages integration event publishing in Ordering service, helping propagate payment success or failure downstream.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.5555555555555556,
+    "mrr": 1.0,
+    "map": 0.5061728395061729
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Core logic that listens for the \\\"OrderStatusChangedToStockConfirmed\\\" event, triggers the payment workflow, and publishes either success or failure events.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Represents the event published when payment processing succeeds; directly supports the feature\u2019s success path.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Represents the event published when payment processing fails; directly supports the feature\u2019s failure path.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Data contract for the incoming stock-confirmed event that triggers payment processing.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Consumes the success event to update order status; indirectly tied to publishing of success/failure.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Consumes the failure event to update order status; indirectly tied to publishing of success/failure.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.48,\n    \"rationale\": \"Event definition used by Ordering service to react to payment success; supports the overall payment-result workflow.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.48,\n    \"rationale\": \"Event definition used by Ordering service to react to payment failure; supports the overall payment-result workflow.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Payment/Payment.API/Startup.cs\",\n    \"confidence\": 0.32,\n    \"rationale\": \"Registers event bus and wiring required for the payment handler to receive stock-confirmed events and publish result events.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs\",\n    \"confidence\": 0.25,\n    \"rationale\": \"Manages integration event publishing in Ordering service, helping propagate payment success or failure downstream.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9349,
+    "completion_tokens": 1548,
+    "total_tokens": 10897
+  },
+  "slot": "AZ3",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 21.9
+}

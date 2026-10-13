@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 0.93,
+      "rationale": "Core domain entity encapsulating order creation, status transitions (stock confirmation, payment, shipment, cancellation) and business rules.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "API surface for creating orders at checkout, changing status, cancelling, and querying orders.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.86,
+      "rationale": "Handles the CreateOrder command, initiating order creation workflow at checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.84,
+      "rationale": "Executes cancellation logic, updating order status when an order is cancelled.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Updates order status after stock confirmation, key step in order processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "Handles transition of order status to Paid after successful payment.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Manages shipment command, moving order to Shipped status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetAwaitingValidationOrderStatusCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.73,
+      "rationale": "Processes transition to AwaitingValidation status during order validation phase.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Handles rejection when stock is insufficient, updating order status accordingly.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 10,
+      "confidence": 0.68,
+      "rationale": "Enumeration/value object defining valid order statuses and their meanings.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Core domain entity encapsulating order creation, status transitions (stock confirmation, payment, shipment, cancellation) and business rules.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"API surface for creating orders at checkout, changing status, cancelling, and querying orders.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Handles the CreateOrder command, initiating order creation workflow at checkout.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.84,\n    \"rationale\": \"Executes cancellation logic, updating order status when an order is cancelled.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Updates order status after stock confirmation, key step in order processing.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles transition of order status to Paid after successful payment.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Manages shipment command, moving order to Shipped status.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetAwaitingValidationOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Processes transition to AwaitingValidation status during order validation phase.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles rejection when stock is insufficient, updating order status accordingly.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Enumeration/value object defining valid order statuses and their meanings.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9329,
+    "completion_tokens": 1152,
+    "total_tokens": 10481
+  },
+  "slot": "AZ3",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 12.5
+}

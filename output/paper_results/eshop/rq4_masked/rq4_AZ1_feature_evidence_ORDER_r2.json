@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central domain model for orders, likely encapsulates core logic for creation, status tracking, and cancellation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Command responsible for initiating order creation, directly tied to the checkout process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles stock confirmation status updates, a key step in the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Processes checkout acceptance events, directly supporting the feature's initiation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.87,
+      "rationale": "Handles order cancellation, a critical part of the feature's functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Handles integration events for stock confirmation, supporting order status tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.83,
+      "rationale": "Represents payment status changes, directly tied to the feature's payment tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.82,
+      "rationale": "Implements the logic for creating orders, essential for the checkout process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.8,
+      "rationale": "Tracks order cancellation events, supporting the feature's cancellation functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 10,
+      "confidence": 0.78,
+      "rationale": "Defines order statuses, crucial for tracking the lifecycle of an order.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Central domain model for orders, likely encapsulates core logic for creation, status tracking, and cancellation.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Command responsible for initiating order creation, directly tied to the checkout process.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Handles stock confirmation status updates, a key step in the order lifecycle.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Processes checkout acceptance events, directly supporting the feature's initiation.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Handles order cancellation, a critical part of the feature's functionality.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles integration events for stock confirmation, supporting order status tracking.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Represents payment status changes, directly tied to the feature's payment tracking.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Implements the logic for creating orders, essential for the checkout process.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Tracks order cancellation events, supporting the feature's cancellation functionality.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Defines order statuses, crucial for tracking the lifecycle of an order.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9358,
+    "completion_tokens": 639,
+    "total_tokens": 9997
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_masked",
+  "run": 2,
+  "elapsed_s": 9.0
+}

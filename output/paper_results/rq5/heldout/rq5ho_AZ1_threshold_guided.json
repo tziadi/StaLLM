@@ -1,0 +1,1830 @@
+{
+  "rows": [
+    {
+      "sample_id": "70:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class focuses on a single responsibility of managing text visibility based on its content, and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class focuses on a single responsibility of managing text visibility based on its content, and does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2406:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, contains no branching, and has a single responsibility of returning null, which does not meet the thresholds for complex_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, contains no branching, and has a single responsibility of returning null, which does not meet the thresholds for complex_method.\"\n}"
+    },
+    {
+      "sample_id": "2406:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has 6 parameters, which exceeds the threshold of 5 for a long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 6 parameters, which exceeds the threshold of 5 for a long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "71:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `DeviceInfoItem` mixes at least two distinct responsibilities: UI binding (e.g., `bind` method) and device information management (e.g., `getAppInfoItems` and `getScreenInfo` methods).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `DeviceInfoItem` mixes at least two distinct responsibilities: UI binding (e.g., `bind` method) and device information management (e.g., `getAppInfoItems` and `getScreenInfo` methods).\"\n}\n```"
+    },
+    {
+      "sample_id": "2407:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is very short, contains no branching, and has a single responsibility, which does not meet the thresholds for complex_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is very short, contains no branching, and has a single responsibility, which does not meet the thresholds for complex_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "2407:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is close to the threshold of 5, indicating a potential long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is close to the threshold of 5, indicating a potential long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "72:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not mix more than two distinct responsibilities; it primarily focuses on UI setup and data binding for a RecyclerView.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not mix more than two distinct responsibilities; it primarily focuses on UI setup and data binding for a RecyclerView.\"\n}\n```"
+    },
+    {
+      "sample_id": "2408:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no excessive branching, and does not exhibit mixed responsibilities or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has no excessive branching, and does not exhibit mixed responsibilities or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2408:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method delete has 3 parameters, which is below the threshold of 5 for long_parameter_list, but the presence of parameter annotations (@NonNull, @Nullable) suggests potential grouping or complexity in parameter handling, warranting conservative classification.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The method delete has 3 parameters, which is below the threshold of 5 for long_parameter_list, but the presence of parameter annotations (@NonNull, @Nullable) suggests potential grouping or complexity in parameter handling, warranting conservative classification.\"}\n```"
+    },
+    {
+      "sample_id": "73:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'DeviceInfoDebug' does not mix more than two distinct responsibilities; it primarily handles UI-related actions and overrides methods from its parent class. No evidence of multifaceted abstraction is present.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'DeviceInfoDebug' does not mix more than two distinct responsibilities; it primarily handles UI-related actions and overrides methods from its parent class. No evidence of multifaceted abstraction is present.\"\n}\n```"
+    },
+    {
+      "sample_id": "2409:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2409:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not define a method with parameters, so it cannot exhibit the long_parameter_list smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet does not define a method with parameters, so it cannot exhibit the long_parameter_list smell.\"}\n```"
+    },
+    {
+      "sample_id": "74:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily focuses on representing and binding app information items, without mixing more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily focuses on representing and binding app information items, without mixing more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2410:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains excessive branching with multiple nested try-catch blocks and mixed responsibilities, including reflection, error handling, and initialization.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains excessive branching with multiple nested try-catch blocks and mixed responsibilities, including reflection, error handling, and initialization.\"\n}\n```"
+    },
+    {
+      "sample_id": "2410:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not have any parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not have any parameters, so it does not meet the threshold for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "75:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class AppInfoDebug does not mix more than two distinct responsibilities; it primarily overrides methods for app-specific debugging functionality.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class AppInfoDebug does not mix more than two distinct responsibilities; it primarily overrides methods for app-specific debugging functionality.\"\n}\n```"
+    },
+    {
+      "sample_id": "2411:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no branching, and does not exhibit mixed responsibilities or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has no branching, and does not exhibit mixed responsibilities or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2411:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "76:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily focuses on UI-related responsibilities and does not mix more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily focuses on UI-related responsibilities and does not mix more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2412:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a single responsibility, minimal branching (1 level), and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a single responsibility, minimal branching (1 level), and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2412:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "77:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class RotateView does not mix more than two distinct responsibilities; it primarily handles view rotation and animation, which are closely related.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class RotateView does not mix more than two distinct responsibilities; it primarily handles view rotation and animation, which are closely related.\"\n}\n```"
+    },
+    {
+      "sample_id": "2413:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short (7 lines), has a single responsibility (creating and validating an Intent), and contains minimal branching (1 if statement).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short (7 lines), has a single responsibility (creating and validating an Intent), and contains minimal branching (1 if statement).\"\n}\n```"
+    },
+    {
+      "sample_id": "2413:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "78:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class focuses on a single responsibility: rendering a polygon shape as a drawable, without mixing distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class focuses on a single responsibility: rendering a polygon shape as a drawable, without mixing distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2414:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method `getAppStoreIntent` exhibits excessive branching with multiple nested levels (e.g., `if` statements for Samsung, Leeco, and Google Play logic), making the control flow convoluted.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method `getAppStoreIntent` exhibits excessive branching with multiple nested levels (e.g., `if` statements for Samsung, Leeco, and Google Play logic), making the control flow convoluted.\"\n}\n```"
+    },
+    {
+      "sample_id": "2414:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method `getAppStoreIntent` has multiple overloaded versions, with one version accepting 2 parameters (`packageName` and `isIncludeGooglePlayStore`). This exceeds the threshold of 5 parameters or parameter groups when considering the cumulative overloads and their usage patterns.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method `getAppStoreIntent` has multiple overloaded versions, with one version accepting 2 parameters (`packageName` and `isIncludeGooglePlayStore`). This exceeds the threshold of 5 parameters or parameter groups when considering the cumulative overloads and their usage patterns.\"\n}\n```"
+    },
+    {
+      "sample_id": "79:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not mix more than two distinct responsibilities; it primarily serves as an application entry point with minimal functionality.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not mix more than two distinct responsibilities; it primarily serves as an application entry point with minimal functionality.\"\n}\n```"
+    },
+    {
+      "sample_id": "2415:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is a single-line utility function with no excessive branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is a single-line utility function with no excessive branching, mixed responsibilities, or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2415:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "80:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `FileItem` mixes multiple distinct responsibilities, including file management, UI binding, and permission handling, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `FileItem` mixes multiple distinct responsibilities, including file management, UI binding, and permission handling, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2416:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2416:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not contain any parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet does not contain any parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "81:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not mix more than two distinct responsibilities; it primarily overrides methods and delegates functionality, adhering to single responsibility principles.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not mix more than two distinct responsibilities; it primarily overrides methods and delegates functionality, adhering to single responsibility principles.\"\n}\n```"
+    },
+    {
+      "sample_id": "2417:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is short, has a clear single responsibility, and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is short, has a clear single responsibility, and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2417:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'main' has only one parameter 'args', which does not exceed the threshold of more than 5 parameters or parameter groups.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'main' has only one parameter 'args', which does not exceed the threshold of more than 5 parameters or parameter groups.\"\n}\n```"
+    },
+    {
+      "sample_id": "82:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class FileContentView mixes multiple distinct responsibilities, including UI management, data handling, and event handling, which aligns with the multifaceted_abstraction smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class FileContentView mixes multiple distinct responsibilities, including UI management, data handling, and event handling, which aligns with the multifaceted_abstraction smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "2418:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is concise, has a single responsibility, and contains minimal branching with no excessive nesting.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is concise, has a single responsibility, and contains minimal branching with no excessive nesting.\"\n}\n```"
+    },
+    {
+      "sample_id": "2418:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "83:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not mix more than two distinct responsibilities; it primarily handles UI-related actions for debugging file exploration.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not mix more than two distinct responsibilities; it primarily handles UI-related actions for debugging file exploration.\"\n}\n```"
+    },
+    {
+      "sample_id": "2419:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2419:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method reverseBitValue has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method reverseBitValue has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "84:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not mix more than two distinct responsibilities; it primarily defines an abstract API and a nested data class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not mix more than two distinct responsibilities; it primarily defines an abstract API and a nested data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "2420:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, no excessive branching, and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, no excessive branching, and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2420:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "85:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class contains only a single field and a constructor, which does not indicate multiple distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class contains only a single field and a constructor, which does not indicate multiple distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2421:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method is short, has a single responsibility, no excessive branching, and a clear control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method is short, has a single responsibility, no excessive branching, and a clear control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2421:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "86:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily focuses on rendering debug items and does not mix more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily focuses on rendering debug items and does not mix more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2422:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no branching, and performs a single responsibility of invoking a utility method.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has no branching, and performs a single responsibility of invoking a utility method.\"}\n```"
+    },
+    {
+      "sample_id": "2422:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method solar2Lunar has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method solar2Lunar has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "87:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class focuses on a single responsibility related to managing a reminder view and does not mix more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class focuses on a single responsibility related to managing a reminder view and does not mix more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2423:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single-line test with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a single-line test with no branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2423:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method has no parameters, so it does not meet the threshold for a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method has no parameters, so it does not meet the threshold for a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "88:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class DebugMenuItem mixes multiple distinct responsibilities: UI binding, data transformation, and category mapping, which aligns with the multifaceted_abstraction smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class DebugMenuItem mixes multiple distinct responsibilities: UI binding, data transformation, and category mapping, which aligns with the multifaceted_abstraction smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "2424:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is a single-line test method with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is a single-line test method with no branching, mixed responsibilities, or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2424:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lunar2Solar has only one parameter group passed to LunarUtils.lunar2Solar, which does not exceed the threshold of more than 5 parameters or parameter groups.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lunar2Solar has only one parameter group passed to LunarUtils.lunar2Solar, which does not exceed the threshold of more than 5 parameters or parameter groups.\"\n}\n```"
+    },
+    {
+      "sample_id": "89:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The class DebugMenu mixes multiple distinct responsibilities, such as UI management, debug configuration, and adapter setup, which aligns with the multifaceted_abstraction smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class DebugMenu mixes multiple distinct responsibilities, such as UI management, debug configuration, and adapter setup, which aligns with the multifaceted_abstraction smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "2425:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility (coordinate transformation), and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has a single responsibility (coordinate transformation), and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2425:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method gcj02ToBd09 has only 2 parameters, which is well below the threshold of more than 5 parameters for the long_parameter_list smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method gcj02ToBd09 has only 2 parameters, which is well below the threshold of more than 5 parameters for the long_parameter_list smell.\"}\n```"
+    },
+    {
+      "sample_id": "90:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class ClearStorageDebug does not mix more than two distinct responsibilities; it primarily handles debug-related actions for clearing storage.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ClearStorageDebug does not mix more than two distinct responsibilities; it primarily handles debug-related actions for clearing storage.\"\n}\n```"
+    },
+    {
+      "sample_id": "2426:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a clear single responsibility, minimal branching (1 level), and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a clear single responsibility, minimal branching (1 level), and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2426:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "91:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `ThreadUtils` mixes multiple distinct responsibilities, such as thread pool management, task execution, and utility methods for thread handling, which exceeds the threshold of >2 distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `ThreadUtils` mixes multiple distinct responsibilities, such as thread pool management, task execution, and utility methods for thread handling, which exceeds the threshold of >2 distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2427:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a clear single responsibility, and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a clear single responsibility, and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2427:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method bd09ToWGS84 has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method bd09ToWGS84 has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "92:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'ViewUtils' mixes more than two distinct responsibilities, such as enabling views, running tasks on the UI thread, checking layout direction, fixing scroll view issues, and inflating layouts.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ViewUtils' mixes more than two distinct responsibilities, such as enabling views, running tasks on the UI thread, checking layout direction, fixing scroll view issues, and inflating layouts.\"\n}\n```"
+    },
+    {
+      "sample_id": "2428:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2428:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "93:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class mixes multiple distinct responsibilities, such as cache management, file operations, threading, and synchronization, which indicates multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class mixes multiple distinct responsibilities, such as cache management, file operations, threading, and synchronization, which indicates multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2429:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no excessive branching or nested levels, and its control flow is straightforward.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has no excessive branching or nested levels, and its control flow is straightforward.\"\n}\n```"
+    },
+    {
+      "sample_id": "2429:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"}\n```"
+    },
+    {
+      "sample_id": "94:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `TimeUtils` mixes multiple distinct responsibilities, including date formatting, time conversion, and system time settings, which indicates a multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `TimeUtils` mixes multiple distinct responsibilities, including date formatting, time conversion, and system time settings, which indicates a multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2430:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has clear responsibilities, and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has clear responsibilities, and does not exhibit excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2430:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method wgs84ToBd09 has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method wgs84ToBd09 has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "95:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class UtilsFileProvider does not mix distinct responsibilities; it overrides a single method with a straightforward implementation.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class UtilsFileProvider does not mix distinct responsibilities; it overrides a single method with a straightforward implementation.\"}\n```"
+    },
+    {
+      "sample_id": "2431:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility (mathematical transformation), and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has a single responsibility (mathematical transformation), and does not exhibit excessive branching or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2431:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "96:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a test suite for ZipUtils, with no evidence of mixing more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a test suite for ZipUtils, with no evidence of mixing more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2432:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility, and contains straightforward control flow without excessive branching.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has a single responsibility, and contains straightforward control flow without excessive branching.\"}\n```"
+    },
+    {
+      "sample_id": "2432:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is close to the threshold of 5, and the parameters are tightly grouped without clear separation, indicating a potential long_parameter_list smell.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The method has 4 parameters, which is close to the threshold of 5, and the parameters are tightly grouped without clear separation, indicating a potential long_parameter_list smell.\"}\n```"
+    },
+    {
+      "sample_id": "97:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class JsonUtils mixes multiple distinct responsibilities, including type checking, JSON parsing, and formatting, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class JsonUtils mixes multiple distinct responsibilities, including type checking, JSON parsing, and formatting, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2433:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a clear single responsibility (coordinate transformation) and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a clear single responsibility (coordinate transformation) and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2433:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method wgs84ToGcj02 has only two parameters, which is below the threshold of more than 5 parameters for the long_parameter_list smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method wgs84ToGcj02 has only two parameters, which is below the threshold of more than 5 parameters for the long_parameter_list smell.\"}\n```"
+    },
+    {
+      "sample_id": "98:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface IToast does not mix distinct responsibilities; it focuses solely on toast-related operations.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface IToast does not mix distinct responsibilities; it focuses solely on toast-related operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "2434:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is concise, has a single responsibility (coordinate conversion), and does not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is concise, has a single responsibility (coordinate conversion), and does not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2434:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "99:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class StringUtilsTest does not mix distinct responsibilities; it is focused solely on testing methods of the StringUtils class, which aligns with its single responsibility as a test class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class StringUtilsTest does not mix distinct responsibilities; it is focused solely on testing methods of the StringUtils class, which aligns with its single responsibility as a test class.\"\n}\n```"
+    },
+    {
+      "sample_id": "2435:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility (coordinate conversion), and contains no excessive branching or convoluted control flow.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has a single responsibility (coordinate conversion), and contains no excessive branching or convoluted control flow.\"\n}"
+    },
+    {
+      "sample_id": "2435:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "100:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class CacheValue is a simple data class with only fields and a constructor, and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The class CacheValue is a simple data class with only fields and a constructor, and does not mix distinct responsibilities.\"}\n```"
+    },
+    {
+      "sample_id": "2436:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2436:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "101:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class mixes multiple distinct responsibilities, including touch event handling, velocity tracking, and direction determination, which qualifies as multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class mixes multiple distinct responsibilities, including touch event handling, velocity tracking, and direction determination, which qualifies as multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2437:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.\"\n}"
+    },
+    {
+      "sample_id": "2437:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only three parameters, which is below the threshold of more than five parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has only three parameters, which is below the threshold of more than five parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "103:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The SDCardUtils class mixes multiple distinct responsibilities, including SD card state checking, path retrieval, storage size calculations, and encapsulating SD card information, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The SDCardUtils class mixes multiple distinct responsibilities, including SD card state checking, path retrieval, storage size calculations, and encapsulating SD card information, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2438:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single-line declaration with no visible branching, responsibilities, or control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is a single-line declaration with no visible branching, responsibilities, or control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2438:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "104:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class ApiUtils mixes multiple distinct responsibilities, including API registration, retrieval, and initialization, which aligns with the multifaceted_abstraction smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ApiUtils mixes multiple distinct responsibilities, including API registration, retrieval, and initialization, which aligns with the multifaceted_abstraction smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "2440:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method has a simple control flow with no excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method has a simple control flow with no excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2440:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method has only one parameter, which is well below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method has only one parameter, which is well below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "105:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `MapUtils` mixes more than two distinct responsibilities, such as creating various types of maps, performing null-safe checks, executing closures, transforming maps, and converting maps to strings, which indicates multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `MapUtils` mixes more than two distinct responsibilities, such as creating various types of maps, performing null-safe checks, executing closures, transforming maps, and converting maps to strings, which indicates multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2441:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains excessive branching with a nested conditional and a large number of operations (over 50 lines), making it convoluted and difficult to follow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains excessive branching with a nested conditional and a large number of operations (over 50 lines), making it convoluted and difficult to follow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2441:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not have any parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not have any parameters, so it does not meet the threshold for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "106:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `NumberUtils` mixes multiple distinct responsibilities, such as thread-local management, number formatting, and type conversion, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `NumberUtils` mixes multiple distinct responsibilities, such as thread-local management, number formatting, and type conversion, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2442:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility, and contains minimal branching (only one if statement).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has a single responsibility, and contains minimal branching (only one if statement).\"\n}\n```"
+    },
+    {
+      "sample_id": "2442:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method has no parameters, so it does not meet the threshold for a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method has no parameters, so it does not meet the threshold for a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "107:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `MapUtilsTest` mixes multiple distinct responsibilities, including testing various map creation methods, utility methods for map operations, and transformation logic, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `MapUtilsTest` mixes multiple distinct responsibilities, including testing various map creation methods, utility methods for map operations, and transformation logic, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2443:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no branching, and performs a single responsibility without convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has no branching, and performs a single responsibility without convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2443:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "108:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `GsonUtils` mixes multiple distinct responsibilities, such as managing Gson instances, serializing/deserializing objects, and generating type tokens, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `GsonUtils` mixes multiple distinct responsibilities, such as managing Gson instances, serializing/deserializing objects, and generating type tokens, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2444:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has a single responsibility, minimal branching, and straightforward control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has a single responsibility, minimal branching, and straightforward control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2444:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "109:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class focuses on a single responsibility (handling touch events) and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class focuses on a single responsibility (handling touch events) and does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2445:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a simple constructor with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a simple constructor with no branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2445:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The constructor has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "110:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `CacheDiskStaticUtilsTest` mixes multiple distinct responsibilities, including setup, data initialization, and various test cases for different data types, which aligns with the definition of multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `CacheDiskStaticUtilsTest` mixes multiple distinct responsibilities, including setup, data initialization, and various test cases for different data types, which aligns with the definition of multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2446:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has no branching, and performs a single responsibility of formatting a string.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method is short, has no branching, and performs a single responsibility of formatting a string.\"}\n```"
+    },
+    {
+      "sample_id": "2446:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "111:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'AppInfo' primarily serves as a data container with fields and trivial getters/setters, and does not mix more than two distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'AppInfo' primarily serves as a data container with fields and trivial getters/setters, and does not mix more than two distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2447:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a simple control flow with only one level of branching and no mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a simple control flow with only one level of branching and no mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2447:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only two parameters, which is below the threshold of more than five parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only two parameters, which is below the threshold of more than five parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "112:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `CacheDoubleUtils` mixes multiple distinct responsibilities, such as managing memory cache, disk cache, and providing utility methods for various data types (e.g., bytes, strings, JSON, bitmaps, drawables, parcelables, and serializables). This violates the single responsibility principle and meets the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `CacheDoubleUtils` mixes multiple distinct responsibilities, such as managing memory cache, disk cache, and providing utility methods for various data types (e.g., bytes, strings, JSON, bitmaps, drawables, parcelables, and serializables). This violates the single responsibility principle and meets the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2448:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2448:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only 2 parameters, which is well below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "113:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `ScreenUtils` mixes more than two distinct responsibilities, such as screen dimensions, screen orientation, screen locking, and screen bitmap manipulation, which indicates multifaceted abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `ScreenUtils` mixes more than two distinct responsibilities, such as screen dimensions, screen orientation, screen locking, and screen bitmap manipulation, which indicates multifaceted abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2449:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no excessive branching, and performs a single responsibility with straightforward control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is short, has no excessive branching, and performs a single responsibility with straightforward control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2449:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "114:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class ShadowSpan has a single responsibility of applying shadow effects to text, and it does not exhibit mixed responsibilities or excessive complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class ShadowSpan has a single responsibility of applying shadow effects to text, and it does not exhibit mixed responsibilities or excessive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "2450:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has clear responsibilities, minimal branching, and does not exhibit convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has clear responsibilities, minimal branching, and does not exhibit convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2450:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "115:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class mixes multiple distinct responsibilities, including byte/hex conversions, memory size calculations, time span formatting, and stream manipulations, which indicates multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class mixes multiple distinct responsibilities, including byte/hex conversions, memory size calculations, time span formatting, and stream manipulations, which indicates multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2451:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a constructor with a single operation and does not exhibit excessive branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2451:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not contain a method with parameters, so the long_parameter_list smell is not applicable.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet does not contain a method with parameters, so the long_parameter_list smell is not applicable.\"}\n```"
+    },
+    {
+      "sample_id": "116:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface and its implementation focus on a single responsibility (handling toast messages) without excessive complexity or mixed concerns.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface and its implementation focus on a single responsibility (handling toast messages) without excessive complexity or mixed concerns.\"\n}\n```"
+    },
+    {
+      "sample_id": "2452:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a single-line declaration with no branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2452:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "117:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `ShadowDrawable` mixes multiple distinct responsibilities, such as managing shadow properties, drawing operations, and handling padding and bounds, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `ShadowDrawable` mixes multiple distinct responsibilities, such as managing shadow properties, drawing operations, and handling padding and bounds, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2453:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a simple control flow with a single switch statement and no excessive branching or mixed responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a simple control flow with a single switch statement and no excessive branching or mixed responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2453:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'onStatusChanged' has three parameters, which is below the threshold of 5 for long_parameter_list, but the parameters are tightly coupled and represent distinct groups (provider, status, extras). This suggests a potential smell due to parameter grouping complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onStatusChanged' has three parameters, which is below the threshold of 5 for long_parameter_list, but the parameters are tightly coupled and represent distinct groups (provider, status, extras). This suggests a potential smell due to parameter grouping complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "118:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `CacheDoubleStaticUtils` mixes multiple distinct responsibilities, including caching for various data types (e.g., bytes, strings, JSON objects, bitmaps, drawables, parcelables, serializables) and cache management operations (e.g., clearing, counting, and disk size retrieval). This exceeds the threshold of >2 distinct responsibilities, indicating multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `CacheDoubleStaticUtils` mixes multiple distinct responsibilities, including caching for various data types (e.g., bytes, strings, JSON objects, bitmaps, drawables, parcelables, serializables) and cache management operations (e.g., clearing, counting, and disk size retrieval). This exceeds the threshold of >2 distinct responsibilities, indicating multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2454:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2454:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has no parameters, so it does not meet the threshold for a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has no parameters, so it does not meet the threshold for a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "119:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface OnExplainListener and its nested interface ShouldRequest do not mix distinct responsibilities; they are focused on handling explanations and requests, which are closely related.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface OnExplainListener and its nested interface ShouldRequest do not mix distinct responsibilities; they are focused on handling explanations and requests, which are closely related.\"\n}\n```"
+    },
+    {
+      "sample_id": "2455:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no excessive branching, and its responsibility is clear.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has no excessive branching, and its responsibility is clear.\"\n}\n```"
+    },
+    {
+      "sample_id": "2455:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'onLocationChanged' has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'onLocationChanged' has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "120:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `BusUtilsTest` mixes multiple distinct responsibilities such as event handling, thread mode testing, sticky event posting, and registration management, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `BusUtilsTest` mixes multiple distinct responsibilities such as event handling, thread mode testing, sticky event posting, and registration management, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2456:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is very short, contains no branching, and has a single clear responsibility.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is very short, contains no branching, and has a single clear responsibility.\"}\n```"
+    },
+    {
+      "sample_id": "2456:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "121:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `FileUtilsTest` mixes multiple distinct responsibilities, including file operations, directory operations, and file metadata testing, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `FileUtilsTest` mixes multiple distinct responsibilities, including file operations, directory operations, and file metadata testing, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2457:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has no excessive branching, and performs a single responsibility of retrieving locality based on latitude and longitude.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has no excessive branching, and performs a single responsibility of retrieving locality based on latitude and longitude.\"\n}\n```"
+    },
+    {
+      "sample_id": "2457:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "122:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface defines two methods related to network status changes, which are cohesive and do not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface defines two methods related to network status changes, which are cohesive and do not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2458:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is very short, contains no branching, and has a single clear responsibility.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is very short, contains no branching, and has a single clear responsibility.\"}\n```"
+    },
+    {
+      "sample_id": "2458:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which is below the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has only one parameter, which is below the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "123:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single responsibility (custom layout behavior) and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single responsibility (custom layout behavior) and does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2459:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains excessive branching with multiple nested if conditions and mixed responsibilities, such as checking permissions, initializing services, and handling location updates.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains excessive branching with multiple nested if conditions and mixed responsibilities, such as checking permissions, initializing services, and handling location updates.\"\n}\n```"
+    },
+    {
+      "sample_id": "2459:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'register' has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'register' has only 3 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "124:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class mixes multiple distinct responsibilities, including managing toast display logic, interacting with activity lifecycle callbacks, and handling system-level UI operations, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class mixes multiple distinct responsibilities, including managing toast display logic, interacting with activity lifecycle callbacks, and handling system-level UI operations, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2460:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a simple control flow with only two levels of nesting and does not exhibit excessive branching, mixed responsibilities, or convoluted logic.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a simple control flow with only two levels of nesting and does not exhibit excessive branching, mixed responsibilities, or convoluted logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "2460:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'unregister' has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'unregister' has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "125:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface contains only one method with a single responsibility, and does not exhibit multifaceted abstraction characteristics.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The interface contains only one method with a single responsibility, and does not exhibit multifaceted abstraction characteristics.\"}\n```"
+    },
+    {
+      "sample_id": "2461:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no branching, and performs a single responsibility without convoluted control flow.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has no branching, and performs a single responsibility without convoluted control flow.\"\n}"
+    },
+    {
+      "sample_id": "2461:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "126:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class NumberUtilsTest does not mix distinct responsibilities; it is focused solely on testing methods of the NumberUtils class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class NumberUtilsTest does not mix distinct responsibilities; it is focused solely on testing methods of the NumberUtils class.\"\n}\n```"
+    },
+    {
+      "sample_id": "2462:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, has a single responsibility, and contains no excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2462:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method getCriteria has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method getCriteria has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "127:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface OnRationaleListener and its nested interface ShouldRequest do not mix distinct responsibilities or exhibit characteristics of multifaceted abstraction; they are focused on a single responsibility related to rationale handling.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface OnRationaleListener and its nested interface ShouldRequest do not mix distinct responsibilities or exhibit characteristics of multifaceted abstraction; they are focused on a single responsibility related to rationale handling.\"\n}\n```"
+    },
+    {
+      "sample_id": "2463:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method is short, has a single responsibility, minimal branching, and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method is short, has a single responsibility, minimal branching, and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2463:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has only 2 parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "128:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'ImageUtilsTest' focuses solely on testing image type detection, which does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ImageUtilsTest' focuses solely on testing image type detection, which does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2464:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains excessive branching with more than 3 nested levels and convoluted control flow, making it difficult to follow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains excessive branching with more than 3 nested levels and convoluted control flow, making it difficult to follow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2464:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has only two parameters, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "129:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class AbsToast mixes multiple distinct responsibilities, such as managing toast views, applying styles, handling RTL layouts, and managing toast lifecycle, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class AbsToast mixes multiple distinct responsibilities, such as managing toast views, applying styles, handling RTL layouts, and managing toast lifecycle, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2465:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short, have clear responsibilities, and do not exhibit excessive branching or convoluted control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short, have clear responsibilities, and do not exhibit excessive branching or convoluted control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2465:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods analyzed have at most one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods analyzed have at most one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "130:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `EncryptUtilsTest` mixes more than two distinct responsibilities, including testing various encryption algorithms (e.g., MD5, SHA, HMAC, DES, AES, RSA, RC4) and managing key generation, which qualifies as multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `EncryptUtilsTest` mixes more than two distinct responsibilities, including testing various encryption algorithms (e.g., MD5, SHA, HMAC, DES, AES, RSA, RC4) and managing key generation, which qualifies as multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2467:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, has no excessive branching, and its control flow is straightforward.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, has no excessive branching, and its control flow is straightforward.\"\n}\n```"
+    },
+    {
+      "sample_id": "2467:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "131:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single abstract method and does not mix multiple responsibilities, meeting none of the thresholds for multifaceted_abstraction.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class has a single abstract method and does not mix multiple responsibilities, meeting none of the thresholds for multifaceted_abstraction.\"}\n```"
+    },
+    {
+      "sample_id": "2470:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The code snippet contains excessive branching with nested if conditions and mixed responsibilities, such as managing listeners, registering/unregistering receivers, and notifying listeners, which indicates a complex_method smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The code snippet contains excessive branching with nested if conditions and mixed responsibilities, such as managing listeners, registering/unregistering receivers, and notifying listeners, which indicates a complex_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "2470:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet does not contain any method with more than 5 parameters or parameter groups, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code snippet does not contain any method with more than 5 parameters or parameter groups, so it does not meet the threshold for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "132:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class CustomBulletSpan focuses on a single responsibility: managing bullet span rendering, and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class CustomBulletSpan focuses on a single responsibility: managing bullet span rendering, and does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2471:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is a single line with no branching, mixed responsibilities, or convoluted control flow.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is a single line with no branching, mixed responsibilities, or convoluted control flow.\"}\n```"
+    },
+    {
+      "sample_id": "2471:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has no parameters, so it does not meet the threshold for long_parameter_list.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The method has no parameters, so it does not meet the threshold for long_parameter_list.\"}\n```"
+    },
+    {
+      "sample_id": "133:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface defines a single method with a clear responsibility, and there is no evidence of mixed responsibilities or excessive complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The interface defines a single method with a clear responsibility, and there is no evidence of mixed responsibilities or excessive complexity.\"}\n```"
+    },
+    {
+      "sample_id": "2472:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a single responsibility, minimal branching (2 levels), and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a single responsibility, minimal branching (2 levels), and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2472:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method unregisterListener has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method unregisterListener has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "134:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface defines a single method with a clear purpose and does not mix distinct responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface defines a single method with a clear purpose and does not mix distinct responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "2473:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a single responsibility, minimal branching (1 level), and a clear control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a single responsibility, minimal branching (1 level), and a clear control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2473:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'onReceive' has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onReceive' has only 2 parameters, which is below the threshold of more than 5 parameters for a long_parameter_list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "135:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `NotificationUtils` mixes multiple distinct responsibilities, such as managing notifications, handling notification channels, and interacting with the status bar, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `NotificationUtils` mixes multiple distinct responsibilities, such as managing notifications, handling notification channels, and interacting with the status bar, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2474:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a single responsibility, minimal branching (1 nested level), and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a single responsibility, minimal branching (1 nested level), and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2474:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method registerListener has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method registerListener has only one parameter, which does not exceed the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "136:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code snippet defines two interfaces with single methods, which do not mix distinct responsibilities or exhibit multifaceted abstraction.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code snippet defines two interfaces with single methods, which do not mix distinct responsibilities or exhibit multifaceted abstraction.\"}\n```"
+    },
+    {
+      "sample_id": "2476:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method is short, has a single responsibility, no excessive branching, and straightforward control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method is short, has a single responsibility, no excessive branching, and straightforward control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2476:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method has only one parameter, which is below the threshold of more than 5 parameters for long_parameter_list.\"\n}\n```"
+    },
+    {
+      "sample_id": "137:multifaceted_abstraction",
+      "smell": "multifaceted_abstraction",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `MessengerUtils` mixes multiple distinct responsibilities, including client management, service management, message handling, and subscription management, which exceeds the threshold for multifaceted_abstraction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `MessengerUtils` mixes multiple distinct responsibilities, including client management, service management, message handling, and subscription management, which exceeds the threshold for multifaceted_abstraction.\"\n}\n```"
+    },
+    {
+      "sample_id": "2477:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has a simple control flow with only one level of branching and a single responsibility of mapping status codes to strings.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has a simple control flow with only one level of branching and a single responsibility of mapping status codes to strings.\"\n}\n```"
+    }
+  ],
+  "metrics": {
+    "precision": 0.30952380952380953,
+    "recall": 0.48148148148148145,
+    "f1": 0.37681159420289856,
+    "accuracy": 0.785,
+    "kappa": 0.254249046132501,
+    "f1_ci_lo": 0.22222222222222224,
+    "f1_ci_hi": 0.5135135135135135,
+    "kappa_ci_lo": 0.0907293931607038,
+    "kappa_ci_hi": 0.4137931034482758,
+    "tp": 13,
+    "fp": 29,
+    "fn": 14,
+    "tn": 144,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 119375,
+    "completion_tokens": 10305,
+    "total_tokens": 129680
+  },
+  "slot": "AZ1",
+  "prompt": "threshold_guided",
+  "dataset": "DACOS_heldout",
+  "source": "RQ5_generated",
+  "elapsed_s": 81.0
+}

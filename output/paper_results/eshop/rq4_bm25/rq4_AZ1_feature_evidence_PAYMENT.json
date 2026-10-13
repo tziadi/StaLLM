@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the integration event for stock confirmation, directly related to initiating payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Defines the integration event for stock confirmation, a prerequisite for payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Represents the event for successful payment, directly supporting the feature's success scenario.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Represents the event for failed payment, directly supporting the feature's failure scenario.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/PaymentSettings.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Contains configuration settings for the payment service, supporting the feature implementation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "Handles the command to set stock confirmation status, indirectly supporting payment initiation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Defines the order entity, which is central to payment processing and status updates.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Defines the integration event for successful payment, relevant to the feature's success scenario.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.76,
+      "rationale": "Defines the integration event for failed payment, relevant to the feature's failure scenario.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Defines payment methods, which are essential for processing payments in the system.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.5555555555555556,
+    "hit@10": 1.0,
+    "recall@10": 0.5555555555555556,
+    "mrr": 1.0,
+    "map": 0.5555555555555556
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles the integration event for stock confirmation, directly related to initiating payment processing.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Defines the integration event for stock confirmation, a prerequisite for payment processing.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Represents the event for successful payment, directly supporting the feature's success scenario.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Represents the event for failed payment, directly supporting the feature's failure scenario.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Payment/Payment.API/PaymentSettings.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Contains configuration settings for the payment service, supporting the feature implementation.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Handles the command to set stock confirmation status, indirectly supporting payment initiation.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Defines the order entity, which is central to payment processing and status updates.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Defines the integration event for successful payment, relevant to the feature's success scenario.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\",\n    \"confidence\": 0.76,\n    \"rationale\": \"Defines the integration event for failed payment, relevant to the feature's failure scenario.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Defines payment methods, which are essential for processing payments in the system.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9348,
+    "completion_tokens": 653,
+    "total_tokens": 10001
+  },
+  "slot": "AZ1",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 8.6
+}

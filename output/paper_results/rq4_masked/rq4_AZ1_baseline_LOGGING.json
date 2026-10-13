@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Centralized event handling mechanism likely includes debug and trace message functionality.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/ProjectManager.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Manages project-wide operations, potentially including debug and trace messages for tracking issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Handles undo operations, which often require debug and trace messages for tracking state changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Displays exceptions, likely includes debug and trace messages for error tracking.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Main entry point of the application, likely includes debug and trace messages for initialization and runtime issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Handles configuration settings, potentially includes debug and trace messages for tracking changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Manages the UI for browsing projects, likely includes debug and trace messages for user interactions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/PersistenceManager.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Handles persistence operations, likely includes debug and trace messages for file handling and saving issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/Notation.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Manages notations, potentially includes debug and trace messages for tracking notation-related issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Displays status updates, likely includes debug and trace messages for tracking application state.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.028037383177570093,
+    "mrr": 1.0,
+    "map": 0.021717846016911437
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.95, \"rationale\": \"Centralized event handling mechanism likely includes debug and trace message functionality.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/kernel/ProjectManager.java\", \"confidence\": 0.90, \"rationale\": \"Manages project-wide operations, potentially including debug and trace messages for tracking issues.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.85, \"rationale\": \"Handles undo operations, which often require debug and trace messages for tracking state changes.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.80, \"rationale\": \"Displays exceptions, likely includes debug and trace messages for error tracking.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.75, \"rationale\": \"Main entry point of the application, likely includes debug and trace messages for initialization and runtime issues.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.70, \"rationale\": \"Handles configuration settings, potentially includes debug and trace messages for tracking changes.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.65, \"rationale\": \"Manages the UI for browsing projects, likely includes debug and trace messages for user interactions.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/persistence/PersistenceManager.java\", \"confidence\": 0.60, \"rationale\": \"Handles persistence operations, likely includes debug and trace messages for file handling and saving issues.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/Notation.java\", \"confidence\": 0.55, \"rationale\": \"Manages notations, potentially includes debug and trace messages for tracking notation-related issues.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\", \"confidence\": 0.50, \"rationale\": \"Displays status updates, likely includes debug and trace messages for tracking application state.\"}\n]",
+  "usage": {
+    "prompt_tokens": 13898,
+    "completion_tokens": 575,
+    "total_tokens": 14473
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 74,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 7.9
+}

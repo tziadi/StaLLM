@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Primary controller for basket operations such as adding, removing, updating items, and checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Core model representing the buyer's shopping basket and its items.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 3,
+      "confidence": 0.95,
+      "rationale": "Repository handling persistence and retrieval of basket data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.93,
+      "rationale": "Represents individual items within a basket, crucial for add/remove/update operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 5,
+      "confidence": 0.91,
+      "rationale": "Interface defining basket repository operations, directly related to basket management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 6,
+      "confidence": 0.89,
+      "rationale": "Model for the checkout process, starting an order from the basket.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 7,
+      "confidence": 0.87,
+      "rationale": "API gateway controller for basket operations, orchestrating calls to basket service.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 8,
+      "confidence": 0.87,
+      "rationale": "Mobile API gateway controller for basket operations, similar to web BFF.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 9,
+      "confidence": 0.85,
+      "rationale": "Service layer in API gateway for basket-related business logic.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs",
+      "rank": 10,
+      "confidence": 0.85,
+      "rationale": "Mobile API gateway service for basket logic, mirroring the web BFF service.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\", \"confidence\": 1.0, \"rationale\": \"Primary controller for basket operations such as adding, removing, updating items, and checkout.\"},\n  {\"rank\": 2, \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\", \"confidence\": 0.98, \"rationale\": \"Core model representing the buyer's shopping basket and its items.\"},\n  {\"rank\": 3, \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\", \"confidence\": 0.95, \"rationale\": \"Repository handling persistence and retrieval of basket data.\"},\n  {\"rank\": 4, \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\", \"confidence\": 0.93, \"rationale\": \"Represents individual items within a basket, crucial for add/remove/update operations.\"},\n  {\"rank\": 5, \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\", \"confidence\": 0.91, \"rationale\": \"Interface defining basket repository operations, directly related to basket management.\"},\n  {\"rank\": 6, \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\", \"confidence\": 0.89, \"rationale\": \"Model for the checkout process, starting an order from the basket.\"},\n  {\"rank\": 7, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\", \"confidence\": 0.87, \"rationale\": \"API gateway controller for basket operations, orchestrating calls to basket service.\"},\n  {\"rank\": 8, \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\", \"confidence\": 0.87, \"rationale\": \"Mobile API gateway controller for basket operations, similar to web BFF.\"},\n  {\"rank\": 9, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Services/BasketService.cs\", \"confidence\": 0.85, \"rationale\": \"Service layer in API gateway for basket-related business logic.\"},\n  {\"rank\": 10, \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Services/BasketService.cs\", \"confidence\": 0.85, \"rationale\": \"Mobile API gateway service for basket logic, mirroring the web BFF service.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9329,
+    "completion_tokens": 541,
+    "total_tokens": 9870
+  },
+  "slot": "AZ2",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 7.3
+}

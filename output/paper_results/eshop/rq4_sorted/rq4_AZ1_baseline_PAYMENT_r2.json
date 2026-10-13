@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-payment",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the event when stock is confirmed, which is a prerequisite for processing payment.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Defines the event for stock confirmation, directly related to initiating payment processing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Defines the event for successful payment, which is part of the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Defines the event for failed payment, which is part of the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Handles the event for successful payment, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Handles the event for failed payment, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Handles successful payment events within the ordering service, relevant to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Handles failed payment events within the ordering service, relevant to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Represents payment methods, which are essential for processing payments.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/DomainEventHandlers/BuyerAndPaymentMethodVerified/UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Updates orders when payment methods are verified, relevant to the feature.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.1111111111111111,
+    "hit@5": 1.0,
+    "recall@5": 0.4444444444444444,
+    "hit@10": 1.0,
+    "recall@10": 0.4444444444444444,
+    "mrr": 1.0,
+    "map": 0.4444444444444444
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the event when stock is confirmed, which is a prerequisite for processing payment.\"},\n  {\"rank\": 2, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.9, \"rationale\": \"Defines the event for stock confirmation, directly related to initiating payment processing.\"},\n  {\"rank\": 3, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the event for successful payment, which is part of the feature description.\"},\n  {\"rank\": 4, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/Events/OrderPaymentFailedIntegrationEvent.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the event for failed payment, which is part of the feature description.\"},\n  {\"rank\": 5, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\", \"confidence\": 0.8, \"rationale\": \"Handles the event for successful payment, directly related to the feature.\"},\n  {\"rank\": 6, \"file\": \"Services/Payment/Payment.API/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\", \"confidence\": 0.8, \"rationale\": \"Handles the event for failed payment, directly related to the feature.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\", \"confidence\": 0.75, \"rationale\": \"Handles successful payment events within the ordering service, relevant to the feature.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentFailedIntegrationEventHandler.cs\", \"confidence\": 0.75, \"rationale\": \"Handles failed payment events within the ordering service, relevant to the feature.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs\", \"confidence\": 0.7, \"rationale\": \"Represents payment methods, which are essential for processing payments.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.API/Application/DomainEventHandlers/BuyerAndPaymentMethodVerified/UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs\", \"confidence\": 0.7, \"rationale\": \"Updates orders when payment methods are verified, relevant to the feature.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9324,
+    "completion_tokens": 605,
+    "total_tokens": 9929
+  },
+  "slot": "AZ1",
+  "feature": "PAYMENT",
+  "gold_count": 9,
+  "gold_visible": 9,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 3.6
+}

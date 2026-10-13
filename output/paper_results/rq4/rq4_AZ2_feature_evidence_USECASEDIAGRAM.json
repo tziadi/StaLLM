@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-usecasediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
+      "rank": 1,
+      "confidence": 0.98,
+      "rationale": "File name directly references 'UseCase' and 'ExtensionPoint', which are core concepts in use case diagrams. Likely implements navigation or relationships for use case diagram elements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "References 'ModelElement' and 'ContainedDiagrams', suggesting it manages or locates diagrams (including use case diagrams) associated with model elements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles navigation from namespaces to diagrams, which would include use case diagrams as a diagram type.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java",
+      "rank": 4,
+      "confidence": 0.89,
+      "rationale": "Manages project-to-diagram relationships, likely including use case diagrams as a supported type.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java",
+      "rank": 5,
+      "confidence": 0.88,
+      "rationale": "Facilitates navigation from the model to its diagrams, which would include use case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/ExplorerTreeModel.java",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Implements the model for the explorer tree, which displays diagrams such as use case diagrams and their elements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/ExplorerTree.java",
+      "rank": 7,
+      "confidence": 0.83,
+      "rationale": "Handles the UI tree for exploring diagrams and their elements, including use case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContents.java",
+      "rank": 8,
+      "confidence": 0.8,
+      "rationale": "Manages navigation from model elements to their contents, which may include use case diagram elements like actors and use cases.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToClassifierAndPackage.java",
+      "rank": 9,
+      "confidence": 0.78,
+      "rationale": "Handles navigation from namespaces to classifiers and packages, which are relevant in the context of use case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToElements.java",
+      "rank": 10,
+      "confidence": 0.77,
+      "rationale": "Manages navigation from the model to its elements, which would include actors and use cases in use case diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"File name directly references 'UseCase' and 'ExtensionPoint', which are core concepts in use case diagrams. Likely implements navigation or relationships for use case diagram elements.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"References 'ModelElement' and 'ContainedDiagrams', suggesting it manages or locates diagrams (including use case diagrams) associated with model elements.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Handles navigation from namespaces to diagrams, which would include use case diagrams as a diagram type.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Manages project-to-diagram relationships, likely including use case diagrams as a supported type.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Facilitates navigation from the model to its diagrams, which would include use case diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/ExplorerTreeModel.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Implements the model for the explorer tree, which displays diagrams such as use case diagrams and their elements.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/ExplorerTree.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Handles the UI tree for exploring diagrams and their elements, including use case diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContents.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Manages navigation from model elements to their contents, which may include use case diagram elements like actors and use cases.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToClassifierAndPackage.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles navigation from namespaces to classifiers and packages, which are relevant in the context of use case diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToElements.java\",\n    \"confidence\": 0.77,\n    \"rationale\": \"Manages navigation from the model to its elements, which would include actors and use cases in use case diagrams.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 12435,
+    "completion_tokens": 757,
+    "total_tokens": 13192
+  },
+  "slot": "AZ2",
+  "feature": "USECASEDIAGRAM",
+  "gold_count": 52,
+  "gold_visible": 6,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 7.4
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Basket feature by handling API requests for adding, removing, and updating items in the basket.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Represents the core data model for a customer's basket, including items and quantities.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles the storage and retrieval of basket data, directly supporting the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Provides a mobile-specific API gateway for basket-related operations, refining the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Provides a web-specific API gateway for basket-related operations, refining the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Defines the structure of individual items in the basket, directly supporting the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Models/BasketData.cs",
+      "rank": 7,
+      "confidence": 0.75,
+      "rationale": "Represents basket data in the mobile API gateway, supporting the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Models/BasketData.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Represents basket data in the web API gateway, supporting the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Handles the event triggered when a user checks out their basket, directly supporting the checkout process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Defines the structure for basket checkout data, supporting the transition from basket to order.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.12698412698412698,
+    "mrr": 1.0,
+    "map": 0.1202821869488536
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Basket feature by handling API requests for adding, removing, and updating items in the basket.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Represents the core data model for a customer's basket, including items and quantities.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Handles the storage and retrieval of basket data, directly supporting the Basket feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Provides a mobile-specific API gateway for basket-related operations, refining the Basket feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Provides a web-specific API gateway for basket-related operations, refining the Basket feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Defines the structure of individual items in the basket, directly supporting the Basket feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Models/BasketData.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Represents basket data in the mobile API gateway, supporting the Basket feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Models/BasketData.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Represents basket data in the web API gateway, supporting the Basket feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles the event triggered when a user checks out their basket, directly supporting the checkout process.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Defines the structure for basket checkout data, supporting the transition from basket to order.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 641,
+    "total_tokens": 9994
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 8.7
+}

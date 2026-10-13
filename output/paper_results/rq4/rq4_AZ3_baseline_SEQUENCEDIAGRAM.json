@@ -1,0 +1,94 @@
+{
+  "task_id": "argouml-feature-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
+      "rank": 1,
+      "confidence": 0.34,
+      "rationale": "Directly names SequenceDiagram and likely navigates to such diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
+      "rank": 2,
+      "confidence": 0.28,
+      "rationale": "Specific UML notation class for sequence-diagram messages (SD prefix).",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
+      "rank": 3,
+      "confidence": 0.24,
+      "rationale": "Generic notation provider for Message elements which appear mainly in sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
+      "rank": 4,
+      "confidence": 0.22,
+      "rationale": "UML-specific implementation of message notation used in sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java",
+      "rank": 5,
+      "confidence": 0.2,
+      "rationale": "Base class for UML message notation; central to rendering sequence-diagram messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/SDNotationSettings.java",
+      "rank": 6,
+      "confidence": 0.18,
+      "rationale": "Notation settings class prefixed with SD (Sequence Diagram).",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
+      "rank": 7,
+      "confidence": 0.16,
+      "rationale": "Explorer rule linking interactions to messages; interactions are core of sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java",
+      "rank": 8,
+      "confidence": 0.14,
+      "rationale": "Provides navigation from collaborations to interactions used within sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/NotationProviderFactory2.java",
+      "rank": 9,
+      "confidence": 0.12,
+      "rationale": "Factory that supplies notation providers, including those specific to sequence-diagram messages.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.012658227848101266,
+    "hit@5": 1.0,
+    "recall@5": 0.02531645569620253,
+    "hit@10": 1.0,
+    "recall@10": 0.02531645569620253,
+    "mrr": 1.0,
+    "map": 0.01772151898734177
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.34, \"rationale\": \"Directly names SequenceDiagram and likely navigates to such diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\", \"confidence\": 0.28, \"rationale\": \"Specific UML notation class for sequence-diagram messages (SD prefix).\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\", \"confidence\": 0.24, \"rationale\": \"Generic notation provider for Message elements which appear mainly in sequence diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\", \"confidence\": 0.22, \"rationale\": \"UML-specific implementation of message notation used in sequence diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java\", \"confidence\": 0.20, \"rationale\": \"Base class for UML message notation; central to rendering sequence-diagram messages.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/notation/SDNotationSettings.java\", \"confidence\": 0.18, \"rationale\": \"Notation settings class prefixed with SD (Sequence Diagram).\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.16, \"rationale\": \"Explorer rule linking interactions to messages; interactions are core of sequence diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\", \"confidence\": 0.14, \"rationale\": \"Provides navigation from collaborations to interactions used within sequence diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/NotationProviderFactory2.java\", \"confidence\": 0.12, \"rationale\": \"Factory that supplies notation providers, including those specific to sequence-diagram messages.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.11, \"rationale\": \"Another rule connecting interactions and messages within sequence diagram context.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12413,
+    "completion_tokens": 1316,
+    "total_tokens": 13729
+  },
+  "slot": "AZ3",
+  "feature": "SEQUENCEDIAGRAM",
+  "gold_count": 79,
+  "gold_visible": 12,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 32.8
+}

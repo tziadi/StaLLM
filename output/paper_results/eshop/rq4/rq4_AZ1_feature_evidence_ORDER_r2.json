@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly handles the creation of orders, which is a core part of the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Implements functionality for canceling orders, which is explicitly mentioned in the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Tracks order status changes related to stock confirmation, aligning with the feature's requirements.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Handles events related to successful payment, which is a key step in the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Tracks order status changes related to shipment, directly supporting the feature's shipment tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Provides querying capabilities for orders, supporting tracking and management of order status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Models/CustomerBasket.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Represents the basket model, which is closely tied to the checkout and order creation process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 8,
+      "confidence": 0.95,
+      "rationale": "Defines the core domain model for orders, encapsulating all order-related data and behavior.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 9,
+      "confidence": 0.85,
+      "rationale": "Provides API endpoints for managing orders, directly supporting the feature's implementation.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/OrderController.cs",
+      "rank": 10,
+      "confidence": 0.8,
+      "rationale": "Handles order-related actions in the web interface, supporting user interaction with the ordering process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Directly handles the creation of orders, which is a core part of the ordering process.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Implements functionality for canceling orders, which is explicitly mentioned in the feature description.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Tracks order status changes related to stock confirmation, aligning with the feature's requirements.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderPaymentSucceededIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles events related to successful payment, which is a key step in the ordering process.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToShippedIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Tracks order status changes related to shipment, directly supporting the feature's shipment tracking.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Provides querying capabilities for orders, supporting tracking and management of order status.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Models/CustomerBasket.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Represents the basket model, which is closely tied to the checkout and order creation process.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the core domain model for orders, encapsulating all order-related data and behavior.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Provides API endpoints for managing orders, directly supporting the feature's implementation.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Controllers/OrderController.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles order-related actions in the web interface, supporting user interaction with the ordering process.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 643,
+    "total_tokens": 9997
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "alphabetical",
+  "run": 2,
+  "elapsed_s": 4.3
+}

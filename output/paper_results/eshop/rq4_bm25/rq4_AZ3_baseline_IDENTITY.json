@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 1,
+      "confidence": 0.33,
+      "rationale": "Registers ASP.NET Core Identity, IdentityServer, authentication and token issuance pipelines; central entry point for the Identity service.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 2,
+      "confidence": 0.14,
+      "rationale": "Defines IdentityServer resources, clients, scopes and token lifetimes; core to how access tokens are produced and validated.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 3,
+      "confidence": 0.11,
+      "rationale": "Handles user login, logout, registration and related account management endpoints directly tied to authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 4,
+      "confidence": 0.07,
+      "rationale": "Implements credential validation against the Entity Framework store; part of the login flow used by AccountController.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 5,
+      "confidence": 0.06,
+      "rationale": "Supplies user claims to IdentityServer when issuing JWT access tokens; key for protecting resources with proper claims.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 6,
+      "confidence": 0.06,
+      "rationale": "Entity Framework context containing ApplicationUser and related identity tables that store user credentials and roles.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Interface abstracting authentication logic; part of the Identity service\u2019s login pipeline.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/AccountController.cs",
+      "rank": 8,
+      "confidence": 0.05,
+      "rationale": "MVC client fa\u00e7ade that initiates login/logout against Identity service and manages user session with access tokens.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Attaches bearer tokens to outgoing HTTP requests from the gateway, enforcing protection of downstream services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs",
+      "rank": 10,
+      "confidence": 0.04,
+      "rationale": "Seeds initial users and roles into the identity database, enabling authentication scenarios out-of-the-box.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.16071428571428573,
+    "mrr": 1.0,
+    "map": 0.15892857142857145
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Startup.cs\",\n    \"confidence\": 0.33,\n    \"rationale\": \"Registers ASP.NET Core Identity, IdentityServer, authentication and token issuance pipelines; central entry point for the Identity service.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Defines IdentityServer resources, clients, scopes and token lifetimes; core to how access tokens are produced and validated.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Handles user login, logout, registration and related account management endpoints directly tied to authentication.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Implements credential validation against the Entity Framework store; part of the login flow used by AccountController.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Supplies user claims to IdentityServer when issuing JWT access tokens; key for protecting resources with proper claims.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Entity Framework context containing ApplicationUser and related identity tables that store user credentials and roles.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Interface abstracting authentication logic; part of the Identity service\u2019s login pipeline.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Web/WebMVC/Controllers/AccountController.cs\",\n    \"confidence\": 0.05,\n    \"rationale\": \"MVC client fa\u00e7ade that initiates login/logout against Identity service and manages user session with access tokens.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Attaches bearer tokens to outgoing HTTP requests from the gateway, enforcing protection of downstream services.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Seeds initial users and roles into the identity database, enabling authentication scenarios out-of-the-box.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 1296,
+    "total_tokens": 10627
+  },
+  "slot": "AZ3",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 21.5
+}

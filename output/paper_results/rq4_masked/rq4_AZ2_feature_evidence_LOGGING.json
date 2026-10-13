@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "The file name and path indicate a developer-focused module, likely to contain debug and trace message mechanisms for developers.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Event pump classes are often responsible for broadcasting events, which is a common place to hook debug and trace messages.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 3,
+      "confidence": 0.82,
+      "rationale": "Inspector panels for event pumps are likely to display or manage debug/trace information about internal events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Main application entry points often initialize or configure global debug and trace facilities.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Exception dialogs are commonly used to display error, debug, and trace information to users or developers.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Configuration handlers often manage settings for enabling or disabling debug and trace output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
+      "rank": 7,
+      "confidence": 0.74,
+      "rationale": "Properties files for configuration may include options for debug and trace message control.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 8,
+      "confidence": 0.73,
+      "rationale": "Duplicate of rank 1, but still highly relevant for developer-oriented debug and trace features.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Status bars are often used to display trace or debug messages in the UI.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 10,
+      "confidence": 0.68,
+      "rationale": "Project browsers may include panels or views for debug and trace output, especially in developer modes.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.009345794392523364,
+    "hit@10": 1.0,
+    "recall@10": 0.02336448598130841,
+    "mrr": 0.5,
+    "map": 0.012016021361815753
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"The file name and path indicate a developer-focused module, likely to contain debug and trace message mechanisms for developers.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Event pump classes are often responsible for broadcasting events, which is a common place to hook debug and trace messages.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Inspector panels for event pumps are likely to display or manage debug/trace information about internal events.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Main application entry points often initialize or configure global debug and trace facilities.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Exception dialogs are commonly used to display error, debug, and trace information to users or developers.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Configuration handlers often manage settings for enabling or disabling debug and trace output.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Properties files for configuration may include options for debug and trace message control.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Duplicate of rank 1, but still highly relevant for developer-oriented debug and trace features.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Status bars are often used to display trace or debug messages in the UI.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Project browsers may include panels or views for debug and trace output, especially in developer modes.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 13922,
+    "completion_tokens": 647,
+    "total_tokens": 14569
+  },
+  "slot": "AZ2",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 74,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 7.6
+}

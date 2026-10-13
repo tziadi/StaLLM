@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Primary HTTP endpoint implementing add/remove/update items and checkout operations for baskets.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Core persistence component that stores and retrieves shopping baskets.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Main domain model representing a buyer's shopping basket and its operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Represents individual items within a basket; essential for add/remove/update logic.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Interface defining basket CRUD operations used by controllers and services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 6,
+      "confidence": 0.83,
+      "rationale": "gRPC interface exposing basket functionality to other services or clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Event emitted when a basket is checked out, linking basket to order creation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Handles order-started event to clear or update basket after checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/ProductPriceChangedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Updates basket item prices when catalog prices change, maintaining basket accuracy.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Startup.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Configures basket service dependencies, routing, and integrations relevant to basket operations.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary HTTP endpoint implementing add/remove/update items and checkout operations for baskets.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Core persistence component that stores and retrieves shopping baskets.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Main domain model representing a buyer's shopping basket and its operations.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Represents individual items within a basket; essential for add/remove/update logic.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Interface defining basket CRUD operations used by controllers and services.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"gRPC interface exposing basket functionality to other services or clients.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Event emitted when a basket is checked out, linking basket to order creation.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles order-started event to clear or update basket after checkout.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/ProductPriceChangedIntegrationEventHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Updates basket item prices when catalog prices change, maintaining basket accuracy.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Basket/Basket.API/Startup.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Configures basket service dependencies, routing, and integrations relevant to basket operations.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9328,
+    "completion_tokens": 1185,
+    "total_tokens": 10513
+  },
+  "slot": "AZ3",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 23.2
+}

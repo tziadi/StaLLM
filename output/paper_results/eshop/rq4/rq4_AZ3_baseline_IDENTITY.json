@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Startup.cs",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Configures IdentityServer, authentication schemes, token issuance, and security middleware.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Defines clients, resources, scopes, and identity server options for token generation and validation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 3,
+      "confidence": 0.83,
+      "rationale": "Implements login, logout, registration, and account management endpoints.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Contains business logic for validating user credentials and issuing authentication results.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Builds user claims included in issued access tokens and integrates with IdentityServer.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/ApplicationUser.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Represents the user entity used for authentication, registration, and account data storage.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 7,
+      "confidence": 0.73,
+      "rationale": "Entity Framework context storing user identities, roles, and related security information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs",
+      "rank": 8,
+      "confidence": 0.68,
+      "rationale": "Seeds initial users/roles required for authentication scenarios and testing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Interface defining authentication contract used by controllers and EFLoginService.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Injects bearer tokens into outgoing HTTP requests, protecting downstream services with access tokens.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.16071428571428573,
+    "mrr": 1.0,
+    "map": 0.16071428571428573
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Identity/Identity.API/Startup.cs\", \"confidence\": 0.9, \"rationale\": \"Configures IdentityServer, authentication schemes, token issuance, and security middleware.\"},\n  {\"rank\": 2, \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\", \"confidence\": 0.85, \"rationale\": \"Defines clients, resources, scopes, and identity server options for token generation and validation.\"},\n  {\"rank\": 3, \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\", \"confidence\": 0.83, \"rationale\": \"Implements login, logout, registration, and account management endpoints.\"},\n  {\"rank\": 4, \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\", \"confidence\": 0.8, \"rationale\": \"Contains business logic for validating user credentials and issuing authentication results.\"},\n  {\"rank\": 5, \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\", \"confidence\": 0.78, \"rationale\": \"Builds user claims included in issued access tokens and integrates with IdentityServer.\"},\n  {\"rank\": 6, \"file\": \"Services/Identity/Identity.API/Models/ApplicationUser.cs\", \"confidence\": 0.75, \"rationale\": \"Represents the user entity used for authentication, registration, and account data storage.\"},\n  {\"rank\": 7, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\", \"confidence\": 0.73, \"rationale\": \"Entity Framework context storing user identities, roles, and related security information.\"},\n  {\"rank\": 8, \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContextSeed.cs\", \"confidence\": 0.68, \"rationale\": \"Seeds initial users/roles required for authentication scenarios and testing.\"},\n  {\"rank\": 9, \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\", \"confidence\": 0.65, \"rationale\": \"Interface defining authentication contract used by controllers and EFLoginService.\"},\n  {\"rank\": 10, \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Infrastructure/HttpClientAuthorizationDelegatingHandler.cs\", \"confidence\": 0.6, \"rationale\": \"Injects bearer tokens into outgoing HTTP requests, protecting downstream services with access tokens.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 994,
+    "total_tokens": 10325
+  },
+  "slot": "AZ3",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 15.2
+}

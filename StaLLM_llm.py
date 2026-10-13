@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Optional, Tuple, Any
 
 try:
-    from openai import AzureOpenAI, OpenAI
+    from openai import AzureOpenAI, BadRequestError, OpenAI
 except ModuleNotFoundError as exc:
     if exc.name != "openai":
         raise
@@ -35,6 +35,7 @@ class LLMConfig:
     api_version: Optional[str] = None
     temperature: float = 0.0
     max_tokens: int = 1400
+    num_ctx: Optional[int] = None   # Ollama context window (<SLOT>_NUM_CTX)
 
 def _guess_slots():
     declared = [s.strip() for s in os.getenv("STALLM_SLOTS", "").split(",") if s.strip()]
@@ -159,6 +160,28 @@ class ChatModel:
             "total_tokens": int(tt or (pt or 0) + (ct or 0))
         }
 
+    def _openai_create(self, model: str, messages, temperature, max_tokens):
+        """Call chat.completions; fall back to reasoning-model params (o1/o3/...).
+
+        Reasoning models reject `max_tokens` and non-default `temperature`.
+        """
+        if not getattr(self, "_reasoning_params", False):
+            try:
+                return self.client.chat.completions.create(
+                    model=model, messages=messages,
+                    temperature=temperature, max_tokens=max_tokens,
+                )
+            except BadRequestError as e:
+                msg = str(e)
+                if "max_completion_tokens" not in msg and "temperature" not in msg:
+                    raise
+                self._reasoning_params = True
+        kwargs = {"model": model, "messages": messages}
+        if max_tokens:
+            # Reasoning tokens count against this budget; leave headroom.
+            kwargs["max_completion_tokens"] = max(int(max_tokens) * 4, 4096)
+        return self.client.chat.completions.create(**kwargs)
+
     def chat(
         self,
         messages: List[Dict[str, str]],
@@ -171,11 +194,9 @@ class ChatModel:
         max_tokens = self.cfg.max_tokens if max_tokens is None else max_tokens
 
         if prov == "azure-openai":
-            resp = self.client.chat.completions.create(
-                model=self.cfg.model or os.getenv("OPENAI_DEPLOYMENT_NAME", ""),
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
+            resp = self._openai_create(
+                self.cfg.model or os.getenv("OPENAI_DEPLOYMENT_NAME", ""),
+                messages, temperature, max_tokens,
             )
             text = resp.choices[0].message.content or ""
             meta = self._usage_dict(getattr(resp, "usage", None))
@@ -183,11 +204,9 @@ class ChatModel:
             return (text, meta) if return_meta else text
 
         elif prov == "openai":
-            resp = self.client.chat.completions.create(
-                model=self.cfg.model or os.getenv("OPENAI_MODEL", "gpt-4o"),
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
+            resp = self._openai_create(
+                self.cfg.model or os.getenv("OPENAI_MODEL", "gpt-4o"),
+                messages, temperature, max_tokens,
             )
             text = resp.choices[0].message.content or ""
             meta = self._usage_dict(getattr(resp, "usage", None))
@@ -209,6 +228,7 @@ class ChatModel:
                         options={
                             "temperature": temperature,
                             "num_predict": max_tokens,
+                            **({"num_ctx": self.cfg.num_ctx} if self.cfg.num_ctx else {}),
                         }
                     )
                 except Exception as e:
@@ -280,6 +300,8 @@ def load_llm_registry():
                 provider="ollama",
                 model=os.getenv(f"{slot}_MODEL", "llama3"),
                 api_base=os.getenv(f"{slot}_HOST") or os.getenv(f"{slot}_API_BASE") or os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+                temperature=float(os.getenv(f"{slot}_TEMPERATURE", "0") or 0),
+                num_ctx=int(os.getenv(f"{slot}_NUM_CTX", "0").split("#")[0].strip() or 0) or None,
             )
         else:
             continue

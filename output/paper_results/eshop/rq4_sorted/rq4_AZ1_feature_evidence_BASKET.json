@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Basket feature by handling API requests for basket operations such as adding, removing items, and checking out.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Represents the core data structure for a customer's basket, including items and quantities, which is central to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines individual items within a basket, supporting the feature's functionality of adding and updating items.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Handles persistence and retrieval of basket data using Redis, directly supporting the feature's backend operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Facilitates the checkout process for a basket, which is a key part of the feature's functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Provides gRPC-based services for basket operations, supporting the feature's integration with other services.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Handles basket-related requests in the mobile API gateway, enabling interaction with the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Handles basket-related requests in the web API gateway, enabling interaction with the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Processes integration events related to basket checkout, supporting the feature's interaction with other services.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/Basket.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Represents the basket in the web application's UI, supporting the feature's user-facing functionality.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.14285714285714285,
+    "mrr": 1.0,
+    "map": 0.14126984126984127
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Basket feature by handling API requests for basket operations such as adding, removing items, and checking out.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Represents the core data structure for a customer's basket, including items and quantities, which is central to the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines individual items within a basket, supporting the feature's functionality of adding and updating items.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles persistence and retrieval of basket data using Redis, directly supporting the feature's backend operations.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Facilitates the checkout process for a basket, which is a key part of the feature's functionality.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Provides gRPC-based services for basket operations, supporting the feature's integration with other services.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles basket-related requests in the mobile API gateway, enabling interaction with the Basket feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles basket-related requests in the web API gateway, enabling interaction with the Basket feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Processes integration events related to basket checkout, supporting the feature's interaction with other services.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/ViewModels/Basket.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Represents the basket in the web application's UI, supporting the feature's user-facing functionality.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 653,
+    "total_tokens": 10006
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 4.2
+}

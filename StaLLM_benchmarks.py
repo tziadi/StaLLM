@@ -5,11 +5,15 @@ from __future__ import annotations
 
 import csv
 import json
+import math
 import os
+import random
 import re
+import time
 import urllib.request
 import zipfile
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Optional
@@ -576,30 +580,42 @@ def run_dacos_smell_benchmark(
     *,
     prompt_template: str = DACOS_PROMPT_TEMPLATE,
     max_samples: Optional[int] = None,
+    workers: int = 1,
+    retries: int = 4,
 ) -> dict[str, Any]:
-    """Run a binary LLM smell classifier over DACOS/DACOSX samples."""
+    """Run a binary LLM smell classifier over DACOS/DACOSX samples.
 
-    rows = []
-    usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
-    for idx, sample in enumerate(samples, start=1):
-        if max_samples and idx > max_samples:
-            break
+    `workers > 1` issues requests concurrently; row order is preserved.
+    """
+
+    selected = list(samples)
+    if max_samples:
+        selected = selected[:max_samples]
+
+    def _classify(sample: SmellSample) -> tuple[dict[str, Any], dict[str, Any]]:
         prompt = _safe_dacos_format(prompt_template, {
             "smell": sample.smell,
             "language": sample.language,
             "code": sample.code[:12000],
         })
-        content, meta = llm.chat(
-            messages=[
-                {"role": "system", "content": "You classify code smells against a human oracle. Return strict JSON only."},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0,
-            max_tokens=700,
-            return_meta=True,
-        )
+        for attempt in range(retries + 1):
+            try:
+                content, meta = llm.chat(
+                    messages=[
+                        {"role": "system", "content": "You classify code smells against a human oracle. Return strict JSON only."},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0,
+                    max_tokens=700,
+                    return_meta=True,
+                )
+                break
+            except Exception:
+                if attempt == retries:
+                    raise
+                time.sleep(2 ** (attempt + 2))
         pred, confidence, rationale = _parse_dacos_prediction(content)
-        rows.append({
+        row = {
             "sample_id": sample.sample_id,
             "smell": sample.smell,
             "gold": bool(sample.label),
@@ -607,9 +623,20 @@ def run_dacos_smell_benchmark(
             "confidence": confidence,
             "rationale": rationale,
             "raw_response": content,
-        })
+        }
+        return row, meta or {}
+
+    if workers > 1:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            outputs = list(pool.map(_classify, selected))
+    else:
+        outputs = [_classify(sample) for sample in selected]
+
+    rows = [row for row, _ in outputs]
+    usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
+    for _, meta in outputs:
         for key in usage:
-            usage[key] += int((meta or {}).get(key, 0))
+            usage[key] += int(meta.get(key, 0))
 
     metrics = _binary_metrics(rows)
     return {"rows": rows, "metrics": metrics, "usage": usage}
@@ -625,7 +652,10 @@ def _parse_dacos_prediction(raw: Any) -> tuple[bool, Optional[float], str]:
         data = json.loads(text)
     except Exception:
         match = re.search(r"\{.*\}", text, flags=re.DOTALL)
-        data = json.loads(match.group(0)) if match else {}
+        try:
+            data = json.loads(match.group(0)) if match else {}
+        except Exception:
+            data = {}
     present = _to_bool_or_none((data or {}).get("present") if isinstance(data, dict) else None)
     confidence = None
     if isinstance(data, dict):
@@ -637,6 +667,44 @@ def _parse_dacos_prediction(raw: Any) -> tuple[bool, Optional[float], str]:
     return bool(present), confidence, rationale
 
 
+def _cohen_kappa(tp: int, fp: int, fn: int, tn: int) -> float:
+    n = tp + fp + fn + tn
+    if n == 0:
+        return 0.0
+    po = (tp + tn) / n
+    pe = ((tp + fp) * (tp + fn) + (tn + fn) * (tn + fp)) / (n * n)
+    return (po - pe) / (1 - pe) if (1 - pe) > 0 else 0.0
+
+
+def _bootstrap_ci_binary(
+    rows: list[dict[str, Any]],
+    n: int = 1000,
+    alpha: float = 0.05,
+    seed: int = 42,
+) -> dict[str, tuple[float, float]]:
+    rng = random.Random(seed)
+    k = len(rows)
+    if k == 0:
+        return {"f1_ci": (0.0, 0.0), "kappa_ci": (0.0, 0.0)}
+    f_vals, kappa_vals = [], []
+    for _ in range(n):
+        sample = rng.choices(rows, k=k)
+        tp = sum(1 for r in sample if r.get("gold") is True and r.get("predicted") is True)
+        fp = sum(1 for r in sample if r.get("gold") is False and r.get("predicted") is True)
+        fn = sum(1 for r in sample if r.get("gold") is True and r.get("predicted") is False)
+        tn = sum(1 for r in sample if r.get("gold") is False and r.get("predicted") is False)
+        p = tp / (tp + fp) if (tp + fp) else 0.0
+        r = tp / (tp + fn) if (tp + fn) else 0.0
+        f_vals.append(2 * p * r / (p + r) if (p + r) else 0.0)
+        kappa_vals.append(_cohen_kappa(tp, fp, fn, tn))
+    lo_idx = max(0, min(n - 1, int(alpha / 2 * n)))
+    hi_idx = max(0, min(n - 1, int((1 - alpha / 2) * n)))
+    def _ci(vals: list[float]) -> tuple[float, float]:
+        s = sorted(vals)
+        return (s[lo_idx], s[hi_idx])
+    return {"f1_ci": _ci(f_vals), "kappa_ci": _ci(kappa_vals)}
+
+
 def _binary_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     tp = sum(1 for row in rows if row.get("gold") is True and row.get("predicted") is True)
     fp = sum(1 for row in rows if row.get("gold") is False and row.get("predicted") is True)
@@ -646,11 +714,18 @@ def _binary_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
     recall = tp / (tp + fn) if (tp + fn) else 0.0
     f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
     accuracy = (tp + tn) / len(rows) if rows else 0.0
+    kappa = _cohen_kappa(tp, fp, fn, tn)
+    ci = _bootstrap_ci_binary(rows)
     return {
         "precision": precision,
         "recall": recall,
         "f1": f1,
         "accuracy": accuracy,
+        "kappa": kappa,
+        "f1_ci_lo": ci["f1_ci"][0],
+        "f1_ci_hi": ci["f1_ci"][1],
+        "kappa_ci_lo": ci["kappa_ci"][0],
+        "kappa_ci_hi": ci["kappa_ci"][1],
         "tp": tp,
         "fp": fp,
         "fn": fn,
@@ -675,7 +750,13 @@ def _safe_dacos_format(template: str, values: dict[str, Any]) -> str:
         return protected.format(**values)
 
 
-def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> list[MaintenanceTask]:
+def load_argouml_feature_tasks(
+    path: str,
+    *,
+    repo_zip: Optional[str] = None,
+    single_only: bool = False,
+    granularity: str = "file",
+) -> list[MaintenanceTask]:
     """Load ArgoUML SPL feature-location mappings.
 
     The public ArgoUML SPL benchmark has been reused in several formats. This
@@ -685,11 +766,19 @@ def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> 
     - feature, feature_name, scenario, concern
     - file, path, class, class_name, method, method_name
     - description, query
+
+    Args:
+        single_only: When True, keep only the 8 core single-feature scenarios
+            (no combined ``_and_`` variants).  Useful for controlled evaluation
+            where each task corresponds to exactly one independent feature.
     """
 
     path_obj = Path(path)
     if path_obj.is_dir():
-        return _load_argouml_directory(path_obj, repo_zip=repo_zip)
+        tasks = _load_argouml_directory(path_obj, repo_zip=repo_zip, granularity=granularity)
+        if single_only:
+            tasks = [t for t in tasks if "_and_" not in t.metadata.get("feature", "")]
+        return tasks
 
     rows = _load_rows(path)
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -736,7 +825,8 @@ def load_argouml_feature_tasks(path: str, *, repo_zip: Optional[str] = None) -> 
     return tasks
 
 
-def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> list[MaintenanceTask]:
+def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None,
+                            granularity: str = "file") -> list[MaintenanceTask]:
     """Load the ArgoUML SPL benchmark directory format.
 
     Expected layout:
@@ -763,12 +853,14 @@ def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> li
     tasks: list[MaintenanceTask] = []
     for gt_file in sorted(gt_dir.glob("*.txt")):
         feature_key = gt_file.stem
+        if feature_key.startswith("not_"):
+            continue
         gold = []
         for raw in gt_file.read_text(encoding="utf-8", errors="ignore").splitlines():
             file_name = _argouml_gt_line_to_file(raw)
             if file_name:
                 gold.append(LocalizationGold(file=file_name, symbol=_argouml_gt_line_to_symbol(raw)))
-        unique_gold = _dedupe_gold(gold)
+        unique_gold = _dedupe_gold(gold, granularity=granularity)
         if not unique_gold:
             continue
         query = _argouml_query_from_feature_key(feature_key, feature_info)
@@ -783,10 +875,60 @@ def _load_argouml_directory(path: Path, *, repo_zip: Optional[str] = None) -> li
             candidate_level="file",
             metadata={
                 "benchmark": "ArgoUML SPL feature location",
+                "granularity": granularity,
                 "feature": feature_key,
                 "source": str(gt_file),
                 "raw_locations": len(gold),
             },
+        ))
+    return tasks
+
+
+def load_feature_locations_csv_tasks(
+    path: str,
+    *,
+    repo_zip: Optional[str] = None,
+    project: str = "",
+    language: str = "",
+    descriptions: Optional[dict[str, str]] = None,
+    extensions: Optional[Iterable[str]] = None,
+) -> list[MaintenanceTask]:
+    """Load a `featureName;file;startLine;...` feature-location export (e.g. eShopOnContainers).
+
+    Gold locations are normalized to files, optionally restricted to `extensions`.
+    `descriptions` maps a feature name to a natural-language description used in
+    the query; without it the query only names the feature.
+    """
+
+    exts = tuple(e.lower() for e in extensions or [])
+    with open(path, newline="", encoding="utf-8", errors="ignore") as f:
+        sample = f.read(2048)
+        f.seek(0)
+        delimiter = ";" if sample.count(";") > sample.count(",") else ","
+        rows = list(csv.DictReader(f, delimiter=delimiter))
+    by_feature: dict[str, set[str]] = defaultdict(set)
+    for row in rows:
+        feature = str(row.get("featureName") or row.get("feature") or "").strip()
+        file_path = str(row.get("file") or "").strip()
+        if feature and file_path and (not exts or file_path.lower().endswith(exts)):
+            by_feature[feature].add(file_path)
+
+    tasks: list[MaintenanceTask] = []
+    for feature in sorted(by_feature):
+        description = (descriptions or {}).get(feature, "")
+        query = _feature_query(feature, [description] if description else [])
+        gold = tuple(LocalizationGold(file=f) for f in sorted(by_feature[feature]))
+        tasks.append(MaintenanceTask(
+            task_id=f"{_slug(project or 'project')}-feature-{_slug(feature)}",
+            task_type=MaintenanceTaskType.FEATURE_LOCATION,
+            project=project,
+            query=query,
+            gold_locations=gold,
+            repo_zip=repo_zip,
+            language=language,
+            candidate_level="file",
+            metadata={"benchmark": f"{project} feature location", "feature": feature.upper(),
+                      "source": path},
         ))
     return tasks
 
@@ -1016,12 +1158,20 @@ def _split_locations(value: Any) -> list[str]:
     return [x for x in out if x]
 
 
-def _dedupe_gold(items: Iterable[LocalizationGold]) -> list[LocalizationGold]:
-    seen = set()
+def _dedupe_gold(items: Iterable[LocalizationGold], granularity: str = "file") -> list[LocalizationGold]:
+    """Deduplicate gold entries.
+
+    granularity='file'   — one entry per file (existing behaviour, drops method symbols).
+    granularity='method' — one entry per (file, symbol) pair; keeps all methods.
+    """
+    seen: set = set()
     out = []
     for item in items:
-        key = item.normalized_file
-        if not key or key in seen:
+        if granularity == "method":
+            key = (item.normalized_file, (item.symbol or "").lower().strip())
+        else:
+            key = item.normalized_file
+        if not item.normalized_file or key in seen:
             continue
         seen.add(key)
         out.append(item)

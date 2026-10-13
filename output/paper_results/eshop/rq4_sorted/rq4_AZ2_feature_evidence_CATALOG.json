@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Catalog feature as a controller, likely handling API endpoints for catalog items, brands, types, and product information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Defines the CatalogItem model, which is central to managing catalog items and their information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Represents catalog brands, directly supporting the feature's brand management aspect.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 4,
+      "confidence": 0.97,
+      "rationale": "Represents catalog types, directly supporting the feature's type management aspect.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 5,
+      "confidence": 0.95,
+      "rationale": "Defines the database context for catalog entities, supporting persistence and retrieval of catalog data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 6,
+      "confidence": 0.93,
+      "rationale": "Configures the CatalogItem entity for the database, refining how catalog items are stored and managed.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs",
+      "rank": 7,
+      "confidence": 0.92,
+      "rationale": "Configures the CatalogBrand entity, supporting brand management in the catalog.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.92,
+      "rationale": "Configures the CatalogType entity, supporting type management in the catalog.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 9,
+      "confidence": 0.91,
+      "rationale": "Implements gRPC service for catalog operations, directly supporting remote access to catalog data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 10,
+      "confidence": 0.89,
+      "rationale": "Provides extension methods for CatalogItem, refining catalog item handling and manipulation.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Catalog feature as a controller, likely handling API endpoints for catalog items, brands, types, and product information.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Defines the CatalogItem model, which is central to managing catalog items and their information.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Represents catalog brands, directly supporting the feature's brand management aspect.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Represents catalog types, directly supporting the feature's type management aspect.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the database context for catalog entities, supporting persistence and retrieval of catalog data.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Configures the CatalogItem entity for the database, refining how catalog items are stored and managed.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Configures the CatalogBrand entity, supporting brand management in the catalog.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Configures the CatalogType entity, supporting type management in the catalog.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Implements gRPC service for catalog operations, directly supporting remote access to catalog data.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Provides extension methods for CatalogItem, refining catalog item handling and manipulation.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9355,
+    "completion_tokens": 626,
+    "total_tokens": 9981
+  },
+  "slot": "AZ2",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 5.8
+}

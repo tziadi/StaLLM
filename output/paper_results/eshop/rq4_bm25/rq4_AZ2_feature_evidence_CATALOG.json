@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Catalog API controller, likely handling catalog item, brand, type, and picture management endpoints.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Defines the CatalogItem model, central to catalog item information and stock representation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Represents the database context for catalog entities, supporting persistence and retrieval of catalog data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 4,
+      "confidence": 0.96,
+      "rationale": "Defines the CatalogBrand model, directly supporting catalog brand management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 5,
+      "confidence": 0.96,
+      "rationale": "Defines the CatalogType model, directly supporting catalog type management.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 6,
+      "confidence": 0.95,
+      "rationale": "Implements catalog-related service logic for the web storefront, likely interacting with the Catalog API.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 7,
+      "confidence": 0.93,
+      "rationale": "Configures the CatalogItem entity for database mapping, supporting catalog item persistence.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 8,
+      "confidence": 0.92,
+      "rationale": "Seeds initial catalog data (items, brands, types) into the database, supporting catalog feature setup.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/CatalogViewModels/IndexViewModel.cs",
+      "rank": 9,
+      "confidence": 0.91,
+      "rationale": "ViewModel for catalog item listing in the storefront UI, directly supporting catalog display.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 10,
+      "confidence": 0.9,
+      "rationale": "Implements gRPC service for catalog operations, supporting remote catalog feature access.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Catalog API controller, likely handling catalog item, brand, type, and picture management endpoints.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Defines the CatalogItem model, central to catalog item information and stock representation.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Represents the database context for catalog entities, supporting persistence and retrieval of catalog data.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Defines the CatalogBrand model, directly supporting catalog brand management.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Defines the CatalogType model, directly supporting catalog type management.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Implements catalog-related service logic for the web storefront, likely interacting with the Catalog API.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Configures the CatalogItem entity for database mapping, supporting catalog item persistence.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Seeds initial catalog data (items, brands, types) into the database, supporting catalog feature setup.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/ViewModels/CatalogViewModels/IndexViewModel.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"ViewModel for catalog item listing in the storefront UI, directly supporting catalog display.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Implements gRPC service for catalog operations, supporting remote catalog feature access.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9355,
+    "completion_tokens": 610,
+    "total_tokens": 9965
+  },
+  "slot": "AZ2",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 4.5
+}

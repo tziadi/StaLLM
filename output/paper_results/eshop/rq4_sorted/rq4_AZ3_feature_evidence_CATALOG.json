@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Primary REST API exposing catalog operations (items, brands, types, pictures, stock) to all clients, therefore central to implementing the Catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.88,
+      "rationale": "Core domain entity that represents a product in the catalog; contains item information, price, picture filename, and stock-related fields.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.82,
+      "rationale": "Entity Framework DbContext that persists CatalogItem, CatalogBrand, and CatalogType entities, directly supporting storage and retrieval of catalog data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 4,
+      "confidence": 0.78,
+      "rationale": "Configures the CatalogItem table mapping, columns, and constraints, refining how catalog data is stored in the database.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Domain entity for product brands, an essential dimension of the catalog managed by the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 6,
+      "confidence": 0.74,
+      "rationale": "Domain entity representing product types/categories, another key part of catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "gRPC service wrapping catalog functionality for internal microservice communication, directly exposing catalog data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Provides helper methods (e.g., picture URI composition) that refine how CatalogItem information is presented to storefront clients.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/CatalogSettings.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Holds configuration such as picture base URL and content paths, directly affecting catalog item picture handling.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CatalogController.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "MVC controller in the storefront that consumes catalog APIs to display items, brands, and types to end users, supporting the feature from the UI side.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Primary REST API exposing catalog operations (items, brands, types, pictures, stock) to all clients, therefore central to implementing the Catalog feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Core domain entity that represents a product in the catalog; contains item information, price, picture filename, and stock-related fields.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Entity Framework DbContext that persists CatalogItem, CatalogBrand, and CatalogType entities, directly supporting storage and retrieval of catalog data.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Configures the CatalogItem table mapping, columns, and constraints, refining how catalog data is stored in the database.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Domain entity for product brands, an essential dimension of the catalog managed by the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Domain entity representing product types/categories, another key part of catalog management.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"gRPC service wrapping catalog functionality for internal microservice communication, directly exposing catalog data.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Extensions/CatalogItemExtensions.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Provides helper methods (e.g., picture URI composition) that refine how CatalogItem information is presented to storefront clients.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Catalog/Catalog.API/CatalogSettings.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Holds configuration such as picture base URL and content paths, directly affecting catalog item picture handling.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Controllers/CatalogController.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"MVC controller in the storefront that consumes catalog APIs to display items, brands, and types to end users, supporting the feature from the UI side.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 1389,
+    "total_tokens": 10743
+  },
+  "slot": "AZ3",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 21.6
+}

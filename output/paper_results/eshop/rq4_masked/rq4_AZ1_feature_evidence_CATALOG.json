@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "This file likely defines the core data model for catalog items, which directly relates to managing product items, brands, types, and stock.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "The controller is responsible for handling API requests related to the catalog, which aligns with managing product information and stock.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "This file likely defines the database context for the catalog, which supports operations on product items, brands, and types.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "This file configures the database schema for catalog items, directly supporting the feature's data persistence needs.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/CatalogItem.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "This file defines the view model for catalog items, which is used to display product information in the storefront.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "This file seeds initial data for the catalog, including product items, brands, and types, which supports the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "This file handles integration events related to the catalog, which may include updates to product stock or information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "This file configures the database schema for catalog brands, which is part of managing product brands.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "This file configures the database schema for catalog types, which is part of managing product types.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/CatalogService.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "This service likely interacts with the catalog API to fetch and manage product data for the storefront.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"This file likely defines the core data model for catalog items, which directly relates to managing product items, brands, types, and stock.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"The controller is responsible for handling API requests related to the catalog, which aligns with managing product information and stock.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"This file likely defines the database context for the catalog, which supports operations on product items, brands, and types.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"This file configures the database schema for catalog items, directly supporting the feature's data persistence needs.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Web/WebMVC/ViewModels/CatalogItem.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"This file defines the view model for catalog items, which is used to display product information in the storefront.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContextSeed.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"This file seeds initial data for the catalog, including product items, brands, and types, which supports the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Catalog/Catalog.API/IntegrationEvents/CatalogIntegrationEventService.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"This file handles integration events related to the catalog, which may include updates to product stock or information.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"This file configures the database schema for catalog brands, which is part of managing product brands.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"This file configures the database schema for catalog types, which is part of managing product types.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Services/CatalogService.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"This service likely interacts with the catalog API to fetch and manage product data for the storefront.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9356,
+    "completion_tokens": 674,
+    "total_tokens": 10030
+  },
+  "slot": "AZ1",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 8.6
+}

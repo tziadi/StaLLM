@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 0.94,
+      "rationale": "Central domain entity that models the lifecycle of an order, including creation, status transitions (stock confirmation, payment, shipping, cancellation) and related invariants.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Public HTTP API that clients use to create, cancel, and query orders; orchestrates the full ordering workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 3,
+      "confidence": 0.83,
+      "rationale": "Enumeration/value object defining the possible states of an order (submitted, awaiting validation, stock confirmed, paid, shipped, cancelled).",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.81,
+      "rationale": "Application-layer handler that executes the creation of a new order at checkout, invoking domain logic and persisting the result.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Handles the cancellation command, updating order status and publishing related domain events.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Updates an order after stock validation, a key step in tracking order progression.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.72,
+      "rationale": "Transitions an order to the paid state once payment succeeds, integral to order tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.69,
+      "rationale": "Handles shipment command, moving the order to shipped status and completing the fulfillment pipeline.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Read-model queries that fetch order details and current status for tracking purposes.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Service that publishes integration events reflecting order status changes (stock confirmed, paid, shipped, cancelled) to other bounded contexts.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 0.94,\n    \"rationale\": \"Central domain entity that models the lifecycle of an order, including creation, status transitions (stock confirmation, payment, shipping, cancellation) and related invariants.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Public HTTP API that clients use to create, cancel, and query orders; orchestrates the full ordering workflow.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Enumeration/value object defining the possible states of an order (submitted, awaiting validation, stock confirmed, paid, shipped, cancelled).\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.81,\n    \"rationale\": \"Application-layer handler that executes the creation of a new order at checkout, invoking domain logic and persisting the result.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Handles the cancellation command, updating order status and publishing related domain events.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Updates an order after stock validation, a key step in tracking order progression.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Transitions an order to the paid state once payment succeeds, integral to order tracking.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.69,\n    \"rationale\": \"Handles shipment command, moving the order to shipped status and completing the fulfillment pipeline.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Read-model queries that fetch order details and current status for tracking purposes.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/OrderingIntegrationEventService.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Service that publishes integration events reflecting order status changes (stock confirmed, paid, shipped, cancelled) to other bounded contexts.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 1144,
+    "total_tokens": 10497
+  },
+  "slot": "AZ3",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 13.3
+}

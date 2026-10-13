@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-activitydiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ActionStateNotation.java",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Directly related to activity diagrams and their notation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Handles state-related notation, which is relevant to activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ActionStateNotationUml.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "UML-specific implementation for action state notation in activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/StateBodyNotationUml.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "UML-specific implementation for state body notation, relevant to activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Exploration rule for navigating states to activities, directly tied to activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "Handles state machine navigation, which is closely related to activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTop.java",
+      "rank": 7,
+      "confidence": 0.6,
+      "rationale": "Facilitates navigation within state machines, relevant to activity diagram workflows.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToEntry.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "Handles entry points for states, which are part of activity diagram sequences.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToExit.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Handles exit points for states, relevant to activity diagram transitions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java",
+      "rank": 10,
+      "confidence": 0.45,
+      "rationale": "Manages outgoing transitions from states, which are key components of activity diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.010638297872340425,
+    "hit@10": 1.0,
+    "recall@10": 0.010638297872340425,
+    "mrr": 0.25,
+    "map": 0.0026595744680851063
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ActionStateNotation.java\", \"confidence\": 0.9, \"rationale\": \"Directly related to activity diagrams and their notation.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java\", \"confidence\": 0.85, \"rationale\": \"Handles state-related notation, which is relevant to activity diagrams.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ActionStateNotationUml.java\", \"confidence\": 0.8, \"rationale\": \"UML-specific implementation for action state notation in activity diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/StateBodyNotationUml.java\", \"confidence\": 0.75, \"rationale\": \"UML-specific implementation for state body notation, relevant to activity diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java\", \"confidence\": 0.7, \"rationale\": \"Exploration rule for navigating states to activities, directly tied to activity diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java\", \"confidence\": 0.65, \"rationale\": \"Handles state machine navigation, which is closely related to activity diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTop.java\", \"confidence\": 0.6, \"rationale\": \"Facilitates navigation within state machines, relevant to activity diagram workflows.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToEntry.java\", \"confidence\": 0.55, \"rationale\": \"Handles entry points for states, which are part of activity diagram sequences.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToExit.java\", \"confidence\": 0.5, \"rationale\": \"Handles exit points for states, relevant to activity diagram transitions.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java\", \"confidence\": 0.45, \"rationale\": \"Manages outgoing transitions from states, which are key components of activity diagrams.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12404,
+    "completion_tokens": 603,
+    "total_tokens": 13007
+  },
+  "slot": "AZ1",
+  "feature": "ACTIVITYDIAGRAM",
+  "gold_count": 94,
+  "gold_visible": 14,
+  "candidate_order": "alphabetical",
+  "run": 3,
+  "elapsed_s": 6.2
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Core domain model for orders; likely contains logic for order creation, status tracking, and cancellation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Handles the creation of orders at checkout, a key part of the described process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Handles events triggered when a user checks out, initiating the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.92,
+      "rationale": "Handles the cancellation of orders, directly matching the cancellation aspect of the process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.9,
+      "rationale": "Handles updating order status after stock confirmation, a key step in the process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.88,
+      "rationale": "Handles updating order status to paid, relevant for payment tracking.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.86,
+      "rationale": "Handles order status when stock is rejected, part of the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs",
+      "rank": 8,
+      "confidence": 0.85,
+      "rationale": "Handles the shipment step of the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.84,
+      "rationale": "Handles integration events for stock confirmation, relevant for tracking order status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs",
+      "rank": 10,
+      "confidence": 0.83,
+      "rationale": "Handles events when payment succeeds, relevant for payment tracking in the order process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Core domain model for orders; likely contains logic for order creation, status tracking, and cancellation.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles the creation of orders at checkout, a key part of the described process.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Handles events triggered when a user checks out, initiating the order process.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Handles the cancellation of orders, directly matching the cancellation aspect of the process.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Handles updating order status after stock confirmation, a key step in the process.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Handles updating order status to paid, relevant for payment tracking.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockRejectedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Handles order status when stock is rejected, part of the order lifecycle.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommandHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles the shipment step of the order process.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.84,\n    \"rationale\": \"Handles integration events for stock confirmation, relevant for tracking order status.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderPaymentSucceededIntegrationEventHandler.cs\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Handles events when payment succeeds, relevant for payment tracking in the order process.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9334,
+    "completion_tokens": 636,
+    "total_tokens": 9970
+  },
+  "slot": "AZ2",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 10.4
+}

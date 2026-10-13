@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Core domain model for orders, directly representing the feature's primary entity.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Handles the creation of orders, a key part of the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Command object for creating orders, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Handles the transition of an order to the 'paid' status, a critical step in the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Handles stock confirmation for orders, a key step in the ordering workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Handles order cancellations, directly supporting the feature's cancellation functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Repository for managing order persistence, essential for the feature's data handling.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "API controller for managing orders, providing endpoints for the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Handles integration events for stock confirmation, supporting the feature's workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Represents the event for an order transitioning to 'paid' status, supporting the feature's lifecycle.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Core domain model for orders, directly representing the feature's primary entity.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles the creation of orders, a key part of the ordering process.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Command object for creating orders, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles the transition of an order to the 'paid' status, a critical step in the ordering process.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles stock confirmation for orders, a key step in the ordering workflow.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles order cancellations, directly supporting the feature's cancellation functionality.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Repository for managing order persistence, essential for the feature's data handling.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"API controller for managing orders, providing endpoints for the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles integration events for stock confirmation, supporting the feature's workflow.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Represents the event for an order transitioning to 'paid' status, supporting the feature's lifecycle.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 629,
+    "total_tokens": 9983
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 7.1
+}

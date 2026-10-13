@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Central domain model for orders, likely contains core logic for order creation, status tracking, and cancellation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Primary API controller for managing orders, directly supports order-related operations such as creation and status updates.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines the various statuses an order can have, crucial for tracking the order lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Command for creating orders, directly supports the feature's order creation functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Command for canceling orders, directly supports the feature's order cancellation functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 6,
+      "confidence": 0.8,
+      "rationale": "Integration event for stock confirmation, supports tracking order status during the lifecycle.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Handles queries related to orders, supports retrieving order details and status.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Repository for accessing and managing order data, supports persistence and retrieval of orders.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommand.cs",
+      "rank": 9,
+      "confidence": 0.75,
+      "rationale": "Command for shipping orders, directly supports the feature's shipment functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Integration event for order cancellation, supports tracking order status changes.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Central domain model for orders, likely contains core logic for order creation, status tracking, and cancellation.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary API controller for managing orders, directly supports order-related operations such as creation and status updates.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the various statuses an order can have, crucial for tracking the order lifecycle.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Command for creating orders, directly supports the feature's order creation functionality.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Command for canceling orders, directly supports the feature's order cancellation functionality.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Integration event for stock confirmation, supports tracking order status during the lifecycle.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles queries related to orders, supports retrieving order details and status.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Repository for accessing and managing order data, supports persistence and retrieval of orders.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommand.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Command for shipping orders, directly supports the feature's shipment functionality.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToCancelledIntegrationEvent.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Integration event for order cancellation, supports tracking order status changes.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 631,
+    "total_tokens": 9985
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "keyword_sorted",
+  "run": 3,
+  "elapsed_s": 3.8
+}

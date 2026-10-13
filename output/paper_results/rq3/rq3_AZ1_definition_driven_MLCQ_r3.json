@@ -1,0 +1,1830 @@
+{
+  "rows": [
+    {
+      "sample_id": "526",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class does not contain any methods, so there is no opportunity for a method to rely on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class does not contain any methods, so there is no opportunity for a method to rely on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "527",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The method is absent, and the class only contains static constants and a private constructor, so no method can be evaluated for length.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The method is absent, and the class only contains static constants and a private constructor, so no method can be evaluated for length.\"\n}\n```"
+    },
+    {
+      "sample_id": "528",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'UnorderedPartitionedKVWriter' centralizes numerous responsibilities, including buffer management, memory allocation, partition handling, serialization, and threading, indicating a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'UnorderedPartitionedKVWriter' centralizes numerous responsibilities, including buffer management, memory allocation, partition handling, serialization, and threading, indicating a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "529",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior and logic, such as buffer management, memory allocation, and writing operations, which go beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior and logic, such as buffer management, memory allocation, and writing operations, which go beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "530",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'setImageMagickPath' relies on 'FilenameUtils.normalize', which is external behavior, rather than operating on its own class's data or logic.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The method 'setImageMagickPath' relies on 'FilenameUtils.normalize', which is external behavior, rather than operating on its own class's data or logic.\"}\n```"
+    },
+    {
+      "sample_id": "531",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet are short and focused, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "532",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are concise, focused, and do not exhibit excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are concise, focused, and do not exhibit excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "533",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods rely heavily on the WritableUtils class for reading, writing, and calculating sizes, indicating a dependency on behavior from another class rather than their own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods rely heavily on the WritableUtils class for reading, writing, and calculating sizes, indicating a dependency on behavior from another class rather than their own.\"\n}\n```"
+    },
+    {
+      "sample_id": "534",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as constructors, validation logic, and an overridden method, indicating it is not primarily a data container.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains meaningful behavior such as constructors, validation logic, and an overridden method, indicating it is not primarily a data container.\"}\n```"
+    },
+    {
+      "sample_id": "535",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it primarily focuses on parsing logic and metadata policies, which are cohesive responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it primarily focuses on parsing logic and metadata policies, which are cohesive responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "536",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.85,
+      "rationale": "The class has multiple responsibilities related to request security, but it does not centralize an excessive number of collaborators or responsibilities to qualify as a god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.85,\n  \"rationale\": \"The class has multiple responsibilities related to request security, but it does not centralize an excessive number of collaborators or responsibilities to qualify as a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "537",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior, such as methods for checking security, redirecting requests, and determining page security, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains meaningful behavior, such as methods for checking security, redirecting requests, and determining page security, which goes beyond merely storing data.\"}\n```"
+    },
+    {
+      "sample_id": "538",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it primarily focuses on conditional rendering logic and informal parameter handling.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it primarily focuses on conditional rendering logic and informal parameter handling.\"\n}\n```"
+    },
+    {
+      "sample_id": "539",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as `test()`, `beginRender()`, and `afterRender()` methods, which perform logic beyond simple data storage.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as `test()`, `beginRender()`, and `afterRender()` methods, which perform logic beyond simple data storage.\"\n}\n```"
+    },
+    {
+      "sample_id": "540",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is not excessively long or doing too much; it is concise and focused on throwing an exception.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is not excessively long or doing too much; it is concise and focused on throwing an exception.\"\n}\n```"
+    },
+    {
+      "sample_id": "541",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not exhibit reliance on data or behavior from another class more than its own; it primarily throws an exception and does not interact with external classes in a way indicative of feature envy.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method does not exhibit reliance on data or behavior from another class more than its own; it primarily throws an exception and does not interact with external classes in a way indicative of feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "542",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getEndTagStyle' relies heavily on the 'VOID_ELEMENTS' data structure, which is external to its own class, indicating feature envy.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The method 'getEndTagStyle' relies heavily on the 'VOID_ELEMENTS' data structure, which is external to its own class, indicating feature envy.\"}\n```"
+    },
+    {
+      "sample_id": "543",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "544",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are short and focused, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "545",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily rely on their own class's fields (`size` and `insns`) rather than data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily rely on their own class's fields (`size` and `insns`) rather than data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "546",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code does not exhibit evidence of a god_class as the classes shown are abstract, have focused responsibilities, and do not centralize excessive collaborators or responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided code does not exhibit evidence of a god_class as the classes shown are abstract, have focused responsibilities, and do not centralize excessive collaborators or responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "547",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'ElementPropertyEvent' primarily stores data (element, oldValue, etc.) with little meaningful behavior, indicating a data_class smell.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The class 'ElementPropertyEvent' primarily stores data (element, oldValue, etc.) with little meaningful behavior, indicating a data_class smell.\"}\n```"
+    },
+    {
+      "sample_id": "548",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods rely heavily on behavior from the TraversalSource superclass rather than their own class, indicating feature envy.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The methods rely heavily on behavior from the TraversalSource superclass rather than their own class, indicating feature envy.\"}\n```"
+    },
+    {
+      "sample_id": "549",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The methods are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "552",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getPropertyMapping' is lengthy and performs multiple tasks, including retrieving mappings, splitting strings, iterating through properties, and handling nested logic, making it difficult to understand at a glance.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getPropertyMapping' is lengthy and performs multiple tasks, including retrieving mappings, splitting strings, iterating through properties, and handling nested logic, making it difficult to understand at a glance.\"\n}\n```"
+    },
+    {
+      "sample_id": "553",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getPropertyMapping' heavily relies on data and behavior from the 'mappings' object, which is passed as a parameter, rather than its own class's fields or methods.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getPropertyMapping' heavily relies on data and behavior from the 'mappings' object, which is passed as a parameter, rather than its own class's fields or methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "554",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'MailChimpServiceImpl' centralizes numerous responsibilities, including managing MailChimp lists, handling subscriptions, updating profiles, and managing merge fields, which indicates a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'MailChimpServiceImpl' centralizes numerous responsibilities, including managing MailChimp lists, handling subscriptions, updating profiles, and managing merge fields, which indicates a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "555",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class `MailChimpServiceImpl` contains significant behavior and logic, including multiple methods for interacting with MailChimp lists, processing profiles, and handling HTTP requests. This indicates it is not primarily a data container.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `MailChimpServiceImpl` contains significant behavior and logic, including multiple methods for interacting with MailChimp lists, processing profiles, and handling HTTP requests. This indicates it is not primarily a data container.\"\n}\n```"
+    },
+    {
+      "sample_id": "556",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it defines two nested classes with specific, focused responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it defines two nested classes with specific, focused responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "557",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'SessionAttributeElement' contains meaningful behavior in its 'addElement' method, which processes session attributes and appends them to a buffer. This goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'SessionAttributeElement' contains meaningful behavior in its 'addElement' method, which processes session attributes and appends them to a buffer. This goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "558",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code does not exhibit evidence of a god_class as the classes and methods shown are minimal, with no indication of centralized responsibilities or excessive collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code does not exhibit evidence of a god_class as the classes and methods shown are minimal, with no indication of centralized responsibilities or excessive collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "559",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'ChannelConfigException' primarily stores data (a message) and extends another class without adding meaningful behavior.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'ChannelConfigException' primarily stores data (a message) and extends another class without adding meaningful behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "562",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method implementations are short and straightforward, each performing a single, clear operation without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method implementations are short and straightforward, each performing a single, clear operation without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "563",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods interact exclusively with their own class's fields and do not rely on data or behavior from another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods interact exclusively with their own class's fields and do not rely on data or behavior from another class.\"}\n```"
+    },
+    {
+      "sample_id": "564",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'DynamicExpression' primarily interacts with its own class and local objects, without relying heavily on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'DynamicExpression' primarily interacts with its own class and local objects, without relying heavily on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "565",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'DynamicExpression' is concise and performs a single responsibility, making it easy to understand and not excessively long.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'DynamicExpression' is concise and performs a single responsibility, making it easy to understand and not excessively long.\"\n}\n```"
+    },
+    {
+      "sample_id": "566",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "No method in the provided code relies more on data or behavior from another class than its own class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"No method in the provided code relies more on data or behavior from another class than its own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "567",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'adjustRelativePath' is relatively long and performs multiple operations, including null/empty checks, path adjustments, file existence checks, and exception handling, making it harder to understand at a glance.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'adjustRelativePath' is relatively long and performs multiple operations, including null/empty checks, path adjustments, file existence checks, and exception handling, making it harder to understand at a glance.\"\n}\n```"
+    },
+    {
+      "sample_id": "568",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is an interface with a narrow and specific purpose, defining only two methods related to connection creation and transaction management, which does not indicate centralized responsibilities or excessive collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is an interface with a narrow and specific purpose, defining only two methods related to connection creation and transaction management, which does not indicate centralized responsibilities or excessive collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "569",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is an interface and defines meaningful behavior through its methods, such as creating connections and accessing a transaction registry, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class is an interface and defines meaningful behavior through its methods, such as creating connections and accessing a transaction registry, which goes beyond merely storing data.\"}\n```"
+    },
+    {
+      "sample_id": "570",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods primarily operate on their own class's fields (factory and global) and do not exhibit reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods primarily operate on their own class's fields (factory and global) and do not exhibit reliance on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "571",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods provided are concise and focused on specific tasks (hashCode and equals), which do not exhibit excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods provided are concise and focused on specific tasks (hashCode and equals), which do not exhibit excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "572",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods shown are relatively short and focused, with no evidence of excessive length or doing too much to be easily understood.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods shown are relatively short and focused, with no evidence of excessive length or doing too much to be easily understood.\"\n}\n```"
+    },
+    {
+      "sample_id": "573",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The 'endAccess' method relies on the 'ClusterManagerBase' class to perform its main functionality, indicating a dependency on another class's behavior rather than its own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The 'endAccess' method relies on the 'ClusterManagerBase' class to perform its main functionality, indicating a dependency on another class's behavior rather than its own.\"\n}\n```"
+    },
+    {
+      "sample_id": "574",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise and focused on specific tasks, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise and focused on specific tasks, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "575",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods rely heavily on manipulating data structures (e.g., perUserTestOnReturn, perUserTestWhileIdle) that appear to belong to another class or abstraction, rather than their own class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods rely heavily on manipulating data structures (e.g., perUserTestOnReturn, perUserTestWhileIdle) that appear to belong to another class or abstraction, rather than their own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "576",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getText' is concise and performs a single responsibility, making it easy to understand and not excessively long.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getText' is concise and performs a single responsibility, making it easy to understand and not excessively long.\"\n}\n```"
+    },
+    {
+      "sample_id": "577",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getText' primarily operates on its own parameter 'text' and does not rely on data or behavior from another class, which does not indicate feature envy.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getText' primarily operates on its own parameter 'text' and does not rely on data or behavior from another class, which does not indicate feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "578",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class FileSaveEventHandler has a single responsibility: handling file save events by delegating actions to the MainFrame class. It does not centralize many responsibilities or collaborators, which is characteristic of a god_class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class FileSaveEventHandler has a single responsibility: handling file save events by delegating actions to the MainFrame class. It does not centralize many responsibilities or collaborators, which is characteristic of a god_class.\"}\n```"
+    },
+    {
+      "sample_id": "579",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class `FileSaveEventHandler` primarily stores a reference to `MainFrame` and delegates behavior to it, without adding meaningful behavior of its own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `FileSaveEventHandler` primarily stores a reference to `MainFrame` and delegates behavior to it, without adding meaningful behavior of its own.\"\n}\n```"
+    },
+    {
+      "sample_id": "580",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'getMethod' is not excessively long and does not contain enough evidence to classify it as a long_method. It is concise and focused on a specific task.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getMethod' is not excessively long and does not contain enough evidence to classify it as a long_method. It is concise and focused on a specific task.\"\n}\n```"
+    },
+    {
+      "sample_id": "581",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The `getMethod` method relies heavily on the `Introspector` class to retrieve methods and perform operations, indicating a dependency on another class's behavior rather than its own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The `getMethod` method relies heavily on the `Introspector` class to retrieve methods and perform operations, indicating a dependency on another class's behavior rather than its own.\"\n}\n```"
+    },
+    {
+      "sample_id": "582",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it primarily focuses on widening the left side of annotations and interacting with the editor and document.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it primarily focuses on widening the left side of annotations and interacting with the editor and document.\"\n}\n```"
+    },
+    {
+      "sample_id": "583",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class WideLeftAnnotationSideAction contains meaningful behavior, such as updating annotations and interacting with an editor, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class WideLeftAnnotationSideAction contains meaningful behavior, such as updating annotations and interacting with an editor, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "586",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class primarily stores data (error_message) and provides minimal meaningful behavior beyond its constructor and a single method call to fadd.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class primarily stores data (error_message) and provides minimal meaningful behavior beyond its constructor and a single method call to fadd.\"\n}\n```"
+    },
+    {
+      "sample_id": "587",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'ErrorFrame' does not centralize many responsibilities or collaborators; it primarily extends 'VinciFrame' and adds a specific error-handling behavior.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class 'ErrorFrame' does not centralize many responsibilities or collaborators; it primarily extends 'VinciFrame' and adds a specific error-handling behavior.\"}\n```"
+    },
+    {
+      "sample_id": "588",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is an interface with narrowly scoped methods and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class is an interface with narrowly scoped methods and does not centralize excessive responsibilities or collaborators.\"}\n```"
+    },
+    {
+      "sample_id": "589",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'SearchByEdgeType' is an interface that primarily defines getters and stores data-related information without meaningful behavior or logic, which is characteristic of a data class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'SearchByEdgeType' is an interface that primarily defines getters and stores data-related information without meaningful behavior or logic, which is characteristic of a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "590",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code primarily access data within their own class and do not rely on behavior or data from another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code primarily access data within their own class and do not rely on behavior or data from another class.\"}\n```"
+    },
+    {
+      "sample_id": "591",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods are short and perform single, straightforward actions, indicating no evidence of a long_method smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The methods are short and perform single, straightforward actions, indicating no evidence of a long_method smell.\"}\n```"
+    },
+    {
+      "sample_id": "592",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The JobSchedulerService class centralizes numerous responsibilities, including job scheduling, execution, metrics tracking, semaphore management, and listener handling, which indicates a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The JobSchedulerService class centralizes numerous responsibilities, including job scheduling, execution, metrics tracking, semaphore management, and listener handling, which indicates a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "593",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class `JobSchedulerService` contains significant behavior, including methods for scheduling, job execution, and managing metrics, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `JobSchedulerService` contains significant behavior, including methods for scheduling, job execution, and managing metrics, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "596",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is an interface with no implementation or collaborators, so it does not centralize responsibilities or exhibit god_class characteristics.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The class is an interface with no implementation or collaborators, so it does not centralize responsibilities or exhibit god_class characteristics.\"}\n```"
+    },
+    {
+      "sample_id": "597",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'AdminUserCredentials' is an interface that appears to primarily define a data structure without meaningful behavior, as it extends another interface and does not add any methods or logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'AdminUserCredentials' is an interface that appears to primarily define a data structure without meaningful behavior, as it extends another interface and does not add any methods or logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "598",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class does not centralize many responsibilities or collaborators; it serves as an adapter with minimal behavior and specific overrides.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class does not centralize many responsibilities or collaborators; it serves as an adapter with minimal behavior and specific overrides.\"\n}\n```"
+    },
+    {
+      "sample_id": "599",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a data holder for overridden methods without meaningful behavior or additional logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a data holder for overridden methods without meaningful behavior or additional logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "600",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily focuses on array manipulation and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class primarily focuses on array manipulation and does not centralize excessive responsibilities or collaborators.\"}\n```"
+    },
+    {
+      "sample_id": "601",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior, such as methods for array manipulation (e.g., get, set, copyFromArray, copyToArray), which indicates it is not merely a data container.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior, such as methods for array manipulation (e.g., get, set, copyFromArray, copyToArray), which indicates it is not merely a data container.\"\n}\n```"
+    },
+    {
+      "sample_id": "602",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class primarily serves as a locale-specific resource bundle for error messages and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily serves as a locale-specific resource bundle for error messages and does not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "603",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'ErrorMessages_zh' primarily stores data in the form of error messages and provides minimal behavior, which is limited to returning the data structure via the 'getContents' method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'ErrorMessages_zh' primarily stores data in the form of error messages and provides minimal behavior, which is limited to returning the data structure via the 'getContents' method.\"\n}\n```"
+    },
+    {
+      "sample_id": "604",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method 'splitText' is very short and does not exhibit characteristics of a long_method, as it only throws an exception without additional logic or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method 'splitText' is very short and does not exhibit characteristics of a long_method, as it only throws an exception without additional logic or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "605",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'splitText' does not rely on data or behavior from another class; it simply throws an exception without interacting with external classes.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'splitText' does not rely on data or behavior from another class; it simply throws an exception without interacting with external classes.\"}\n```"
+    },
+    {
+      "sample_id": "606",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class ExsltBase does not centralize too many responsibilities or collaborators; it primarily provides utility methods for string and numeric conversions related to Node objects.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class ExsltBase does not centralize too many responsibilities or collaborators; it primarily provides utility methods for string and numeric conversions related to Node objects.\"}\n```"
+    },
+    {
+      "sample_id": "607",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains utility methods (`toString` and `toNumber`) that perform meaningful behavior, indicating it is not primarily a data container.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains utility methods (`toString` and `toNumber`) that perform meaningful behavior, indicating it is not primarily a data container.\"\n}\n```"
+    },
+    {
+      "sample_id": "608",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method 'hasAttribute' is short and focused, containing only a single error call and return statement.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'hasAttribute' is short and focused, containing only a single error call and return statement.\"\n}\n```"
+    },
+    {
+      "sample_id": "609",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short and focused, each performing a single responsibility of returning a specific type of BranchInstruction based on a boolean parameter.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are short and focused, each performing a single responsibility of returning a specific type of BranchInstruction based on a boolean parameter.\"\n}\n```"
+    },
+    {
+      "sample_id": "610",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods GT, GE, LT, and LE rely heavily on creating instances of other classes (e.g., IFGT, IF_ICMPGT, IFGE, IF_ICMPGE, etc.) rather than utilizing data or behavior from their own class.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The methods GT, GE, LT, and LE rely heavily on creating instances of other classes (e.g., IFGT, IF_ICMPGT, IFGE, IF_ICMPGE, etc.) rather than utilizing data or behavior from their own class.\"}\n```"
+    },
+    {
+      "sample_id": "611",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'angularRegistryPush_result' appears to primarily store data and lacks meaningful behavior, as evidenced by the focus on reading, writing, and validating its structure without additional logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'angularRegistryPush_result' appears to primarily store data and lacks meaningful behavior, as evidenced by the focus on reading, writing, and validating its structure without additional logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "612",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'validateToken' is significantly longer than the others, contains multiple nested logic blocks, and performs several distinct tasks, making it difficult to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'validateToken' is significantly longer than the others, contains multiple nested logic blocks, and performs several distinct tasks, making it difficult to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "613",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getName' heavily relies on the 'SignedJWT' and 'JWTClaimsSet' classes to extract the subject, indicating it depends more on external classes than its own class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getName' heavily relies on the 'SignedJWT' and 'JWTClaimsSet' classes to extract the subject, indicating it depends more on external classes than its own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "614",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The ZooInspectorPanel class centralizes numerous responsibilities, including UI management, event handling, connection management, and interaction with multiple collaborators such as ZooInspectorManager, Toolbar, and ZooInspectorNodeViewersPanel.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The ZooInspectorPanel class centralizes numerous responsibilities, including UI management, event handling, connection management, and interaction with multiple collaborators such as ZooInspectorManager, Toolbar, and ZooInspectorNodeViewersPanel.\"\n}\n```"
+    },
+    {
+      "sample_id": "615",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class ZooInspectorPanel contains significant behavior, including UI setup, event handling, and interaction with other components, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class ZooInspectorPanel contains significant behavior, including UI setup, event handling, and interaction with other components, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "616",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "617",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The `setProperty` method relies heavily on the `System` class and `internalProperties` object, indicating it accesses and manipulates external data or behavior more than its own class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The `setProperty` method relies heavily on the `System` class and `internalProperties` object, indicating it accesses and manipulates external data or behavior more than its own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "618",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class SparkVersion does not centralize too many responsibilities or collaborators; it primarily focuses on version comparison and representation.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class SparkVersion does not centralize too many responsibilities or collaborators; it primarily focuses on version comparison and representation.\"\n}\n```"
+    },
+    {
+      "sample_id": "619",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as version comparison methods (e.g., newerThan, olderThan, isSpark2) and utility methods (e.g., isSecretSocketSupported), which go beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as version comparison methods (e.g., newerThan, olderThan, isSpark2) and utility methods (e.g., isSecretSocketSupported), which go beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "620",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods provided are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods provided are short and focused, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "621",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code primarily interact with their own class's fields and do not exhibit reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code primarily interact with their own class's fields and do not exhibit reliance on data or behavior from another class.\"}\n```"
+    },
+    {
+      "sample_id": "622",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method relies heavily on data and behavior from external classes such as LogEntry, Log4JEntry, and TransactionEntry, rather than its own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method relies heavily on data and behavior from external classes such as LogEntry, Log4JEntry, and TransactionEntry, rather than its own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "623",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The constructor 'JsonGenerator' is excessively long, containing multiple nested loops, conditionals, and responsibilities, making it difficult to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor 'JsonGenerator' is excessively long, containing multiple nested loops, conditionals, and responsibilities, making it difficult to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "624",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The classes 'UndeployException' and 'StopException' primarily store data and inherit behavior from 'ServerCommandException' without adding meaningful behavior of their own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The classes 'UndeployException' and 'StopException' primarily store data and inherit behavior from 'ServerCommandException' without adding meaningful behavior of their own.\"\n}\n```"
+    },
+    {
+      "sample_id": "625",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code does not exhibit characteristics of a god_class, as the classes are small, focused, and do not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code does not exhibit characteristics of a god_class, as the classes are small, focused, and do not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "634",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is empty and does not centralize any responsibilities or collaborators.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The class is empty and does not centralize any responsibilities or collaborators.\"}\n```"
+    },
+    {
+      "sample_id": "635",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'PivotalNetworkInParams' appears to primarily serve as a container for data without any visible methods or meaningful behavior.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'PivotalNetworkInParams' appears to primarily serve as a container for data without any visible methods or meaningful behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "636",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short and focused, each performing a single responsibility of creating and returning an object. This does not meet the criteria for a long_method smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are short and focused, each performing a single responsibility of creating and returning an object. This does not meet the criteria for a long_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "637",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods rely heavily on data and behavior from other classes (e.g., getConnectionContext(), getRootV3(), getTokenProvider()) rather than their own class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods rely heavily on data and behavior from other classes (e.g., getConnectionContext(), getRootV3(), getTokenProvider()) rather than their own class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "638",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short and primarily delegate to constructors or other methods, which does not indicate a long_method smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are short and primarily delegate to constructors or other methods, which does not indicate a long_method smell.\"}\n```"
+    },
+    {
+      "sample_id": "639",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily delegate to constructors or factory methods without exhibiting reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily delegate to constructors or factory methods without exhibiting reliance on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "640",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise and focused on specific tasks, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise and focused on specific tasks, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "641",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceSubstitution' relies heavily on the 'Pattern' and 'Matcher' classes for its functionality, indicating it depends more on external classes than its own class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceSubstitution' relies heavily on the 'Pattern' and 'Matcher' classes for its functionality, indicating it depends more on external classes than its own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "642",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class primarily stores data (rpcDataPackage and errorCode) and provides getters and setters for them, with minimal meaningful behavior beyond constructors.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class primarily stores data (rpcDataPackage and errorCode) and provides getters and setters for them, with minimal meaningful behavior beyond constructors.\"\n}\n```"
+    },
+    {
+      "sample_id": "643",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class primarily serves as a custom exception with minimal responsibilities and collaborators, which does not align with the characteristics of a god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class primarily serves as a custom exception with minimal responsibilities and collaborators, which does not align with the characteristics of a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "644",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class _ApplicationInstancesResponse does not centralize too many responsibilities or collaborators; it primarily serves as a data container with deserialization logic.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class _ApplicationInstancesResponse does not centralize too many responsibilities or collaborators; it primarily serves as a data container with deserialization logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "645",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class '_ApplicationInstancesResponse' primarily stores data (a map of instances) and has minimal meaningful behavior, with the only additional functionality being a nested deserializer class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class '_ApplicationInstancesResponse' primarily stores data (a map of instances) and has minimal meaningful behavior, with the only additional functionality being a nested deserializer class.\"\n}\n```"
+    },
+    {
+      "sample_id": "648",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'from' is not excessively long and performs a straightforward mapping operation, making it easy to understand.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'from' is not excessively long and performs a straightforward mapping operation, making it easy to understand.\"\n}\n```"
+    },
+    {
+      "sample_id": "649",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'from' does not rely on data or behavior from another class; it operates solely on its own class's data and logic.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'from' does not rely on data or behavior from another class; it operates solely on its own class's data and logic.\"}\n```"
+    },
+    {
+      "sample_id": "650",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'IncludeAllLaunchConfigurationScope' primarily stores data and has minimal meaningful behavior, as it only overrides a single method with a trivial implementation.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The class 'IncludeAllLaunchConfigurationScope' primarily stores data and has minimal meaningful behavior, as it only overrides a single method with a trivial implementation.\"}\n```"
+    },
+    {
+      "sample_id": "651",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines small, focused classes with specific responsibilities, which does not indicate a god_class smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The code defines small, focused classes with specific responsibilities, which does not indicate a god_class smell.\"}\n```"
+    },
+    {
+      "sample_id": "652",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'DimsDataList' centralizes numerous responsibilities, including data manipulation, axis configuration, serialization, and complex logic for handling slices and dimensions, which are indicative of a god class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'DimsDataList' centralizes numerous responsibilities, including data manipulation, axis configuration, serialization, and complex logic for handling slices and dimensions, which are indicative of a god class.\"\n}\n```"
+    },
+    {
+      "sample_id": "653",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class DimsDataList contains significant behavior, including methods for manipulating, normalizing, and processing data, as well as complex logic for axis handling and serialization. This goes beyond the definition of a data_class, which primarily stores data with minimal behavior.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class DimsDataList contains significant behavior, including methods for manipulating, normalizing, and processing data, as well as complex logic for axis handling and serialization. This goes beyond the definition of a data_class, which primarily stores data with minimal behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "654",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are short and focused, each performing a single, clear operation without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are short and focused, each performing a single, clear operation without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "655",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods in the code rely heavily on data or behavior (e.g., setDataset, getDataset, setString, getString) that appear to belong to another class, suggesting feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the code rely heavily on data or behavior (e.g., setDataset, getDataset, setString, getString) that appear to belong to another class, suggesting feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "656",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'AttributesDeletedStrategy' has a single responsibility of handling the 'AttributesDeleted' event and does not centralize too many responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'AttributesDeletedStrategy' has a single responsibility of handling the 'AttributesDeleted' event and does not centralize too many responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "657",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'AttributesDeletedStrategy' primarily serves as a container for a single method that applies an event to modify a builder, with no meaningful behavior or additional logic beyond delegating to another class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'AttributesDeletedStrategy' primarily serves as a container for a single method that applies an event to modify a builder, with no meaningful behavior or additional logic beyond delegating to another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "658",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The methods in the provided code are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "659",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The `accept` method relies on the `Visitor` class to perform operations, indicating it depends more on external behavior than its own class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The `accept` method relies on the `Visitor` class to perform operations, indicating it depends more on external behavior than its own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "660",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'LiveSignalEnforcement' centralizes numerous responsibilities, including signal enforcement, caching, authorization, and message publishing, indicating a god_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'LiveSignalEnforcement' centralizes numerous responsibilities, including signal enforcement, caching, authorization, and message publishing, indicating a god_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "661",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class `LiveSignalEnforcement` and its nested `Provider` class contain significant behavior, including enforcement logic, caching, and signal processing, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class `LiveSignalEnforcement` and its nested `Provider` class contain significant behavior, including enforcement logic, caching, and signal processing, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "662",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it primarily provides utility functions for handling Map.Entry objects.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it primarily provides utility functions for handling Map.Entry objects.\"}\n```"
+    },
+    {
+      "sample_id": "663",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The classes 'MapKeyFunction' and 'MapValueFunction' primarily store data and provide minimal behavior, focusing only on extracting keys or values from a Map.Entry.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The classes 'MapKeyFunction' and 'MapValueFunction' primarily store data and provide minimal behavior, focusing only on extracting keys or values from a Map.Entry.\"\n}\n```"
+    },
+    {
+      "sample_id": "666",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods provided (equals and hashCode) are concise and focused on specific responsibilities, without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods provided (equals and hashCode) are concise and focused on specific responsibilities, without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "667",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the code primarily operate on the fields of their own class (e.g., 'message', 'type', 'isAccessible') and do not rely on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the code primarily operate on the fields of their own class (e.g., 'message', 'type', 'isAccessible') and do not rely on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "668",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is an interface with a single method and does not centralize many responsibilities or collaborators.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The class is an interface with a single method and does not centralize many responsibilities or collaborators.\"}\n```"
+    },
+    {
+      "sample_id": "669",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The JsonSerializable interface primarily defines a method for converting data to a JSONValue, indicating it mainly serves as a data holder with minimal behavior.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.95, \"rationale\": \"The JsonSerializable interface primarily defines a method for converting data to a JSONValue, indicating it mainly serves as a data holder with minimal behavior.\"}\n```"
+    },
+    {
+      "sample_id": "670",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods in the provided code are short, focused, and do not exhibit excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The methods in the provided code are short, focused, and do not exhibit excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "671",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the class primarily interact with its own fields (`filePath` and `data`) and do not exhibit reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the class primarily interact with its own fields (`filePath` and `data`) and do not exhibit reliance on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "674",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short, focused, and perform single, simple tasks, which does not align with the definition of a long_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are short, focused, and perform single, simple tasks, which does not align with the definition of a long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "675",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code snippet do not rely on data or behavior from another class; they are self-contained and return hardcoded values.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code snippet do not rely on data or behavior from another class; they are self-contained and return hardcoded values.\"\n}\n```"
+    },
+    {
+      "sample_id": "676",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The class is a simple data transfer object (DTO) with no centralized responsibilities or collaborators, making it not a god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class is a simple data transfer object (DTO) with no centralized responsibilities or collaborators, making it not a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "677",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'FileStateUpdateDto' primarily consists of getter and setter methods, indicating it mainly stores data without meaningful behavior.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.95, \"rationale\": \"The class 'FileStateUpdateDto' primarily consists of getter and setter methods, indicating it mainly stores data without meaningful behavior.\"}\n```"
+    },
+    {
+      "sample_id": "678",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are relatively short and focused on specific tasks, without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods are relatively short and focused on specific tasks, without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "679",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getSiblingIndexWithClassName' relies heavily on the 'Elements' class for behavior, indicating a dependency on another class's functionality rather than its own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getSiblingIndexWithClassName' relies heavily on the 'Elements' class for behavior, indicating a dependency on another class's functionality rather than its own.\"\n}\n```"
+    },
+    {
+      "sample_id": "680",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class 'MachineStoppedEvent' has a single responsibility of representing an event and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'MachineStoppedEvent' has a single responsibility of representing an event and does not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "681",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains meaningful behavior such as event dispatching and type association, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains meaningful behavior such as event dispatching and type association, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "682",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods in the code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"The methods in the code are short and focused, with no evidence of excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "683",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code do not rely on data or behavior from another class; they primarily interact with their own class's fields.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code do not rely on data or behavior from another class; they primarily interact with their own class's fields.\"\n}\n```"
+    },
+    {
+      "sample_id": "686",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'addProgress' relies on the 'ProgressReport' class to retrieve the task ID, indicating a dependency on another class's data or behavior.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'addProgress' relies on the 'ProgressReport' class to retrieve the task ID, indicating a dependency on another class's data or behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "687",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the provided code are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "688",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GoIntoAction does not centralize too many responsibilities or collaborators; it primarily focuses on managing 'Go Into' and 'Go Back' actions for the ProjectExplorerPresenter.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class GoIntoAction does not centralize too many responsibilities or collaborators; it primarily focuses on managing 'Go Into' and 'Go Back' actions for the ProjectExplorerPresenter.\"\n}\n```"
+    },
+    {
+      "sample_id": "689",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class 'GoIntoAction' contains meaningful behavior, such as updating the UI and handling user actions, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'GoIntoAction' contains meaningful behavior, such as updating the UI and handling user actions, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "690",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class 'Ipam' primarily serves as a data container with getter, setter, and utility methods, and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'Ipam' primarily serves as a data container with getter, setter, and utility methods, and does not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "691",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class 'Ipam' primarily consists of fields, getters, setters, and utility methods (e.g., equals, hashCode, toString) without meaningful behavior, indicating it is a data class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'Ipam' primarily consists of fields, getters, setters, and utility methods (e.g., equals, hashCode, toString) without meaningful behavior, indicating it is a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "692",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the code are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "693",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The 'equals' method relies heavily on the 'annotationType' and 'type' fields from another instance of the 'Key' class, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The 'equals' method relies heavily on the 'annotationType' and 'type' fields from another instance of the 'Key' class, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "694",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'ConstantPartitioner' has a single responsibility of managing document partitioning with a constant content type, and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ConstantPartitioner' has a single responsibility of managing document partitioning with a constant content type, and does not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "695",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily stores data fields such as 'legalContentTypes', 'contentType', 'documentLength', and 'documentHandle' with minimal meaningful behavior beyond basic getters, setters, and simple operations.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily stores data fields such as 'legalContentTypes', 'contentType', 'documentLength', and 'documentHandle' with minimal meaningful behavior beyond basic getters, setters, and simple operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "696",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceWith' is concise, focused, and does not exhibit excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceWith' is concise, focused, and does not exhibit excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "697",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'replaceWith' primarily interacts with its own class's methods and data, such as 'checkNotRemoved', 'notPermittedOnRootElement', 'insertAfter', 'getNextSibling', and 'remove', rather than relying heavily on another class's data or behavior.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'replaceWith' primarily interacts with its own class's methods and data, such as 'checkNotRemoved', 'notPermittedOnRootElement', 'insertAfter', 'getNextSibling', and 'remove', rather than relying heavily on another class's data or behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "698",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short, focused, and do not exhibit excessive length or complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are short, focused, and do not exhibit excessive length or complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "699",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods rely on their own class's fields and do not exhibit reliance on another class's data or behavior.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods rely on their own class's fields and do not exhibit reliance on another class's data or behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "700",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method implementations are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method implementations are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "701",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code primarily interact with their own class's data and behavior, without relying heavily on another class's data or methods.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the provided code primarily interact with their own class's data and behavior, without relying heavily on another class's data or methods.\"}\n```"
+    },
+    {
+      "sample_id": "702",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class 'SuiteInProgressInfo' has a single responsibility related to test state management and does not centralize excessive responsibilities or collaborators.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class 'SuiteInProgressInfo' has a single responsibility related to test state management and does not centralize excessive responsibilities or collaborators.\"\n}\n```"
+    },
+    {
+      "sample_id": "703",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class SuiteInProgressInfo contains meaningful behavior, such as the isProblem and getDescription methods, which operate on its data and provide functionality beyond simple data storage.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class SuiteInProgressInfo contains meaningful behavior, such as the isProblem and getDescription methods, which operate on its data and provide functionality beyond simple data storage.\"}\n```"
+    },
+    {
+      "sample_id": "704",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class 'MetaDataFactoryImpl' centralizes numerous responsibilities, including object creation for multiple types, string conversion, and exception handling, indicating it is a god_class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'MetaDataFactoryImpl' centralizes numerous responsibilities, including object creation for multiple types, string conversion, and exception handling, indicating it is a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "705",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior, including factory methods for creating various objects and handling string conversions, which goes beyond merely storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior, including factory methods for creating various objects and handling string conversions, which goes beyond merely storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "706",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GExpressionsHelper does not centralize too many responsibilities or collaborators; it primarily provides utility methods for comparing EClass objects.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class GExpressionsHelper does not centralize too many responsibilities or collaborators; it primarily provides utility methods for comparing EClass objects.\"}\n```"
+    },
+    {
+      "sample_id": "707",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class GExpressionsHelper primarily provides utility methods and does not primarily store data with little meaningful behavior, which is the defining characteristic of a data_class smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class GExpressionsHelper primarily provides utility methods and does not primarily store data with little meaningful behavior, which is the defining characteristic of a data_class smell.\"}\n```"
+    },
+    {
+      "sample_id": "708",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class 'ResizePolicyTests' does not centralize excessive responsibilities or collaborators; it primarily serves as a test suite with focused methods and helper classes.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class 'ResizePolicyTests' does not centralize excessive responsibilities or collaborators; it primarily serves as a test suite with focused methods and helper classes.\"\n}\n```"
+    },
+    {
+      "sample_id": "709",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The DimensionPart class primarily stores data (Dimension size) and provides basic getter, setter, and copy methods without meaningful behavior beyond simple data manipulation.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The DimensionPart class primarily stores data (Dimension size) and provides basic getter, setter, and copy methods without meaningful behavior beyond simple data manipulation.\"\n}\n```"
+    },
+    {
+      "sample_id": "710",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is not excessively long or doing too much; it primarily consists of simple operations and control flow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is not excessively long or doing too much; it primarily consists of simple operations and control flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "711",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not rely on data or behavior from another class; it primarily interacts with its own grammar access and internal state.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method does not rely on data or behavior from another class; it primarily interacts with its own grammar access and internal state.\"}\n```"
+    },
+    {
+      "sample_id": "712",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is not excessively long or doing too much; it primarily consists of a single assignment operation and related grammar access logic.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method is not excessively long or doing too much; it primarily consists of a single assignment operation and related grammar access logic.\"}\n```"
+    },
+    {
+      "sample_id": "713",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method does not rely on data or behavior from another class; it primarily interacts with its own class's grammar access and assignments.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method does not rely on data or behavior from another class; it primarily interacts with its own class's grammar access and assignments.\"}\n```"
+    },
+    {
+      "sample_id": "714",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class NodeOrderer does not centralize too many responsibilities or collaborators; its primary focus is on ordering nodes and levels within a graph layout, which is a cohesive responsibility.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class NodeOrderer does not centralize too many responsibilities or collaborators; its primary focus is on ordering nodes and levels within a graph layout, which is a cohesive responsibility.\"\n}\n```"
+    },
+    {
+      "sample_id": "715",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class `NodeOrderer` contains meaningful behavior, such as processing and ordering nodes, and is not limited to storing data.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class `NodeOrderer` contains meaningful behavior, such as processing and ordering nodes, and is not limited to storing data.\"\n}\n```"
+    },
+    {
+      "sample_id": "716",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'generatePositions' is not excessively long and does not appear to do too much to be easily understood based on the provided code snippet.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'generatePositions' is not excessively long and does not appear to do too much to be easily understood based on the provided code snippet.\"\n}\n```"
+    },
+    {
+      "sample_id": "717",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method 'generatePositions' relies heavily on the 'SelfLoopComponent' class to retrieve ports and perform operations, indicating a dependency on another class's data and behavior rather than its own.",
+      "raw_response": "```json\n{\"present\": true, \"confidence\": 0.85, \"rationale\": \"The method 'generatePositions' relies heavily on the 'SelfLoopComponent' class to retrieve ports and perform operations, indicating a dependency on another class's data and behavior rather than its own.\"}\n```"
+    },
+    {
+      "sample_id": "718",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class primarily serves as a data holder with getter and setter methods, and while it has some validation logic, it does not centralize excessive responsibilities or collaborators to qualify as a god_class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class primarily serves as a data holder with getter and setter methods, and while it has some validation logic, it does not centralize excessive responsibilities or collaborators to qualify as a god_class.\"\n}\n```"
+    },
+    {
+      "sample_id": "719",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily stores data fields (sharedSecret, keyPath, tokenExpirationSeconds, certificatePath) and provides getters and setters with minimal meaningful behavior, which aligns with the definition of a data_class smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily stores data fields (sharedSecret, keyPath, tokenExpirationSeconds, certificatePath) and provides getters and setters with minimal meaningful behavior, which aligns with the definition of a data_class smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "720",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code snippet access and return data from their own class, not relying on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code snippet access and return data from their own class, not relying on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "721",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short, focused, and perform single, clear tasks, which does not indicate a long_method smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The methods in the provided code are short, focused, and perform single, clear tasks, which does not indicate a long_method smell.\"}\n```"
+    },
+    {
+      "sample_id": "722",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'get' has a long parameter list and performs multiple operations, making it difficult to understand and suggesting it is too long.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'get' has a long parameter list and performs multiple operations, making it difficult to understand and suggesting it is too long.\"\n}\n```"
+    },
+    {
+      "sample_id": "723",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'get' primarily operates on its own parameters and internal logic, without relying excessively on data or behavior from another class.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method 'get' primarily operates on its own parameters and internal logic, without relying excessively on data or behavior from another class.\"}\n```"
+    },
+    {
+      "sample_id": "724",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code are short and focused, with no evidence of excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the provided code are short and focused, with no evidence of excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "725",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code primarily interact with their own class's fields (e.g., 'port') and do not exhibit reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code primarily interact with their own class's fields (e.g., 'port') and do not exhibit reliance on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "726",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet does not contain a method that is excessively long or does too much; it primarily consists of a class definition and short constructors.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet does not contain a method that is excessively long or does too much; it primarily consists of a class definition and short constructors.\"\n}\n```"
+    },
+    {
+      "sample_id": "727",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code does not show any method that relies more on data or behavior from another class than its own class, which is the defining characteristic of the feature_envy smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code does not show any method that relies more on data or behavior from another class than its own class, which is the defining characteristic of the feature_envy smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "728",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods are short and focused, each performing a single, clear responsibility without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The methods are short and focused, each performing a single, clear responsibility without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "729",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The methods rely on the 'notificationMessage' object to perform their primary functionality, indicating a dependency on another class's data or behavior rather than their own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods rely on the 'notificationMessage' object to perform their primary functionality, indicating a dependency on another class's data or behavior rather than their own.\"\n}\n```"
+    },
+    {
+      "sample_id": "730",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The 'Build' class primarily stores data (e.g., 'version') and provides basic getter and setter methods without meaningful behavior.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The 'Build' class primarily stores data (e.g., 'version') and provides basic getter and setter methods without meaningful behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "731",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize many responsibilities or collaborators; it primarily stores data and provides simple getters and setters.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize many responsibilities or collaborators; it primarily stores data and provides simple getters and setters.\"\n}\n```"
+    },
+    {
+      "sample_id": "732",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The Subchannel class primarily stores data (numRods, rodDiameter, pitch) and provides getters, setters, and basic operations like equals, hashCode, and clone, with minimal meaningful behavior beyond data management.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The Subchannel class primarily stores data (numRods, rodDiameter, pitch) and provides getters, setters, and basic operations like equals, hashCode, and clone, with minimal meaningful behavior beyond data management.\"\n}\n```"
+    },
+    {
+      "sample_id": "733",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class does not centralize too many responsibilities or collaborators; it primarily manages attributes and behaviors related to subchannel properties and inherits from a parent class, Pipe.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class does not centralize too many responsibilities or collaborators; it primarily manages attributes and behaviors related to subchannel properties and inherits from a parent class, Pipe.\"\n}\n```"
+    },
+    {
+      "sample_id": "736",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code do not exhibit reliance on data or behavior from another class more than their own class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code do not exhibit reliance on data or behavior from another class more than their own class.\"\n}\n```"
+    },
+    {
+      "sample_id": "737",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods provided are constructors and are relatively short, focusing on initialization without excessive length or complexity.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods provided are constructors and are relatively short, focusing on initialization without excessive length or complexity.\"}\n```"
+    },
+    {
+      "sample_id": "738",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method 'onCompleteFailure' relies on '_callback' and 'getEndPoint', which are likely external to its own class, indicating a dependency on another class's data or behavior.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method 'onCompleteFailure' relies on '_callback' and 'getEndPoint', which are likely external to its own class, indicating a dependency on another class's data or behavior.\"\n}\n```"
+    },
+    {
+      "sample_id": "739",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods are short and focused, with no evidence of excessive length or doing too much.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods are short and focused, with no evidence of excessive length or doing too much.\"\n}\n```"
+    },
+    {
+      "sample_id": "740",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method lengths are short and focused, with no evidence of excessive length or doing too much to hinder understanding.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method lengths are short and focused, with no evidence of excessive length or doing too much to hinder understanding.\"\n}\n```"
+    },
+    {
+      "sample_id": "741",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method relies heavily on the behavior and data of the 'lwM2mPath' class, such as 'isObjectInstance()', 'getObjectId()', and 'getObjectInstanceId()', indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method relies heavily on the behavior and data of the 'lwM2mPath' class, such as 'isObjectInstance()', 'getObjectId()', and 'getObjectInstanceId()', indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "742",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'resolveGenericRef' heavily relies on the 'GenericRef' class and its methods (e.g., 'ref.setGenericFromType'), indicating a dependency on another class's data and behavior rather than its own.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'resolveGenericRef' heavily relies on the 'GenericRef' class and its methods (e.g., 'ref.setGenericFromType'), indicating a dependency on another class's data and behavior rather than its own.\"\n}\n```"
+    },
+    {
+      "sample_id": "743",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'resolveGenericRef' is too long and performs multiple tasks, including type checking, recursive calls, and setting generic references, making it difficult to understand at a glance.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'resolveGenericRef' is too long and performs multiple tasks, including type checking, recursive calls, and setting generic references, making it difficult to understand at a glance.\"\n}\n```"
+    },
+    {
+      "sample_id": "744",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the provided code are short and focused on setting or unsetting specific fields, which does not indicate a long_method smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the provided code are short and focused on setting or unsetting specific fields, which does not indicate a long_method smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "745",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the provided code primarily interact with their own class's fields and do not exhibit reliance on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods in the provided code primarily interact with their own class's fields and do not exhibit reliance on data or behavior from another class.\"\n}\n```"
+    },
+    {
+      "sample_id": "746",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class primarily stores data with simple getters and setters, showing no evidence of centralized responsibilities or excessive collaboration.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class primarily stores data with simple getters and setters, showing no evidence of centralized responsibilities or excessive collaboration.\"\n}\n```"
+    },
+    {
+      "sample_id": "747",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 1.0,
+      "rationale": "The class 'TestTopic' primarily consists of fields and their corresponding getter and setter methods, with no meaningful behavior or logic, which is characteristic of a data class.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 1.0,\n  \"rationale\": \"The class 'TestTopic' primarily consists of fields and their corresponding getter and setter methods, with no meaningful behavior or logic, which is characteristic of a data class.\"\n}\n```"
+    },
+    {
+      "sample_id": "748",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'hasPermission' relies heavily on the 'GwtSessionPermission' class for its behavior, including instantiating and passing it to another method, indicating feature envy.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'hasPermission' relies heavily on the 'GwtSessionPermission' class for its behavior, including instantiating and passing it to another method, indicating feature envy.\"\n}\n```"
+    },
+    {
+      "sample_id": "749",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'hasPermission' is concise, performs a single responsibility, and delegates the actual permission check to another method. It does not exhibit characteristics of a long_method.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'hasPermission' is concise, performs a single responsibility, and delegates the actual permission check to another method. It does not exhibit characteristics of a long_method.\"\n}\n```"
+    },
+    {
+      "sample_id": "750",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The methods are short and perform simple getter and setter operations, which do not indicate a long_method smell.",
+      "raw_response": "```json\n{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The methods are short and perform simple getter and setter operations, which do not indicate a long_method smell.\"}\n```"
+    },
+    {
+      "sample_id": "751",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods in the code primarily interact with their own class's fields and do not rely on data or behavior from another class.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods in the code primarily interact with their own class's fields and do not rely on data or behavior from another class.\"\n}\n```"
+    }
+  ],
+  "metrics": {
+    "precision": 0.3968253968253968,
+    "recall": 0.6944444444444444,
+    "f1": 0.5050505050505051,
+    "accuracy": 0.755,
+    "kappa": 0.3579664570230609,
+    "f1_ci_lo": 0.3783783783783784,
+    "f1_ci_hi": 0.6170212765957447,
+    "kappa_ci_lo": 0.21956295525494257,
+    "kappa_ci_hi": 0.49474803882462454,
+    "tp": 25,
+    "fp": 38,
+    "fn": 11,
+    "tn": 126,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 131308,
+    "completion_tokens": 10968,
+    "total_tokens": 142276
+  },
+  "slot": "AZ1",
+  "prompt": "definition_driven",
+  "dataset": "MLCQ",
+  "run": 3,
+  "elapsed_s": 79.6
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/SDNotationSettings.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "File name directly references 'SD' (Sequence Diagram) and 'Notation', indicating strong relevance to sequence diagram features and their settings.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Messages are core elements in sequence diagrams; this file likely handles their notation and display.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
+      "rank": 3,
+      "confidence": 0.91,
+      "rationale": "File name includes 'SDMessage' and 'Uml', strongly suggesting it deals with sequence diagram messages in UML.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
+      "rank": 4,
+      "confidence": 0.89,
+      "rationale": "Explicitly references navigation from classifier to sequence diagram, indicating involvement in sequence diagram feature location.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
+      "rank": 5,
+      "confidence": 0.88,
+      "rationale": "Handles navigation from operations to sequence diagrams, likely relevant to sequence diagram feature implementation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
+      "rank": 6,
+      "confidence": 0.87,
+      "rationale": "Handles UML notation for messages, which are central to sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/MessageNodeBuilder.java",
+      "rank": 7,
+      "confidence": 0.85,
+      "rationale": "File name suggests it builds message nodes, which are key elements in sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
+      "rank": 8,
+      "confidence": 0.84,
+      "rationale": "Interactions and messages are fundamental to sequence diagrams; this file likely manages their relationship.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ClassifierRoleNotationUml.java",
+      "rank": 9,
+      "confidence": 0.82,
+      "rationale": "Classifier roles are represented as lifelines in sequence diagrams; this file likely handles their notation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/InitNotationUml.java",
+      "rank": 10,
+      "confidence": 0.8,
+      "rationale": "Initialization of UML notation providers, possibly including sequence diagram elements.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.02531645569620253,
+    "hit@10": 1.0,
+    "recall@10": 0.0379746835443038,
+    "mrr": 0.25,
+    "map": 0.012447257383966246
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/notation/SDNotationSettings.java\", \"confidence\": 0.95, \"rationale\": \"File name directly references 'SD' (Sequence Diagram) and 'Notation', indicating strong relevance to sequence diagram features and their settings.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\", \"confidence\": 0.92, \"rationale\": \"Messages are core elements in sequence diagrams; this file likely handles their notation and display.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\", \"confidence\": 0.91, \"rationale\": \"File name includes 'SDMessage' and 'Uml', strongly suggesting it deals with sequence diagram messages in UML.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.89, \"rationale\": \"Explicitly references navigation from classifier to sequence diagram, indicating involvement in sequence diagram feature location.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\", \"confidence\": 0.88, \"rationale\": \"Handles navigation from operations to sequence diagrams, likely relevant to sequence diagram feature implementation.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\", \"confidence\": 0.87, \"rationale\": \"Handles UML notation for messages, which are central to sequence diagrams.\"},\n  {\"rank\": 7, \"file\": \"modules/dev/src/org/argouml/dev/MessageNodeBuilder.java\", \"confidence\": 0.85, \"rationale\": \"File name suggests it builds message nodes, which are key elements in sequence diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.84, \"rationale\": \"Interactions and messages are fundamental to sequence diagrams; this file likely manages their relationship.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ClassifierRoleNotationUml.java\", \"confidence\": 0.82, \"rationale\": \"Classifier roles are represented as lifelines in sequence diagrams; this file likely handles their notation.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/InitNotationUml.java\", \"confidence\": 0.80, \"rationale\": \"Initialization of UML notation providers, possibly including sequence diagram elements.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12414,
+    "completion_tokens": 635,
+    "total_tokens": 13049
+  },
+  "slot": "AZ2",
+  "feature": "SEQUENCEDIAGRAM",
+  "gold_count": 79,
+  "gold_visible": 12,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 6.3
+}

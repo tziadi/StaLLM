@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly handles basket-related operations such as adding, removing items, and checking out.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Implements the storage and retrieval of basket data using Redis, which is central to basket functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines the structure of a customer's basket, including items and quantities.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Represents individual items within a basket, including their properties such as quantity.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Handles the event triggered when a user checks out their basket, linking basket functionality to order creation.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Processes events related to starting an order, which is closely tied to basket checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Provides gRPC-based basket operations, supporting remote basket management.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CartController.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Manages cart-related actions in the web application, which overlaps with basket functionality.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/BasketService.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Implements basket-related services for the web application, supporting user interactions with their basket.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/Basket.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Defines the basket view model used in the web application, representing basket data for UI rendering.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly handles basket-related operations such as adding, removing items, and checking out.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Implements the storage and retrieval of basket data using Redis, which is central to basket functionality.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the structure of a customer's basket, including items and quantities.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Represents individual items within a basket, including their properties such as quantity.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles the event triggered when a user checks out their basket, linking basket functionality to order creation.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Processes events related to starting an order, which is closely tied to basket checkout.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Provides gRPC-based basket operations, supporting remote basket management.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Web/WebMVC/Controllers/CartController.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Manages cart-related actions in the web application, which overlaps with basket functionality.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/Services/BasketService.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Implements basket-related services for the web application, supporting user interactions with their basket.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/ViewModels/Basket.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Defines the basket view model used in the web application, representing basket data for UI rendering.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 612,
+    "total_tokens": 9965
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "alphabetical",
+  "run": 2,
+  "elapsed_s": 4.6
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly manages the basket operations such as adding, removing items, and updating quantities, which aligns closely with the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Represents the data structure for a customer's basket, which is central to the feature's functionality.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Handles the persistence and retrieval of basket data, supporting the core operations of the feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Acts as a gateway for basket-related operations in the mobile context, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Provides basket-related operations for the web interface, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Defines the structure of individual items in the basket, which is essential for implementing the feature.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Mobile.Bff.Shopping/aggregator/Models/BasketData.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Represents basket data in the mobile gateway, supporting the feature's operations.",
+      "method": ""
+    },
+    {
+      "file": "ApiGateways/Web.Bff.Shopping/aggregator/Models/BasketData.cs",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Represents basket data in the web gateway, supporting the feature's operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 9,
+      "confidence": 0.65,
+      "rationale": "Handles the checkout process for the basket, which is a key part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Controllers/CartController.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Manages cart-related actions in the web MVC application, which is related to the feature.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.12698412698412698,
+    "mrr": 1.0,
+    "map": 0.1202821869488536
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Directly manages the basket operations such as adding, removing items, and updating quantities, which aligns closely with the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Represents the data structure for a customer's basket, which is central to the feature's functionality.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles the persistence and retrieval of basket data, supporting the core operations of the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Acts as a gateway for basket-related operations in the mobile context, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Controllers/BasketController.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Provides basket-related operations for the web interface, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Defines the structure of individual items in the basket, which is essential for implementing the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"ApiGateways/Mobile.Bff.Shopping/aggregator/Models/BasketData.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Represents basket data in the mobile gateway, supporting the feature's operations.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"ApiGateways/Web.Bff.Shopping/aggregator/Models/BasketData.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Represents basket data in the web gateway, supporting the feature's operations.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Handles the checkout process for the basket, which is a key part of the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/Controllers/CartController.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Manages cart-related actions in the web MVC application, which is related to the feature.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9354,
+    "completion_tokens": 644,
+    "total_tokens": 9998
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "bm25_masked",
+  "run": 2,
+  "elapsed_s": 5.2
+}

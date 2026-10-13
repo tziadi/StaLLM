@@ -1,9 +1,12 @@
 # StaLLM_tasks.py
-"""Task abstractions for extending StarLLM beyond static-analysis spans.
+"""Activity abstractions for extending StarLLM beyond static-analysis spans.
 
 This module is intentionally independent from the current static-analysis
-pipeline. It defines a small interchange format for localization tasks such as
-feature location and bug location, plus ranking metrics shared by both tasks.
+pipeline. It defines a small interchange format for localization activities
+such as feature location and bug location, plus ranking metrics shared by both.
+
+The class names keep "Task" for backward compatibility with existing benchmark
+adapters and CLI flags; user-facing text should prefer "activity".
 """
 
 from __future__ import annotations
@@ -11,6 +14,7 @@ from __future__ import annotations
 import csv
 import json
 import os
+import re
 import zipfile
 from dataclasses import dataclass, field
 from enum import StrEnum
@@ -75,10 +79,30 @@ class RankedLocation:
     rank: int
     confidence: Optional[float] = None
     rationale: str = ""
+    method: str = ""
 
     @property
     def normalized_file(self) -> str:
         return normalize_path(self.file)
+
+
+@dataclass(frozen=True)
+class MethodCandidate:
+    """A Java method extracted from a source file."""
+
+    file: str        # relative path: org/argouml/Foo.java
+    class_name: str  # simple class name
+    method_name: str # method name (constructor = class name)
+    params: str      # comma-separated param types
+    line: int        # declaration line
+
+    @property
+    def canonical(self) -> str:
+        return f"{self.file} :: {self.method_name}({self.params})"
+
+    @property
+    def short(self) -> str:
+        return f"{self.method_name}({self.params})"
 
 
 LOCATION_PROMPT_TEMPLATES: dict[str, str] = {
@@ -357,8 +381,18 @@ def summarize_location_results(results: Iterable[dict[str, Any]]) -> dict[str, f
     return {key: totals[key] / counts[key] for key in sorted(totals) if counts.get(key)}
 
 
-def list_repo_candidates(repo_zip: str, allowed_exts: Optional[Iterable[str]] = None) -> list[str]:
-    """List source-code candidate paths from a repository ZIP."""
+def list_repo_candidates(
+    repo_zip: str,
+    allowed_exts: Optional[Iterable[str]] = None,
+    feature_hint: Optional[str] = None,
+) -> list[str]:
+    """List source-code candidate paths from a repository ZIP.
+
+    When `feature_hint` is provided (e.g. the feature name "DEPLOYMENTDIAGRAM"),
+    the list is pre-sorted so that paths whose basename or parent directory
+    contains the lowercased keyword appear first, improving budget coverage
+    for features whose implementation lies in lexicographically-late packages.
+    """
 
     allowed = tuple(ext.lower() for ext in allowed_exts or [])
     candidates: list[str] = []
@@ -372,7 +406,322 @@ def list_repo_candidates(repo_zip: str, allowed_exts: Optional[Iterable[str]] = 
             if allowed and not name.lower().endswith(allowed):
                 continue
             candidates.append(name)
-    return sorted(candidates)
+    candidates.sort()
+    if feature_hint:
+        kw = feature_hint.lower()
+        def _sort_key(path: str) -> int:
+            p = path.lower()
+            if kw in os.path.basename(p):
+                return 0
+            if kw in p:
+                return 1
+            return 2
+        candidates.sort(key=_sort_key)
+    return candidates
+
+
+# ── Method-level localization ──────────────────────────────────────────────────
+
+METHOD_LOCATION_PROMPT = """You are performing method-level feature location in a Java project.
+
+Goal: identify the specific methods that implement, refine, or directly support the requested feature.
+
+Project: {project}
+Feature query:
+{query}
+
+Candidate methods (format: file :: methodName(params) [line]):
+{candidate_text}
+
+Return strict JSON only. Rank the top {top_k} methods most relevant to the feature.
+Each item must include: rank (int), file (string), method (string, exact name from candidate), confidence (0.0–1.0), rationale (one sentence).
+Example: [{{"rank": 1, "file": "org/Foo.java", "method": "doThing(Object)", "confidence": 0.9, "rationale": "..."}}]
+"""
+
+_METHOD_SIG_RE = re.compile(
+    r"(?:public|protected|private|static|final|abstract|synchronized|native|\s)*"
+    r"[\w<>\[\],\s]+\s+(\w+)\s*\(([^)]*)\)\s*(?:throws[^{;]+)?\s*[{;]",
+    re.MULTILINE,
+)
+
+
+def extract_java_methods_from_zip(
+    repo_zip: str,
+    file_paths: Iterable[str],
+    max_methods_per_file: int = 30,
+) -> list[MethodCandidate]:
+    """Extract method signatures from Java files inside a ZIP.
+
+    Uses javalang when available; falls back to regex extraction.
+    """
+    candidates: list[MethodCandidate] = []
+    try:
+        import javalang as _jl
+        _use_javalang = True
+    except ImportError:
+        _use_javalang = False
+
+    with zipfile.ZipFile(repo_zip, "r") as zf:
+        for fpath in file_paths:
+            try:
+                src = zf.read(fpath).decode("utf-8", errors="replace")
+            except Exception:
+                continue
+            # derive relative path: strip common src-root prefixes
+            rel = re.sub(r"^.*?/src/", "", fpath)
+            rel = re.sub(r"^.*?/java/", "", rel)
+            cls_name = os.path.basename(fpath).removesuffix(".java")
+            methods = _extract_methods_javalang(src, rel, cls_name, _use_javalang)
+            if not methods:
+                methods = _extract_methods_regex(src, rel, cls_name)
+            candidates.extend(methods[:max_methods_per_file])
+    return candidates
+
+
+def _extract_methods_javalang(
+    src: str, rel_path: str, cls_name: str, use_javalang: bool
+) -> list[MethodCandidate]:
+    if not use_javalang:
+        return []
+    try:
+        import javalang
+        tree = javalang.parse.parse(src)
+    except Exception:
+        return []
+    out: list[MethodCandidate] = []
+    for _, node in tree:
+        if isinstance(node, (javalang.tree.MethodDeclaration, javalang.tree.ConstructorDeclaration)):
+            name = node.name
+            try:
+                params = ", ".join(p.type.name for p in (node.parameters or []))
+            except Exception:
+                params = ""
+            line = node.position.line if node.position else 0
+            out.append(MethodCandidate(
+                file=rel_path,
+                class_name=cls_name,
+                method_name=name,
+                params=params,
+                line=line,
+            ))
+    return out
+
+
+def _extract_methods_regex(src: str, rel_path: str, cls_name: str) -> list[MethodCandidate]:
+    out: list[MethodCandidate] = []
+    for i, line in enumerate(src.splitlines(), start=1):
+        m = re.match(
+            r"\s+(?:(?:public|protected|private|static|final|abstract|synchronized)\s+)*"
+            r"(?:[\w<>\[\]]+\s+)?(\w+)\s*\(([^)]*)\)\s*(?:throws\s+\S+\s*)?[{]",
+            line,
+        )
+        if m:
+            name = m.group(1)
+            if name in {"if", "while", "for", "switch", "catch"}:
+                continue
+            params = ", ".join(p.strip().split()[-1] if p.strip() else "" for p in m.group(2).split(",") if p.strip())
+            out.append(MethodCandidate(file=rel_path, class_name=cls_name,
+                                       method_name=name, params=params, line=i))
+    return out
+
+
+def list_repo_method_candidates(
+    repo_zip: str,
+    file_candidates: list[str],
+    file_budget: int = 100,
+    max_methods_per_file: int = 20,
+    feature_hint: Optional[str] = None,
+) -> list[MethodCandidate]:
+    """Extract method-level candidates from the top `file_budget` files."""
+    if feature_hint:
+        kw = feature_hint.lower()
+        def _key(p: str) -> int:
+            pl = p.lower()
+            if kw in os.path.basename(pl):
+                return 0
+            if kw in pl:
+                return 1
+            return 2
+        ordered = sorted(file_candidates, key=_key)
+    else:
+        ordered = list(file_candidates)
+    # exclude compiled .class targets (keep /src/ files)
+    src_only = [f for f in ordered if "/src/" in f or "/test/" not in f]
+    src_only = [f for f in src_only if "/target/" not in f][:file_budget]
+    return extract_java_methods_from_zip(repo_zip, src_only, max_methods_per_file)
+
+
+def method_match(predicted_file: str, predicted_method: str,
+                 gold_file: str, gold_symbol: Optional[str]) -> bool:
+    """True when prediction matches a gold (file, symbol) pair.
+
+    File match uses suffix comparison; method match compares only the
+    method name (ignoring parameter types, which may differ in notation).
+    """
+    if not paths_match(predicted_file, gold_file):
+        return False
+    if not gold_symbol:
+        return True  # class-level gold entry: file match is sufficient
+    pred_name = predicted_method.split("(")[0].strip() if predicted_method else ""
+    gold_name = gold_symbol.split("(")[0].strip()
+    return pred_name.lower() == gold_name.lower()
+
+
+def parse_method_ranked_locations(raw: str) -> list[RankedLocation]:
+    """Parse LLM JSON that includes a 'method' field alongside 'file'."""
+    if not raw:
+        return []
+    text = raw.strip()
+    if text.startswith("```"):
+        parts = text.split("```")
+        text = parts[1].strip() if len(parts) > 1 else text.strip("`").strip()
+        if text.lower().startswith("json"):
+            text = text[4:].strip()
+    try:
+        data = json.loads(text)
+    except Exception:
+        match = re.search(r"(\[[\s\S]*\]|\{[\s\S]*\})", text)
+        if not match:
+            return []
+        try:
+            data = json.loads(match.group(1))
+        except Exception:
+            return []
+    if isinstance(data, dict):
+        data = data.get("locations") or data.get("methods") or data.get("ranked_methods") or []
+    if not isinstance(data, list):
+        return []
+    out: list[RankedLocation] = []
+    seen: set[str] = set()
+    for idx, item in enumerate(data, start=1):
+        if not isinstance(item, dict):
+            continue
+        file_name = item.get("file") or item.get("path") or ""
+        method = str(item.get("method") or item.get("method_name") or "")
+        confidence = _to_float_or_none(item.get("confidence") or item.get("score"))
+        rationale = str(item.get("rationale") or item.get("reason") or "")
+        rank = _to_int_or_none(item.get("rank")) or idx
+        key = f"{normalize_path(file_name)}::{method}"
+        if not file_name or key in seen:
+            continue
+        seen.add(key)
+        out.append(RankedLocation(file=str(file_name), rank=int(rank),
+                                  confidence=confidence, rationale=rationale,
+                                  method=method))
+    return sorted(out, key=lambda p: p.rank)
+
+
+def ranking_metrics_method(
+    predictions: Iterable[RankedLocation],
+    gold_locations: Iterable[LocalizationGold],
+    ks: tuple[int, ...] = (1, 5, 10),
+) -> dict[str, float]:
+    """Method-level ranking metrics.
+
+    A prediction hits a gold entry when:
+    - the file paths match (suffix), AND
+    - the method name matches (or gold has no symbol, i.e. class-level entry).
+    """
+    preds = list(predictions)
+    gold = list(gold_locations)
+    if not gold:
+        return {**{f"hit@{k}": 0.0 for k in ks}, "mrr": 0.0, "map": 0.0}
+
+    sorted_preds = sorted(preds, key=lambda p: p.rank)
+    metrics: dict[str, float] = {}
+
+    for k in ks:
+        top = sorted_preds[:k]
+        hit = any(
+            method_match(p.file, p.method, g.file, g.symbol)
+            for p in top for g in gold
+        )
+        metrics[f"hit@{k}"] = 1.0 if hit else 0.0
+
+    rr = 0.0
+    precisions = []
+    matched_gold: set[int] = set()
+    for rank, pred in enumerate(sorted_preds, start=1):
+        for gi, g in enumerate(gold):
+            if gi not in matched_gold and method_match(pred.file, pred.method, g.file, g.symbol):
+                matched_gold.add(gi)
+                if rr == 0.0:
+                    rr = 1.0 / rank
+                precisions.append(len(matched_gold) / rank)
+                break
+    metrics["mrr"] = rr
+    metrics["map"] = sum(precisions) / len(gold) if precisions else 0.0
+    return metrics
+
+
+def run_location_task_method(
+    task: "MaintenanceTask",
+    repo_zip: str,
+    all_file_candidates: list[str],
+    llm: Any,
+    top_k: int = 10,
+    file_budget: int = 100,
+    max_methods_per_file: int = 20,
+) -> dict[str, Any]:
+    """Run method-level feature/bug localization.
+
+    1. Extract Java methods from the top `file_budget` keyword-sorted files.
+    2. Build a method-level prompt and call the LLM.
+    3. Evaluate predictions against method-level ground truth.
+    """
+    feature_hint = task.metadata.get("feature")
+    method_candidates = list_repo_method_candidates(
+        repo_zip, all_file_candidates,
+        file_budget=file_budget,
+        max_methods_per_file=max_methods_per_file,
+        feature_hint=feature_hint,
+    )
+
+    candidate_text = "\n".join(
+        f"- {mc.file} :: {mc.method_name}({mc.params}) [line {mc.line}]"
+        for mc in method_candidates[:600]  # hard cap on prompt size
+    )
+    prompt = METHOD_LOCATION_PROMPT.format(
+        project=task.project,
+        query=task.query,
+        candidate_text=candidate_text,
+        top_k=top_k,
+    )
+    content, meta = llm.chat(
+        messages=[
+            {"role": "system", "content": "You rank Java methods for software maintenance. Return strict JSON only."},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=1500,
+        temperature=0,
+        return_meta=True,
+    )
+    predictions = parse_method_ranked_locations(content)[:top_k]
+    # evaluate at method level
+    method_gold = [g for g in task.gold_locations if g.symbol]
+    file_gold   = task.gold_locations  # keep file-level for backward compat
+    metrics_method = ranking_metrics_method(predictions, method_gold, ks=(1, 5, 10))
+    metrics_file   = ranking_metrics(predictions, file_gold, ks=(1, 5, 10))
+
+    return {
+        "task_id": task.task_id,
+        "task_type": task.task_type.value,
+        "project": task.project,
+        "predictions": [p.__dict__ for p in predictions],
+        "metrics_method": metrics_method,
+        "metrics_file": metrics_file,
+        "metrics": metrics_method,  # primary
+        "method_gold_count": len(method_gold),
+        "file_gold_count": len(file_gold),
+        "method_candidates_count": len(method_candidates),
+        "prompt_style": "method_level",
+        "raw_response": content,
+        "usage": {
+            "prompt_tokens": int((meta or {}).get("prompt_tokens", 0)),
+            "completion_tokens": int((meta or {}).get("completion_tokens", 0)),
+            "total_tokens": int((meta or {}).get("total_tokens", 0)),
+        },
+    }
 
 
 def load_localization_tasks_csv(csv_path: str, task_type: MaintenanceTaskType | str,

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements the Basket feature by handling API requests related to basket operations such as adding, removing items, and checking out.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Manages the storage and retrieval of basket data using Redis, which is central to the Basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Defines the structure of a customer's basket, including items and quantities, which is essential for the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Represents individual items in the basket, supporting operations like adding and updating quantities.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "Handles the checkout process for the basket, transitioning it into an order, which is a key part of the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Services/IBasketRepository.cs",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Defines the interface for basket data operations, ensuring the feature's functionality is modular and testable.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Provides gRPC-based services for basket operations, supporting distributed systems and external integrations.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/Services/BasketService.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Implements basket-related services for the web application, enabling user interaction with the basket feature.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/Basket.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Represents the basket in the web application's UI, supporting user-facing operations like viewing and modifying the basket.",
+      "method": ""
+    },
+    {
+      "file": "Web/WebMVC/ViewModels/BasketItem.cs",
+      "rank": 10,
+      "confidence": 0.55,
+      "rationale": "Represents individual items in the basket within the web application's UI, supporting user interactions with basket items.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.14285714285714285,
+    "mrr": 1.0,
+    "map": 0.13525447215923406
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements the Basket feature by handling API requests related to basket operations such as adding, removing items, and checking out.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Manages the storage and retrieval of basket data using Redis, which is central to the Basket feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the structure of a customer's basket, including items and quantities, which is essential for the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Represents individual items in the basket, supporting operations like adding and updating quantities.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles the checkout process for the basket, transitioning it into an order, which is a key part of the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Basket/Basket.API/Services/IBasketRepository.cs\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Defines the interface for basket data operations, ensuring the feature's functionality is modular and testable.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Provides gRPC-based services for basket operations, supporting distributed systems and external integrations.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Web/WebMVC/Services/BasketService.cs\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Implements basket-related services for the web application, enabling user interaction with the basket feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Web/WebMVC/ViewModels/Basket.cs\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Represents the basket in the web application's UI, supporting user-facing operations like viewing and modifying the basket.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Web/WebMVC/ViewModels/BasketItem.cs\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Represents individual items in the basket within the web application's UI, supporting user interactions with basket items.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 9353,
+    "completion_tokens": 638,
+    "total_tokens": 9991
+  },
+  "slot": "AZ1",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "keyword_sorted",
+  "run": 3,
+  "elapsed_s": 3.8
+}

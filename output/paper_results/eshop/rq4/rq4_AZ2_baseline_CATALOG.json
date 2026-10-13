@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-catalog",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/CatalogController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Primary controller for catalog operations, directly manages catalog items, brands, types, and item information.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogItem.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Defines the catalog item entity, central to catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogBrand.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Defines catalog brands, a key aspect of catalog feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Model/CatalogType.cs",
+      "rank": 4,
+      "confidence": 0.97,
+      "rationale": "Defines catalog types, another core catalog entity.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Grpc/CatalogService.cs",
+      "rank": 5,
+      "confidence": 0.95,
+      "rationale": "gRPC service for catalog, likely exposes catalog operations to other services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs",
+      "rank": 6,
+      "confidence": 0.94,
+      "rationale": "Entity Framework context for catalog, manages persistence of catalog items, brands, and types.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Controllers/PicController.cs",
+      "rank": 7,
+      "confidence": 0.92,
+      "rationale": "Handles product pictures, which are part of catalog management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs",
+      "rank": 8,
+      "confidence": 0.91,
+      "rationale": "Configures catalog item entity for database, important for catalog data structure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs",
+      "rank": 9,
+      "confidence": 0.9,
+      "rationale": "Configures catalog brand entity, relevant for catalog structure.",
+      "method": ""
+    },
+    {
+      "file": "Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs",
+      "rank": 10,
+      "confidence": 0.9,
+      "rationale": "Configures catalog type entity, relevant for catalog structure.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.013157894736842105,
+    "hit@5": 1.0,
+    "recall@5": 0.06578947368421052,
+    "hit@10": 1.0,
+    "recall@10": 0.13157894736842105,
+    "mrr": 1.0,
+    "map": 0.13157894736842105
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Catalog/Catalog.API/Controllers/CatalogController.cs\", \"confidence\": 1.0, \"rationale\": \"Primary controller for catalog operations, directly manages catalog items, brands, types, and item information.\"},\n  {\"rank\": 2, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogItem.cs\", \"confidence\": 0.98, \"rationale\": \"Defines the catalog item entity, central to catalog management.\"},\n  {\"rank\": 3, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogBrand.cs\", \"confidence\": 0.97, \"rationale\": \"Defines catalog brands, a key aspect of catalog feature.\"},\n  {\"rank\": 4, \"file\": \"Services/Catalog/Catalog.API/Model/CatalogType.cs\", \"confidence\": 0.97, \"rationale\": \"Defines catalog types, another core catalog entity.\"},\n  {\"rank\": 5, \"file\": \"Services/Catalog/Catalog.API/Grpc/CatalogService.cs\", \"confidence\": 0.95, \"rationale\": \"gRPC service for catalog, likely exposes catalog operations to other services.\"},\n  {\"rank\": 6, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/CatalogContext.cs\", \"confidence\": 0.94, \"rationale\": \"Entity Framework context for catalog, manages persistence of catalog items, brands, and types.\"},\n  {\"rank\": 7, \"file\": \"Services/Catalog/Catalog.API/Controllers/PicController.cs\", \"confidence\": 0.92, \"rationale\": \"Handles product pictures, which are part of catalog management.\"},\n  {\"rank\": 8, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogItemEntityTypeConfiguration.cs\", \"confidence\": 0.91, \"rationale\": \"Configures catalog item entity for database, important for catalog data structure.\"},\n  {\"rank\": 9, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogBrandEntityTypeConfiguration.cs\", \"confidence\": 0.90, \"rationale\": \"Configures catalog brand entity, relevant for catalog structure.\"},\n  {\"rank\": 10, \"file\": \"Services/Catalog/Catalog.API/Infrastructure/EntityConfigurations/CatalogTypeEntityTypeConfiguration.cs\", \"confidence\": 0.90, \"rationale\": \"Configures catalog type entity, relevant for catalog structure.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9331,
+    "completion_tokens": 528,
+    "total_tokens": 9859
+  },
+  "slot": "AZ2",
+  "feature": "CATALOG",
+  "gold_count": 76,
+  "gold_visible": 76,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 5.1
+}

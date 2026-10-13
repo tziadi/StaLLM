@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Handles the creation of orders at checkout, which aligns with the query description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Processes events related to user checkout, directly related to the order creation process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Defines the core order entity, which is central to the order lifecycle described in the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Handles stock confirmation, a key step in the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Handles the transition of an order to a paid status, relevant to the payment step in the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Handles events related to stock confirmation, a critical part of the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Handles order cancellations, which is explicitly mentioned in the query.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.65,
+      "rationale": "Represents events related to payment status changes, relevant to the payment step.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs",
+      "rank": 9,
+      "confidence": 0.6,
+      "rationale": "Represents events related to stock confirmation, a key part of the order process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 10,
+      "confidence": 0.6,
+      "rationale": "Manages order persistence, which is essential for tracking order status through its lifecycle.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommandHandler.cs\", \"confidence\": 0.95, \"rationale\": \"Handles the creation of orders at checkout, which aligns with the query description.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/UserCheckoutAcceptedIntegrationEventHandler.cs\", \"confidence\": 0.9, \"rationale\": \"Processes events related to user checkout, directly related to the order creation process.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\", \"confidence\": 0.85, \"rationale\": \"Defines the core order entity, which is central to the order lifecycle described in the query.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommandHandler.cs\", \"confidence\": 0.8, \"rationale\": \"Handles stock confirmation, a key step in the order process.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommandHandler.cs\", \"confidence\": 0.75, \"rationale\": \"Handles the transition of an order to a paid status, relevant to the payment step in the query.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/EventHandling/OrderStockConfirmedIntegrationEventHandler.cs\", \"confidence\": 0.7, \"rationale\": \"Handles events related to stock confirmation, a critical part of the order process.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommandHandler.cs\", \"confidence\": 0.7, \"rationale\": \"Handles order cancellations, which is explicitly mentioned in the query.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToPaidIntegrationEvent.cs\", \"confidence\": 0.65, \"rationale\": \"Represents events related to payment status changes, relevant to the payment step.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStatusChangedToStockConfirmedIntegrationEvent.cs\", \"confidence\": 0.6, \"rationale\": \"Represents events related to stock confirmation, a key part of the order process.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\", \"confidence\": 0.6, \"rationale\": \"Manages order persistence, which is essential for tracking order status through its lifecycle.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9334,
+    "completion_tokens": 590,
+    "total_tokens": 9924
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "bm25_masked",
+  "run": 3,
+  "elapsed_s": 16.4
+}

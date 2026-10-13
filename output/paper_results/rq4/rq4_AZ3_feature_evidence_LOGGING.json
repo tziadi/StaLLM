@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 1,
+      "confidence": 0.34,
+      "rationale": "Provides a UI panel for inspecting the Argo EventPump, letting developers trace and view internal events; strongly aligned with runtime debug/trace logging.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 2,
+      "confidence": 0.3,
+      "rationale": "Initialises and registers the whole developer/debug subsystem (menus, actions, panels) that surface debug log and trace facilities.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/DevActionFactory.java",
+      "rank": 3,
+      "confidence": 0.28,
+      "rationale": "Creates the menu/toolbar actions used to enable or open logging-related developer panels; central entry point for activating logging features.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoLogPanel.java",
+      "rank": 4,
+      "confidence": 0.26,
+      "rationale": "UI panel that displays the undo/redo event log, giving detailed trace information useful for debugging application behaviour.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoManagerWrapper.java",
+      "rank": 5,
+      "confidence": 0.23,
+      "rationale": "Wraps the core UndoManager while recording operations for the UndoLogPanel; directly responsible for producing undo trace messages.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/ModeInspectorPanel.java",
+      "rank": 6,
+      "confidence": 0.21,
+      "rationale": "Displays current input modes and their transitions, aiding developers in tracing GUI state changes; part of the debug logging toolkit.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/MessageNodeBuilder.java",
+      "rank": 7,
+      "confidence": 0.18,
+      "rationale": "Builds tree nodes representing messages/events shown in inspector panels; indirectly supports structured display of logged information.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java",
+      "rank": 8,
+      "confidence": 0.16,
+      "rationale": "Generates call-stack related nodes for developer views, letting users trace which code paths produced particular log messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 9,
+      "confidence": 0.15,
+      "rationale": "Central dispatcher for application events; many debug panels hook into it to monitor and log internal events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 10,
+      "confidence": 0.14,
+      "rationale": "Global AWT exception handler that captures and outputs stack traces, contributing to the overall debug logging capability.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 1.0,
+    "recall@10": 0.004672897196261682,
+    "mrr": 0.1111111111111111,
+    "map": 0.0005192107995846313
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.34,\n    \"rationale\": \"Provides a UI panel for inspecting the Argo EventPump, letting developers trace and view internal events; strongly aligned with runtime debug/trace logging.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.30,\n    \"rationale\": \"Initialises and registers the whole developer/debug subsystem (menus, actions, panels) that surface debug log and trace facilities.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"modules/dev/src/org/argouml/dev/DevActionFactory.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Creates the menu/toolbar actions used to enable or open logging-related developer panels; central entry point for activating logging features.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoLogPanel.java\",\n    \"confidence\": 0.26,\n    \"rationale\": \"UI panel that displays the undo/redo event log, giving detailed trace information useful for debugging application behaviour.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoManagerWrapper.java\",\n    \"confidence\": 0.23,\n    \"rationale\": \"Wraps the core UndoManager while recording operations for the UndoLogPanel; directly responsible for producing undo trace messages.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"modules/dev/src/org/argouml/dev/ModeInspectorPanel.java\",\n    \"confidence\": 0.21,\n    \"rationale\": \"Displays current input modes and their transitions, aiding developers in tracing GUI state changes; part of the debug logging toolkit.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"modules/dev/src/org/argouml/dev/MessageNodeBuilder.java\",\n    \"confidence\": 0.18,\n    \"rationale\": \"Builds tree nodes representing messages/events shown in inspector panels; indirectly supports structured display of logged information.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java\",\n    \"confidence\": 0.16,\n    \"rationale\": \"Generates call-stack related nodes for developer views, letting users trace which code paths produced particular log messages.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.15,\n    \"rationale\": \"Central dispatcher for application events; many debug panels hook into it to monitor and log internal events.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Global AWT exception handler that captures and outputs stack traces, contributing to the overall debug logging capability.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12427,
+    "completion_tokens": 1348,
+    "total_tokens": 13775
+  },
+  "slot": "AZ3",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 81,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 25.4
+}

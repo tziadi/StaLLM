@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-deploymentdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java",
+      "rank": 1,
+      "confidence": 0.32,
+      "rationale": "Provides UML-specific notation for Node Instances, the primary visual element on deployment diagrams, indicating direct support for rendering this feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java",
+      "rank": 2,
+      "confidence": 0.3,
+      "rationale": "Generic notation provider for node instances; forms the base logic that the UML-specific class refines, central to displaying nodes on deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java",
+      "rank": 3,
+      "confidence": 0.28,
+      "rationale": "Handles UML notation of Component Instances which are mapped onto nodes in deployment diagrams, directly influencing how components appear on the diagram.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java",
+      "rank": 4,
+      "confidence": 0.26,
+      "rationale": "Base notation class for component instances; essential for drawing software artifacts that are deployed on hardware nodes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCompInstanceWithoutNode.java",
+      "rank": 5,
+      "confidence": 0.25,
+      "rationale": "Critic checks for component instances lacking hosting nodes\u2014a deployment-specific consistency rule, indicating intimate knowledge of deployment diagram semantics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentWithoutNode.java",
+      "rank": 6,
+      "confidence": 0.24,
+      "rationale": "Another critic aimed at detecting components not assigned to nodes; supports correctness of deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentInstanceWithoutClassifier.java",
+      "rank": 7,
+      "confidence": 0.21,
+      "rationale": "Ensures component instances are properly typed; while broader than deployment, it directly applies to elements shown on deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNodeToResidentComponent.java",
+      "rank": 8,
+      "confidence": 0.18,
+      "rationale": "Explorer navigation rule that links nodes to resident components, mirroring the node-component mapping depicted in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java",
+      "rank": 9,
+      "confidence": 0.17,
+      "rationale": "Provides tree navigation from any diagram object to contained nodes, enabling browsing and management of nodes created in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java",
+      "rank": 10,
+      "confidence": 0.16,
+      "rationale": "Explorer rule exposing nodes from the model root, facilitating selection and editing of deployment-relevant elements.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java\",\n    \"confidence\": 0.32,\n    \"rationale\": \"Provides UML-specific notation for Node Instances, the primary visual element on deployment diagrams, indicating direct support for rendering this feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java\",\n    \"confidence\": 0.30,\n    \"rationale\": \"Generic notation provider for node instances; forms the base logic that the UML-specific class refines, central to displaying nodes on deployment diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Handles UML notation of Component Instances which are mapped onto nodes in deployment diagrams, directly influencing how components appear on the diagram.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java\",\n    \"confidence\": 0.26,\n    \"rationale\": \"Base notation class for component instances; essential for drawing software artifacts that are deployed on hardware nodes.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCompInstanceWithoutNode.java\",\n    \"confidence\": 0.25,\n    \"rationale\": \"Critic checks for component instances lacking hosting nodes\u2014a deployment-specific consistency rule, indicating intimate knowledge of deployment diagram semantics.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentWithoutNode.java\",\n    \"confidence\": 0.24,\n    \"rationale\": \"Another critic aimed at detecting components not assigned to nodes; supports correctness of deployment diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrComponentInstanceWithoutClassifier.java\",\n    \"confidence\": 0.21,\n    \"rationale\": \"Ensures component instances are properly typed; while broader than deployment, it directly applies to elements shown on deployment diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNodeToResidentComponent.java\",\n    \"confidence\": 0.18,\n    \"rationale\": \"Explorer navigation rule that links nodes to resident components, mirroring the node-component mapping depicted in deployment diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java\",\n    \"confidence\": 0.17,\n    \"rationale\": \"Provides tree navigation from any diagram object to contained nodes, enabling browsing and management of nodes created in deployment diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java\",\n    \"confidence\": 0.16,\n    \"rationale\": \"Explorer rule exposing nodes from the model root, facilitating selection and editing of deployment-relevant elements.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12422,
+    "completion_tokens": 1483,
+    "total_tokens": 13905
+  },
+  "slot": "AZ3",
+  "feature": "DEPLOYMENTDIAGRAM",
+  "gold_count": 32,
+  "gold_visible": 4,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 17.4
+}

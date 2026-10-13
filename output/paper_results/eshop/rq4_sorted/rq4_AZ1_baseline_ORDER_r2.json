@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-order",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Ordering/Ordering.API/Controllers/OrdersController.cs",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central controller for handling order-related operations in the Ordering service.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Handles the creation of orders, a key part of the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles the cancellation of orders, directly related to the feature.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Handles stock confirmation, a critical step in the ordering process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommand.cs",
+      "rank": 5,
+      "confidence": 0.85,
+      "rationale": "Handles payment status updates, a key part of the ordering workflow.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommand.cs",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Handles the shipment of orders, a crucial step in the process.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Represents the core domain model for orders, encapsulating order data and behavior.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Triggers events when an order is started, linking to other services.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs",
+      "rank": 9,
+      "confidence": 0.7,
+      "rationale": "Provides query capabilities for retrieving order-related data.",
+      "method": ""
+    },
+    {
+      "file": "Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs",
+      "rank": 10,
+      "confidence": 0.7,
+      "rationale": "Handles data persistence for orders, supporting the ordering process.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.005128205128205128,
+    "hit@5": 1.0,
+    "recall@5": 0.02564102564102564,
+    "hit@10": 1.0,
+    "recall@10": 0.05128205128205128,
+    "mrr": 1.0,
+    "map": 0.05128205128205128
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Ordering/Ordering.API/Controllers/OrdersController.cs\", \"confidence\": 0.95, \"rationale\": \"Central controller for handling order-related operations in the Ordering service.\"},\n  {\"rank\": 2, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CreateOrderCommand.cs\", \"confidence\": 0.9, \"rationale\": \"Handles the creation of orders, a key part of the ordering process.\"},\n  {\"rank\": 3, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/CancelOrderCommand.cs\", \"confidence\": 0.9, \"rationale\": \"Handles the cancellation of orders, directly related to the feature.\"},\n  {\"rank\": 4, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetStockConfirmedOrderStatusCommand.cs\", \"confidence\": 0.85, \"rationale\": \"Handles stock confirmation, a critical step in the ordering process.\"},\n  {\"rank\": 5, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/SetPaidOrderStatusCommand.cs\", \"confidence\": 0.85, \"rationale\": \"Handles payment status updates, a key part of the ordering workflow.\"},\n  {\"rank\": 6, \"file\": \"Services/Ordering/Ordering.API/Application/Commands/ShipOrderCommand.cs\", \"confidence\": 0.85, \"rationale\": \"Handles the shipment of orders, a crucial step in the process.\"},\n  {\"rank\": 7, \"file\": \"Services/Ordering/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs\", \"confidence\": 0.8, \"rationale\": \"Represents the core domain model for orders, encapsulating order data and behavior.\"},\n  {\"rank\": 8, \"file\": \"Services/Ordering/Ordering.API/Application/IntegrationEvents/Events/OrderStartedIntegrationEvent.cs\", \"confidence\": 0.75, \"rationale\": \"Triggers events when an order is started, linking to other services.\"},\n  {\"rank\": 9, \"file\": \"Services/Ordering/Ordering.API/Application/Queries/OrderQueries.cs\", \"confidence\": 0.7, \"rationale\": \"Provides query capabilities for retrieving order-related data.\"},\n  {\"rank\": 10, \"file\": \"Services/Ordering/Ordering.Infrastructure/Repositories/OrderRepository.cs\", \"confidence\": 0.7, \"rationale\": \"Handles data persistence for orders, supporting the ordering process.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9330,
+    "completion_tokens": 532,
+    "total_tokens": 9862
+  },
+  "slot": "AZ1",
+  "feature": "ORDER",
+  "gold_count": 195,
+  "gold_visible": 195,
+  "candidate_order": "keyword_sorted",
+  "run": 2,
+  "elapsed_s": 5.4
+}

@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-basket",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Basket/Basket.API/Controllers/BasketController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Primary controller for basket operations such as adding, removing, updating items, and checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs",
+      "rank": 2,
+      "confidence": 0.98,
+      "rationale": "Implements basket data storage and retrieval, core to basket feature persistence.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/CustomerBasket.cs",
+      "rank": 3,
+      "confidence": 0.97,
+      "rationale": "Represents the buyer's basket model, central to basket state management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketItem.cs",
+      "rank": 4,
+      "confidence": 0.96,
+      "rationale": "Represents individual items in the basket, essential for item-level operations.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/IBasketRepository.cs",
+      "rank": 5,
+      "confidence": 0.95,
+      "rationale": "Defines the repository interface for basket operations, key for abstraction and testing.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Grpc/BasketService.cs",
+      "rank": 6,
+      "confidence": 0.93,
+      "rationale": "gRPC service for basket operations, likely used for inter-service communication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/Model/BasketCheckout.cs",
+      "rank": 7,
+      "confidence": 0.92,
+      "rationale": "Represents the checkout process for a basket, directly related to starting an order.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs",
+      "rank": 8,
+      "confidence": 0.9,
+      "rationale": "Integration event triggered when a user checks out their basket.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs",
+      "rank": 9,
+      "confidence": 0.88,
+      "rationale": "Handles events related to order start, closely tied to basket checkout.",
+      "method": ""
+    },
+    {
+      "file": "Services/Basket/Basket.API/BasketSettings.cs",
+      "rank": 10,
+      "confidence": 0.85,
+      "rationale": "Configuration settings for the basket service, may affect basket behavior.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.015873015873015872,
+    "hit@5": 1.0,
+    "recall@5": 0.07936507936507936,
+    "hit@10": 1.0,
+    "recall@10": 0.15873015873015872,
+    "mrr": 1.0,
+    "map": 0.15873015873015872
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"Services/Basket/Basket.API/Controllers/BasketController.cs\", \"confidence\": 1.0, \"rationale\": \"Primary controller for basket operations such as adding, removing, updating items, and checkout.\"},\n  {\"rank\": 2, \"file\": \"Services/Basket/Basket.API/Infrastructure/Repositories/RedisBasketRepository.cs\", \"confidence\": 0.98, \"rationale\": \"Implements basket data storage and retrieval, core to basket feature persistence.\"},\n  {\"rank\": 3, \"file\": \"Services/Basket/Basket.API/Model/CustomerBasket.cs\", \"confidence\": 0.97, \"rationale\": \"Represents the buyer's basket model, central to basket state management.\"},\n  {\"rank\": 4, \"file\": \"Services/Basket/Basket.API/Model/BasketItem.cs\", \"confidence\": 0.96, \"rationale\": \"Represents individual items in the basket, essential for item-level operations.\"},\n  {\"rank\": 5, \"file\": \"Services/Basket/Basket.API/Model/IBasketRepository.cs\", \"confidence\": 0.95, \"rationale\": \"Defines the repository interface for basket operations, key for abstraction and testing.\"},\n  {\"rank\": 6, \"file\": \"Services/Basket/Basket.API/Grpc/BasketService.cs\", \"confidence\": 0.93, \"rationale\": \"gRPC service for basket operations, likely used for inter-service communication.\"},\n  {\"rank\": 7, \"file\": \"Services/Basket/Basket.API/Model/BasketCheckout.cs\", \"confidence\": 0.92, \"rationale\": \"Represents the checkout process for a basket, directly related to starting an order.\"},\n  {\"rank\": 8, \"file\": \"Services/Basket/Basket.API/IntegrationEvents/Events/UserCheckoutAcceptedIntegrationEvent.cs\", \"confidence\": 0.9, \"rationale\": \"Integration event triggered when a user checks out their basket.\"},\n  {\"rank\": 9, \"file\": \"Services/Basket/Basket.API/IntegrationEvents/EventHandling/OrderStartedIntegrationEventHandler.cs\", \"confidence\": 0.88, \"rationale\": \"Handles events related to order start, closely tied to basket checkout.\"},\n  {\"rank\": 10, \"file\": \"Services/Basket/Basket.API/BasketSettings.cs\", \"confidence\": 0.85, \"rationale\": \"Configuration settings for the basket service, may affect basket behavior.\"}\n]",
+  "usage": {
+    "prompt_tokens": 9329,
+    "completion_tokens": 534,
+    "total_tokens": 9863
+  },
+  "slot": "AZ2",
+  "feature": "BASKET",
+  "gold_count": 63,
+  "gold_visible": 63,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 15.6
+}

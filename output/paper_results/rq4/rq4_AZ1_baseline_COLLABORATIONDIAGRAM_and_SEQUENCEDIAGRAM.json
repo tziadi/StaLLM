@@ -1,0 +1,99 @@
+{
+  "task_id": "argouml-feature-collaborationdiagram-and-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Directly references collaboration diagrams, which are central to the query.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Directly references sequence diagrams, which are central to the query.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "Focuses on collaboration diagrams and their interactions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Specifically mentions operations related to collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Specifically mentions operations related to sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "Handles message notation, which is relevant for interaction diagrams like sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
+      "rank": 7,
+      "confidence": 0.6,
+      "rationale": "Focuses on UML message notation, relevant for sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "Specifically addresses sequence diagram message notation in UML.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Focuses on interactions and messages, relevant for both collaboration and sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoLinkToStimuli.java",
+      "rank": 10,
+      "confidence": 0.45,
+      "rationale": "Deals with links and stimuli, which are relevant for interaction modeling in diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.2,
+    "hit@10": 1.0,
+    "recall@10": 0.2,
+    "mrr": 0.3333333333333333,
+    "map": 0.06666666666666667
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\", \"confidence\": 0.9, \"rationale\": \"Directly references collaboration diagrams, which are central to the query.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.85, \"rationale\": \"Directly references sequence diagrams, which are central to the query.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.8, \"rationale\": \"Focuses on collaboration diagrams and their interactions.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\", \"confidence\": 0.75, \"rationale\": \"Specifically mentions operations related to collaboration diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\", \"confidence\": 0.7, \"rationale\": \"Specifically mentions operations related to sequence diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\", \"confidence\": 0.65, \"rationale\": \"Handles message notation, which is relevant for interaction diagrams like sequence diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\", \"confidence\": 0.6, \"rationale\": \"Focuses on UML message notation, relevant for sequence diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\", \"confidence\": 0.55, \"rationale\": \"Specifically addresses sequence diagram message notation in UML.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.5, \"rationale\": \"Focuses on interactions and messages, relevant for both collaboration and sequence diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoLinkToStimuli.java\", \"confidence\": 0.45, \"rationale\": \"Deals with links and stimuli, which are relevant for interaction modeling in diagrams.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12494,
+    "completion_tokens": 596,
+    "total_tokens": 13090
+  },
+  "slot": "AZ1",
+  "feature": "COLLABORATIONDIAGRAM_and_SEQUENCEDIAGRAM",
+  "gold_count": 5,
+  "candidate_order": "alphabetical",
+  "elapsed_s": 5.1
+}

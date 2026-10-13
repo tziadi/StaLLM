@@ -1,0 +1,101 @@
+{
+  "task_id": "eshoponcontainers-feature-identity",
+  "task_type": "feature_location",
+  "project": "eShopOnContainers",
+  "predictions": [
+    {
+      "file": "Services/Identity/Identity.API/Controllers/AccountController.cs",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Directly implements user authentication, login, logout, registration, and account management actions, matching the feature description.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/EFLoginService.cs",
+      "rank": 2,
+      "confidence": 0.95,
+      "rationale": "Handles login logic and authentication, supporting user authentication and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ILoginService.cs",
+      "rank": 3,
+      "confidence": 0.93,
+      "rationale": "Defines the interface for login services, directly supporting authentication and token issuance.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/ConsentController.cs",
+      "rank": 4,
+      "confidence": 0.92,
+      "rationale": "Manages user consent, which is a key part of authentication and authorization flows.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Configuration/Config.cs",
+      "rank": 5,
+      "confidence": 0.91,
+      "rationale": "Contains configuration for identity and authentication, including token settings and protection mechanisms.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs",
+      "rank": 6,
+      "confidence": 0.9,
+      "rationale": "Represents the data model for login UI, directly supporting user authentication.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs",
+      "rank": 7,
+      "confidence": 0.89,
+      "rationale": "Represents the data model for user registration UI, directly supporting account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Services/ProfileService.cs",
+      "rank": 8,
+      "confidence": 0.88,
+      "rationale": "Handles user profile management, which is part of account management and identity.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Data/ApplicationDbContext.cs",
+      "rank": 9,
+      "confidence": 0.87,
+      "rationale": "Manages user data storage and retrieval, supporting authentication and account management.",
+      "method": ""
+    },
+    {
+      "file": "Services/Identity/Identity.API/Controllers/HomeController.cs",
+      "rank": 10,
+      "confidence": 0.85,
+      "rationale": "Provides entry points and UI actions related to identity, often including login/logout and account management views.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.017857142857142856,
+    "hit@5": 1.0,
+    "recall@5": 0.08928571428571429,
+    "hit@10": 1.0,
+    "recall@10": 0.17857142857142858,
+    "mrr": 1.0,
+    "map": 0.17857142857142858
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"Services/Identity/Identity.API/Controllers/AccountController.cs\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Directly implements user authentication, login, logout, registration, and account management actions, matching the feature description.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"Services/Identity/Identity.API/Services/EFLoginService.cs\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Handles login logic and authentication, supporting user authentication and token issuance.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"Services/Identity/Identity.API/Services/ILoginService.cs\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the interface for login services, directly supporting authentication and token issuance.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"Services/Identity/Identity.API/Controllers/ConsentController.cs\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Manages user consent, which is a key part of authentication and authorization flows.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"Services/Identity/Identity.API/Configuration/Config.cs\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Contains configuration for identity and authentication, including token settings and protection mechanisms.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/LoginViewModel.cs\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Represents the data model for login UI, directly supporting user authentication.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"Services/Identity/Identity.API/Models/AccountViewModels/RegisterViewModel.cs\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Represents the data model for user registration UI, directly supporting account management.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"Services/Identity/Identity.API/Services/ProfileService.cs\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Handles user profile management, which is part of account management and identity.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"Services/Identity/Identity.API/Data/ApplicationDbContext.cs\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Manages user data storage and retrieval, supporting authentication and account management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"Services/Identity/Identity.API/Controllers/HomeController.cs\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Provides entry points and UI actions related to identity, often including login/logout and account management views.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 9356,
+    "completion_tokens": 603,
+    "total_tokens": 9959
+  },
+  "slot": "AZ2",
+  "feature": "IDENTITY",
+  "gold_count": 56,
+  "gold_visible": 56,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 4.1
+}
