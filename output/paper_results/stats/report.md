@@ -174,6 +174,8 @@
 | numbered | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.071 | 0.204 | 0.105 ± 0.024 | 0.154 [0.129, 0.179] | 1.0 | 0.116 [0.093, 0.139] | 0.8282 | 0 | 72.1 |
 | numbered | AZ2 | azure:gpt-4.1-features | scanner | 3 | 0.153 | 0.176 | 0.163 ± 0.067 | 0.13 [0.099, 0.164] | 0.03 | 0.116 [0.083, 0.15] | 0.009 | 0 | 81.8 |
 | numbered | AZ3 | azure:o3-features | scanner | 3 | 0.186 | 0.282 | 0.224 ± 0.028 | 0.168 [0.138, 0.196] | 0.001 | 0.117 [0.086, 0.149] | 0.001 | 2 | 335.1 |
+| numbered | AZ4 | ollama:qwen2.5-coder:14b-instruct@localhost:11434 | scanner | 3 | 0.159 | 0.204 | 0.179 ± 0.008 | 0.149 [0.114, 0.183] | 0.0609 | 0.111 [0.081, 0.146] | 0.002 | 0 | 1853.1 |
+| numbered | AZ6 | ollama:deepseek-coder:6.7b-instruct@localhost:11434 | scanner | 3 | 0.15 | 0.31 | 0.202 ± 0.005 | 0.137 [0.109, 0.163] | 0.001 | 0.109 [0.081, 0.136] | 0.001 | 0 | 1167.6 |
 | original | AZ1 | azure:gpt-4o-Tewfik | baseline | 3 | 0.116 | 0.171 | 0.138 ± 0.031 | 0.155 [0.123, 0.187] | 0.8342 | 0.112 [0.082, 0.146] | 0.0629 | 0 | 64.0 |
 | original | AZ1 | azure:gpt-4o-Tewfik | hybrid | 3 | 0.073 | 0.227 | 0.11 ± 0.032 | 0.15 [0.129, 0.173] | 1.0 | 0.115 [0.091, 0.138] | 0.6543 | 0 | 103.1 |
 | original | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.07 | 0.194 | 0.102 ± 0.021 | 0.165 [0.142, 0.19] | 1.0 | 0.122 [0.098, 0.147] | 0.9491 | 0 | 81.2 |
@@ -181,6 +183,13 @@
 | original | AZ3 | azure:o3-features | scanner | 3 | 0.204 | 0.273 | 0.233 ± 0.07 | 0.174 [0.143, 0.206] | 0.001 | 0.131 [0.101, 0.165] | 0.001 | 0 | 580.6 |
 | original | AZ4 | ollama:qwen2.5-coder:14b-instruct@localhost:11434 | scanner | 3 | 0.089 | 0.13 | 0.105 ± 0.006 | 0.116 [0.087, 0.147] | 0.7552 | 0.119 [0.09, 0.151] | 0.8082 | 0 | 1247.8 |
 | original | AZ6 | ollama:deepseek-coder:6.7b-instruct@localhost:11434 | scanner | 3 | 0.036 | 0.069 | 0.047 ± 0.001 | 0.147 [0.117, 0.177] | 1.0 | 0.11 [0.082, 0.139] | 1.0 | 0 | 1221.3 |
+
+*Without the empty-answer retry (files answered by the retry count as empty); random placement recomputed on the same spans.*
+
+| Protocol | Slot | Prompt | retry files | F1 with retry | F1 without retry | random placement | p |
+|---|---|---|---|---|---|---|---|
+| numbered | AZ4 | scanner | 6.7 | 0.179 | 0.181 | 0.154 | 0.0919 |
+| numbered | AZ6 | scanner | 2.0 | 0.202 | 0.195 | 0.135 | 0.001 |
 
 ## RQ5 — held-out DACOS test split (disjoint from the selection split)
 

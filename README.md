@@ -78,7 +78,7 @@ StaLLM/
 
 ### 1) Clone & setup
 ```bash
-git clone https://github.com/username/StaLLM.git
+git clone https://github.com/tziadi/StaLLM.git
 cd StaLLM
 python -m venv .venv
 source .venv/bin/activate      # Linux/Mac

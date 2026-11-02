@@ -461,6 +461,48 @@ def fig_rq4_conditions(stats_dir: Path, out_dir: Path, metric: str = "mrr") -> N
     print(f"  saved {path}")
 
 
+RQ12_CONFIGS = [("AZ1", "baseline", "gpt-4o · Baseline"), ("AZ1", "hybrid", "gpt-4o · Hybrid"),
+                ("AZ1", "scanner", "gpt-4o · Scanner"), ("AZ2", "scanner", "gpt-4.1 · Scanner"),
+                ("AZ3", "scanner", "o3 · Scanner"), ("AZ4", "scanner", "qwen2.5-coder · Scanner"),
+                ("AZ6", "scanner", "deepseek-coder · Scanner")]
+
+
+def fig_rq12_exact_lines(stats_dir: Path, out_dir: Path) -> None:
+    """Excess of predictions that start exactly on an oracle line over random placement,
+    raw versus numbered code, with file-level bootstrap intervals (line_offset_analysis.py)."""
+    rows = {(r["protocol"], r["slot"], r["prompt"]): r for r in _read_csv(stats_dir / "line_offsets.csv")}
+    if not rows:
+        return
+    fig, ax = plt.subplots(figsize=(3.4, 2.6))
+    for k, (protocol, color, marker, label) in enumerate([("original", C2, "o", "Raw code"),
+                                                          ("numbered", C1, "s", "Numbered lines")]):
+        for i, (slot, prompt, _) in enumerate(RQ12_CONFIGS):
+            r = rows.get((protocol, slot, prompt))
+            if not r:
+                continue
+            lo, hi = (float(x) for x in r["excess_0_ci"].strip("[]").split(","))
+            y = i + (0.16 if k else -0.16)
+            ax.plot([100 * lo, 100 * hi], [y, y], color=color, linewidth=1.1)
+            ax.plot(100 * float(r["excess_0"]), y, marker=marker, markersize=4.5, color=color,
+                    markeredgecolor="#fcfcfb", markeredgewidth=0.6, label=label if i == 0 else None)
+    ax.axvline(0, color=GRAY, linewidth=0.8, linestyle=(0, (2, 1.5)))
+    ax.set_yticks(range(len(RQ12_CONFIGS)))
+    ax.set_yticklabels([c[2] for c in RQ12_CONFIGS], fontsize=7.5)
+    ax.invert_yaxis()
+    ax.set_xlabel("Exact start lines above random placement (points)", fontsize=8)
+    ax.grid(axis="x", color=LIGHT_GRID, linewidth=0.6)
+    ax.set_axisbelow(True)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    fig.legend(*ax.get_legend_handles_labels(), loc="upper center", ncol=2, frameon=False,
+               fontsize=7.5, bbox_to_anchor=(0.6, 1.0))
+    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    path = out_dir / "fig_rq12_exact_lines.pdf"
+    fig.savefig(path)
+    plt.close(fig)
+    print(f"  saved {path}")
+
+
 def fig_rq3_models(stats_dir: Path, results_dir: Path, out_dir: Path, metric: str = "kappa") -> None:
     rows = [r for r in _read_csv(stats_dir / "rq3_by_slot.csv") if r["prompt"] == "binary_oracle_baseline"]
     base = _read_csv(results_dir / "summary_rq3_baselines.csv")
@@ -547,6 +589,7 @@ def main() -> None:
     _configure_style()
     print("Generating figures from summaries...")
     stats_dir = args.results_dir / "stats"
+    fig_rq12_exact_lines(stats_dir, args.out_dir)
     fig_rq3_models(stats_dir, args.results_dir, args.out_dir)
     for metric in ("mrr", "p@10"):
         fig_rq4_conditions(stats_dir, args.out_dir, metric)
