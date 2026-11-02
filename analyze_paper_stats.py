@@ -96,9 +96,14 @@ def _r(x: float, nd: int = 3) -> float:
 
 # ── RQ3 ──────────────────────────────────────────────────────────────────────
 
+RQ3_SLOTS = ("AZ1", "AZ2", "AZ3")  # the paper reports RQ3 for the hosted models only
+
+
 def load_rq3() -> list[dict[str, Any]]:
     res = []
     for f in sorted((OUT / "rq3").glob("rq3_*.json")):
+        if f.name.split("_")[1] not in RQ3_SLOTS:
+            continue
         d = _load(f)
         d.setdefault("run", 1)
         res.append(d)
