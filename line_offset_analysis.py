@@ -113,6 +113,25 @@ def _bootstrap(files: list[dict], rng: random.Random) -> dict:
     return res
 
 
+def _blank_skip_share(spans: list[dict]) -> float:
+    """Share of predictions that start on an oracle line only if blank lines are not
+    counted, i.e. on the index of that line among the non-blank lines of the file."""
+    import zipfile
+    with zipfile.ZipFile(str(aps.RQ12_ZIP)) as z:
+        src = {n.lower(): z.read(n).decode("utf-8", "replace").split("\n") for n in z.namelist()}
+    n = hits = 0
+    for s in spans:
+        for b, f in s.items():
+            if not f["gt"] or b not in src:
+                continue
+            starts = {g for g, _ in f["gt"]}
+            skipped = {sum(1 for line in src[b][:g] if line.strip()) for g in starts} - starts
+            for p, _ in f["pred"]:
+                n += 1
+                hits += p in skipped
+    return hits / n if n else float("nan")
+
+
 def main() -> None:
     oracle = aps._rq12_oracle()
     groups: dict[tuple, list] = defaultdict(list)
@@ -148,6 +167,7 @@ def main() -> None:
             "before": neg, "after": pos, "p_sign": aps._r(p_sign, 4),
             "drift_rho": aps._r(rho), "drift_p": aps._r(p_rho, 4),
         })
+        rows[-1]["blank_skip"] = aps._r(_blank_skip_share(spans))
         rows[-1].update(_bootstrap(_per_file(spans, random.Random(7)), random.Random(11)))
         for x, _ in model:
             if abs(x) <= 10:
@@ -172,11 +192,13 @@ def main() -> None:
            "Excess k: share of predictions within k lines of an oracle start minus the share expected "
            "under random placement in the same files. Before share: misplaced predictions "
            "(0 < |offset| <= 20) that lie before the oracle line (0.5 = no direction).\n",
-           "| Protocol | Slot | Prompt | files | excess 0 | excess 1 | excess 2 | before share |",
-           "|---|---|---|---|---|---|---|---|"]
+           "*blank skip*: share of predictions that start on an oracle line only when blank lines are "
+           "not counted.\n",
+           "| Protocol | Slot | Prompt | files | excess 0 | excess 1 | excess 2 | before share | blank skip |",
+           "|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
         md.append(f"| {r['protocol']} | {r['slot']} | {r['prompt']} | {r['files']} | "
-                  + " | ".join(f"{r[k]} {r[k + '_ci']}" for k in ("excess_0", "excess_1", "excess_2", "before_share")) + " |")
+                  + " | ".join(f"{r[k]} {r[k + '_ci']}" for k in ("excess_0", "excess_1", "excess_2", "before_share")) + f" | {r['blank_skip']} |")
     (STATS / "line_offsets.md").write_text("\n".join(md) + "\n")
     print("\n".join(md))
 
