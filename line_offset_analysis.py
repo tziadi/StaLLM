@@ -65,6 +65,54 @@ def _random_preds(spans_by_file: dict, rng: random.Random) -> dict:
     return preds
 
 
+BOOT = 2000
+TOLERANCES = (0, 1, 2)
+
+
+def _per_file(spans: list[dict], rng: random.Random) -> list[dict]:
+    """Per file, pooled over runs: model offsets and the expected hits of random placement.
+    Files are the resampling unit, so the near-identical predictions of repeated runs
+    at temperature 0 are not counted as independent observations."""
+    files = []
+    for b in sorted(spans[0]):
+        starts = [s for s, _ in spans[0][b]["gt"]]
+        if not starts:
+            continue
+        model, rand_hits = [], {k: 0.0 for k in TOLERANCES}
+        for s in spans:
+            f = s[b]
+            model += [x for x, _ in _offsets({b: f}, {b: f["pred"]})]
+            for _ in range(50):
+                r = [x for x, _ in _offsets({b: f}, _random_preds({b: f}, rng))]
+                for k in TOLERANCES:
+                    rand_hits[k] += sum(abs(x) <= k for x in r) / 50
+        if model:
+            files.append({"model": model, "rand_hits": rand_hits})
+    return files
+
+
+def _bootstrap(files: list[dict], rng: random.Random) -> dict:
+    """Point estimates and 95% file-level bootstrap intervals for (i) the excess of
+    predictions within k lines of an oracle start over random placement and (ii) the
+    share of misplaced predictions (0 < |offset| <= 20) that lie before the oracle line."""
+    def stats(sample):
+        n = sum(len(f["model"]) for f in sample)
+        out = {f"excess_{k}": (sum(sum(abs(x) <= k for x in f["model"]) for f in sample)
+                               - sum(f["rand_hits"][k] for f in sample)) / n for k in TOLERANCES}
+        neg = sum(sum(-20 <= x < 0 for x in f["model"]) for f in sample)
+        pos = sum(sum(0 < x <= 20 for x in f["model"]) for f in sample)
+        out["before_share"] = neg / (neg + pos) if neg + pos else float("nan")
+        return out
+    point = stats(files)
+    boots = [stats([rng.choice(files) for _ in files]) for _ in range(BOOT)]
+    res = {"files": len(files)}
+    for key, v in point.items():
+        vals = sorted(b[key] for b in boots if b[key] == b[key])
+        res[key] = aps._r(v)
+        res[key + "_ci"] = f"[{aps._r(vals[int(0.025 * len(vals))])}, {aps._r(vals[int(0.975 * len(vals)) - 1])}]"
+    return res
+
+
 def main() -> None:
     oracle = aps._rq12_oracle()
     groups: dict[tuple, list] = defaultdict(list)
@@ -100,6 +148,7 @@ def main() -> None:
             "before": neg, "after": pos, "p_sign": aps._r(p_sign, 4),
             "drift_rho": aps._r(rho), "drift_p": aps._r(p_rho, 4),
         })
+        rows[-1].update(_bootstrap(_per_file(spans, random.Random(7)), random.Random(11)))
         for x, _ in model:
             if abs(x) <= 10:
                 hist.append({"protocol": protocol, "slot": slot, "prompt": prompt, "offset": x})
@@ -119,6 +168,15 @@ def main() -> None:
         md.append(f"| {r['protocol']} | {r['slot']} | {r['prompt']} | {r['n_pred']} | {r['exact']} | "
                   f"{r['exact_random']} | {r['near']} | {r['near_random']} | {r['p_near']} | {r['median_abs']} | "
                   f"{r['median_abs_random']} | {r['median_signed_near']} | {r['median_signed_near_random']} | {r['before']}/{r['after']} | {r['p_sign']} | {r['drift_rho']} | {r['drift_p']} |")
+    md += ["", "## File-level bootstrap (files resampled with all their runs; 95% intervals)\n",
+           "Excess k: share of predictions within k lines of an oracle start minus the share expected "
+           "under random placement in the same files. Before share: misplaced predictions "
+           "(0 < |offset| <= 20) that lie before the oracle line (0.5 = no direction).\n",
+           "| Protocol | Slot | Prompt | files | excess 0 | excess 1 | excess 2 | before share |",
+           "|---|---|---|---|---|---|---|---|"]
+    for r in rows:
+        md.append(f"| {r['protocol']} | {r['slot']} | {r['prompt']} | {r['files']} | "
+                  + " | ".join(f"{r[k]} {r[k + '_ci']}" for k in ("excess_0", "excess_1", "excess_2", "before_share")) + " |")
     (STATS / "line_offsets.md").write_text("\n".join(md) + "\n")
     print("\n".join(md))
 
