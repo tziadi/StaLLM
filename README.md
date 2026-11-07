@@ -167,6 +167,12 @@ The sidebar groups the pages in three sections:
 | | **Prompt Optimisation** | AutoResearch loop with train/held-out split. |
 | Resources | **Prompt Library**, **Run History**, **Evaluation Protocol**, **About & Citation** | Prompt repository; stored runs aggregated per configuration (mean, SD, 95% t-interval); matching rules; provenance and BibTeX. |
 
+| Run Tasks | Built-in Controls |
+|---|---|
+| ![Run configuration: activity, input, output format, oracle, model slot and prompts](docs/screenshots/workbench_run.png) | ![Verdict of a control (here random placement) for each configuration](docs/screenshots/workbench_controls.png) |
+
+![Benchmark Results: span-level F1 of each configuration with its chance baseline](docs/screenshots/workbench_results.png)
+
 Populate the Benchmark pages with `python run_paper_experiments.py` followed by `python analyze_paper_stats.py` (see [docs/REPLICATION.md](docs/REPLICATION.md)). The UI code lives in `stallm_ui/` (theme, benchmark pages, run history, reproducibility helpers).
 
 ### Workflow (Run Tasks page, analyzer oracle)
