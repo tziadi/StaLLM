@@ -1,0 +1,23 @@
+
+============================================================
+RQ5 — AutoResearch: LLM-generated prompt optimisation
+============================================================
+DACOS: 200 samples
+MLCQ:  200 samples
+RQ3 baseline F1 (DACOS): {'binary_oracle_baseline': 0.7597402597402598, 'conservative_evidence': 0.7677419354838709, 'definition_driven': 0.7938461538461538}
+Generating 5 prompt candidates via AZ1 …
+  Saved 5 candidates → output/paper_results_annot/rq5/generated_prompts.json
+
+Evaluating 5 candidates on DACOS …
+  Evaluating structured_diagnostic_checklist … f1=0.776  prec=0.669  rec=0.924
+  Evaluating calibrated_confidence … f1=0.781  prec=0.676  rec=0.924
+  Evaluating contrastive_analysis … f1=0.740  prec=0.671  rec=0.824
+  Evaluating threshold_anchored … f1=0.763  prec=0.671  rec=0.885
+  Evaluating diagnostic_questions … f1=0.753  prec=0.655  rec=0.885
+
+Best on DACOS: 'calibrated_confidence' (F1=0.781)
+Validating best prompt on MLCQ … f1=0.526
+
+[RQ5] Summary → output/paper_results_annot/summary_rq5.csv
+
+Done.

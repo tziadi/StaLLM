@@ -40,6 +40,15 @@ DACOS_SAMPLE_SMELL_IDS = {
     3: "multifaceted_abstraction",
 }
 
+# Position of each smell flag in a row of the DACOS `annotation` table:
+# (id, iscm, isim, islp, isma, is_smell, sample_id).
+DACOS_ANNOTATION_FLAGS = {
+    "complex_method": 1,
+    "long_parameter_list": 3,
+    "multifaceted_abstraction": 4,
+}
+DACOS_ANNOTATED_SEED = 42
+
 MLCQ_SEVERITY_ORDER = {
     "none": 0,
     "no": 0,
@@ -71,7 +80,16 @@ class SmellSample:
     metadata: dict[str, Any] | None = None
 
 
-def load_dacos_smell_samples(path: str, *, files_root: Optional[str] = None, limit: Optional[int] = None) -> list[SmellSample]:
+def load_dacos_smell_samples(
+    path: str,
+    *,
+    files_root: Optional[str] = None,
+    limit: Optional[int] = None,
+    label_source: str = "sample_table",
+    split: str = "selection",
+    seed: int = DACOS_ANNOTATED_SEED,
+    smells: Optional[tuple[str, ...]] = None,
+) -> list[SmellSample]:
     """Load DACOS/DACOSX human smell samples.
 
     DACOS is published as MySQL dumps plus a source-code archive. For practical
@@ -84,9 +102,22 @@ def load_dacos_smell_samples(path: str, *, files_root: Optional[str] = None, lim
       1/4 multifaceted abstraction present/absent
       2/5 long parameter list present/absent
       3/6 complex method present/absent
+
+    With the DACOS SQL dump, `label_source="sample_table"` (default, used by the
+    runs of the IST paper) reads the label from the `smells` column of the
+    `sample` table. That column marks the smell a snippet was selected for, not
+    the developers' judgement. `label_source="annotations"` aggregates the
+    `annotation` table instead (see load_dacos_annotated_splits) and returns
+    the `split` ("selection" or "heldout") of `limit` samples (default 200).
     """
 
     path_obj = Path(path)
+    if label_source == "annotations":
+        splits = load_dacos_annotated_splits(path, files_root=files_root, split_size=limit or 200, seed=seed,
+                                             smells=smells)
+        return splits[split]
+    if label_source != "sample_table":
+        raise ValueError(f"Unknown DACOS label source: {label_source}")
     if path_obj.suffix.lower() in {".csv", ".tsv", ".json", ".jsonl", ".ndjson"}:
         rows = _load_rows(path)
     elif path_obj.suffix.lower() == ".sql":
@@ -237,6 +268,161 @@ def _flatten_dacos_sample_buckets(buckets: dict[str, list[SmellSample]], limit: 
                 if limit and len(ordered) >= limit:
                     return ordered
     return ordered
+
+
+def load_dacos_annotated_splits(
+    path: str,
+    *,
+    files_root: Optional[str] = None,
+    split_size: int = 200,
+    seed: int = DACOS_ANNOTATED_SEED,
+    split_names: tuple[str, ...] = ("selection", "heldout"),
+    smells: Optional[tuple[str, ...]] = None,
+) -> dict[str, list[SmellSample]]:
+    """Build disjoint DACOS splits labeled by the developers' annotations.
+
+    Rules:
+    - a (sample, smell) pair is eligible when the sample was selected for
+      annotation of that smell (`smells` column of `sample`) and has at least
+      one row in `annotation`;
+    - the label is the strict majority of the annotators' flag for that smell
+      (iscm, islp or isma); ties are excluded;
+    - each sample (and each source file) is used for one smell only and in
+      one split only;
+    - `smells` restricts the smells (default: all three);
+    - each split has an equal quota per smell (67/67/66 for 200), the
+      positive share of each smell follows its share among eligible pairs, and
+      samples are drawn round-robin over projects after a seeded shuffle;
+    - pairs whose source file is missing or shorter than 80 characters are
+      skipped.
+    """
+
+    path_obj = Path(path)
+    sql_text = path_obj.read_text(encoding="utf-8", errors="ignore")
+    source_root = _resolve_dacos_files_root(path_obj, files_root)
+    if not source_root:
+        raise FileNotFoundError(f"DACOS source files not found next to {path_obj}")
+
+    samples = {row[0]: row for row in _iter_sql_table(sql_text, "sample") if len(row) >= 8}
+    votes: dict[Any, list[list[Any]]] = defaultdict(list)
+    for row in _iter_sql_table(sql_text, "annotation"):
+        if len(row) >= 7:
+            votes[row[6]].append(row)
+
+    pools: dict[str, dict[bool, list[dict[str, Any]]]] = {
+        smell: {True: [], False: []} for smell in DACOS_SAMPLE_SMELL_IDS.values()
+    }
+    for sample_id, annotations in votes.items():
+        row = samples.get(sample_id)
+        if not row:
+            continue
+        tagged = {int(v) for v in re.findall(r"\d+", str(row[7] or ""))}
+        for smell_id in sorted(tagged):
+            smell = DACOS_SAMPLE_SMELL_IDS.get(smell_id)
+            if not smell:
+                continue
+            flag = DACOS_ANNOTATION_FLAGS[smell]
+            yes = sum(1 for a in annotations if a[flag] == 1)
+            no = len(annotations) - yes
+            if yes == no:
+                continue
+            pools[smell][yes > no].append({
+                "sample_id": sample_id, "smell": smell, "label": yes > no,
+                "yes": yes, "no": no, "project": row[5], "path": row[4],
+                "designite_id": row[1], "sample_constraints": row[6],
+            })
+
+    read_code = _dacos_code_reader(source_root)
+    rng = random.Random(seed)
+    for smell in pools:
+        for label in (True, False):
+            items = sorted(pools[smell][label], key=lambda item: item["sample_id"])
+            rng.shuffle(items)
+            pools[smell][label] = _round_robin_by_project(items)
+
+    smells = list(smells or DACOS_SAMPLE_SMELL_IDS.values())
+    base, extra = divmod(split_size, len(smells))
+    quotas = {smell: base + (1 if i < extra else 0) for i, smell in enumerate(smells)}
+    used: set[Any] = set()
+    cursors = {(smell, label): 0 for smell in smells for label in (True, False)}
+    splits: dict[str, list[SmellSample]] = {}
+    for name in split_names:
+        chosen: list[SmellSample] = []
+        for smell in smells:
+            pos, neg = len(pools[smell][True]), len(pools[smell][False])
+            n_pos = round(quotas[smell] * pos / (pos + neg)) if pos + neg else 0
+            for label, wanted in ((True, n_pos), (False, quotas[smell] - n_pos)):
+                items = pools[smell][label]
+                taken = 0
+                while taken < wanted and cursors[(smell, label)] < len(items):
+                    item = items[cursors[(smell, label)]]
+                    cursors[(smell, label)] += 1
+                    if item["sample_id"] in used or item["path"] in used:
+                        continue
+                    code = read_code(str(item["path"] or ""))
+                    if len(code.strip()) < 80:
+                        continue
+                    used.update((item["sample_id"], item["path"]))
+                    taken += 1
+                    chosen.append(SmellSample(
+                        sample_id=f"{item['sample_id']}:{smell}",
+                        smell=smell,
+                        label=item["label"],
+                        code=code,
+                        language="Java",
+                        source=str(path_obj),
+                        metadata={
+                            "dacos_sample_id": item["sample_id"],
+                            "designite_id": item["designite_id"],
+                            "project": item["project"],
+                            "path": item["path"],
+                            "sample_constraints": item["sample_constraints"],
+                            "annotations_yes": item["yes"],
+                            "annotations_no": item["no"],
+                            "label_source": "annotations",
+                            "split": name,
+                            "source_archive": str(source_root),
+                        },
+                    ))
+        splits[name] = chosen
+    return splits
+
+
+def _dacos_code_reader(source_root: Path):
+    """Return a reader that opens the DACOS archive once instead of per file."""
+    if source_root.is_file() and source_root.suffix.lower() == ".zip":
+        archive = zipfile.ZipFile(source_root)
+        names = set(archive.namelist())
+
+        def read(file_ref: str) -> str:
+            member = str(file_ref).replace("\\", "/").lstrip("/")
+            if member in names:
+                return archive.read(member).decode("utf-8", errors="ignore")
+            return _read_dacos_file(str(source_root), file_ref)
+
+        return read
+    return lambda file_ref: _read_dacos_file(str(source_root), file_ref)
+
+
+def _round_robin_by_project(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_project: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in items:
+        by_project[str(item["project"])].append(item)
+    queues = [by_project[project] for project in sorted(by_project)]
+    ordered: list[dict[str, Any]] = []
+    for idx in range(max((len(queue) for queue in queues), default=0)):
+        for queue in queues:
+            if idx < len(queue):
+                ordered.append(queue[idx])
+    return ordered
+
+
+def _iter_sql_table(sql_text: str, table: str) -> Iterable[list[Any]]:
+    pattern = re.compile(r"INSERT\s+INTO\s+`%s`\s+VALUES\s*(?P<values>.*?);\s*$" % re.escape(table),
+                         re.IGNORECASE | re.DOTALL | re.MULTILINE)
+    for match in pattern.finditer(sql_text):
+        for values in _iter_sql_value_groups(match.group("values")):
+            yield _parse_sql_values(values)
 
 
 def _dacos_sample_from_row(row: dict[str, Any], *, idx: int, files_root: Optional[str], source: str) -> Optional[SmellSample]:

@@ -70,6 +70,28 @@ OUT_4_MASK = OUT / "rq4_masked"    # feature name masked in the query, BM25-rank
 OUT_5      = OUT / "rq5"           # AutoResearch: generated prompt variants
 OUT_5_HO   = OUT_5 / "heldout"     # RQ5 held-out DACOS test split
 
+# --dacos-labels annotations: DACOS labeled by the developers' annotations
+# (majority vote, ties excluded, complex method and long parameter list only),
+# with disjoint selection/held-out splits. Results go to paper_results_annot/,
+# MLCQ is not rerun in RQ3, and RQ5 selects the best candidate by kappa.
+DACOS_LABELS = "sample_table"
+DACOS_ANNOT_SMELLS = ("complex_method", "long_parameter_list")
+
+
+def load_dacos(split: str = "selection") -> list:
+    files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
+    if DACOS_LABELS == "annotations":
+        return load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES,
+                                        label_source="annotations", split=split,
+                                        smells=DACOS_ANNOT_SMELLS)
+    if split == "heldout":
+        return load_dacos_heldout()
+    return load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES)
+
+
+def selection_metric() -> str:
+    return "kappa" if DACOS_LABELS == "annotations" else "f1"
+
 DACOS_MAIN     = DATA / "DACOS" / "DACOSMain.sql"
 DACOS_EXT      = DATA / "DACOS" / "DACOSExtended.sql"
 DACOS_FILES    = DATA / "DACOS" / "files.zip"
@@ -220,7 +242,10 @@ def run_rq3(dry: bool = False):
     print("="*60)
 
     datasets = {}
-    if DACOS_MAIN.exists():
+    if DACOS_LABELS == "annotations":
+        datasets["DACOS"] = load_dacos("selection")
+        print(f"  {len(datasets['DACOS'])} annotated DACOS samples loaded (MLCQ not rerun)")
+    elif DACOS_MAIN.exists():
         print(f"Loading DACOS from {DACOS_MAIN} …")
         files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
         samples_main = load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES)
@@ -233,7 +258,7 @@ def run_rq3(dry: bool = False):
     else:
         print(f"[warn] {DACOS_MAIN} not found — skipping DACOS")
 
-    if MLCQ_CSV.exists():
+    if MLCQ_CSV.exists() and DACOS_LABELS != "annotations":
         print(f"Loading MLCQ from {MLCQ_CSV} …")
         mlcq = load_mlcq_smell_samples(str(MLCQ_CSV), limit=MAX_SAMPLES)
         datasets["MLCQ"] = mlcq
@@ -717,8 +742,7 @@ def run_rq5(dry: bool = False):
     # ── load datasets ─────────────────────────────────────────────────────────
     datasets: dict = {}
     if DACOS_MAIN.exists():
-        files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
-        samples = load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES)
+        samples = load_dacos("selection")
         datasets["DACOS"] = samples
         print(f"DACOS: {len(samples)} samples")
     if MLCQ_CSV.exists():
@@ -791,7 +815,7 @@ def run_rq5(dry: bool = False):
         return
 
     # ── Step 3: find best on DACOS → validate on MLCQ ────────────────────────
-    best = max(dacos_results, key=lambda r: r.get("metrics", {}).get("f1", 0))
+    best = max(dacos_results, key=lambda r: r.get("metrics", {}).get(selection_metric(), 0))
     best_name = best["prompt"]
     best_f1_dacos = best.get("metrics", {}).get("f1", 0)
     print(f"\nBest on DACOS: '{best_name}' (F1={best_f1_dacos:.3f})")
@@ -884,9 +908,9 @@ def run_rq3_baselines():
     print("="*60)
     files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
     sets = {
-        "DACOS": load_dacos_smell_samples(str(DACOS_MAIN), files_root=files_root, limit=MAX_SAMPLES),
+        "DACOS": load_dacos("selection"),
         "MLCQ": load_mlcq_smell_samples(str(MLCQ_CSV), limit=MAX_SAMPLES),
-        "DACOS_heldout": load_dacos_heldout(),
+        "DACOS_heldout": load_dacos("heldout"),
     }
     rows = []
     for ds, samples in sets.items():
@@ -982,7 +1006,7 @@ def _rq5_best_generated() -> Optional[dict]:
     best = None
     for f in sorted(OUT_5.glob("rq5_DACOS_*.json")):
         d = json.loads(f.read_text())
-        if best is None or d["metrics"]["f1"] > best["metrics"]["f1"]:
+        if best is None or d["metrics"][selection_metric()] > best["metrics"][selection_metric()]:
             best = d
     return best
 
@@ -1005,7 +1029,7 @@ def run_rq5_heldout(dry: bool = False):
     if best is None:
         print("[error] No RQ5 selection results found — run --rq 5 first")
         return
-    test = load_dacos_heldout()
+    test = load_dacos("heldout")
     pos = sum(1 for s in test if s.label)
     print(f"Held-out DACOS: {len(test)} samples ({pos} positive); best generated = {best['prompt']}")
 
@@ -1104,6 +1128,7 @@ def _write_csv(path: Path, rows: list[dict]):
 
 def main():
     global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM, NUMBER_LINES, OUT_2
+    global DACOS_LABELS, OUT, OUT_3, OUT_5, OUT_5_HO
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
     parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
@@ -1124,7 +1149,15 @@ def main():
                         help="RQ1/RQ2: prefix code lines with their number; results go to rq2_numbered/.")
     parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
                                              f"(default: {','.join(RQ4_CONDITIONS)}).")
+    parser.add_argument("--dacos-labels", choices=["sample_table", "annotations"], default="sample_table",
+                        help="RQ3/RQ5: DACOS labels from the sample table (paper v1) or from the "
+                             "developers' annotations; annotations write to output/paper_results_annot/.")
     args = parser.parse_args()
+    if args.dacos_labels == "annotations":
+        DACOS_LABELS = "annotations"
+        OUT = Path("output/paper_results_annot")
+        OUT_3, OUT_5 = OUT / "rq3", OUT / "rq5"
+        OUT_5_HO = OUT_5 / "heldout"
 
     if args.slots:
         RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]

@@ -1,0 +1,97 @@
+# Additional analyses (review)
+
+Computed from stored outputs, no model call.
+
+## 1. RQ3 — ranking stability with the oracle held fixed
+
+**(a) Reruns.** The nine configurations ranked with gpt-4o's run r (gpt-4.1 and o3 have one run). ρ over 9 configurations, and over the 3 gpt-4o prompts alone.
+
+| Dataset | Metric | Runs | ρ (9 configs) | same best | ρ (3 gpt-4o prompts) |
+|---|---|---|---|---|---|
+| DACOS | f1 | 1 vs 2 | 0.983 | True | 1.0 |
+| DACOS | f1 | 1 vs 3 | 0.983 | True | 1.0 |
+| DACOS | f1 | 2 vs 3 | 1.0 | True | 1.0 |
+| DACOS | kappa | 1 vs 2 | 0.983 | True | 1.0 |
+| DACOS | kappa | 1 vs 3 | 0.967 | True | 1.0 |
+| DACOS | kappa | 2 vs 3 | 0.983 | True | 1.0 |
+| MLCQ | f1 | 1 vs 2 | 0.9 | True | 1.0 |
+| MLCQ | f1 | 1 vs 3 | 0.9 | True | 1.0 |
+| MLCQ | f1 | 2 vs 3 | 1.0 | True | 1.0 |
+| MLCQ | kappa | 1 vs 2 | 0.767 | True | -0.5 |
+| MLCQ | kappa | 1 vs 3 | 0.767 | True | -0.5 |
+| MLCQ | kappa | 2 vs 3 | 1.0 | True | 1.0 |
+
+**(b) Paired bootstrap** (1000 resamples of the samples, run 1 of each configuration, seed 42). Median ρ and 95% interval.
+
+| Dataset | ρ(κ human, κ metric) observed | ρ κ human: resample vs original | ρ κ human: two resamples | ρ F1 human: resample vs original | ρ κ metric: resample vs original | ρ(κ human, κ metric) in resamples | same human-best (κ) | same human-best (F1) | same metric-best (κ) | human-best ≠ metric-best |
+|---|---|---|---|---|---|---|---|---|---|---|
+| DACOS | 0.567 | 0.783 [0.367, 0.967] | 0.633 [0.033, 0.933] | 0.8 [0.3, 0.967] | 0.783 [-0.067, 0.967] | 0.5 [-0.25, 0.917] | 50% | 46% | 22% | 70% |
+| MLCQ | 0.583 | 0.75 [0.3, 0.967] | 0.667 [0.167, 0.933] | 0.733 [0.283, 0.967] | 0.7 [0.1, 0.95] | 0.433 [-0.4, 0.9] | 89% | 83% | 29% | 78% |
+
+- DACOS: best by human κ = AZ2/conservative_evidence, best by metric κ = AZ3/definition_driven.
+- MLCQ: best by human κ = AZ3/conservative_evidence, best by metric κ = AZ3/binary_oracle_baseline.
+
+## 2. RQ1/RQ2 — without the empty-answer retry
+
+*Files answered only through the retry are counted as empty. Runs with per-file provenance (`source` in spans_by_file: the numbered runs of AZ4 and AZ6) give an exact value. The other runs record only the number k of such files, so the files are identified from the retry answers saved in llm_debug/ (a file whose predictions equal a saved retry answer and no saved first answer). This reconstruction recovers the recorded k in every run and agrees with the per-file provenance where it exists. When a file matches both a first and a retry answer, low/high give the extreme choices. Random placement and p are recomputed on the same spans (1000 draws, seed 42).*
+
+| Protocol | Slot | Prompt | runs | exact | retry files | LLM errors | F1 with retry | F1 without retry (low–high) | random (low/high) | p (low/high) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| numbered | AZ1 | baseline | 3 | False | 3.3 | 0 | 0.217 | 0.218–0.218 | 0.183/0.183 | 0.035/0.035 |
+| numbered | AZ1 | hybrid | 3 | False | 0.7 | 0 | 0.156 | 0.149–0.149 | 0.147/0.147 | 0.4146/0.4146 |
+| numbered | AZ1 | scanner | 3 | False | 2.3 | 0 | 0.105 | 0.104–0.104 | 0.157/0.157 | 1.0/1.0 |
+| numbered | AZ2 | scanner | 3 | False | 10.3 | 0 | 0.163 | 0.13–0.13 | 0.068/0.068 | 0.001/0.001 |
+| numbered | AZ3 | scanner | 3 | False | 1.3 | 2 | 0.224 | 0.226–0.231 | 0.17/0.172 | 0.002/0.001 |
+| numbered | AZ4 | scanner | 3 | True | 6.7 | 0 | 0.179 | 0.181–0.181 | 0.154/0.154 | 0.0919/0.0919 |
+| numbered | AZ6 | scanner | 3 | True | 2.0 | 0 | 0.202 | 0.195–0.195 | 0.135/0.135 | 0.001/0.001 |
+| original | AZ1 | baseline | 3 | False | 3.3 | 0 | 0.138 | 0.115–0.115 | 0.125/0.125 | 0.7383/0.7383 |
+| original | AZ1 | hybrid | 3 | False | 0.7 | 0 | 0.11 | 0.106–0.106 | 0.145/0.145 | 1.0/1.0 |
+| original | AZ1 | scanner | 3 | False | 2.0 | 0 | 0.102 | 0.096–0.096 | 0.162/0.162 | 1.0/1.0 |
+| original | AZ2 | scanner | 3 | False | 12.0 | 0 | 0.127 | 0.091–0.091 | 0.13/0.13 | 0.97/0.97 |
+| original | AZ3 | scanner | 3 | False | 5.7 | 0 | 0.233 | 0.186–0.186 | 0.125/0.125 | 0.001/0.001 |
+| original | AZ4 | scanner | 3 | False | 6.7 | 0 | 0.105 | 0.054–0.054 | 0.092/0.092 | 0.997/0.997 |
+| original | AZ6 | scanner | 3 | False | 5.0 | 0 | 0.047 | 0.052–0.052 | 0.155/0.155 | 1.0/1.0 |
+
+## 3. RQ4 — random ordering of the candidate list
+
+*The model receives only the file paths of the candidate list (StaLLM_tasks.py, `candidate_text = "- path"` lines), never file contents. Expected Precision@10 = gold files in the list / list length (hypergeometric mean of the top ten). Expected MRR = exact expectation of the reciprocal rank of the first gold file within the top ten (0 if none), uniform random permutation.*
+
+| System | Condition | candidates | gold in list (mean) | E[P@10] | E[MRR] |
+|---|---|---|---|---|---|
+| argouml | alphabetical | 600 | 36.6 | 0.061 | 0.134 |
+| argouml | keyword_sorted | 600 | 77.4 | 0.129 | 0.224 |
+| argouml | bm25_sorted | 600 | 116.1 | 0.194 | 0.351 |
+| argouml | bm25_masked | 600 | 80.8 | 0.135 | 0.254 |
+| eshop | alphabetical | 523 | 79.8 | 0.152 | 0.294 |
+| eshop | keyword_sorted | 523 | 79.8 | 0.152 | 0.294 |
+| eshop | bm25_sorted | 523 | 79.8 | 0.152 | 0.294 |
+| eshop | bm25_masked | 523 | 79.8 | 0.152 | 0.294 |
+
+Per feature: reviewer_rq4_random_ordering.csv.
+
+## 4. MLCQ — fragments and reviewers of the 200 rows used
+
+*Presence = severity other than `none`. Agreement over (fragment, smell) pairs reviewed by two or more reviewers in the full MLCQ export; Krippendorff's α (nominal).*
+
+- rows_used: 200
+- rows_matched: 200
+- distinct_fragments: 101
+- distinct_fragment_smell_pairs: 200
+- reviewers: {'10': 4, '13': 4, '5': 8, '6': 86, '7': 90, '8': 8}
+- pairs_with_2plus_reviewers: 62
+- pairs_with_disagreement: 28
+- pct_agreement_used: 0.548
+- alpha_used: 0.423
+- rows_label_differs_from_majority: 10
+- alpha_full_dataset: 0.379
+- pct_agreement_full_dataset: 0.55
+
+## 5. Checks
+
+- Table 2 time: analyze_paper_stats.analyze_rq12 writes `time_s = statistics.median(elapsed_s of the runs)`, i.e. the median over runs of the wall-clock time of a run.
+- Run counts, sensitivity_chance.csv vs rq12_rerun.csv: identical. A difference means sensitivity_analyses.py was last run before all runs were stored and must be rerun.
+- RQ5 held-out (stats/rq5_heldout.csv): `generated_only_correct` counts samples where only the generated prompt is correct (mcnemar_exact(generated, manual)).
+- RQ5 MLCQ, generated vs binary_oracle_baseline (run 1): 9 vs 10 discordant, p=1.0
+- RQ5 MLCQ, generated vs conservative_evidence (run 1): 10 vs 6 discordant, p=0.4545
+- RQ5 MLCQ, generated vs definition_driven (run 1): 20 vs 4 discordant, p=0.0015
+

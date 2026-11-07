@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_diagnostic_checklist",
+    "template": "You are a code quality analyst specializing in smell detection.\n\nTask: Determine whether the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nFollow this structured checklist:\n1. Does the code exhibit characteristics explicitly tied to {smell}?\n2. Are there any patterns or structures that strongly suggest {smell}?\n3. Is there sufficient evidence to confidently conclude the presence of {smell}?\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_confidence",
+    "template": "You are a code smell detection expert.\n\nTask: Evaluate whether the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nInstructions:\n- Assess the snippet for evidence of {smell}.\n- Explicitly calibrate your confidence level based on the strength of evidence:\n  - High confidence: Clear and direct evidence.\n  - Medium confidence: Some evidence, but not definitive.\n  - Low confidence: Weak or ambiguous evidence.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "contrastive_analysis",
+    "template": "You are a software quality evaluator.\n\nTask: Determine whether the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nInstructions:\n- Compare the snippet against characteristics that define {smell}.\n- Contrast it with characteristics that explicitly do NOT align with {smell}.\n- Decide based on whether the evidence aligns more strongly with the presence or absence of {smell}.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "threshold_anchored",
+    "template": "You are a code smell detection specialist.\n\nTask: Evaluate whether the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nDecision rules:\n- Use measurable thresholds specific to {smell}:\n  - complex_method: More than 3 nested levels or 5+ branches.\n  - long_method: Exceeds 50 lines of code.\n  - long_parameter_list: More than 5 parameters.\n  - multifaceted_abstraction: Contains 3+ distinct responsibilities.\n  - god_class: Exceeds 10 methods and centralizes multiple unrelated functionalities.\n- If the snippet meets or exceeds the threshold, the smell is likely present.\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "diagnostic_questions",
+    "template": "You are a software quality inspector.\n\nTask: Determine whether the following code snippet contains the smell: {smell}.\nLanguage: {language}\n\nFollow these diagnostic questions:\n1. Does the code exhibit structural or behavioral traits associated with {smell}?\n2. Are there specific lines or patterns that strongly indicate {smell}?\n3. Is the evidence sufficient to confidently conclude the presence of {smell}?\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one short evidence sentence\"}}\n\nCode:\n{code}"
+  }
+]

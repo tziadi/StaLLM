@@ -42,6 +42,7 @@ from scipy.stats import binomtest, spearmanr, wilcoxon
 
 OUT = Path("output/paper_results")
 STATS = OUT / "stats"
+MLCQ_ROOT = OUT   # --root for the annotated DACOS runs keeps the MLCQ runs of the main results
 RQ4_DIRS = {"alphabetical": "rq4", "keyword_sorted": "rq4_sorted",
             "bm25_sorted": "rq4_bm25", "bm25_masked": "rq4_masked"}
 RQ4_SYSTEMS = {"ArgoUML (8 single features)": OUT, "eShopOnContainers (5 features)": OUT / "eshop"}
@@ -101,7 +102,10 @@ RQ3_SLOTS = ("AZ1", "AZ2", "AZ3")  # the paper reports RQ3 for the hosted models
 
 def load_rq3() -> list[dict[str, Any]]:
     res = []
-    for f in sorted((OUT / "rq3").glob("rq3_*.json")):
+    files = sorted((OUT / "rq3").glob("rq3_*.json"))
+    if MLCQ_ROOT != OUT:
+        files += sorted((MLCQ_ROOT / "rq3").glob("rq3_*_MLCQ*.json"))
+    for f in files:
         if f.name.split("_")[1] not in RQ3_SLOTS:
             continue
         d = _load(f)
@@ -337,17 +341,19 @@ def analyze_rq3_oracle_swap(results: list[dict[str, Any]], md: list[str]) -> Non
                    and {r["sample_id"] for r in d["rows"]} == set(heur)]
         if len(configs) < 3:
             continue
-        rows = []
+        rows, k_h_raw, k_m_raw = [], [], []
         for d in sorted(configs, key=lambda d: (d["slot"], d["prompt"])):
             gold = [bool(r["gold"]) for r in d["rows"]]
             pred = [bool(r["predicted"]) for r in d["rows"]]
             hpred = [heur[r["sample_id"]] for r in d["rows"]]
             f1_h, k_h = _binary_scores(gold, pred)
             f1_m, k_m = _binary_scores(hpred, pred)
+            k_h_raw.append(k_h)
+            k_m_raw.append(k_m)
             rows.append({"dataset": split, "slot": d["slot"], "prompt": d["prompt"],
                          "f1_human": _r(f1_h), "kappa_human": _r(k_h),
                          "f1_heuristic": _r(f1_m), "kappa_heuristic": _r(k_m)})
-        rho, p = spearmanr([r["kappa_human"] for r in rows], [r["kappa_heuristic"] for r in rows])
+        rho, p = spearmanr(k_h_raw, k_m_raw)   # unrounded, so that rounding does not create ties
         best_h = max(rows, key=lambda r: r["kappa_human"])
         best_m = max(rows, key=lambda r: r["kappa_heuristic"])
         swap.extend(rows)
@@ -565,15 +571,26 @@ def analyze_rq5(md: list[str]) -> None:
 
 
 def main() -> None:
+    global OUT, STATS
+    import argparse
+    parser = argparse.ArgumentParser(description="Statistics for the StaLLM paper")
+    parser.add_argument("--root", default=str(OUT),
+                        help="Results root; output/paper_results_annot analyzes RQ3/RQ5 only, "
+                             "with the MLCQ runs of output/paper_results.")
+    root = Path(parser.parse_args().root)
+    smells_only = root != OUT
+    OUT, STATS = root, root / "stats"
     STATS.mkdir(parents=True, exist_ok=True)
     md = ["# StaLLM paper — statistical analysis\n"]
     rq3 = load_rq3()
     analyze_rq3(rq3, md)
     analyze_rq3_oracle_swap(rq3, md)
-    for i, (title, root) in enumerate(RQ4_SYSTEMS.items()):
-        analyze_rq4(md, root=root, title=title, tag="" if i == 0 else "_eshop")
+    if not smells_only:
+        for i, (title, rq4_root) in enumerate(RQ4_SYSTEMS.items()):
+            analyze_rq4(md, root=rq4_root, title=title, tag="" if i == 0 else "_eshop")
     analyze_rq3_baselines(md)
-    analyze_rq12(md)
+    if not smells_only:
+        analyze_rq12(md)
     analyze_rq5(md)
     (STATS / "report.md").write_text("\n".join(md))
     print(f"Wrote {STATS / 'report.md'}")
