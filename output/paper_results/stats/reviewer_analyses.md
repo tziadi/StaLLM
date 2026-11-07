@@ -2,6 +2,8 @@
 
 Computed from stored outputs, no model call.
 
+**Legacy DACOS labels.** In this root, DACOS is labeled by the `smells` column of the DACOS sample table (preliminary version). The paper reports RQ3 and RQ5 on the annotated DACOS sample: see output/paper_results_annot/stats/reviewer_analyses.md. Analyses 2–4 do not depend on DACOS and are the numbers of the paper.
+
 ## 1. RQ3 — ranking stability with the oracle held fixed
 
 **(a) Reruns.** The nine configurations ranked with gpt-4o's run r (gpt-4.1 and o3 have one run). ρ over 9 configurations, and over the 3 gpt-4o prompts alone.

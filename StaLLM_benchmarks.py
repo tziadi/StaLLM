@@ -1376,3 +1376,45 @@ def _slug(value: Any) -> str:
             keep.append("-")
             last_dash = True
     return "".join(keep).strip("-") or "feature"
+
+
+def export_dacos_annotated_splits(
+    path: str,
+    out_path: str,
+    *,
+    smells: tuple[str, ...],
+    files_root: Optional[str] = None,
+    split_size: int = 200,
+    seed: int = DACOS_ANNOTATED_SEED,
+) -> dict[str, Any]:
+    """Write the ids, labels and votes of the annotated DACOS splits to JSON.
+
+    `smells` is required so that the exported file always matches the smells
+    of the runs it documents.
+    """
+
+    splits = load_dacos_annotated_splits(path, files_root=files_root, split_size=split_size,
+                                         seed=seed, smells=smells)
+    doc = {
+        "source": str(path),
+        "label_source": "annotations",
+        "seed": seed,
+        "smells": list(smells),
+        "split_size": split_size,
+        "rule": "strict majority of the annotators' flag for the smell the sample was selected for; "
+                "ties excluded; one smell per sample and per file; disjoint splits",
+        "splits": {
+            name: [{
+                "sample_id": s.metadata.get("dacos_sample_id"),
+                "smell": s.smell,
+                "label": bool(s.label),
+                "yes": s.metadata.get("annotations_yes"),
+                "no": s.metadata.get("annotations_no"),
+                "project": s.metadata.get("project"),
+                "path": s.metadata.get("path"),
+            } for s in samples]
+            for name, samples in splits.items()
+        },
+    }
+    Path(out_path).write_text(json.dumps(doc, indent=2), encoding="utf-8")
+    return doc

@@ -1,10 +1,13 @@
 """Additional analyses requested in review, computed from the stored outputs only
 (no model call).
 
-    python reviewer_analyses.py
+    python reviewer_analyses.py                                     # legacy DACOS labels, all analyses
+    python reviewer_analyses.py --root output/paper_results_annot   # RQ3 on annotated DACOS (paper)
 
-Writes CSV files and a markdown summary (reviewer_analyses.md) to
-output/paper_results/stats/:
+Writes CSV files and a markdown summary (reviewer_analyses.md) to <root>/stats/.
+With the default root, the DACOS part of analysis 1 and the RQ5 check use the
+legacy DACOS labels of the preliminary version (sample table); the paper
+reports RQ3/RQ5 from output/paper_results_annot/. Analyses:
 
 1. RQ3 ranking stability with the oracle held fixed (reruns and paired bootstrap),
    compared with the oracle-substitution correlation.
@@ -418,8 +421,27 @@ def checks(md: list[str]) -> None:
 
 
 def main() -> None:
+    global OUT, STATS
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--root", default=str(aps.OUT))
+    root = Path(parser.parse_args().root)
+    annotated = root != aps.OUT
+    OUT, STATS = root, root / "stats"
+    aps.OUT, aps.STATS = OUT, STATS
+    STATS.mkdir(parents=True, exist_ok=True)
     md = ["# Additional analyses (review)\n", "Computed from stored outputs, no model call.\n"]
-    for step in (rq3_stability, rq12_no_retry, rq4_random, mlcq_reviewers, checks):
+    if annotated:
+        md.append("RQ3 on DACOS labeled by the annotators' majority (complex method, long parameter list), "
+                  "with the MLCQ runs of output/paper_results/. These are the numbers of the paper.\n")
+        steps = (rq3_stability,)
+    else:
+        md.append("**Legacy DACOS labels.** In this root, DACOS is labeled by the `smells` column of the DACOS "
+                  "sample table (preliminary version). The paper reports RQ3 and RQ5 on the annotated DACOS "
+                  "sample: see output/paper_results_annot/stats/reviewer_analyses.md. Analyses 2–4 do not "
+                  "depend on DACOS and are the numbers of the paper.\n")
+        steps = (rq3_stability, rq12_no_retry, rq4_random, mlcq_reviewers, checks)
+    for step in steps:
         step(md)
         print(f"done: {step.__name__}")
     (STATS / "reviewer_analyses.md").write_text("\n".join(md) + "\n", encoding="utf-8")

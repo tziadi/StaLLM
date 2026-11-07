@@ -180,6 +180,8 @@ def main() -> None:
     rows, summary = [], []
     for ds, samples in sets.items():
         labels, st = pmd_labels(pmd, samples)
+        (STATS / f"pmd_labels_{ds}{tag}.json").write_text(json.dumps(
+            [{"sample_id": k, "pmd": v} for k, v in sorted(labels.items())], indent=1))
         human = {s.sample_id: bool(s.label) for s in samples if s.sample_id in labels}
         ids = sorted(labels)
         pmd_pos = sum(labels[i] for i in ids)

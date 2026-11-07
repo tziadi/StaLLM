@@ -40,6 +40,7 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent))
 
 from StaLLM_benchmarks import (
+    export_dacos_annotated_splits,
     load_dacos_smell_samples,
     load_mlcq_smell_samples,
     run_dacos_smell_benchmark,
@@ -70,10 +71,13 @@ OUT_4_MASK = OUT / "rq4_masked"    # feature name masked in the query, BM25-rank
 OUT_5      = OUT / "rq5"           # AutoResearch: generated prompt variants
 OUT_5_HO   = OUT_5 / "heldout"     # RQ5 held-out DACOS test split
 
-# --dacos-labels annotations: DACOS labeled by the developers' annotations
-# (majority vote, ties excluded, complex method and long parameter list only),
-# with disjoint selection/held-out splits. Results go to paper_results_annot/,
-# MLCQ is not rerun in RQ3, and RQ5 selects the best candidate by kappa.
+# --dacos-labels annotations (default): DACOS labeled by the developers'
+# annotations (majority vote, ties excluded, complex method and long parameter
+# list only), with disjoint selection/held-out splits. Results go to
+# paper_results_annot/, MLCQ is not rerun in RQ3, and RQ5 selects the best
+# candidate by kappa. --dacos-labels sample_table is the legacy label source of
+# the preliminary version (the `smells` column of the DACOS sample table, which
+# marks the samples selected for annotation, not the annotators' judgement).
 DACOS_LABELS = "sample_table"
 DACOS_ANNOT_SMELLS = ("complex_method", "long_parameter_list")
 
@@ -263,7 +267,7 @@ def run_rq3(dry: bool = False):
         mlcq = load_mlcq_smell_samples(str(MLCQ_CSV), limit=MAX_SAMPLES)
         datasets["MLCQ"] = mlcq
         print(f"  {len(mlcq)} MLCQ samples loaded")
-    else:
+    elif not MLCQ_CSV.exists():
         print(f"[warn] {MLCQ_CSV} not found — skipping MLCQ")
 
     if not datasets:
@@ -309,7 +313,7 @@ def run_rq3(dry: bool = False):
                 })
 
     if rows_summary:
-        rebuild_summaries()
+        rebuild_summaries(rq4=False)
 
 
 # ── RQ4 : Feature location (ArgoUML SPL) ─────────────────────────────────────
@@ -1053,7 +1057,7 @@ def run_rq5_heldout(dry: bool = False):
                          "elapsed_s": round(time.time() - t0, 1)})
             out.write_text(json.dumps(data, indent=2, default=str))
             print(f"  {slot} {name}: {fmt_metrics(data['metrics'])}")
-    rebuild_summaries()
+    rebuild_summaries(rq4=False)
 
 
 # ── Summaries (rebuilt from all saved JSON results) ──────────────────────────
@@ -1084,8 +1088,9 @@ def _rebuild_rq4_summary(out_root: Path, conditions: dict) -> list[dict]:
     return rq4_all
 
 
-def rebuild_summaries() -> None:
-    """Rewrite summary CSVs from every result file, so parallel/partial runs stay consistent."""
+def rebuild_summaries(rq4: bool = True) -> None:
+    """Rewrite summary CSVs from every result file, so parallel/partial runs stay consistent.
+    RQ3/RQ5 runs pass rq4=False, so they never rewrite the RQ4 summaries."""
     rq3 = []
     for f in sorted(OUT_3.glob("rq3_*.json")):
         d = json.loads(f.read_text())
@@ -1095,8 +1100,9 @@ def rebuild_summaries() -> None:
                     "elapsed_s": d.get("elapsed_s")})
     _write_csv(OUT / "summary_rq3.csv", rq3)
 
-    for system, cfg in SYSTEMS.items():
-        _rebuild_rq4_summary(cfg["out"], RQ4_CONDITIONS)
+    if rq4:
+        for system, cfg in SYSTEMS.items():
+            _rebuild_rq4_summary(cfg["out"], RQ4_CONDITIONS)
 
     ho = []
     for f in sorted(OUT_5_HO.glob("rq5ho_*.json")):
@@ -1130,7 +1136,7 @@ def main():
     global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM, NUMBER_LINES, OUT_2
     global DACOS_LABELS, OUT, OUT_3, OUT_5, OUT_5_HO
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
-    parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary"],
+    parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary", "splits"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
                              "5h=RQ5 held-out DACOS test, summary=rebuild CSVs only.")
     parser.add_argument("--dry", action="store_true", help="Dry run — print plan without calling the LLM")
@@ -1149,9 +1155,10 @@ def main():
                         help="RQ1/RQ2: prefix code lines with their number; results go to rq2_numbered/.")
     parser.add_argument("--conditions", help="RQ4 candidate orderings, comma-separated "
                                              f"(default: {','.join(RQ4_CONDITIONS)}).")
-    parser.add_argument("--dacos-labels", choices=["sample_table", "annotations"], default="sample_table",
-                        help="RQ3/RQ5: DACOS labels from the sample table (paper v1) or from the "
-                             "developers' annotations; annotations write to output/paper_results_annot/.")
+    parser.add_argument("--dacos-labels", choices=["annotations", "sample_table"], default="annotations",
+                        help="RQ3/RQ5: DACOS labels from the developers' annotations (default, results in "
+                             "output/paper_results_annot/) or, for the legacy preliminary runs, from the "
+                             "sample table (results in output/paper_results/).")
     args = parser.parse_args()
     if args.dacos_labels == "annotations":
         DACOS_LABELS = "annotations"
@@ -1179,6 +1186,13 @@ def main():
     rq = args.rq
     if rq == "summary":
         rebuild_summaries()
+    if rq == "splits":
+        files_root = str(DACOS_FILES) if DACOS_FILES.exists() else None
+        for target in (OUT / "stallm_annotated_splits.json", DACOS_MAIN.parent / "stallm_annotated_splits.json"):
+            doc = export_dacos_annotated_splits(str(DACOS_MAIN), str(target), smells=DACOS_ANNOT_SMELLS,
+                                                files_root=files_root, split_size=MAX_SAMPLES)
+            print(f"[splits] {target}: " + ", ".join(
+                f"{k} {len(v)} ({sum(x['label'] for x in v)} positive)" for k, v in doc["splits"].items()))
     if rq == "2":
         run_rq2(dry=args.dry, prompts=tuple(p.strip() for p in (args.prompts or "scanner").split(",")))
     if rq == "3b":

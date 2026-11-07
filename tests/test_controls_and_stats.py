@@ -130,11 +130,33 @@ class StatsTest(unittest.TestCase):
 
     @unittest.skipUnless((ROOT / "output/paper_results/stats/rq3_oracle_swap.csv").exists(), "no stats")
     def test_reported_spearman_values(self):
-        rows = list(csv.DictReader((ROOT / "output/paper_results/stats/rq3_oracle_swap.csv").read_text().splitlines()))
-        for ds, expected in (("DACOS", 0.567), ("MLCQ", 0.583)):
-            r = [x for x in rows if x["dataset"] == ds]
-            rho, _ = spearmanr([float(x["kappa_human"]) for x in r], [float(x["kappa_heuristic"]) for x in r])
+        """Oracle-substitution rho of the paper (annotated DACOS, MLCQ), from unrounded kappa values."""
+        annot, main = ROOT / "output/paper_results_annot", ROOT / "output/paper_results"
+        for ds, root, expected in (("DACOS", annot, 0.650), ("MLCQ", main, 0.583)):
+            heur = {str(r["sample_id"]): bool(r["predicted"]) for r in json.loads(
+                (annot / "rq3" / "baselines" / f"rq3b_metric_heuristic_{ds}.json").read_text())["rows"]}
+            k_h, k_m = [], []
+            for f in sorted((root / "rq3").glob(f"rq3_AZ[123]_*_{ds}.json")):
+                rows = json.loads(f.read_text())["rows"]
+                pred = [bool(r["predicted"]) for r in rows]
+                k_h.append(aps._binary_scores([bool(r["gold"]) for r in rows], pred)[1])
+                k_m.append(aps._binary_scores([heur[str(r["sample_id"])] for r in rows], pred)[1])
+            self.assertEqual(len(k_h), 9)
+            rho, _ = spearmanr(k_h, k_m)
             self.assertAlmostEqual(rho, expected, places=3)
+
+    def test_annotated_split_file_matches_results(self):
+        """The shipped DACOS split file lists exactly the samples of the RQ3 and RQ5 runs."""
+        annot = ROOT / "output/paper_results_annot"
+        doc = json.loads((annot / "stallm_annotated_splits.json").read_text())
+        self.assertEqual(doc["smells"], ["complex_method", "long_parameter_list"])
+        for split, pattern in (("selection", "rq3/rq3_*_DACOS*.json"), ("heldout", "rq5/heldout/rq5ho_*.json")):
+            expected = {(str(x["sample_id"]), x["smell"], x["label"]) for x in doc["splits"][split]}
+            self.assertEqual(sum(x[2] for x in expected), 131)
+            for f in glob.glob(str(annot / pattern)):
+                got = {(r["sample_id"].split(":")[0], r["smell"], bool(r["gold"]))
+                       for r in json.loads(Path(f).read_text())["rows"]}
+                self.assertEqual(got, expected, f)
 
 
 if __name__ == "__main__":
