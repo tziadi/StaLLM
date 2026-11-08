@@ -80,3 +80,12 @@ python generate_paper_figures.py
 | RQ4 non-LLM re-rankers on the BM25 list, duplicated files | `output/paper_results/stats/rq4_rerankers.csv`, `rq4_duplicates.csv`, `rq4_reranker_analyses.md` | `rq4_reranker_analyses.py` |
 | RQ5 selection, held-out, MLCQ | `output/paper_results_annot/summary_rq5.csv`, `stats/rq5_heldout.csv` | `analyze_paper_stats.py --root output/paper_results_annot` |
 | RQ5 paired Δκ, repeated splits by κ with chance references, run-to-run spread | `output/paper_results_annot/stats/smell_pairwise_kappa.csv`, `smell_rq5_splits.csv` | `smell_analyses.py` |
+
+## Fourth review round (`python revision_analyses.py`)
+| Claim | Output |
+|---|---|
+| Random-placement p with 10,000 draws, Holm per protocol and over all 18 tests (Table 2) | `output/paper_results/stats/revision_chance_10000.csv` |
+| Direct test of the protocol effect on the excess over chance (deepseek-coder +0.17, 95% CI 0.03–0.28) | `output/paper_results/stats/revision_protocol_effect.csv` |
+| Structural heuristic (signatures, throw, catch): F1 0.390, 128 predictions | `output/paper_results/stats/revision_structural_baseline.csv` |
+| MCC ≤ 0.19 on DACOS, mean over runs | `output/paper_results_annot/stats/revision_mcc.csv` |
+| 199 of the 200 DACOS selection samples have two concordant votes | `output/paper_results_annot/stallm_annotated_splits.json` (`yes`/`no` fields) |
