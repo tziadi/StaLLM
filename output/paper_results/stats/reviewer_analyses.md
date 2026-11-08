@@ -6,9 +6,9 @@ Computed from stored outputs, no model call.
 
 ## 1. RQ3 — ranking stability with the oracle held fixed
 
-**(a) Reruns.** The nine configurations ranked with gpt-4o's run r (gpt-4.1 and o3 have one run). ρ over 9 configurations, and over the 3 gpt-4o prompts alone.
+**(a) Reruns.** The configurations ranked with run r of the models that have three runs (gpt-4o, DeepSeek-V3.2, Mistral-Large-3; gpt-4.1 and o3 have one run). ρ over all configurations, and over the 3 gpt-4o prompts alone.
 
-| Dataset | Metric | Runs | ρ (9 configs) | same best | ρ (3 gpt-4o prompts) |
+| Dataset | Metric | Runs | ρ (all configs) | same best | ρ (3 gpt-4o prompts) |
 |---|---|---|---|---|---|
 | DACOS | f1 | 1 vs 2 | 0.983 | True | 1.0 |
 | DACOS | f1 | 1 vs 3 | 0.983 | True | 1.0 |
@@ -16,19 +16,19 @@ Computed from stored outputs, no model call.
 | DACOS | kappa | 1 vs 2 | 0.983 | True | 1.0 |
 | DACOS | kappa | 1 vs 3 | 0.967 | True | 1.0 |
 | DACOS | kappa | 2 vs 3 | 0.983 | True | 1.0 |
-| MLCQ | f1 | 1 vs 2 | 0.9 | True | 1.0 |
-| MLCQ | f1 | 1 vs 3 | 0.9 | True | 1.0 |
-| MLCQ | f1 | 2 vs 3 | 1.0 | True | 1.0 |
-| MLCQ | kappa | 1 vs 2 | 0.767 | True | -0.5 |
-| MLCQ | kappa | 1 vs 3 | 0.767 | True | -0.5 |
-| MLCQ | kappa | 2 vs 3 | 1.0 | True | 1.0 |
+| MLCQ | f1 | 1 vs 2 | 0.964 | True | 1.0 |
+| MLCQ | f1 | 1 vs 3 | 0.968 | True | 1.0 |
+| MLCQ | f1 | 2 vs 3 | 0.996 | True | 1.0 |
+| MLCQ | kappa | 1 vs 2 | 0.932 | False | -0.5 |
+| MLCQ | kappa | 1 vs 3 | 0.911 | True | -0.5 |
+| MLCQ | kappa | 2 vs 3 | 0.982 | False | 1.0 |
 
 **(b) Paired bootstrap** (1000 resamples of the samples, run 1 of each configuration, seed 42). Median ρ and 95% interval.
 
 | Dataset | ρ(κ human, κ metric) observed | ρ κ human: resample vs original | ρ κ human: two resamples | ρ F1 human: resample vs original | ρ κ metric: resample vs original | ρ(κ human, κ metric) in resamples | same human-best (κ) | same human-best (F1) | same metric-best (κ) | human-best ≠ metric-best |
 |---|---|---|---|---|---|---|---|---|---|---|
 | DACOS | 0.567 | 0.783 [0.367, 0.967] | 0.633 [0.033, 0.933] | 0.8 [0.3, 0.967] | 0.783 [-0.067, 0.967] | 0.5 [-0.25, 0.917] | 50% | 46% | 22% | 70% |
-| MLCQ | 0.583 | 0.75 [0.3, 0.967] | 0.667 [0.167, 0.933] | 0.733 [0.283, 0.967] | 0.7 [0.1, 0.95] | 0.433 [-0.4, 0.9] | 89% | 83% | 29% | 78% |
+| MLCQ | 0.676 | 0.894 [0.693, 0.971] | 0.824 [0.554, 0.944] | 0.9 [0.706, 0.978] | 0.795 [0.408, 0.943] | 0.593 [-0.107, 0.896] | 47% | 52% | 24% | 88% |
 
 - DACOS: best by human κ = AZ2/conservative_evidence, best by metric κ = AZ3/definition_driven.
 - MLCQ: best by human κ = AZ3/conservative_evidence, best by metric κ = AZ3/binary_oracle_baseline.
@@ -46,6 +46,8 @@ Computed from stored outputs, no model call.
 | numbered | AZ3 | scanner | 3 | False | 1.3 | 2 | 0.224 | 0.226–0.231 | 0.17/0.172 | 0.002/0.001 |
 | numbered | AZ4 | scanner | 3 | True | 6.7 | 0 | 0.179 | 0.181–0.181 | 0.154/0.154 | 0.0919/0.0919 |
 | numbered | AZ6 | scanner | 3 | True | 2.0 | 0 | 0.202 | 0.195–0.195 | 0.135/0.135 | 0.001/0.001 |
+| numbered | AZ7 | scanner | 3 | True | 1.3 | 0 | 0.239 | 0.151–0.151 | 0.121/0.121 | 0.004/0.004 |
+| numbered | AZ8 | scanner | 3 | True | 0.7 | 0 | 0.194 | 0.188–0.188 | 0.16/0.16 | 0.013/0.013 |
 | original | AZ1 | baseline | 3 | False | 3.3 | 0 | 0.138 | 0.115–0.115 | 0.125/0.125 | 0.7383/0.7383 |
 | original | AZ1 | hybrid | 3 | False | 0.7 | 0 | 0.11 | 0.106–0.106 | 0.145/0.145 | 1.0/1.0 |
 | original | AZ1 | scanner | 3 | False | 2.0 | 0 | 0.102 | 0.096–0.096 | 0.162/0.162 | 1.0/1.0 |
@@ -53,6 +55,8 @@ Computed from stored outputs, no model call.
 | original | AZ3 | scanner | 3 | False | 5.7 | 0 | 0.233 | 0.186–0.186 | 0.125/0.125 | 0.001/0.001 |
 | original | AZ4 | scanner | 3 | False | 6.7 | 0 | 0.105 | 0.054–0.054 | 0.092/0.092 | 0.997/0.997 |
 | original | AZ6 | scanner | 3 | False | 5.0 | 0 | 0.047 | 0.052–0.052 | 0.155/0.155 | 1.0/1.0 |
+| original | AZ7 | scanner | 3 | True | 1.3 | 0 | 0.167 | 0.151–0.151 | 0.142/0.142 | 0.2767/0.2767 |
+| original | AZ8 | scanner | 3 | True | 0.7 | 0 | 0.152 | 0.145–0.145 | 0.165/0.165 | 0.952/0.952 |
 
 ## 3. RQ4 — random ordering of the candidate list
 

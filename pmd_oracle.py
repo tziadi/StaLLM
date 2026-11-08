@@ -156,7 +156,7 @@ def pmd_labels(pmd: str, samples: list) -> tuple[dict[str, bool], dict[str, int]
 def configs(dataset: str) -> dict[str, dict[str, bool]]:
     root = ANNOT if dataset == "DACOS" else MAIN
     out = {}
-    for f in sorted((root / "rq3").glob(f"rq3_AZ[123]_*_{dataset}.json")):
+    for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}.json")):
         d = aps._load(f)
         out[f"{d['slot']}/{d['prompt']}"] = {r["sample_id"]: bool(r["predicted"]) for r in d["rows"]}
     return out
@@ -216,7 +216,7 @@ def main() -> None:
         md.append(f"- PMD positives {pmd_pos}, human positives {sum(human.values())}; "
                   f"κ(PMD, human) = {aps._r(k_ph)}, F1 = {aps._r(f1_ph)}")
         md.append(f"- per smell (n, PMD positive, human positive): {by_smell}")
-        md.append(f"- Spearman ρ between the κ rankings of the 9 configurations (human vs PMD) = {aps._r(rho)}; "
+        md.append(f"- Spearman ρ between the κ rankings of the {len(names)} configurations (human vs PMD) = {aps._r(rho)}; "
                   f"best vs human: {best_h}; best vs PMD: {best_p}\n")
         md.append("| Configuration | n | κ human | κ PMD |\n|---|---|---|---|")
         for r in rows:

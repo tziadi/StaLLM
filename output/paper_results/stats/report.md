@@ -22,14 +22,16 @@
 | MLCQ | AZ3 | binary_oracle_baseline | 0.8 | 0.333 | 0.471 [0.275, 0.625] | 0.408 |
 | MLCQ | AZ3 | conservative_evidence | 0.783 | 0.5 | 0.61 [0.439, 0.746] | 0.547 |
 | MLCQ | AZ3 | definition_driven | 0.609 | 0.389 | 0.475 [0.304, 0.623] | 0.389 |
+| MLCQ | AZ7 | binary_oracle_baseline | 0.8 | 0.111 | 0.195 [0.045, 0.372] | 0.158 |
+| MLCQ | AZ7 | conservative_evidence | 0.667 | 0.111 | 0.19 [0.048, 0.356] | 0.147 |
+| MLCQ | AZ7 | definition_driven | 0.429 | 0.25 | 0.316 [0.145, 0.471] | 0.211 |
+| MLCQ | AZ8 | binary_oracle_baseline | 0.708 | 0.472 | 0.567 [0.4, 0.7] | 0.494 |
+| MLCQ | AZ8 | conservative_evidence | 0.6 | 0.667 | 0.632 [0.492, 0.75] | 0.545 |
+| MLCQ | AZ8 | definition_driven | 0.512 | 0.583 | 0.545 [0.4, 0.667] | 0.438 |
 
-**McNemar (Holm-adjusted within factor):** 9/36 pairwise comparisons significant at α=0.05.
+**McNemar (Holm-adjusted within factor):** 5/63 pairwise comparisons significant at α=0.05.
 
-- prompt | AZ1 | DACOS: binary_oracle_baseline vs conservative_evidence (17 vs 3 discordant, p_holm=0.0438)
-- prompt | AZ1 | DACOS: binary_oracle_baseline vs definition_driven (21 vs 2 discordant, p_holm=0.0012)
-- slot | binary_oracle_baseline | DACOS: AZ1 vs AZ2 (14 vs 35 discordant, p_holm=0.0494)
-- slot | binary_oracle_baseline | DACOS: AZ1 vs AZ3 (20 vs 46 discordant, p_holm=0.026)
-- slot | binary_oracle_baseline | MLCQ: AZ2 vs AZ3 (0 vs 9 discordant, p_holm=0.0494)
+- prompt | AZ1 | DACOS: binary_oracle_baseline vs definition_driven (21 vs 2 discordant, p_holm=0.0016)
 - slot | conservative_evidence | DACOS: AZ1 vs AZ2 (8 vs 44 discordant, p_holm=0.0)
 - slot | conservative_evidence | DACOS: AZ1 vs AZ3 (15 vs 57 discordant, p_holm=0.0)
 - slot | definition_driven | DACOS: AZ1 vs AZ2 (9 vs 49 discordant, p_holm=0.0)
@@ -45,6 +47,12 @@
 | AZ1 | conservative_evidence | MLCQ | 3 | 95.5% | 0.534 ± 0.038 |
 | AZ1 | definition_driven | DACOS | 3 | 91.0% | 0.382 ± 0.01 |
 | AZ1 | definition_driven | MLCQ | 3 | 94.0% | 0.5 ± 0.014 |
+| AZ7 | binary_oracle_baseline | MLCQ | 3 | 99.5% | 0.194 ± 0.003 |
+| AZ7 | conservative_evidence | MLCQ | 3 | 99.0% | 0.175 ± 0.027 |
+| AZ7 | definition_driven | MLCQ | 3 | 99.5% | 0.32 ± 0.003 |
+| AZ8 | binary_oracle_baseline | MLCQ | 3 | 96.0% | 0.542 ± 0.022 |
+| AZ8 | conservative_evidence | MLCQ | 3 | 98.0% | 0.64 ± 0.015 |
+| AZ8 | definition_driven | MLCQ | 3 | 97.0% | 0.551 ± 0.015 |
 
 ## RQ3 — oracle substitution (human labels vs. metric heuristic, same samples)
 
@@ -62,7 +70,7 @@
 | AZ3 | conservative_evidence | 0.368 | 0.312 | 0.364 | 0.327 |
 | AZ3 | definition_driven | 0.378 | 0.326 | 0.381 | 0.347 |
 
-**MLCQ** (9 configurations): Spearman ρ(κ human, κ heuristic) = 0.583 (p=0.099); best vs human: AZ3/conservative_evidence, best vs heuristic: AZ3/binary_oracle_baseline
+**MLCQ** (15 configurations): Spearman ρ(κ human, κ heuristic) = 0.676 (p=0.006); best vs human: AZ3/conservative_evidence, best vs heuristic: AZ3/binary_oracle_baseline
 
 | Slot | Prompt | F1 human | κ human | F1 heuristic | κ heuristic |
 |---|---|---|---|---|---|
@@ -75,6 +83,12 @@
 | AZ3 | binary_oracle_baseline | 0.471 | 0.408 | 0.467 | 0.423 |
 | AZ3 | conservative_evidence | 0.61 | 0.547 | 0.474 | 0.421 |
 | AZ3 | definition_driven | 0.475 | 0.389 | 0.421 | 0.363 |
+| AZ7 | binary_oracle_baseline | 0.195 | 0.158 | 0.2 | 0.169 |
+| AZ7 | conservative_evidence | 0.19 | 0.147 | 0.19 | 0.154 |
+| AZ7 | definition_driven | 0.316 | 0.211 | 0.222 | 0.148 |
+| AZ8 | binary_oracle_baseline | 0.567 | 0.494 | 0.462 | 0.407 |
+| AZ8 | conservative_evidence | 0.632 | 0.545 | 0.4 | 0.327 |
+| AZ8 | definition_driven | 0.545 | 0.438 | 0.429 | 0.358 |
 
 ## RQ4 — feature location, ArgoUML (8 single features) (mean over features, runs averaged)
 
@@ -176,6 +190,8 @@
 | numbered | AZ3 | azure:o3-features | scanner | 3 | 0.186 | 0.282 | 0.224 ± 0.028 | 0.168 [0.138, 0.196] | 0.001 | 0.117 [0.086, 0.149] | 0.001 | 2 | 335.1 |
 | numbered | AZ4 | ollama:qwen2.5-coder:14b-instruct@localhost:11434 | scanner | 3 | 0.159 | 0.204 | 0.179 ± 0.008 | 0.149 [0.114, 0.183] | 0.0609 | 0.111 [0.081, 0.146] | 0.002 | 0 | 1853.1 |
 | numbered | AZ6 | ollama:deepseek-coder:6.7b-instruct@localhost:11434 | scanner | 3 | 0.15 | 0.31 | 0.202 ± 0.005 | 0.137 [0.109, 0.163] | 0.001 | 0.109 [0.081, 0.136] | 0.001 | 0 | 1167.6 |
+| numbered | AZ7 | azure:DeepSeek-V3.2 | scanner | 3 | 0.162 | 0.458 | 0.239 ± 0.063 | 0.172 [0.147, 0.199] | 0.001 | 0.12 [0.095, 0.143] | 0.001 | 0 | 72.3 |
+| numbered | AZ8 | azure:Mistral-Large-3 | scanner | 3 | 0.131 | 0.375 | 0.194 ± 0.031 | 0.175 [0.153, 0.197] | 0.0569 | 0.139 [0.118, 0.163] | 0.001 | 0 | 123.2 |
 | original | AZ1 | azure:gpt-4o-Tewfik | baseline | 3 | 0.116 | 0.171 | 0.138 ± 0.031 | 0.155 [0.123, 0.187] | 0.8342 | 0.112 [0.082, 0.146] | 0.0629 | 0 | 64.0 |
 | original | AZ1 | azure:gpt-4o-Tewfik | hybrid | 3 | 0.073 | 0.227 | 0.11 ± 0.032 | 0.15 [0.129, 0.173] | 1.0 | 0.115 [0.091, 0.138] | 0.6543 | 0 | 103.1 |
 | original | AZ1 | azure:gpt-4o-Tewfik | scanner | 3 | 0.07 | 0.194 | 0.102 ± 0.021 | 0.165 [0.142, 0.19] | 1.0 | 0.122 [0.098, 0.147] | 0.9491 | 0 | 81.2 |
@@ -183,6 +199,8 @@
 | original | AZ3 | azure:o3-features | scanner | 3 | 0.204 | 0.273 | 0.233 ± 0.07 | 0.174 [0.143, 0.206] | 0.001 | 0.131 [0.101, 0.165] | 0.001 | 0 | 580.6 |
 | original | AZ4 | ollama:qwen2.5-coder:14b-instruct@localhost:11434 | scanner | 3 | 0.089 | 0.13 | 0.105 ± 0.006 | 0.116 [0.087, 0.147] | 0.7552 | 0.119 [0.09, 0.151] | 0.8082 | 0 | 1247.8 |
 | original | AZ6 | ollama:deepseek-coder:6.7b-instruct@localhost:11434 | scanner | 3 | 0.036 | 0.069 | 0.047 ± 0.001 | 0.147 [0.117, 0.177] | 1.0 | 0.11 [0.082, 0.139] | 1.0 | 0 | 1221.3 |
+| original | AZ7 | azure:DeepSeek-V3.2 | scanner | 3 | 0.117 | 0.292 | 0.167 ± 0.026 | 0.16 [0.132, 0.188] | 0.3367 | 0.122 [0.098, 0.148] | 0.002 | 0 | 74.6 |
+| original | AZ8 | azure:Mistral-Large-3 | scanner | 3 | 0.106 | 0.269 | 0.152 ± 0.01 | 0.179 [0.157, 0.202] | 0.988 | 0.144 [0.118, 0.168] | 0.2597 | 0 | 113.6 |
 
 *Without the empty-answer retry (files answered by the retry count as empty); random placement recomputed on the same spans.*
 
@@ -190,6 +208,10 @@
 |---|---|---|---|---|---|---|---|
 | numbered | AZ4 | scanner | 6.7 | 0.179 | 0.181 | 0.154 | 0.0919 |
 | numbered | AZ6 | scanner | 2.0 | 0.202 | 0.195 | 0.135 | 0.001 |
+| numbered | AZ7 | scanner | 1.3 | 0.239 | 0.151 | 0.121 | 0.004 |
+| numbered | AZ8 | scanner | 0.7 | 0.194 | 0.188 | 0.16 | 0.013 |
+| original | AZ7 | scanner | 1.3 | 0.167 | 0.151 | 0.142 | 0.2767 |
+| original | AZ8 | scanner | 0.7 | 0.152 | 0.145 | 0.165 | 0.952 |
 
 ## RQ5 — held-out DACOS test split (disjoint from the selection split)
 

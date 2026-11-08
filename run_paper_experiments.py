@@ -80,6 +80,7 @@ OUT_5_HO   = OUT_5 / "heldout"     # RQ5 held-out DACOS test split
 # marks the samples selected for annotation, not the annotators' judgement).
 DACOS_LABELS = "sample_table"
 DACOS_ANNOT_SMELLS = ("complex_method", "long_parameter_list")
+RQ3_DATASETS: Optional[set] = None   # --rq3-datasets: restrict RQ3 to these datasets
 
 
 def load_dacos(split: str = "selection") -> list:
@@ -270,6 +271,8 @@ def run_rq3(dry: bool = False):
     elif not MLCQ_CSV.exists():
         print(f"[warn] {MLCQ_CSV} not found — skipping MLCQ")
 
+    if RQ3_DATASETS:
+        datasets = {k: v for k, v in datasets.items() if k in RQ3_DATASETS}
     if not datasets:
         print("[error] No datasets available for RQ3")
         return
@@ -1134,7 +1137,7 @@ def _write_csv(path: Path, rows: list[dict]):
 
 def main():
     global RQ3_SLOTS, RQ4_SLOTS, RUNS, WORKERS, SYSTEM, NUMBER_LINES, OUT_2
-    global DACOS_LABELS, OUT, OUT_3, OUT_5, OUT_5_HO
+    global DACOS_LABELS, OUT, OUT_3, OUT_5, OUT_5_HO, RQ3_DATASETS
     parser = argparse.ArgumentParser(description="StaLLM paper experiment runner")
     parser.add_argument("--rq", choices=["2", "3", "3b", "4", "4m", "5", "5h", "summary", "splits"],
                         help="Run only this RQ. 4m=method-level, 5=AutoResearch, "
@@ -1159,7 +1162,10 @@ def main():
                         help="RQ3/RQ5: DACOS labels from the developers' annotations (default, results in "
                              "output/paper_results_annot/) or, for the legacy preliminary runs, from the "
                              "sample table (results in output/paper_results/).")
+    parser.add_argument("--rq3-datasets", help="RQ3: comma-separated datasets to run (DACOS, MLCQ; default: all).")
     args = parser.parse_args()
+    if args.rq3_datasets:
+        RQ3_DATASETS = {d.strip() for d in args.rq3_datasets.split(",") if d.strip()}
     if args.dacos_labels == "annotations":
         DACOS_LABELS = "annotations"
         OUT = Path("output/paper_results_annot")
@@ -1170,7 +1176,7 @@ def main():
         RQ3_SLOTS = RQ4_SLOTS = [s.strip() for s in args.slots.split(",") if s.strip()]
     RUNS, WORKERS, SYSTEM = args.runs, args.workers, args.system
     if args.number_lines:
-        NUMBER_LINES, OUT_2 = True, OUT / "rq2_numbered"
+        NUMBER_LINES, OUT_2 = True, OUT_2.parent / "rq2_numbered"   # span-level results stay in paper_results/
     conditions = [c.strip() for c in args.conditions.split(",")] if args.conditions else None
     if args.prompts:
         keep = {p.strip() for p in args.prompts.split(",")}

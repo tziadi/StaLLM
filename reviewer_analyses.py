@@ -59,19 +59,20 @@ def rq3_stability(md: list[str]) -> None:
         run1 = sorted([d for d in runs if d["run"] == 1], key=lambda d: (d["slot"], d["prompt"]))
         names = [f"{d['slot']}/{d['prompt']}" for d in run1]
 
-        # (a) Reruns: rank the nine configurations with gpt-4o's run r, other models fixed.
+        # (a) Reruns: rank the configurations with run r of every model that has
+        # three runs (gpt-4o, DeepSeek-V3.2, Mistral-Large-3), single-run models fixed.
         def scores(r: int, metric: str) -> list[float]:
             out = []
             for d in run1:
-                if d["slot"] == "AZ1":
-                    d = next(x for x in runs if x["slot"] == "AZ1" and x["prompt"] == d["prompt"] and x["run"] == r)
+                d = next((x for x in runs if x["slot"] == d["slot"] and x["prompt"] == d["prompt"]
+                          and x["run"] == r), d)
                 out.append(d["metrics"][metric])
             return out
         for metric in ("f1", "kappa"):
             for r1, r2 in ((1, 2), (1, 3), (2, 3)):
                 a, b = scores(r1, metric), scores(r2, metric)
                 rerun_rows.append({"dataset": ds, "metric": metric, "runs": f"{r1} vs {r2}",
-                                   "rho_9_configs": aps._r(_rho(a, b)),
+                                   "rho_all_configs": aps._r(_rho(a, b)),
                                    "best_same": names[a.index(max(a))] == names[b.index(max(b))],
                                    "rho_3_gpt4o_prompts": aps._r(_rho(a[:3], b[:3]))})
 
@@ -123,11 +124,12 @@ def rq3_stability(md: list[str]) -> None:
     aps._write_csv(STATS / "reviewer_rq3_rerun_rankings.csv", rerun_rows)
     aps._write_csv(STATS / "reviewer_rq3_bootstrap.csv", boot_rows)
 
-    md.append("**(a) Reruns.** The nine configurations ranked with gpt-4o's run r (gpt-4.1 and o3 have one run). "
-              "ρ over 9 configurations, and over the 3 gpt-4o prompts alone.\n")
-    md.append("| Dataset | Metric | Runs | ρ (9 configs) | same best | ρ (3 gpt-4o prompts) |\n|---|---|---|---|---|---|")
+    md.append("**(a) Reruns.** The configurations ranked with run r of the models that have three runs "
+              "(gpt-4o, DeepSeek-V3.2, Mistral-Large-3; gpt-4.1 and o3 have one run). "
+              "ρ over all configurations, and over the 3 gpt-4o prompts alone.\n")
+    md.append("| Dataset | Metric | Runs | ρ (all configs) | same best | ρ (3 gpt-4o prompts) |\n|---|---|---|---|---|---|")
     for r in rerun_rows:
-        md.append(f"| {r['dataset']} | {r['metric']} | {r['runs']} | {r['rho_9_configs']} | {r['best_same']} "
+        md.append(f"| {r['dataset']} | {r['metric']} | {r['runs']} | {r['rho_all_configs']} | {r['best_same']} "
                   f"| {r['rho_3_gpt4o_prompts']} |")
     md.append("")
     md.append(f"**(b) Paired bootstrap** ({BOOT} resamples of the samples, run 1 of each configuration, seed 42). "

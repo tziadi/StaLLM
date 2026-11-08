@@ -17,6 +17,8 @@ Files without a detected method body (method_body falls back to code lines): non
 | numbered | AZ3 | scanner | 3 | 0.224 | 0.168 | 0.001 | 0.161 | 0.002 | 0.172 | 0.002 |
 | numbered | AZ4 | scanner | 3 | 0.179 | 0.149 | 0.0609 | 0.143 | 0.021 | 0.155 | 0.0769 |
 | numbered | AZ6 | scanner | 3 | 0.202 | 0.137 | 0.001 | 0.132 | 0.001 | 0.142 | 0.001 |
+| numbered | AZ7 | scanner | 3 | 0.239 | 0.172 | 0.001 | 0.165 | 0.001 | 0.175 | 0.001 |
+| numbered | AZ8 | scanner | 3 | 0.194 | 0.175 | 0.0569 | 0.172 | 0.018 | 0.179 | 0.0869 |
 | original | AZ1 | baseline | 3 | 0.138 | 0.155 | 0.8342 | 0.148 | 0.7403 | 0.157 | 0.8731 |
 | original | AZ1 | hybrid | 3 | 0.11 | 0.15 | 1.0 | 0.143 | 0.999 | 0.149 | 1.0 |
 | original | AZ1 | scanner | 3 | 0.102 | 0.165 | 1.0 | 0.16 | 1.0 | 0.163 | 1.0 |
@@ -24,6 +26,8 @@ Files without a detected method body (method_body falls back to code lines): non
 | original | AZ3 | scanner | 3 | 0.233 | 0.174 | 0.001 | 0.166 | 0.001 | 0.18 | 0.001 |
 | original | AZ4 | scanner | 3 | 0.105 | 0.116 | 0.7552 | 0.11 | 0.6214 | 0.122 | 0.8681 |
 | original | AZ6 | scanner | 3 | 0.047 | 0.147 | 1.0 | 0.14 | 1.0 | 0.15 | 1.0 |
+| original | AZ7 | scanner | 3 | 0.167 | 0.16 | 0.3367 | 0.154 | 0.1768 | 0.164 | 0.4156 |
+| original | AZ8 | scanner | 3 | 0.152 | 0.179 | 0.988 | 0.174 | 0.969 | 0.184 | 0.993 |
 
 ## Balanced and Strict presets, uniform null
 
@@ -43,6 +47,10 @@ Files without a detected method body (method_body falls back to code lines): non
 | numbered | AZ4 | scanner | Strict | 0.154 | 0.075 | 0.001 |
 | numbered | AZ6 | scanner | Balanced | 0.19 | 0.107 | 0.001 |
 | numbered | AZ6 | scanner | Strict | 0.127 | 0.072 | 0.001 |
+| numbered | AZ7 | scanner | Balanced | 0.225 | 0.143 | 0.001 |
+| numbered | AZ7 | scanner | Strict | 0.215 | 0.107 | 0.001 |
+| numbered | AZ8 | scanner | Balanced | 0.173 | 0.156 | 0.0959 |
+| numbered | AZ8 | scanner | Strict | 0.16 | 0.132 | 0.005 |
 | original | AZ1 | baseline | Balanced | 0.112 | 0.126 | 0.8072 |
 | original | AZ1 | baseline | Strict | 0.086 | 0.092 | 0.6454 |
 | original | AZ1 | hybrid | Balanced | 0.083 | 0.126 | 1.0 |
@@ -57,20 +65,24 @@ Files without a detected method body (method_body falls back to code lines): non
 | original | AZ4 | scanner | Strict | 0.079 | 0.067 | 0.1738 |
 | original | AZ6 | scanner | Balanced | 0.047 | 0.115 | 1.0 |
 | original | AZ6 | scanner | Strict | 0.009 | 0.076 | 1.0 |
+| original | AZ7 | scanner | Balanced | 0.13 | 0.133 | 0.6014 |
+| original | AZ7 | scanner | Strict | 0.111 | 0.1 | 0.1868 |
+| original | AZ8 | scanner | Balanced | 0.134 | 0.158 | 0.966 |
+| original | AZ8 | scanner | Strict | 0.113 | 0.134 | 0.957 |
 
 ## Lenient pairs: category of the prediction vs category of the matched finding
 
-- distinct (prediction, finding) pairs within ±3 lines, with a recoverable description: 1112
-- descriptions assigned to a category by keywords: 901 (81%); same category as the finding's rule: 330 (37%), other category: 571 (63%)
+- distinct (prediction, finding) pairs within ±3 lines, with a recoverable description: 1752
+- descriptions assigned to a category by keywords: 1396 (80%); same category as the finding's rule: 513 (37%), other category: 883 (63%)
 
 | Finding category | pairs | same category |
 |---|---|---|
-| design | 260 | 39 |
-| testing | 229 | 72 |
-| exception | 211 | 160 |
-| performance | 83 | 2 |
-| dead_code | 52 | 25 |
-| hardcoded | 24 | 17 |
-| complexity | 24 | 8 |
-| deprecated | 10 | 7 |
-| naming | 8 | 0 |
+| design | 443 | 63 |
+| exception | 327 | 238 |
+| testing | 321 | 113 |
+| performance | 130 | 14 |
+| dead_code | 72 | 38 |
+| complexity | 39 | 13 |
+| hardcoded | 38 | 24 |
+| deprecated | 15 | 10 |
+| naming | 11 | 0 |

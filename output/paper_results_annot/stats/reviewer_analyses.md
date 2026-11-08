@@ -6,29 +6,29 @@ RQ3 on DACOS labeled by the annotators' majority (complex method, long parameter
 
 ## 1. RQ3 — ranking stability with the oracle held fixed
 
-**(a) Reruns.** The nine configurations ranked with gpt-4o's run r (gpt-4.1 and o3 have one run). ρ over 9 configurations, and over the 3 gpt-4o prompts alone.
+**(a) Reruns.** The configurations ranked with run r of the models that have three runs (gpt-4o, DeepSeek-V3.2, Mistral-Large-3; gpt-4.1 and o3 have one run). ρ over all configurations, and over the 3 gpt-4o prompts alone.
 
-| Dataset | Metric | Runs | ρ (9 configs) | same best | ρ (3 gpt-4o prompts) |
+| Dataset | Metric | Runs | ρ (all configs) | same best | ρ (3 gpt-4o prompts) |
 |---|---|---|---|---|---|
-| DACOS | f1 | 1 vs 2 | 1.0 | True | 1.0 |
-| DACOS | f1 | 1 vs 3 | 1.0 | True | 1.0 |
-| DACOS | f1 | 2 vs 3 | 1.0 | True | 1.0 |
-| DACOS | kappa | 1 vs 2 | 0.983 | True | 1.0 |
-| DACOS | kappa | 1 vs 3 | 0.983 | True | 0.5 |
-| DACOS | kappa | 2 vs 3 | 0.967 | True | 0.5 |
-| MLCQ | f1 | 1 vs 2 | 0.9 | True | 1.0 |
-| MLCQ | f1 | 1 vs 3 | 0.9 | True | 1.0 |
-| MLCQ | f1 | 2 vs 3 | 1.0 | True | 1.0 |
-| MLCQ | kappa | 1 vs 2 | 0.767 | True | -0.5 |
-| MLCQ | kappa | 1 vs 3 | 0.767 | True | -0.5 |
-| MLCQ | kappa | 2 vs 3 | 1.0 | True | 1.0 |
+| DACOS | f1 | 1 vs 2 | 0.989 | True | 1.0 |
+| DACOS | f1 | 1 vs 3 | 0.989 | True | 1.0 |
+| DACOS | f1 | 2 vs 3 | 0.989 | True | 1.0 |
+| DACOS | kappa | 1 vs 2 | 0.918 | True | 1.0 |
+| DACOS | kappa | 1 vs 3 | 0.961 | True | 0.5 |
+| DACOS | kappa | 2 vs 3 | 0.886 | True | 0.5 |
+| MLCQ | f1 | 1 vs 2 | 0.964 | True | 1.0 |
+| MLCQ | f1 | 1 vs 3 | 0.968 | True | 1.0 |
+| MLCQ | f1 | 2 vs 3 | 0.996 | True | 1.0 |
+| MLCQ | kappa | 1 vs 2 | 0.932 | False | -0.5 |
+| MLCQ | kappa | 1 vs 3 | 0.911 | True | -0.5 |
+| MLCQ | kappa | 2 vs 3 | 0.982 | False | 1.0 |
 
 **(b) Paired bootstrap** (1000 resamples of the samples, run 1 of each configuration, seed 42). Median ρ and 95% interval.
 
 | Dataset | ρ(κ human, κ metric) observed | ρ κ human: resample vs original | ρ κ human: two resamples | ρ F1 human: resample vs original | ρ κ metric: resample vs original | ρ(κ human, κ metric) in resamples | same human-best (κ) | same human-best (F1) | same metric-best (κ) | human-best ≠ metric-best |
 |---|---|---|---|---|---|---|---|---|---|---|
-| DACOS | 0.65 | 0.7 [-0.05, 0.933] | 0.483 [-0.35, 0.887] | 0.983 [0.917, 1.0] | 0.983 [0.917, 1.0] | 0.494 [-0.383, 0.883] | 44% | 97% | 69% | 74% |
-| MLCQ | 0.583 | 0.75 [0.3, 0.967] | 0.667 [0.167, 0.933] | 0.733 [0.283, 0.967] | 0.7 [0.1, 0.95] | 0.433 [-0.4, 0.9] | 89% | 83% | 29% | 78% |
+| DACOS | 0.511 | 0.657 [0.175, 0.875] | 0.425 [-0.189, 0.811] | 0.975 [0.932, 0.996] | 0.907 [0.743, 0.979] | 0.346 [-0.332, 0.771] | 32% | 88% | 69% | 81% |
+| MLCQ | 0.676 | 0.894 [0.693, 0.971] | 0.824 [0.554, 0.944] | 0.9 [0.706, 0.978] | 0.795 [0.408, 0.943] | 0.593 [-0.107, 0.896] | 47% | 52% | 24% | 88% |
 
 - DACOS: best by human κ = AZ3/binary_oracle_baseline, best by metric κ = AZ3/definition_driven.
 - MLCQ: best by human κ = AZ3/conservative_evidence, best by metric κ = AZ3/binary_oracle_baseline.

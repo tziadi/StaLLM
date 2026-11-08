@@ -12,8 +12,8 @@ the configuration's F1 averaged over its runs) / (1 + draws). Each draw moves
 every predicted span of every run to a random line of the same file, keeping
 its length. The test unit is therefore the mean F1 over the runs.
 
-1. Holm adjustment of these p values within each protocol (7 configurations)
-   and over all 14 tests.
+1. Holm adjustment of these p values within each protocol (9 configurations)
+   and over all tests of both protocols.
 2. Borderline configurations rerun with 10,000 draws.
 3. Category-aware matching: a lenient match also requires that the keyword
    category of the prediction's description (structured_baselines.DESC_KEYWORDS)
@@ -39,6 +39,7 @@ import structured_baselines as sb
 STATS = aps.OUT / "stats"
 BORDERLINE = [("numbered", "AZ1", "baseline", "Lenient"), ("numbered", "AZ1", "hybrid", "Lenient"),
               ("numbered", "AZ2", "scanner", "Lenient"), ("numbered", "AZ4", "scanner", "Lenient"),
+              ("numbered", "AZ8", "scanner", "Lenient"),
               ("numbered", "AZ1", "hybrid", "Strict")]
 
 
@@ -47,7 +48,7 @@ def holm(md: list[str]) -> None:
         rows = list(csv.DictReader(f))
     out = []
     for scope, groups in (("per protocol", {p: [r for r in rows if r["protocol"] == p] for p in ("original", "numbered")}),
-                          ("all 14", {"all": rows})):
+                          (f"all {len(rows)}", {"all": rows})):
         for _, rs in groups.items():
             adj = aps.holm([float(r["p_random"]) for r in rs])
             for r, a in zip(rs, adj):

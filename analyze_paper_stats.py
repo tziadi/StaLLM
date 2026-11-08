@@ -97,7 +97,7 @@ def _r(x: float, nd: int = 3) -> float:
 
 # ── RQ3 ──────────────────────────────────────────────────────────────────────
 
-RQ3_SLOTS = ("AZ1", "AZ2", "AZ3")  # the paper reports RQ3 for the hosted models only
+RQ3_SLOTS = ("AZ1", "AZ2", "AZ3", "AZ7", "AZ8")  # the paper reports RQ3 for the hosted models only
 
 
 def load_rq3() -> list[dict[str, Any]]:

@@ -10,9 +10,9 @@ The default setting reproduces the recorded heuristic exactly. Lenient and stric
 
 | Dataset | Thresholds | flagged | κ heuristic vs human | ρ (n configs) | p | best vs human | best vs metric |
 |---|---|---|---|---|---|---|---|
-| DACOS | lenient | 141 | -0.008 | -0.05 (9) | 0.898 | AZ3/binary_oracle_baseline | AZ2/conservative_evidence |
-| DACOS | default | 72 | 0.181 | 0.65 (9) | 0.058 | AZ3/binary_oracle_baseline | AZ3/definition_driven |
-| DACOS | strict | 33 | 0.089 | 0.75 (9) | 0.02 | AZ3/binary_oracle_baseline | AZ3/definition_driven |
-| MLCQ | lenient | 22 | 0.401 | 0.544 (9) | 0.13 | AZ3/conservative_evidence | AZ3/conservative_evidence |
-| MLCQ | default | 15 | 0.408 | 0.583 (9) | 0.099 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
-| MLCQ | strict | 8 | 0.27 | 0.45 (9) | 0.224 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
+| DACOS | lenient | 141 | -0.008 | 0.132 (15) | 0.639 | AZ3/binary_oracle_baseline | AZ2/conservative_evidence |
+| DACOS | default | 72 | 0.181 | 0.511 (15) | 0.052 | AZ3/binary_oracle_baseline | AZ3/definition_driven |
+| DACOS | strict | 33 | 0.089 | 0.636 (15) | 0.011 | AZ3/binary_oracle_baseline | AZ3/definition_driven |
+| MLCQ | lenient | 22 | 0.401 | 0.794 (15) | 0.0 | AZ3/conservative_evidence | AZ8/definition_driven |
+| MLCQ | default | 15 | 0.408 | 0.676 (15) | 0.006 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
+| MLCQ | strict | 8 | 0.27 | 0.432 (15) | 0.108 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |

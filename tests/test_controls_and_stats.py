@@ -130,18 +130,18 @@ class StatsTest(unittest.TestCase):
 
     @unittest.skipUnless((ROOT / "output/paper_results/stats/rq3_oracle_swap.csv").exists(), "no stats")
     def test_reported_spearman_values(self):
-        """Oracle-substitution rho of the paper (annotated DACOS, MLCQ), from unrounded kappa values."""
+        """Oracle-substitution rho of the paper over the 15 hosted configurations (annotated DACOS, MLCQ), from unrounded kappa values."""
         annot, main = ROOT / "output/paper_results_annot", ROOT / "output/paper_results"
-        for ds, root, expected in (("DACOS", annot, 0.650), ("MLCQ", main, 0.583)):
+        for ds, root, expected in (("DACOS", annot, 0.511), ("MLCQ", main, 0.676)):
             heur = {str(r["sample_id"]): bool(r["predicted"]) for r in json.loads(
                 (annot / "rq3" / "baselines" / f"rq3b_metric_heuristic_{ds}.json").read_text())["rows"]}
             k_h, k_m = [], []
-            for f in sorted((root / "rq3").glob(f"rq3_AZ[123]_*_{ds}.json")):
+            for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{ds}.json")):
                 rows = json.loads(f.read_text())["rows"]
                 pred = [bool(r["predicted"]) for r in rows]
                 k_h.append(aps._binary_scores([bool(r["gold"]) for r in rows], pred)[1])
                 k_m.append(aps._binary_scores([heur[str(r["sample_id"])] for r in rows], pred)[1])
-            self.assertEqual(len(k_h), 9)
+            self.assertEqual(len(k_h), 15)
             rho, _ = spearmanr(k_h, k_m)
             self.assertAlmostEqual(rho, expected, places=3)
 

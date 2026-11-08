@@ -1,0 +1,1830 @@
+{
+  "rows": [
+    {
+      "sample_id": "526",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code defines only static constants and a private constructor, with no methods that could exhibit feature envy.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The code defines only static constants and a private constructor, with no methods that could exhibit feature envy.\"}"
+    },
+    {
+      "sample_id": "527",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code consists only of static final string constants and a private constructor, with no method present to evaluate for length.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The code consists only of static final string constants and a private constructor, with no method present to evaluate for length.\"}"
+    },
+    {
+      "sample_id": "528",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class centralizes numerous responsibilities including buffer management, spill coordination, file I/O, statistics tracking, and multi-threaded execution, while managing a large number of collaborators and internal state variables.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class centralizes numerous responsibilities including buffer management, spill coordination, file I/O, statistics tracking, and multi-threaded execution, while managing a large number of collaborators and internal state variables.\"\n}"
+    },
+    {
+      "sample_id": "529",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior including buffer management, spill logic, multithreading, and I/O operations, not just data storage.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains significant behavior including buffer management, spill logic, multithreading, and I/O operations, not just data storage.\"}"
+    },
+    {
+      "sample_id": "530",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippets are simple getter and setter methods that only access or modify a field within their own class, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippets are simple getter and setter methods that only access or modify a field within their own class, showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "531",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippets are short getter and setter methods, each performing a single, clear task without excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippets are short getter and setter methods, each performing a single, clear task without excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "532",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "Each method is short, focused on a single responsibility, and easily understandable.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"Each method is short, focused on a single responsibility, and easily understandable.\"\n}"
+    },
+    {
+      "sample_id": "533",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily operate on their own class's fields (mapId, compressedLength, uncompressedLength, forReduce) using utility classes for serialization, without excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily operate on their own class's fields (mapId, compressedLength, uncompressedLength, forReduce) using utility classes for serialization, without excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "534",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as constructors with validation logic and an overridden method handling parser completion, rather than just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as constructors with validation logic and an overridden method handling parser completion, rather than just storing data.\"\n}"
+    },
+    {
+      "sample_id": "535",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class extends a parent class and primarily handles specific metadata policy validation and parser completion logic without centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class extends a parent class and primarily handles specific metadata policy validation and parser completion logic without centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "536",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class focuses solely on request security management, coordinating a few collaborators for a single responsibility without centralizing excessive functionality.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class focuses solely on request security management, coordinating a few collaborators for a single responsibility without centralizing excessive functionality.\"\n}"
+    },
+    {
+      "sample_id": "537",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains multiple methods implementing security logic and request handling, not just data storage.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains multiple methods implementing security logic and request handling, not just data storage.\"\n}"
+    },
+    {
+      "sample_id": "538",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single, well-defined responsibility of conditionally rendering content based on a test, without centralizing many collaborators or responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single, well-defined responsibility of conditionally rendering content based on a test, without centralizing many collaborators or responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "539",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as rendering logic and control flow, not just data storage.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as rendering logic and control flow, not just data storage.\"\n}"
+    },
+    {
+      "sample_id": "540",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows only a method stub with a single line of implementation, which is not long enough to be considered a long_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows only a method stub with a single line of implementation, which is not long enough to be considered a long_method.\"\n}"
+    },
+    {
+      "sample_id": "541",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows a method that only throws an UnsupportedOperationException, with no logic that accesses or relies on data from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows a method that only throws an UnsupportedOperationException, with no logic that accesses or relies on data from another class.\"\n}"
+    },
+    {
+      "sample_id": "542",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows a class defining constants and simple methods that primarily operate on its own data (like checking a static set), with no evidence of a method excessively accessing or depending on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows a class defining constants and simple methods that primarily operate on its own data (like checking a static set), with no evidence of a method excessively accessing or depending on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "543",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet shows only short method definitions and a list initialization, with no method exceeding a few lines of code.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.8, \"rationale\": \"The provided code snippet shows only short method definitions and a list initialization, with no method exceeding a few lines of code.\"}"
+    },
+    {
+      "sample_id": "544",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows two short, focused methods (getSize and equals) that are each only a few lines long and perform a single, clear responsibility.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows two short, focused methods (getSize and equals) that are each only a few lines long and perform a single, clear responsibility.\"\n}"
+    },
+    {
+      "sample_id": "545",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The equals method primarily accesses its own fields (size and insns) and compares them with another instance of the same class, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The equals method primarily accesses its own fields (size and insns) and compares them with another instance of the same class, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "546",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet shows only a small part of a class, focusing on event handling and property change definitions, which does not indicate centralization of many responsibilities or excessive collaborators.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.8, \"rationale\": \"The provided code snippet shows only a small part of a class, focusing on event handling and property change definitions, which does not indicate centralization of many responsibilities or excessive collaborators.\"}"
+    },
+    {
+      "sample_id": "547",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The ElementPropertyEvent class only contains fields and a constructor, with no meaningful behavior beyond data storage.",
+      "raw_response": "{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The ElementPropertyEvent class only contains fields and a constructor, with no meaningful behavior beyond data storage.\"}"
+    },
+    {
+      "sample_id": "548",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods delegate directly to the parent class's implementation without excessive reliance on another class's data or behavior beyond normal inheritance.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods delegate directly to the parent class's implementation without excessive reliance on another class's data or behavior beyond normal inheritance.\"\n}"
+    },
+    {
+      "sample_id": "549",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided methods are short, simple overrides that delegate to a parent class, each containing only a single line of logic.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided methods are short, simple overrides that delegate to a parent class, each containing only a single line of logic.\"\n}"
+    },
+    {
+      "sample_id": "552",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The provided code snippet is a fragment of a method, not a complete method, so its length cannot be assessed.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The provided code snippet is a fragment of a method, not a complete method, so its length cannot be assessed.\"\n}"
+    },
+    {
+      "sample_id": "553",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet is too fragmented and lacks sufficient context to determine if a method exhibits excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet is too fragmented and lacks sufficient context to determine if a method exhibits excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "554",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The class focuses on integrating with the MailChimp API and managing subscription operations without centralizing a wide variety of unrelated responsibilities or excessive collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The class focuses on integrating with the MailChimp API and managing subscription operations without centralizing a wide variety of unrelated responsibilities or excessive collaborators.\"\n}"
+    },
+    {
+      "sample_id": "555",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class implements a service interface with multiple methods that perform complex operations like HTTP requests, JSON processing, and business logic, rather than just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class implements a service interface with multiple methods that perform complex operations like HTTP requests, JSON processing, and business logic, rather than just storing data.\"\n}"
+    },
+    {
+      "sample_id": "556",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows only small, focused inner classes (SessionAttributeElement and ConnectionStatusElement) implementing a single responsibility each, with no evidence of a class centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows only small, focused inner classes (SessionAttributeElement and ConnectionStatusElement) implementing a single responsibility each, with no evidence of a class centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "557",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The SessionAttributeElement class contains meaningful behavior in its addElement method, which includes logic for retrieving and formatting session attributes, rather than just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The SessionAttributeElement class contains meaningful behavior in its addElement method, which includes logic for retrieving and formatting session attributes, rather than just storing data.\"\n}"
+    },
+    {
+      "sample_id": "558",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet only shows a small, focused exception class and a method stub, with no evidence of a class centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet only shows a small, focused exception class and a method stub, with no evidence of a class centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "559",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code shows a custom exception class with only a constructor and no data fields or getter/setter methods, which does not fit the definition of a data class that primarily stores data with minimal behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code shows a custom exception class with only a constructor and no data fields or getter/setter methods, which does not fit the definition of a data class that primarily stores data with minimal behavior.\"\n}"
+    },
+    {
+      "sample_id": "562",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists of short getter and setter methods, each only a few lines long, with no method exceeding a length that would be considered too long or doing too much.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The provided code consists of short getter and setter methods, each only a few lines long, with no method exceeding a length that would be considered too long or doing too much.\"}"
+    },
+    {
+      "sample_id": "563",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code consists only of simple getter and setter methods for boolean fields, with no method calls or references to other classes to exhibit feature envy.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.0, \"rationale\": \"The provided code consists only of simple getter and setter methods for boolean fields, with no method calls or references to other classes to exhibit feature envy.\"}"
+    },
+    {
+      "sample_id": "564",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method primarily interacts with its own class's fields and methods (like jjtree, jj_consume_token) and does not show excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method primarily interacts with its own class's fields and methods (like jjtree, jj_consume_token) and does not show excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "565",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is only 20 lines long, which is not excessively long for a Java method, especially one handling parsing logic with error handling.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is only 20 lines long, which is not excessively long for a Java method, especially one handling parsing logic with error handling.\"\n}"
+    },
+    {
+      "sample_id": "566",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method getInsecureRenegotiation only accesses a field within its own class, and adjustRelativePath operates on its own parameters and static utilities without excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method getInsecureRenegotiation only accesses a field within its own class, and adjustRelativePath operates on its own parameters and static utilities without excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "567",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method adjustRelativePath is only 15 lines long and performs a single, focused task of adjusting a file path.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method adjustRelativePath is only 15 lines long and performs a single, focused task of adjusting a file path.\"}"
+    },
+    {
+      "sample_id": "568",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The interface defines only two focused methods related to transaction management and connection creation, without centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The interface defines only two focused methods related to transaction management and connection creation, without centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "569",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface defines meaningful behavior through methods that manage transaction registries and create connections, rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface defines meaningful behavior through methods that manage transaction registries and create connections, rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "570",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily access fields of their own class (factory and global) and do not show excessive reliance on another class's data or behavior.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods primarily access fields of their own class (factory and global) and do not show excessive reliance on another class's data or behavior.\"}"
+    },
+    {
+      "sample_id": "571",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists of two short, focused methods (hashCode and equals) that are each under 20 lines and perform a single, well-defined responsibility.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code consists of two short, focused methods (hashCode and equals) that are each under 20 lines and perform a single, well-defined responsibility.\"\n}"
+    },
+    {
+      "sample_id": "572",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet is too short and incomplete to assess if the method is too long or does too much.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet is too short and incomplete to assess if the method is too long or does too much.\"\n}"
+    },
+    {
+      "sample_id": "573",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet is incomplete and does not show a method that relies more on data or behavior from another class than its own class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet is incomplete and does not show a method that relies more on data or behavior from another class than its own class.\"\n}"
+    },
+    {
+      "sample_id": "574",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is only 4 lines of executable code, which is not long enough to be considered a long_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is only 4 lines of executable code, which is not long enough to be considered a long_method.\"\n}"
+    },
+    {
+      "sample_id": "575",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method primarily interacts with its own class's fields (perUserTestOnReturn) and uses only its own class's helper method (createMap), showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method primarily interacts with its own class's fields (perUserTestOnReturn) and uses only its own class's helper method (createMap), showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "576",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short, containing only a few lines of straightforward logic to extract text between tags or return the original text.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short, containing only a few lines of straightforward logic to extract text between tags or return the original text.\"\n}"
+    },
+    {
+      "sample_id": "577",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method getText operates only on its own parameter and local variables, with no dependencies on other classes' data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method getText operates only on its own parameter and local variables, with no dependencies on other classes' data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "578",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single, well-defined responsibility of handling file save events and delegates the actual saving logic to the MainFrame.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single, well-defined responsibility of handling file save events and delegates the actual saving logic to the MainFrame.\"\n}"
+    },
+    {
+      "sample_id": "579",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily stores a reference to MainFrame and delegates all behavior to it, with no meaningful logic of its own beyond a simple actionPerformed method that calls MainFrame's methods.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily stores a reference to MainFrame and delegates all behavior to it, with no meaningful logic of its own beyond a simple actionPerformed method that calls MainFrame's methods.\"\n}"
+    },
+    {
+      "sample_id": "580",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows only a partial method definition, which is not long enough to be considered a long_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows only a partial method definition, which is not long enough to be considered a long_method.\"\n}"
+    },
+    {
+      "sample_id": "581",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows a method that primarily interacts with its own class's fields and superclass methods, with no evidence of excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows a method that primarily interacts with its own class's fields and superclass methods, with no evidence of excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "582",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single, focused responsibility of widening the left side of a selected annotation and does not centralize many collaborators or responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single, focused responsibility of widening the left side of a selected annotation and does not centralize many collaborators or responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "583",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as updating selection state and performing annotation modifications, not just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as updating selection state and performing annotation modifications, not just storing data.\"\n}"
+    },
+    {
+      "sample_id": "586",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The ErrorFrame class primarily stores an error message in a VinciFrame with minimal additional behavior beyond its constructor.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The ErrorFrame class primarily stores an error message in a VinciFrame with minimal additional behavior beyond its constructor.\"\n}"
+    },
+    {
+      "sample_id": "587",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The ErrorFrame class has a single, clear responsibility of representing an error condition in a VinciFrame, with no evidence of centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The ErrorFrame class has a single, clear responsibility of representing an error condition in a VinciFrame, with no evidence of centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "588",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The interface defines a single, focused responsibility for search parameters without centralizing multiple responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The interface defines a single, focused responsibility for search parameters without centralizing multiple responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "589",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The interface only declares getter methods for data fields and lacks any meaningful behavior or business logic.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The interface only declares getter methods for data fields and lacks any meaningful behavior or business logic.\"\n}"
+    },
+    {
+      "sample_id": "590",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists only of simple getter methods that return fields from their own class, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code consists only of simple getter methods that return fields from their own class, showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "591",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists of several very short getter methods, each only one line long, which is the opposite of a long method.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The provided code consists of several very short getter methods, each only one line long, which is the opposite of a long method.\"}"
+    },
+    {
+      "sample_id": "592",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class centralizes responsibilities for job scheduling, execution, concurrency control, metrics collection, and dependency injection, coordinating with multiple collaborators like JobAccessor, JobFactory, JobListener, and various counters and timers.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class centralizes responsibilities for job scheduling, execution, concurrency control, metrics collection, and dependency injection, coordinating with multiple collaborators like JobAccessor, JobFactory, JobListener, and various counters and timers.\"\n}"
+    },
+    {
+      "sample_id": "593",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior including scheduling logic, job execution management, and lifecycle methods, not just data storage.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains significant behavior including scheduling logic, job execution management, and lifecycle methods, not just data storage.\"}"
+    },
+    {
+      "sample_id": "596",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code is a simple interface with no methods or fields, showing no centralization of responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code is a simple interface with no methods or fields, showing no centralization of responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "597",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The interface AdminUserCredentials extends PrincipalCredentials and contains no fields or methods, indicating it is a marker or role interface rather than a class primarily storing data with little behavior.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The interface AdminUserCredentials extends PrincipalCredentials and contains no fields or methods, indicating it is a marker or role interface rather than a class primarily storing data with little behavior.\"}"
+    },
+    {
+      "sample_id": "598",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a small, focused adapter that overrides only two methods to provide compatibility across JDK versions, without centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a small, focused adapter that overrides only two methods to provide compatibility across JDK versions, without centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "599",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is an abstract adapter providing method implementations for compatibility, not primarily a data container.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is an abstract adapter providing method implementations for compatibility, not primarily a data container.\"\n}"
+    },
+    {
+      "sample_id": "600",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single, focused responsibility of implementing a short array feature structure with specific array operations, without centralizing many unrelated responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single, focused responsibility of implementing a short array feature structure with specific array operations, without centralizing many unrelated responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "601",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class implements meaningful behavior for array operations, including bounds checking, data manipulation, and conversions, rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class implements meaningful behavior for array operations, including bounds checking, data manipulation, and conversions, rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "602",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a simple resource bundle that only provides localized error messages and does not centralize many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a simple resource bundle that only provides localized error messages and does not centralize many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "603",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily defines a static two-dimensional array of error message key-value pairs with no meaningful behavior beyond returning that data.",
+      "raw_response": "{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The class primarily defines a static two-dimensional array of error message key-value pairs with no meaningful behavior beyond returning that data.\"}"
+    },
+    {
+      "sample_id": "604",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is only one line long and performs a single, simple action of throwing an exception.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is only one line long and performs a single, simple action of throwing an exception.\"\n}"
+    },
+    {
+      "sample_id": "605",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method only throws an exception using its own class's exception type and does not interact with or rely on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method only throws an exception using its own class's exception type and does not interact with or rely on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "606",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a small, focused abstract base class providing only two static utility methods for converting node data, with no evidence of centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a small, focused abstract base class providing only two static utility methods for converting node data, with no evidence of centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "607",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains meaningful static utility methods for converting node data, rather than primarily storing data with minimal behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains meaningful static utility methods for converting node data, rather than primarily storing data with minimal behavior.\"\n}"
+    },
+    {
+      "sample_id": "608",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is very short, containing only an error call and a return statement, which does not meet the criteria of being too long or doing too much.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method is very short, containing only an error call and a return statement, which does not meet the criteria of being too long or doing too much.\"}"
+    },
+    {
+      "sample_id": "609",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "Each method is extremely short, consisting of only a single return statement with a ternary operator.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"Each method is extremely short, consisting of only a single return statement with a ternary operator.\"\n}"
+    },
+    {
+      "sample_id": "610",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods shown are simple factory methods that create and return new instances of branch instructions based on a boolean parameter, without relying on data or behavior from another class.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods shown are simple factory methods that create and return new instances of branch instructions based on a boolean parameter, without relying on data or behavior from another class.\"}"
+    },
+    {
+      "sample_id": "611",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class angularRegistryPush_result appears to primarily store data with minimal behavior, as it only contains validation and serialization methods typical of data containers.",
+      "raw_response": "{\"present\": true, \"confidence\": 0.9, \"rationale\": \"The class angularRegistryPush_result appears to primarily store data with minimal behavior, as it only contains validation and serialization methods typical of data containers.\"}"
+    },
+    {
+      "sample_id": "612",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The method is only 4 lines long and performs a single, focused task of extracting a subject from a JWT token.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The method is only 4 lines long and performs a single, focused task of extracting a subject from a JWT token.\"\n}"
+    },
+    {
+      "sample_id": "613",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method getName relies heavily on parsing and extracting data from the JWTAuthenticationToken and SignedJWT classes, performing operations more aligned with those external classes than its own.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method getName relies heavily on parsing and extracting data from the JWTAuthenticationToken and SignedJWT classes, performing operations more aligned with those external classes than its own.\"\n}"
+    },
+    {
+      "sample_id": "614",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.7,
+      "rationale": "The class primarily orchestrates UI components and delegates responsibilities to other classes like ZooInspectorManager, ZooInspectorTreeViewer, and ZooInspectorNodeViewersPanel, rather than centralizing many responsibilities itself.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.7,\n  \"rationale\": \"The class primarily orchestrates UI components and delegates responsibilities to other classes like ZooInspectorManager, ZooInspectorTreeViewer, and ZooInspectorNodeViewersPanel, rather than centralizing many responsibilities itself.\"\n}"
+    },
+    {
+      "sample_id": "615",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains significant behavior including UI setup, event handling, and business logic methods like connect and disconnect, rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains significant behavior including UI setup, event handling, and business logic methods like connect and disconnect, rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "616",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippets are short, focused methods that each perform a single, clear task without excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippets are short, focused methods that each perform a single, clear task without excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "617",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method setProperty primarily interacts with its own internalProperties object and System class, which is a standard library, not another custom class, and getHome uses its own state and System properties without excessive reliance on another specific class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method setProperty primarily interacts with its own internalProperties object and System class, which is a standard library, not another custom class, and getHome uses its own state and System properties without excessive reliance on another specific class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "618",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single, well-defined responsibility of representing and comparing Spark versions, without centralizing many collaborators or unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single, well-defined responsibility of representing and comparing Spark versions, without centralizing many collaborators or unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "619",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class provides meaningful behavior through multiple methods for version comparison and feature detection, not just data storage.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class provides meaningful behavior through multiple methods for version comparison and feature detection, not just data storage.\"\n}"
+    },
+    {
+      "sample_id": "620",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet shows only short, simple getter, setter, and a stub destroy method, none of which are long or do too much.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet shows only short, simple getter, setter, and a stub destroy method, none of which are long or do too much.\"\n}"
+    },
+    {
+      "sample_id": "621",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet only contains simple getters, setters, and a partial destroy method, with no method that exhibits excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet only contains simple getters, setters, and a partial destroy method, with no method that exhibits excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "622",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The constructor primarily processes its own LogIterator and builds JSON objects, with no method showing excessive reliance on another class's data or behavior.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The constructor primarily processes its own LogIterator and builds JSON objects, with no method showing excessive reliance on another class's data or behavior.\"}"
+    },
+    {
+      "sample_id": "623",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor method spans over 100 lines, containing extensive parsing logic, multiple conditional branches, and JSON object manipulations, making it excessively long and difficult to understand.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor method spans over 100 lines, containing extensive parsing logic, multiple conditional branches, and JSON object manipulations, making it excessively long and difficult to understand.\"\n}"
+    },
+    {
+      "sample_id": "624",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The classes are simple exception types and a callback implementation, not primarily data containers with fields and getters/setters.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The classes are simple exception types and a callback implementation, not primarily data containers with fields and getters/setters.\"\n}"
+    },
+    {
+      "sample_id": "625",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code consists of small, focused exception classes and a simple callback class, none of which centralize many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code consists of small, focused exception classes and a simple callback class, none of which centralize many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "634",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class PivotalNetworkInParams is empty and contains no responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class PivotalNetworkInParams is empty and contains no responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "635",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class PivotalNetworkInParams is defined with no fields or methods, indicating it is intended solely to store data with no behavior.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class PivotalNetworkInParams is defined with no fields or methods, indicating it is intended solely to store data with no behavior.\"\n}"
+    },
+    {
+      "sample_id": "636",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet consists of several short, single-line methods, each performing a single, clear responsibility.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippet consists of several short, single-line methods, each performing a single, clear responsibility.\"\n}"
+    },
+    {
+      "sample_id": "637",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods primarily use their own class's getters to construct new objects, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods primarily use their own class's getters to construct new objects, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "638",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet consists of short, focused constructor overloads that delegate to a primary constructor, each being only a few lines long.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippet consists of short, focused constructor overloads that delegate to a primary constructor, each being only a few lines long.\"\n}"
+    },
+    {
+      "sample_id": "639",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code consists only of constructor overloads that delegate to a parent class, with no method body that accesses data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code consists only of constructor overloads that delegate to a parent class, with no method body that accesses data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "640",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is short, focused on a single substitution task, and does not contain excessive lines or multiple responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is short, focused on a single substitution task, and does not contain excessive lines or multiple responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "641",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method replaceSubstitution operates primarily on its own parameters and standard Java library classes (Pattern, Matcher), without excessive reliance on data or behavior from another specific class in the codebase.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method replaceSubstitution operates primarily on its own parameters and standard Java library classes (Pattern, Matcher), without excessive reliance on data or behavior from another specific class in the codebase.\"\n}"
+    },
+    {
+      "sample_id": "642",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily consists of private fields with getters and setters, and multiple constructors that only initialize these fields, lacking meaningful behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily consists of private fields with getters and setters, and multiple constructors that only initialize these fields, lacking meaningful behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "643",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a simple exception with only two fields and standard constructors, not centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a simple exception with only two fields and standard constructors, not centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "644",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class is a simple data container with a single responsibility of holding instance information and a deserializer, lacking centralized control or many collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class is a simple data container with a single responsibility of holding instance information and a deserializer, lacking centralized control or many collaborators.\"\n}"
+    },
+    {
+      "sample_id": "645",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily defines a single abstract getter for a data map and includes a deserializer for JSON, with no meaningful business logic or behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily defines a single abstract getter for a data map and includes a deserializer for JSON, with no meaningful business logic or behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "648",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet is a short enum declaration with a simple constructor and a static factory method, not a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippet is a short enum declaration with a simple constructor and a static factory method, not a long method.\"\n}"
+    },
+    {
+      "sample_id": "649",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code defines an enum with a constructor and a static factory method, showing no method that excessively uses data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code defines an enum with a constructor and a static factory method, showing no method that excessively uses data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "650",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The IncludeAllLaunchConfigurationScope and FilteringLaunchConfigurationScope classes primarily store data (like the 'scopes' field) and have minimal behavior, with only simple accessor or inclusion-checking methods.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The IncludeAllLaunchConfigurationScope and FilteringLaunchConfigurationScope classes primarily store data (like the 'scopes' field) and have minimal behavior, with only simple accessor or inclusion-checking methods.\"\n}"
+    },
+    {
+      "sample_id": "651",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows small, focused inner classes with single responsibilities, not a class centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows small, focused inner classes with single responsibilities, not a class centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "652",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The class primarily manages a list of DimsData objects with focused responsibilities for axis selection and data representation, without centralizing many unrelated collaborators or functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The class primarily manages a list of DimsData objects with focused responsibilities for axis selection and data representation, without centralizing many unrelated collaborators or functionalities.\"\n}"
+    },
+    {
+      "sample_id": "653",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains numerous methods that implement meaningful behavior, such as axis management, data transformation, and complex logic for setting plot axes, beyond simple data storage.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The class contains numerous methods that implement meaningful behavior, such as axis management, data transformation, and complex logic for setting plot axes, beyond simple data storage.\"}"
+    },
+    {
+      "sample_id": "654",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet consists of short, single-responsibility methods that each perform a simple getter or setter operation.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The provided code snippet consists of short, single-responsibility methods that each perform a simple getter or setter operation.\"}"
+    },
+    {
+      "sample_id": "655",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippets are simple getter and setter methods that operate on their own class's fields or constants, showing no reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippets are simple getter and setter methods that operate on their own class's fields or constants, showing no reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "656",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single, well-defined responsibility of handling a specific event by removing attributes, with no evidence of centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single, well-defined responsibility of handling a specific event by removing attributes, with no evidence of centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "657",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior by implementing an event-handling strategy, not just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior by implementing an event-handling strategy, not just storing data.\"\n}"
+    },
+    {
+      "sample_id": "658",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method length() and accept() are short, focused, and perform single, clear responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method length() and accept() are short, focused, and perform single, clear responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "659",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method accept relies on its own class's field const_value_index and the inherited tag, showing no disproportionate dependency on another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method accept relies on its own class's field const_value_index and the inherited tag, showing no disproportionate dependency on another class.\"\n}"
+    },
+    {
+      "sample_id": "660",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The class focuses on enforcing live signals and delegates specific enforcement logic to other classes like EnforcerRetriever and ThingCommandEnforcement, rather than centralizing many unrelated responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The class focuses on enforcing live signals and delegates specific enforcement logic to other classes like EnforcerRetriever and ThingCommandEnforcement, rather than centralizing many unrelated responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "661",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains significant behavior and logic for enforcing live signals, including complex branching, method calls, and interactions with collaborators, rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains significant behavior and logic for enforcing live signals, including complex branching, method calls, and interactions with collaborators, rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "662",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The code shows small, focused utility classes and methods with single responsibilities, not a class centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The code shows small, focused utility classes and methods with single responsibilities, not a class centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "663",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code defines classes that encapsulate behavior (implementing the Function interface to extract keys or values from Map.Entry objects) rather than merely storing data.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The provided code defines classes that encapsulate behavior (implementing the Function interface to extract keys or values from Map.Entry objects) rather than merely storing data.\"}"
+    },
+    {
+      "sample_id": "666",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows only short, focused methods (toString, equals, hashCode) that are typical for a Java class and do not exceed reasonable length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows only short, focused methods (toString, equals, hashCode) that are typical for a Java class and do not exceed reasonable length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "667",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code consists of standard toString, equals, and hashCode implementations that only operate on the class's own fields (message, type, isAccessible), showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code consists of standard toString, equals, and hashCode implementations that only operate on the class's own fields (message, type, isAccessible), showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "668",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The interface defines only a single, focused responsibility of converting to a JSON element, with no evidence of centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The interface defines only a single, focused responsibility of converting to a JSON element, with no evidence of centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "669",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines an interface that extends another interface and declares a single method, focusing on behavior (conversion to JSON) rather than primarily storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines an interface that extends another interface and declares a single method, focusing on behavior (conversion to JSON) rather than primarily storing data.\"\n}"
+    },
+    {
+      "sample_id": "670",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class contains only a constructor and two simple getter methods, each with minimal lines of code and no complex logic.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class contains only a constructor and two simple getter methods, each with minimal lines of code and no complex logic.\"\n}"
+    },
+    {
+      "sample_id": "671",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class only exposes its own fields through getters and does not contain any method that heavily uses data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class only exposes its own fields through getters and does not contain any method that heavily uses data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "674",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet consists of several short, single-line methods that each return a simple string value.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet consists of several short, single-line methods that each return a simple string value.\"\n}"
+    },
+    {
+      "sample_id": "675",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code consists only of simple getter methods returning constant values, with no method calls or dependencies on other classes.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The provided code consists only of simple getter methods returning constant values, with no method calls or dependencies on other classes.\"}"
+    },
+    {
+      "sample_id": "676",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a simple DTO with only three properties and no centralization of responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a simple DTO with only three properties and no centralization of responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "677",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class only defines data fields (type, path, hashCode) and their corresponding getters and with-methods, with no meaningful behavior or business logic.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class only defines data fields (type, path, hashCode) and their corresponding getters and with-methods, with no meaningful behavior or business logic.\"\n}"
+    },
+    {
+      "sample_id": "678",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows several short, focused methods, each performing a single, clear task without excessive length or complexity.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows several short, focused methods, each performing a single, clear task without excessive length or complexity.\"\n}"
+    },
+    {
+      "sample_id": "679",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippets are static utility methods that operate on Element objects, but they do not show a method excessively using data from another class while neglecting its own.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippets are static utility methods that operate on Element objects, but they do not show a method excessively using data from another class while neglecting its own.\"\n}"
+    },
+    {
+      "sample_id": "680",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a simple event handler with a single responsibility of representing a machine stopped event and not centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a simple event handler with a single responsibility of representing a machine stopped event and not centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "681",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily stores a MachineImpl object and provides only a getter and event-dispatching boilerplate, with no meaningful behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily stores a MachineImpl object and provides only a getter and event-dispatching boilerplate, with no meaningful behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "682",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "The longest method (toString) is only a single, straightforward string concatenation block with no excessive length or multiple responsibilities.",
+      "raw_response": "{\"present\": false, \"confidence\": 1.0, \"rationale\": \"The longest method (toString) is only a single, straightforward string concatenation block with no excessive length or multiple responsibilities.\"}"
+    },
+    {
+      "sample_id": "683",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The methods shown are simple getters, setters, and a toString that only access fields of their own class, showing no reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The methods shown are simple getters, setters, and a toString that only access fields of their own class, showing no reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "686",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The provided code snippet shows a method that primarily interacts with its own class's fields (updatedView, progressView) and a parameter (progress), with no clear evidence of excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The provided code snippet shows a method that primarily interacts with its own class's fields (updatedView, progressView) and a parameter (progress), with no clear evidence of excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "687",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows only a few short methods, none of which are long enough to be considered a long_method smell.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows only a few short methods, none of which are long enough to be considered a long_method smell.\"\n}"
+    },
+    {
+      "sample_id": "688",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single, focused responsibility of managing 'Go Into' mode actions for a project explorer, without centralizing many unrelated responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single, focused responsibility of managing 'Go Into' mode actions for a project explorer, without centralizing many unrelated responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "689",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful behavior such as updating UI state and handling user actions, rather than just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful behavior such as updating UI state and handling user actions, rather than just storing data.\"\n}"
+    },
+    {
+      "sample_id": "690",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": null,
+      "rationale": "",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \" \"rationale\": \"The class is a simple data container with getters, setters, and basic utility methods, showing no centralization of many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "691",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The Ipam class primarily consists of private fields with getters, setters, and builder-style methods, along with standard equals, hashCode, and toString implementations, but lacks any meaningful business logic or behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The Ipam class primarily consists of private fields with getters, setters, and builder-style methods, along with standard equals, hashCode, and toString implementations, but lacks any meaningful business logic or behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "692",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code consists of short, focused methods, with the longest method (equals) being only 7 lines and clearly understandable.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code consists of short, focused methods, with the longest method (equals) being only 7 lines and clearly understandable.\"\n}"
+    },
+    {
+      "sample_id": "693",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods in the Key class primarily operate on its own fields (type, annotationType, hashCode) without excessive reliance on another class's data or behavior.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The methods in the Key class primarily operate on its own fields (type, annotationType, hashCode) without excessive reliance on another class's data or behavior.\"}"
+    },
+    {
+      "sample_id": "694",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class has a single, well-defined responsibility of managing a constant partition for a document, with minimal collaborators and no centralization of unrelated functionalities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class has a single, well-defined responsibility of managing a constant partition for a document, with minimal collaborators and no centralization of unrelated functionalities.\"\n}"
+    },
+    {
+      "sample_id": "695",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class includes meaningful behavior such as handling document changes, computing partitions, and managing document state, beyond just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class includes meaningful behavior such as handling document changes, computing partitions, and managing document state, beyond just storing data.\"\n}"
+    },
+    {
+      "sample_id": "696",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is only 5 lines of code, which is far too short to be considered a long method.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The method is only 5 lines of code, which is far too short to be considered a long method.\"}"
+    },
+    {
+      "sample_id": "697",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method primarily operates on its own class's state and collaborators, with no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method primarily operates on its own class's state and collaborators, with no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "698",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet consists of two very short getter methods, each only one line long, which does not meet the criteria for a long method.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.95, \"rationale\": \"The provided code snippet consists of two very short getter methods, each only one line long, which does not meet the criteria for a long method.\"}"
+    },
+    {
+      "sample_id": "699",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists only of simple getter methods that return their own class's fields, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code consists only of simple getter methods that return their own class's fields, showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "700",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method is a simple constructor and two short, single-purpose overrides, each only a few lines long.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method is a simple constructor and two short, single-purpose overrides, each only a few lines long.\"\n}"
+    },
+    {
+      "sample_id": "701",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code consists of a constructor and simple accessor/dispatcher methods that only operate on the class's own fields, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code consists of a constructor and simple accessor/dispatcher methods that only operate on the class's own fields, showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "702",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class SuiteInProgressInfo has a single, focused responsibility of representing a test suite in progress and does not centralize many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class SuiteInProgressInfo has a single, focused responsibility of representing a test suite in progress and does not centralize many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "703",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class SuiteInProgressInfo extends TestInProgressInfo and includes meaningful behavior such as the isProblem method that iterates over child states and getDescription that returns a specific enum, rather than just storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class SuiteInProgressInfo extends TestInProgressInfo and includes meaningful behavior such as the isProblem method that iterates over child states and getDescription that returns a specific enum, rather than just storing data.\"\n}"
+    },
+    {
+      "sample_id": "704",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class is a standard factory implementation with a single responsibility of creating instances of model objects and handling data type conversions, without centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class is a standard factory implementation with a single responsibility of creating instances of model objects and handling data type conversions, without centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "705",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class implements a factory pattern with multiple methods for creating objects and converting data types, demonstrating meaningful behavior beyond simple data storage.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class implements a factory pattern with multiple methods for creating objects and converting data types, demonstrating meaningful behavior beyond simple data storage.\"\n}"
+    },
+    {
+      "sample_id": "706",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class GExpressionsHelper is a small utility class with only two static methods focused on a single, specific responsibility related to EClass comparisons, and it does not centralize many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class GExpressionsHelper is a small utility class with only two static methods focused on a single, specific responsibility related to EClass comparisons, and it does not centralize many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "707",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class contains meaningful static utility methods for checking supertype relationships and equality, not just data storage.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class contains meaningful static utility methods for checking supertype relationships and equality, not just data storage.\"\n}"
+    },
+    {
+      "sample_id": "708",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The class is a test class focused on testing a specific resize policy, not centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The class is a test class focused on testing a specific resize policy, not centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "709",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code defines classes with meaningful behavior, such as DimensionPart implementing IResizableContentPart with methods for visual creation, content management, and size handling, and ResizePolicyTestsContentPartFactory implementing IContentPartFactory for content part creation, rather than merely storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code defines classes with meaningful behavior, such as DimensionPart implementing IResizableContentPart with methods for visual creation, content management, and size handling, and ResizePolicyTestsContentPartFactory implementing IContentPartFactory for content part creation, rather than merely storing data.\"\n}"
+    },
+    {
+      "sample_id": "710",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short and focused on a single, simple action, not exceeding typical length thresholds.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short and focused on a single, simple action, not exceeding typical length thresholds.\"\n}"
+    },
+    {
+      "sample_id": "711",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method primarily interacts with its own class's fields and methods, such as keepStackSize() and restoreStackSize(), without excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method primarily interacts with its own class's fields and methods, such as keepStackSize() and restoreStackSize(), without excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "712",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is short and focused on a single grammar rule implementation, not exceeding typical length thresholds.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is short and focused on a single grammar rule implementation, not exceeding typical length thresholds.\"\n}"
+    },
+    {
+      "sample_id": "713",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method primarily interacts with its own class's state and grammar access objects, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method primarily interacts with its own class's state and grammar access objects, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "714",
+      "smell": "god_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.2,
+      "rationale": "The class has a single, focused responsibility of ordering nodes in a tree layout and does not centralize many unrelated responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.2,\n  \"rationale\": \"The class has a single, focused responsibility of ordering nodes in a tree layout and does not centralize many unrelated responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "715",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class implements a layout algorithm with substantial behavior in its process and orderLevel methods, rather than primarily storing data.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class implements a layout algorithm with substantial behavior in its process and orderLevel methods, rather than primarily storing data.\"\n}"
+    },
+    {
+      "sample_id": "716",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet is too short and incomplete, showing only the beginning of a method that does not yet demonstrate excessive length or multiple responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet is too short and incomplete, showing only the beginning of a method that does not yet demonstrate excessive length or multiple responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "717",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The method primarily accesses its own class's inherited component and the component's ports, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The method primarily accesses its own class's inherited component and the component's ports, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "718",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class has a single, cohesive responsibility of managing configuration properties for cryptographic signatures, with no evidence of centralizing many unrelated responsibilities or excessive collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class has a single, cohesive responsibility of managing configuration properties for cryptographic signatures, with no evidence of centralizing many unrelated responsibilities or excessive collaborators.\"\n}"
+    },
+    {
+      "sample_id": "719",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class includes meaningful behavior beyond data storage, such as validation logic in setters and business methods like isAppropriateForCreating and isAppropriateForValidating.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class includes meaningful behavior beyond data storage, such as validation logic in setters and business methods like isAppropriateForCreating and isAppropriateForValidating.\"\n}"
+    },
+    {
+      "sample_id": "720",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code consists only of simple getter methods that return fields from their own class, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code consists only of simple getter methods that return fields from their own class, showing no reliance on data or behavior from another class.\"\n}"
+    },
+    {
+      "sample_id": "721",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippets are short, simple getter methods, each consisting of a single return statement.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippets are short, simple getter methods, each consisting of a single return statement.\"\n}"
+    },
+    {
+      "sample_id": "722",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is only 12 lines of code, which is not excessively long for typical Java standards.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is only 12 lines of code, which is not excessively long for typical Java standards.\"\n}"
+    },
+    {
+      "sample_id": "723",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The method primarily processes its own parameters and delegates to a helper method within the same class, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The method primarily processes its own parameters and delegates to a helper method within the same class, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "724",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows only a few short getter methods and a constructor line, which are not long enough to be considered a long_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows only a few short getter methods and a constructor line, which are not long enough to be considered a long_method.\"\n}"
+    },
+    {
+      "sample_id": "725",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet consists only of getter methods and a constructor fragment, with no method exhibiting excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet consists only of getter methods and a constructor fragment, with no method exhibiting excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "726",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code only contains short constructors with no method body or minimal logic, far below typical thresholds for a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code only contains short constructors with no method body or minimal logic, far below typical thresholds for a long method.\"\n}"
+    },
+    {
+      "sample_id": "727",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The code defines a simple event class with constructors and no methods that exhibit excessive interaction with another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The code defines a simple event class with constructors and no methods that exhibit excessive interaction with another class.\"\n}"
+    },
+    {
+      "sample_id": "728",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet shows two short, single-statement methods that each perform one clear action.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet shows two short, single-statement methods that each perform one clear action.\"\n}"
+    },
+    {
+      "sample_id": "729",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The method uses its own class's field (notificationMessage) to call a method, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The method uses its own class's field (notificationMessage) to call a method, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "730",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The Build class only contains a single field with getter and setter, lacking any meaningful behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The Build class only contains a single field with getter and setter, lacking any meaningful behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "731",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code snippet shows a simple nested Build class with only version management and a few getter/setter methods, lacking evidence of centralizing many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code snippet shows a simple nested Build class with only version management and a few getter/setter methods, lacking evidence of centralizing many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "732",
+      "smell": "data_class",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The class primarily consists of private fields with getters and setters, and standard methods like equals, clone, copy, and hashCode, with no meaningful domain-specific behavior beyond basic data validation.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class primarily consists of private fields with getters and setters, and standard methods like equals, clone, copy, and hashCode, with no meaningful domain-specific behavior beyond basic data validation.\"\n}"
+    },
+    {
+      "sample_id": "733",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The class Subchannel is a simple data container with basic getters, setters, and utility methods, and does not centralize many responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The class Subchannel is a simple data container with basic getters, setters, and utility methods, and does not centralize many responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "736",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet only shows constructors and field declarations, with no method implementations that could exhibit reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet only shows constructors and field declarations, with no method implementations that could exhibit reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "737",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet only shows field declarations and constructor definitions, none of which are long or complex enough to be considered a long_method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet only shows field declarations and constructor definitions, none of which are long or complex enough to be considered a long_method.\"\n}"
+    },
+    {
+      "sample_id": "738",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method onCompleteFailure primarily interacts with its own class's fields and methods, such as releaseHeader, failedCallback, _callback, and _shutdownOut, without showing excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method onCompleteFailure primarily interacts with its own class's fields and methods, such as releaseHeader, failedCallback, _callback, and _shutdownOut, without showing excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "739",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method onCompleteFailure is only 4 lines long and performs a focused set of related cleanup and failure-handling tasks.",
+      "raw_response": "{\"present\": false, \"confidence\": 0.9, \"rationale\": \"The method onCompleteFailure is only 4 lines long and performs a focused set of related cleanup and failure-handling tasks.\"}"
+    },
+    {
+      "sample_id": "740",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The provided code snippet shows only short, focused methods with clear single responsibilities.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The provided code snippet shows only short, focused methods with clear single responsibilities.\"\n}"
+    },
+    {
+      "sample_id": "741",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.0,
+      "rationale": "The provided code snippet does not contain a method that relies more on data or behavior from another class than its own class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.0,\n  \"rationale\": \"The provided code snippet does not contain a method that relies more on data or behavior from another class than its own class.\"\n}"
+    },
+    {
+      "sample_id": "742",
+      "smell": "feature_envy",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The provided code snippet shows methods primarily interacting with their own parameters and static utility classes, with no clear evidence of a method excessively using another class's data or behavior over its own.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The provided code snippet shows methods primarily interacting with their own parameters and static utility classes, with no clear evidence of a method excessively using another class's data or behavior over its own.\"\n}"
+    },
+    {
+      "sample_id": "743",
+      "smell": "long_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The provided code snippet shows only a few short methods, each with a clear, focused responsibility and limited length.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The provided code snippet shows only a few short methods, each with a clear, focused responsibility and limited length.\"\n}"
+    },
+    {
+      "sample_id": "744",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists only of field declarations and simple setter/unsetter methods, each of which is short and focused on a single responsibility.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code consists only of field declarations and simple setter/unsetter methods, each of which is short and focused on a single responsibility.\"\n}"
+    },
+    {
+      "sample_id": "745",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The code only shows field declarations and simple setter/unsetter methods that operate directly on their own class's fields, with no method logic that accesses or relies heavily on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The code only shows field declarations and simple setter/unsetter methods that operate directly on their own class's fields, with no method logic that accesses or relies heavily on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "746",
+      "smell": "god_class",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The class only contains three fields with getters and setters, showing no centralization of responsibilities or collaborators.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class only contains three fields with getters and setters, showing no centralization of responsibilities or collaborators.\"\n}"
+    },
+    {
+      "sample_id": "747",
+      "smell": "data_class",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The class TestTopic only contains private fields with getter and setter methods, exhibiting no meaningful behavior beyond data storage.",
+      "raw_response": "{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The class TestTopic only contains private fields with getter and setter methods, exhibiting no meaningful behavior beyond data storage.\"\n}"
+    },
+    {
+      "sample_id": "748",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.1,
+      "rationale": "The method primarily delegates to another method within the same class and uses its own parameters to construct an object, showing no excessive reliance on another class's data or behavior.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.1,\n  \"rationale\": \"The method primarily delegates to another method within the same class and uses its own parameters to construct an object, showing no excessive reliance on another class's data or behavior.\"\n}"
+    },
+    {
+      "sample_id": "749",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is only 2 lines long and performs a single, straightforward task of delegating a permission check.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is only 2 lines long and performs a single, straightforward task of delegating a permission check.\"\n}"
+    },
+    {
+      "sample_id": "750",
+      "smell": "long_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 1.0,
+      "rationale": "All methods are simple getters and setters, each consisting of a single line of code, which is far from being a long method.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 1.0,\n  \"rationale\": \"All methods are simple getters and setters, each consisting of a single line of code, which is far from being a long method.\"\n}"
+    },
+    {
+      "sample_id": "751",
+      "smell": "feature_envy",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The provided code consists only of simple getter and setter methods that access and modify fields within their own class, showing no reliance on data or behavior from another class.",
+      "raw_response": "{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The provided code consists only of simple getter and setter methods that access and modify fields within their own class, showing no reliance on data or behavior from another class.\"\n}"
+    }
+  ],
+  "metrics": {
+    "precision": 0.45,
+    "recall": 0.25,
+    "f1": 0.32142857142857145,
+    "accuracy": 0.81,
+    "kappa": 0.22131147540983626,
+    "f1_ci_lo": 0.14634146341463417,
+    "f1_ci_hi": 0.48000000000000004,
+    "kappa_ci_lo": 0.03846153846153872,
+    "kappa_ci_hi": 0.40108191653786707,
+    "tp": 9,
+    "fp": 11,
+    "fn": 27,
+    "tn": 153,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 135145,
+    "completion_tokens": 10327,
+    "total_tokens": 145472
+  },
+  "slot": "AZ7",
+  "prompt": "definition_driven",
+  "dataset": "MLCQ",
+  "run": 3,
+  "elapsed_s": 40.4
+}

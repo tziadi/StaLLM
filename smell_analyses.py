@@ -53,7 +53,7 @@ def _kappa(gold: list[bool], pred: list[bool]) -> float:
 def _configs(dataset: str) -> dict[str, dict[str, tuple[bool, bool]]]:
     root = ANNOT if dataset == "DACOS" else MAIN
     out = {}
-    for f in sorted((root / "rq3").glob(f"rq3_AZ[123]_*_{dataset}.json")):
+    for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}.json")):
         d = aps._load(f)
         out[f"{d['slot']}/{d['prompt']}"] = _rows(f)
     return out

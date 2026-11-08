@@ -1,0 +1,1830 @@
+{
+  "rows": [
+    {
+      "sample_id": "3639:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains a complex conditional check at the start, multiple nested if-statements, and repeated similar blocks for handling icons, indicating high cyclomatic complexity and poor separation of concerns.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains a complex conditional check at the start, multiple nested if-statements, and repeated similar blocks for handling icons, indicating high cyclomatic complexity and poor separation of concerns.\"\n}\n```"
+    },
+    {
+      "sample_id": "99858:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains nested loops, conditional branches (including an if-else chain), and multiple responsibilities (handling removed components, existing components, new components, and logging). This indicates high cyclomatic complexity and violates the Single Responsibility Principle.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains nested loops, conditional branches (including an if-else chain), and multiple responsibilities (handling removed components, existing components, new components, and logging). This indicates high cyclomatic complexity and violates the Single Responsibility Principle.\"\n}\n```"
+    },
+    {
+      "sample_id": "71872:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity due to multiple nested conditionals (if-else blocks), a while loop with internal try-catch, and recursive calls. It handles multiple responsibilities: logging, lock management, sequence validation, DB fetching, and retry logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to multiple nested conditionals (if-else blocks), a while loop with internal try-catch, and recursive calls. It handles multiple responsibilities: logging, lock management, sequence validation, DB fetching, and retry logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "48721:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method is focused on a single task (converting an array to a delimited string) with clear, linear logic and minimal branching. Cyclomatic complexity is low (3 paths: empty/null, single element, multiple elements).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method is focused on a single task (converting an array to a delimited string) with clear, linear logic and minimal branching. Cyclomatic complexity is low (3 paths: empty/null, single element, multiple elements).\"\n}\n```"
+    },
+    {
+      "sample_id": "84230:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'run()' exhibits multiple characteristics of a complex method: it contains nested conditionals (multiple if-else blocks), handles multiple exception types, performs several operations (decryption, content element extraction, and listener notifications), and has a high cyclomatic complexity due to the branching logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'run()' exhibits multiple characteristics of a complex method: it contains nested conditionals (multiple if-else blocks), handles multiple exception types, performs several operations (decryption, content element extraction, and listener notifications), and has a high cyclomatic complexity due to the branching logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "96358:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is long due to multiple conditions and print statements, but each condition is simple and independent. The logic is straightforward and does not exhibit high cyclomatic complexity or nested structures.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is long due to multiple conditions and print statements, but each condition is simple and independent. The logic is straightforward and does not exhibit high cyclomatic complexity or nested structures.\"\n}\n```"
+    },
+    {
+      "sample_id": "92864:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "Method has clear logic with two simple loops and early returns, no deep nesting or excessive operations. Cyclomatic complexity is low.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"Method has clear logic with two simple loops and early returns, no deep nesting or excessive operations. Cyclomatic complexity is low.\"\n}\n```"
+    },
+    {
+      "sample_id": "37467:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'add' exhibits multiple characteristics of a complex method: it handles numerous responsibilities (input validation, business logic for cart addition, stock checks, and cart updates), contains nested conditionals, and spans over 40 lines of code with multiple exit points. The cyclomatic complexity is high due to the branching logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'add' exhibits multiple characteristics of a complex method: it handles numerous responsibilities (input validation, business logic for cart addition, stock checks, and cart updates), contains nested conditionals, and spans over 40 lines of code with multiple exit points. The cyclomatic complexity is high due to the branching logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "23460:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method performs multiple distinct operations (fetching settings, querying orders, updating statuses, releasing stock, updating coupons, and handling integration) with nested loops and conditional logic, exceeding typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method performs multiple distinct operations (fetching settings, querying orders, updating statuses, releasing stock, updating coupons, and handling integration) with nested loops and conditional logic, exceeding typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "41995:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'validateClient' exhibits multiple indicators of complexity: it handles multiple responsibilities (session validation, Redis operations, HTTP client requests, and redirects), contains deeply nested conditionals (if-else blocks), and has a high cyclomatic complexity due to numerous branches and error handling paths.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'validateClient' exhibits multiple indicators of complexity: it handles multiple responsibilities (session validation, Redis operations, HTTP client requests, and redirects), contains deeply nested conditionals (if-else blocks), and has a high cyclomatic complexity due to numerous branches and error handling paths.\"\n}\n```"
+    },
+    {
+      "sample_id": "4119:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'show' exhibits multiple nested conditionals, a loop with internal branching, and asynchronous logic (Runnable), resulting in high cyclomatic complexity and poor readability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'show' exhibits multiple nested conditionals, a loop with internal branching, and asynchronous logic (Runnable), resulting in high cyclomatic complexity and poor readability.\"\n}\n```"
+    },
+    {
+      "sample_id": "98274:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple nested conditionals (including a nested if within an if), performs several distinct checks, and has a high cyclomatic complexity. The TODO comment also suggests the method is overly broad and could be refactored.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple nested conditionals (including a nested if within an if), performs several distinct checks, and has a high cyclomatic complexity. The TODO comment also suggests the method is overly broad and could be refactored.\"\n}\n```"
+    },
+    {
+      "sample_id": "73376:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getCounts' exhibits multiple indicators of complexity: nested loops (including a nested loop inside a conditional), bitwise operations, and multiple responsibilities (calculating bitwise min/max, determining changed bits, and counting byte frequencies). The method is also long and has a high cognitive load due to the combination of these factors.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getCounts' exhibits multiple indicators of complexity: nested loops (including a nested loop inside a conditional), bitwise operations, and multiple responsibilities (calculating bitwise min/max, determining changed bits, and counting byte frequencies). The method is also long and has a high cognitive load due to the combination of these factors.\"\n}\n```"
+    },
+    {
+      "sample_id": "44850:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains nested conditionals, duplicated logic (two nearly identical blocks for token handling), and multiple responsibilities (checking token positions and delegating to handlers). The cyclomatic complexity is elevated due to the nested if-statements and loops.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains nested conditionals, duplicated logic (two nearly identical blocks for token handling), and multiple responsibilities (checking token positions and delegating to handlers). The cyclomatic complexity is elevated due to the nested if-statements and loops.\"\n}\n```"
+    },
+    {
+      "sample_id": "85173:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The private `StateDescriptor` constructor exhibits high cyclomatic complexity due to multiple conditional checks (e.g., parameter validation, constructor selection loop with nested type checks) and non-trivial control flow. The method handles diverse responsibilities including validation, field assignment, and dynamic constructor resolution.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The private `StateDescriptor` constructor exhibits high cyclomatic complexity due to multiple conditional checks (e.g., parameter validation, constructor selection loop with nested type checks) and non-trivial control flow. The method handles diverse responsibilities including validation, field assignment, and dynamic constructor resolution.\"\n}\n```"
+    },
+    {
+      "sample_id": "96587:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'dfs' exhibits high cyclomatic complexity due to nested loops (do-while, for), multiple conditional branches (if-else), and recursive calls. It also performs multiple responsibilities (DFS traversal, cycle detection, and component identification).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'dfs' exhibits high cyclomatic complexity due to nested loops (do-while, for), multiple conditional branches (if-else), and recursive calls. It also performs multiple responsibilities (DFS traversal, cycle detection, and component identification).\"\n}\n```"
+    },
+    {
+      "sample_id": "95025:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has multiple nested conditionals, handles multiple responsibilities (dispatching, timeout handling, future execution checks), and exceeds typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has multiple nested conditionals, handles multiple responsibilities (dispatching, timeout handling, future execution checks), and exceeds typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "24836:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity due to multiple conditional branches (7+ if statements), performs multiple responsibilities (query construction, pagination, data transformation, and result assembly), and exceeds typical size thresholds for a single method (30+ lines).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to multiple conditional branches (7+ if statements), performs multiple responsibilities (query construction, pagination, data transformation, and result assembly), and exceeds typical size thresholds for a single method (30+ lines).\"\n}\n```"
+    },
+    {
+      "sample_id": "23473:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple conditional branches (5+), nested logic, and performs several calculations with BigDecimal operations, indicating high cyclomatic complexity and low readability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple conditional branches (5+), nested logic, and performs several calculations with BigDecimal operations, indicating high cyclomatic complexity and low readability.\"\n}\n```"
+    },
+    {
+      "sample_id": "42038:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'decompress' exhibits multiple indicators of complexity: it handles multiple responsibilities (directory creation, file extraction, error handling), contains nested conditionals, loops, and resource management, and exceeds typical method length. The cyclomatic complexity is high due to the nested structures and multiple execution paths.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'decompress' exhibits multiple indicators of complexity: it handles multiple responsibilities (directory creation, file extraction, error handling), contains nested conditionals, loops, and resource management, and exceeds typical method length. The cyclomatic complexity is high due to the nested structures and multiple execution paths.\"\n}\n```"
+    },
+    {
+      "sample_id": "5845:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method uses a switch-case structure with multiple branches, but each branch is simple (single return statement or a straightforward if-else). The cyclomatic complexity is moderate but not excessive for the given logic.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method uses a switch-case structure with multiple branches, but each branch is simple (single return statement or a straightforward if-else). The cyclomatic complexity is moderate but not excessive for the given logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "100930:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'requestInfo' exhibits high complexity due to nested anonymous listeners with conditional logic, multiple error handling paths, and direct interaction with low-level networking components (ChannelFuture, bootstrap). The cyclomatic complexity is elevated by the multiple if-else branches and asynchronous callbacks.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'requestInfo' exhibits high complexity due to nested anonymous listeners with conditional logic, multiple error handling paths, and direct interaction with low-level networking components (ChannelFuture, bootstrap). The cyclomatic complexity is elevated by the multiple if-else branches and asynchronous callbacks.\"\n}\n```"
+    },
+    {
+      "sample_id": "73081:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'report' performs multiple responsibilities: calculating TPS, tracking min/max TTL, computing averages, and formatting output. It has a high cyclomatic complexity due to nested conditionals and multiple independent operations.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'report' performs multiple responsibilities: calculating TPS, tracking min/max TTL, computing averages, and formatting output. It has a high cyclomatic complexity due to nested conditionals and multiple independent operations.\"\n}\n```"
+    },
+    {
+      "sample_id": "47806:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'run' exhibits multiple responsibilities: URL construction, connection handling, stream processing, and resource cleanup. It also contains nested conditionals, exception handling, and a loop, increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'run' exhibits multiple responsibilities: URL construction, connection handling, stream processing, and resource cleanup. It also contains nested conditionals, exception handling, and a loop, increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "82348:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'setupListeners' contains two large anonymous inner classes with nested conditional logic and loops, increasing cognitive complexity. The method itself orchestrates multiple responsibilities (listener setup, event handling, and state management) rather than delegating.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'setupListeners' contains two large anonymous inner classes with nested conditional logic and loops, increasing cognitive complexity. The method itself orchestrates multiple responsibilities (listener setup, event handling, and state management) rather than delegating.\"\n}\n```"
+    },
+    {
+      "sample_id": "97769:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The `delete` method (private helper) exhibits high cyclomatic complexity due to multiple nested conditionals, recursive calls, and multiple exit points. It handles several distinct cases (null checks, left/right subtree traversal, node replacement logic), making it harder to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The `delete` method (private helper) exhibits high cyclomatic complexity due to multiple nested conditionals, recursive calls, and multiple exit points. It handles several distinct cases (null checks, left/right subtree traversal, node replacement logic), making it harder to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "87457:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "Method contains multiple conditional branches (4 if-else blocks) and performs several distinct operations, increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"Method contains multiple conditional branches (4 if-else blocks) and performs several distinct operations, increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "24019:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'run' exhibits multiple characteristics of a complex method: it performs several distinct operations (logging, service bean retrieval, conditional checks, database updates, and iterative processing with nested conditionals), has a high cyclomatic complexity due to nested if-else blocks, and handles multiple responsibilities (status updates, order refunds, and groupon processing).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'run' exhibits multiple characteristics of a complex method: it performs several distinct operations (logging, service bean retrieval, conditional checks, database updates, and iterative processing with nested conditionals), has a high cyclomatic complexity due to nested if-else blocks, and handles multiple responsibilities (status updates, order refunds, and groupon processing).\"\n}\n```"
+    },
+    {
+      "sample_id": "23282:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method exhibits high cyclomatic complexity due to nested conditionals (if-else blocks) and multiple logical branches. It performs several distinct operations (DB queries, updates, and conditional logic) that could be refactored into smaller, focused methods.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to nested conditionals (if-else blocks) and multiple logical branches. It performs several distinct operations (DB queries, updates, and conditional logic) that could be refactored into smaller, focused methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "42000:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method exhibits multiple indicators of complexity: nested conditionals (if-else), a loop with conditional logic, string concatenation operations, and parameter map processing. The cyclomatic complexity is elevated due to the branching logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method exhibits multiple indicators of complexity: nested conditionals (if-else), a loop with conditional logic, string concatenation operations, and parameter map processing. The cyclomatic complexity is elevated due to the branching logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "2367:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'doHttpAction' exhibits multiple indicators of complexity: it handles multiple responsibilities (HTTP method configuration, request execution, response handling, and resource cleanup), contains nested conditionals, manages multiple resources (connection, streams), and includes error handling and cleanup logic. The method's length and cyclomatic complexity are high.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'doHttpAction' exhibits multiple indicators of complexity: it handles multiple responsibilities (HTTP method configuration, request execution, response handling, and resource cleanup), contains nested conditionals, manages multiple resources (connection, streams), and includes error handling and cleanup logic. The method's length and cyclomatic complexity are high.\"\n}\n```"
+    },
+    {
+      "sample_id": "99677:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'help' exhibits high cyclomatic complexity due to multiple nested conditionals (if-else branches) and a loop. It handles multiple responsibilities: listing all commands, validating input, and formatting detailed help text for a specific command.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'help' exhibits high cyclomatic complexity due to multiple nested conditionals (if-else branches) and a loop. It handles multiple responsibilities: listing all commands, validating input, and formatting detailed help text for a specific command.\"\n}\n```"
+    },
+    {
+      "sample_id": "76486:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has multiple nested conditionals, repeated character checks, and manual string parsing logic, increasing cognitive complexity and reducing readability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has multiple nested conditionals, repeated character checks, and manual string parsing logic, increasing cognitive complexity and reducing readability.\"\n}\n```"
+    },
+    {
+      "sample_id": "48551:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'advance' contains multiple nested loops and conditional blocks, performs complex pointer manipulation, and handles multiple responsibilities (traversing entries, tables, and segments), indicating high cyclomatic complexity and poor readability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'advance' contains multiple nested loops and conditional blocks, performs complex pointer manipulation, and handles multiple responsibilities (traversing entries, tables, and segments), indicating high cyclomatic complexity and poor readability.\"\n}\n```"
+    },
+    {
+      "sample_id": "80796:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is short, has a single responsibility, and consists of simple conditional checks with early returns. No deep nesting or complex logic is present.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is short, has a single responsibility, and consists of simple conditional checks with early returns. No deep nesting or complex logic is present.\"\n}\n```"
+    },
+    {
+      "sample_id": "97559:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'partition' contains multiple nested loops and conditional statements, performs low-level array manipulations, and has a high cyclomatic complexity, indicating a complex method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'partition' contains multiple nested loops and conditional statements, performs low-level array manipulations, and has a high cyclomatic complexity, indicating a complex method.\"\n}\n```"
+    },
+    {
+      "sample_id": "92833:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple nested conditional branches (if statements) and handles several distinct type resolution cases, increasing cognitive complexity. The cyclomatic complexity is high due to the branching logic.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple nested conditional branches (if statements) and handles several distinct type resolution cases, increasing cognitive complexity. The cyclomatic complexity is high due to the branching logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "23603:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'prepay' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (8+ if statements), handles multiple responsibilities (validation, payment processing, error handling), and performs operations like transaction management, request parsing, and service calls. The method's length and nested logic exceed typical thresholds for maintainability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'prepay' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (8+ if statements), handles multiple responsibilities (validation, payment processing, error handling), and performs operations like transaction management, request parsing, and service calls. The method's length and nested logic exceed typical thresholds for maintainability.\"\n}\n```"
+    },
+    {
+      "sample_id": "7303:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity due to nested loops (3 levels deep), multiple conditional branches, and extensive type casting. It performs multiple distinct operations (brand names, product categories, and product attributes processing) that could be refactored into separate helper methods.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to nested loops (3 levels deep), multiple conditional branches, and extensive type casting. It performs multiple distinct operations (brand names, product categories, and product attributes processing) that could be refactored into separate helper methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "42044:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method performs multiple distinct tasks: preparing a statement, setting parameters, executing a query, processing result set metadata, and constructing a list of maps. It has nested loops and conditional logic, increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method performs multiple distinct tasks: preparing a statement, setting parameters, executing a query, processing result set metadata, and constructing a list of maps. It has nested loops and conditional logic, increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "4249:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'postStickyInner' exhibits multiple nested blocks (if, for, synchronized), handles multiple responsibilities (logging, conditional invocation, synchronization, and map management), and exceeds typical cyclomatic complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'postStickyInner' exhibits multiple nested blocks (if, for, synchronized), handles multiple responsibilities (logging, conditional invocation, synchronization, and map management), and exceeds typical cyclomatic complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "102979:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'addEnablingAllTelemetryListener' exhibits multiple indicators of complexity: nested loops (for-each), nested conditionals (if), lambda with multiple statements, and a high number of operations (e.g., reflection, UI updates, and config manipulation). The method's length and logical depth suggest it violates the Single Responsibility Principle and is difficult to understand or maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'addEnablingAllTelemetryListener' exhibits multiple indicators of complexity: nested loops (for-each), nested conditionals (if), lambda with multiple statements, and a high number of operations (e.g., reflection, UI updates, and config manipulation). The method's length and logical depth suggest it violates the Single Responsibility Principle and is difficult to understand or maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "73605:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has multiple nested conditionals, handles several responsibilities (parsing, date arithmetic, error handling), and exceeds typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has multiple nested conditionals, handles several responsibilities (parsing, date arithmetic, error handling), and exceeds typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "45024:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'process' exhibits multiple signs of complexity: it contains nested conditional logic (if-else chains), handles multiple responsibilities (classloader matching, class searching, and result processing), and includes error handling with try-catch. The method's length and branching complexity exceed typical thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'process' exhibits multiple signs of complexity: it contains nested conditional logic (if-else chains), handles multiple responsibilities (classloader matching, class searching, and result processing), and includes error handling with try-catch. The method's length and branching complexity exceed typical thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "80063:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'parse' exhibits multiple indicators of complexity: it handles numerous variables (jid, name, action, node, item, done), manages multiple conditional branches (three if-else blocks), and performs parsing logic with side effects. The cyclomatic complexity is high due to nested conditions and loop.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'parse' exhibits multiple indicators of complexity: it handles numerous variables (jid, name, action, node, item, done), manages multiple conditional branches (three if-else blocks), and performs parsing logic with side effects. The cyclomatic complexity is high due to nested conditions and loop.\"\n}\n```"
+    },
+    {
+      "sample_id": "97516:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'put' exhibits multiple responsibilities (key validation, null value handling, resizing, and key-value insertion) and contains nested conditional logic with a loop, increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'put' exhibits multiple responsibilities (key validation, null value handling, resizing, and key-value insertion) and contains nested conditional logic with a loop, increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "91906:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method follows a standard pattern for equals() implementation with clear, sequential conditional checks and no deep nesting or complex logic.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method follows a standard pattern for equals() implementation with clear, sequential conditional checks and no deep nesting or complex logic.\"\n}\n```"
+    },
+    {
+      "sample_id": "24719:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'sendWithTemplate' exhibits high cyclomatic complexity due to multiple conditional branches (if-else blocks), nested try-catch blocks, and a loop. It also performs multiple responsibilities: constructing a request, handling template parameters, executing the request, and processing the response.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'sendWithTemplate' exhibits high cyclomatic complexity due to multiple conditional branches (if-else blocks), nested try-catch blocks, and a loop. It also performs multiple responsibilities: constructing a request, handling template parameters, executing the request, and processing the response.\"\n}\n```"
+    },
+    {
+      "sample_id": "23435:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method contains multiple nested conditional blocks (if-else chains) and performs several distinct operations (filtering coupons by use type, calculating totals, and categorizing into enable/disable lists). The cyclomatic complexity is high due to the three main branches for useType (0, 1, 2) and additional nested conditions within each branch.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method contains multiple nested conditional blocks (if-else chains) and performs several distinct operations (filtering coupons by use type, calculating totals, and categorizing into enable/disable lists). The cyclomatic complexity is high due to the three main branches for useType (0, 1, 2) and additional nested conditions within each branch.\"\n}\n```"
+    },
+    {
+      "sample_id": "5679:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'registerInner' exhibits multiple indicators of complexity: nested conditionals (3+ levels deep), nested loops (for-loops inside synchronized blocks), exception handling, and multiple responsibilities (bus registration, tag mapping, and sticky processing). The cyclomatic complexity is high due to these factors.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'registerInner' exhibits multiple indicators of complexity: nested conditionals (3+ levels deep), nested loops (for-loops inside synchronized blocks), exception handling, and multiple responsibilities (bus registration, tag mapping, and sticky processing). The cyclomatic complexity is high due to these factors.\"\n}\n```"
+    },
+    {
+      "sample_id": "103968:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'createGameManifest' exhibits multiple indicators of complexity: it has a high number of lines (over 40), performs multiple distinct tasks (e.g., title generation, dependency resolution, world setup, and configuration updates), contains nested conditionals, and mixes different levels of abstraction. The method lacks clear decomposition into smaller, focused methods.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'createGameManifest' exhibits multiple indicators of complexity: it has a high number of lines (over 40), performs multiple distinct tasks (e.g., title generation, dependency resolution, world setup, and configuration updates), contains nested conditionals, and mixes different levels of abstraction. The method lacks clear decomposition into smaller, focused methods.\"\n}\n```"
+    },
+    {
+      "sample_id": "73184:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'execute' exhibits multiple indicators of complexity: it handles buffer allocation, packet writing, file I/O, string manipulation, conditional logic, and loop structures. The method performs more than one primary responsibility, including log file parsing and network packet construction.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'execute' exhibits multiple indicators of complexity: it handles buffer allocation, packet writing, file I/O, string manipulation, conditional logic, and loop structures. The method performs more than one primary responsibility, including log file parsing and network packet construction.\"\n}\n```"
+    },
+    {
+      "sample_id": "47516:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity with multiple nested conditionals (e.g., if-else blocks, nested loops), numerous local variables (e.g., continueCount, lastStartPos, lastContinueLineNum), and complex control flow (e.g., break, continue). The method's length and intertwined logic make it difficult to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity with multiple nested conditionals (e.g., if-else blocks, nested loops), numerous local variables (e.g., continueCount, lastStartPos, lastContinueLineNum), and complex control flow (e.g., break, continue). The method's length and intertwined logic make it difficult to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "85907:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'accept' exhibits multiple indicators of complexity: it handles numerous exception types, manages multiple conditional branches (e.g., early return for empty streamHosts, failure threshold checks), and performs several distinct operations (socket creation, failure tracking, response handling). The cyclomatic complexity is high due to nested loops and conditionals.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'accept' exhibits multiple indicators of complexity: it handles numerous exception types, manages multiple conditional branches (e.g., early return for empty streamHosts, failure threshold checks), and performs several distinct operations (socket creation, failure tracking, response handling). The cyclomatic complexity is high due to nested loops and conditionals.\"\n}\n```"
+    },
+    {
+      "sample_id": "96375:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The methods are concise and focused on single responsibilities. The private `keys` method uses recursion but remains clear and handles a specific traversal task. No excessive nesting, long method body, or high cyclomatic complexity observed.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The methods are concise and focused on single responsibilities. The private `keys` method uses recursion but remains clear and handles a specific traversal task. No excessive nesting, long method body, or high cyclomatic complexity observed.\"\n}\n```"
+    },
+    {
+      "sample_id": "91528:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The `getNodeIds(StatefulRedisClusterConnection<?,?> connection)` method exhibits high complexity due to nested conditionals, loops, and multiple operations (e.g., candidate selection, random index generation, and node filtering). Cyclomatic complexity is elevated by the `if` branches, `for` loop, and lambda-like `ReadFrom.Nodes` implementation.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The `getNodeIds(StatefulRedisClusterConnection<?,?> connection)` method exhibits high complexity due to nested conditionals, loops, and multiple operations (e.g., candidate selection, random index generation, and node filtering). Cyclomatic complexity is elevated by the `if` branches, `for` loop, and lambda-like `ReadFrom.Nodes` implementation.\"\n}\n```"
+    },
+    {
+      "sample_id": "37508:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'receive' contains multiple nested conditional checks (if-else blocks) and performs several distinct operations (validation, business logic, and object creation), exceeding typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'receive' contains multiple nested conditional checks (if-else blocks) and performs several distinct operations (validation, business logic, and object creation), exceeding typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "23506:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'calcCartPromotion' exhibits multiple indicators of complexity: it is long (over 60 lines), contains deeply nested conditionals (if-else chains up to 4 levels), handles multiple promotion types (1, 3, 4), and performs varied operations (copying properties, calculations, message generation) within the same method. The cyclomatic complexity is high due to the numerous branches and loops.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'calcCartPromotion' exhibits multiple indicators of complexity: it is long (over 60 lines), contains deeply nested conditionals (if-else chains up to 4 levels), handles multiple promotion types (1, 3, 4), and performs varied operations (copying properties, calculations, message generation) within the same method. The cyclomatic complexity is high due to the numerous branches and loops.\"\n}\n```"
+    },
+    {
+      "sample_id": "3121:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains nested conditionals and duplicated logic for two similar request types, increasing cognitive complexity. The cyclomatic complexity is high due to multiple branching paths.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains nested conditionals and duplicated logic for two similar request types, increasing cognitive complexity. The cyclomatic complexity is high due to multiple branching paths.\"\n}\n```"
+    },
+    {
+      "sample_id": "100828:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method has a clear, linear control flow with only two conditional branches and straightforward arithmetic operations. Cyclomatic complexity is low (3), and the logic is easy to follow.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method has a clear, linear control flow with only two conditional branches and straightforward arithmetic operations. Cyclomatic complexity is low (3), and the logic is easy to follow.\"\n}\n```"
+    },
+    {
+      "sample_id": "75357:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'run' exhibits high cyclomatic complexity due to nested loops, multiple conditional branches (if-else, try-catch-finally), and a non-trivial control flow. It handles multiple responsibilities (selector management, connection handling, error logging) and exceeds typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'run' exhibits high cyclomatic complexity due to nested loops, multiple conditional branches (if-else, try-catch-finally), and a non-trivial control flow. It handles multiple responsibilities (selector management, connection handling, error logging) and exceeds typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "48003:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'enhance' exhibits multiple indicators of complexity: (1) high number of parameters (6), (2) nested conditional logic (if-else blocks), (3) exception handling with multiple catch blocks, (4) loops with embedded try-catch, (5) mixed concerns (logging, filtering, transformation), and (6) excessive length (over 50 lines). The control flow is non-linear and requires significant cognitive effort to follow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'enhance' exhibits multiple indicators of complexity: (1) high number of parameters (6), (2) nested conditional logic (if-else blocks), (3) exception handling with multiple catch blocks, (4) loops with embedded try-catch, (5) mixed concerns (logging, filtering, transformation), and (6) excessive length (over 50 lines). The control flow is non-linear and requires significant cognitive effort to follow.\"\n}\n```"
+    },
+    {
+      "sample_id": "82694:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'reply' exhibits multiple characteristics of a complex method: it performs numerous conditional checks (5+), handles multiple edge cases, contains nested logic (e.g., loops and conditional blocks), and delegates to another method ('send') with many parameters. The cyclomatic complexity is high due to the branching and loops.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'reply' exhibits multiple characteristics of a complex method: it performs numerous conditional checks (5+), handles multiple edge cases, contains nested logic (e.g., loops and conditional blocks), and delegates to another method ('send') with many parameters. The cyclomatic complexity is high due to the branching and loops.\"\n}\n```"
+    },
+    {
+      "sample_id": "96689:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'contractEdge' exhibits high cyclomatic complexity due to nested loops (for-for) and multiple conditional branches (if-else chains). It handles edge cases with intricate logic, making it harder to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'contractEdge' exhibits high cyclomatic complexity due to nested loops (for-for) and multiple conditional branches (if-else chains). It handles edge cases with intricate logic, making it harder to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "90298:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple conditional branches (if/else), nested logic, and performs several distinct operations (tracing setup, span creation, endpoint handling), exceeding typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple conditional branches (if/else), nested logic, and performs several distinct operations (tracing setup, span creation, endpoint handling), exceeding typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "37472:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'cancel' contains multiple nested conditional checks (7+), handles several distinct responsibilities (validation, status updates, and service calls), and exceeds typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'cancel' contains multiple nested conditional checks (7+), handles several distinct responsibilities (validation, status updates, and service calls), and exceeds typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "23336:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'handleUpdateSkuStockList' exhibits multiple indicators of complexity: it performs several distinct operations (deletion, insertion, update, and removal of SKU stocks), contains nested conditionals, and involves multiple stream operations and database interactions. The method's length and the number of responsibilities suggest high cyclomatic complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'handleUpdateSkuStockList' exhibits multiple indicators of complexity: it performs several distinct operations (deletion, insertion, update, and removal of SKU stocks), contains nested conditionals, and involves multiple stream operations and database interactions. The method's length and the number of responsibilities suggest high cyclomatic complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "5823:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'bindViewHolder' exhibits multiple nested conditionals, anonymous inner classes, and repeated logic patterns (click and long-click listeners), increasing cognitive complexity beyond a simple linear flow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'bindViewHolder' exhibits multiple nested conditionals, anonymous inner classes, and repeated logic patterns (click and long-click listeners), increasing cognitive complexity beyond a simple linear flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "100122:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity due to deeply nested conditional statements (5+ levels) and multiple boolean conditions combined with logical operators, making it difficult to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to deeply nested conditional statements (5+ levels) and multiple boolean conditions combined with logical operators, making it difficult to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "76466:complex_method",
+      "smell": "complex_method",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains nested conditionals, a switch statement, and multiple early returns, increasing its cyclomatic complexity and making it harder to follow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains nested conditionals, a switch statement, and multiple early returns, increasing its cyclomatic complexity and making it harder to follow.\"\n}\n```"
+    },
+    {
+      "sample_id": "2338:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method consists of simple conditional checks with straightforward return statements, lacking nested logic, loops, or complex operations that would indicate complexity.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method consists of simple conditional checks with straightforward return statements, lacking nested logic, loops, or complex operations that would indicate complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "99856:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has multiple nested conditionals, loops, and complex logic involving parent-child relationships and component serialization, exceeding typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has multiple nested conditionals, loops, and complex logic involving parent-child relationships and component serialization, exceeding typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "72795:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method 'mergAvg' exhibits multiple responsibilities: (1) identifying columns to merge, (2) performing the merge calculation, (3) handling result updates, and (4) cleaning up removed indices. It also contains nested conditionals and loops, increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method 'mergAvg' exhibits multiple responsibilities: (1) identifying columns to merge, (2) performing the merge calculation, (3) handling result updates, and (4) cleaning up removed indices. It also contains nested conditionals and loops, increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "48594:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'remove' exhibits multiple indicators of complexity: nested conditionals (e.g., 'if (!refRemove)', 'if (e != null)', 'if (value == null || value.equals(v))'), a loop with a complex condition ('while (e != null && key != e.keyRef && (refRemove || hash != e.hash || !keyEq(key,e.key())))'), and additional nested logic for rebuilding the hash chain. The method handles multiple responsibilities (stale entry removal, key matching, value matching, and hash chain reconstruction), contributing to its complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'remove' exhibits multiple indicators of complexity: nested conditionals (e.g., 'if (!refRemove)', 'if (e != null)', 'if (value == null || value.equals(v))'), a loop with a complex condition ('while (e != null && key != e.keyRef && (refRemove || hash != e.hash || !keyEq(key,e.key())))'), and additional nested logic for rebuilding the hash chain. The method handles multiple responsibilities (stale entry removal, key matching, value matching, and hash chain reconstruction), contributing to its complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "82315:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method contains nested loops and conditional logic, performing multiple distinct operations (stopping sessions, cleaning up candidates, notifying listeners, and closing). This exceeds typical complexity for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method contains nested loops and conditional logic, performing multiple distinct operations (stopping sessions, cleaning up candidates, notifying listeners, and closing). This exceeds typical complexity for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "96708:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'dfs' exhibits multiple indicators of complexity: nested loops (for and implicit recursion), multiple conditional branches (if-else), and a nested loop with conditional logic inside the else block. The method handles multiple responsibilities (DFS traversal and cycle detection), increasing cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'dfs' exhibits multiple indicators of complexity: nested loops (for and implicit recursion), multiple conditional branches (if-else), and a nested loop with conditional logic inside the else block. The method handles multiple responsibilities (DFS traversal and cycle detection), increasing cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "86199:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is lengthy due to multiple field comparisons but follows a standard pattern for equals() implementations. No deep nesting or complex logic is present.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is lengthy due to multiple field comparisons but follows a standard pattern for equals() implementations. No deep nesting or complex logic is present.\"\n}\n```"
+    },
+    {
+      "sample_id": "37595:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method contains multiple conditional branches (if-else chain) to handle different storage modes, increasing cognitive complexity and making it harder to read and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method contains multiple conditional branches (if-else chain) to handle different storage modes, increasing cognitive complexity and making it harder to read and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "23272:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method handles multiple responsibilities: pagination setup, query criteria construction (with conditional logic), date parsing, and sorting. The nested try-catch blocks and date manipulation logic add complexity beyond a simple query method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method handles multiple responsibilities: pagination setup, query criteria construction (with conditional logic), date parsing, and sorting. The nested try-catch blocks and date manipulation logic add complexity beyond a simple query method.\"\n}\n```"
+    },
+    {
+      "sample_id": "42087:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.8,
+      "rationale": "The method contains multiple nested conditional checks (5 if-statements) with repetitive logic for validating and assigning the 'ip' variable, indicating high cyclomatic complexity and poor readability.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method contains multiple nested conditional checks (5 if-statements) with repetitive logic for validating and assigning the 'ip' variable, indicating high cyclomatic complexity and poor readability.\"\n}\n```"
+    },
+    {
+      "sample_id": "2459:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'register' exhibits multiple indicators of complexity: (1) high number of parameters (3), (2) nested conditional logic (if statements with multiple conditions), (3) multiple responsibilities (input validation, provider checks, listener management, and location updates), and (4) side effects (modifying static fields like mLocationManager and mListener).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'register' exhibits multiple indicators of complexity: (1) high number of parameters (3), (2) nested conditional logic (if statements with multiple conditions), (3) multiple responsibilities (input validation, provider checks, listener management, and location updates), and (4) side effects (modifying static fields like mLocationManager and mListener).\"\n}\n```"
+    },
+    {
+      "sample_id": "99168:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method 'checkBlockEntry' contains multiple nested loops and conditional logic, performs array initializations, and handles block event dispatching, indicating high cyclomatic complexity and multiple responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method 'checkBlockEntry' contains multiple nested loops and conditional logic, performs array initializations, and handles block event dispatching, indicating high cyclomatic complexity and multiple responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "71095:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'sequenceSlicing' exhibits high cyclomatic complexity due to multiple nested conditionals (if-else blocks) and branching logic for parsing and validating input strings. It handles several edge cases, increasing its complexity beyond a simple linear flow.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'sequenceSlicing' exhibits high cyclomatic complexity due to multiple nested conditionals (if-else blocks) and branching logic for parsing and validating input strings. It handles several edge cases, increasing its complexity beyond a simple linear flow.\"\n}\n```"
+    },
+    {
+      "sample_id": "46721:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method has a simple conditional check and a loop with recursive call, but the logic is straightforward and not overly complex. The cyclomatic complexity is low (3 paths), and the method's purpose is clear.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method has a simple conditional check and a loop with recursive call, but the logic is straightforward and not overly complex. The cyclomatic complexity is low (3 paths), and the method's purpose is clear.\"\n}\n```"
+    },
+    {
+      "sample_id": "83472:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The constructor 'PrivacyListManager' exhibits multiple indicators of a complex method: it contains nested anonymous classes (IQRequestHandler, StanzaListener, ConnectionListener), deep nesting (e.g., nested loops and conditionals), and performs multiple distinct responsibilities (registering handlers, managing listeners, handling stanza processing, and connection state). The method is lengthy and handles more than one logical task.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor 'PrivacyListManager' exhibits multiple indicators of a complex method: it contains nested anonymous classes (IQRequestHandler, StanzaListener, ConnectionListener), deep nesting (e.g., nested loops and conditionals), and performs multiple distinct responsibilities (registering handlers, managing listeners, handling stanza processing, and connection state). The method is lengthy and handles more than one logical task.\"\n}\n```"
+    },
+    {
+      "sample_id": "96071:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'partition' contains multiple nested loops and conditional checks, performs several operations (median calculation, exchanges, comparisons), and has a high cyclomatic complexity, indicating a complex method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'partition' contains multiple nested loops and conditional checks, performs several operations (median calculation, exchanges, comparisons), and has a high cyclomatic complexity, indicating a complex method.\"\n}\n```"
+    },
+    {
+      "sample_id": "91889:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is concise, follows a standard equals() pattern, and lacks nested conditionals or loops. Cyclomatic complexity is low.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is concise, follows a standard equals() pattern, and lacks nested conditionals or loops. Cyclomatic complexity is low.\"\n}\n```"
+    },
+    {
+      "sample_id": "23601:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'h5pay' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (7+), handles multiple responsibilities (validation, order processing, payment request creation), and includes error handling with nested logic. The method's length and cyclomatic complexity are elevated due to these factors.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'h5pay' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (7+), handles multiple responsibilities (validation, order processing, payment request creation), and includes error handling with nested logic. The method's length and cyclomatic complexity are elevated due to these factors.\"\n}\n```"
+    },
+    {
+      "sample_id": "2910:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method has multiple nested conditionals, performs several distinct operations (validation, file deletion, directory creation, file copying/moving, and error handling), and exceeds typical complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has multiple nested conditionals, performs several distinct operations (validation, file deletion, directory creation, file copying/moving, and error handling), and exceeds typical complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "105337:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple nested conditionals, a loop, and several operations (e.g., distance calculations, chunk encoding) that increase its cyclomatic complexity. It handles more than one responsibility (e.g., chunk selection logic, message building, and counter management).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple nested conditionals, a loop, and several operations (e.g., distance calculations, chunk encoding) that increase its cyclomatic complexity. It handles more than one responsibility (e.g., chunk selection logic, message building, and counter management).\"\n}\n```"
+    },
+    {
+      "sample_id": "69497:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method exhibits high cyclomatic complexity due to nested loops (4 levels deep) and multiple conditional branches. It handles multiple responsibilities (parsing privileges, schemas, tables, and data nodes) and exceeds typical size/complexity thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method exhibits high cyclomatic complexity due to nested loops (4 levels deep) and multiple conditional branches. It handles multiple responsibilities (parsing privileges, schemas, tables, and data nodes) and exceeds typical size/complexity thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "48592:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method exhibits multiple indicators of complexity: nested conditionals (if-else blocks), loops (while), multiple variable assignments, and intertwined logic for handling hash collisions, rehashing, and stale entry removal. The cyclomatic complexity is high due to these factors.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method exhibits multiple indicators of complexity: nested conditionals (if-else blocks), loops (while), multiple variable assignments, and intertwined logic for handling hash collisions, rehashing, and stale entry removal. The cyclomatic complexity is high due to these factors.\"\n}\n```"
+    },
+    {
+      "sample_id": "79255:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method contains conditional logic and error handling, but the cyclomatic complexity remains moderate (4 branches). The operations are cohesive and focused on a single responsibility (preparing a file output stream).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method contains conditional logic and error handling, but the cyclomatic complexity remains moderate (4 branches). The operations are cohesive and focused on a single responsibility (preparing a file output stream).\"\n}\n```"
+    },
+    {
+      "sample_id": "96423:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.8,
+      "rationale": "The method is relatively short (12 lines excluding comments and whitespace) and performs a straightforward sequence of operations: input validation, array initialization, and edge addition in a loop. While it involves some logic, it does not exhibit high cyclomatic complexity or nested structures indicative of a 'complex_method' smell.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.8,\n  \"rationale\": \"The method is relatively short (12 lines excluding comments and whitespace) and performs a straightforward sequence of operations: input validation, array initialization, and edge addition in a loop. While it involves some logic, it does not exhibit high cyclomatic complexity or nested structures indicative of a 'complex_method' smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "93784:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method contains multiple nested conditionals and branching logic (if-else blocks), handles multiple responsibilities (peeking, removing, iterating over queue), and has a cyclomatic complexity likely exceeding typical thresholds for a single method.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method contains multiple nested conditionals and branching logic (if-else blocks), handles multiple responsibilities (peeking, removing, iterating over queue), and has a cyclomatic complexity likely exceeding typical thresholds for a single method.\"\n}\n```"
+    },
+    {
+      "sample_id": "37475:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'submit' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (8+), handles various business rules (e.g., validation, order status checks, amount comparison), and performs multiple operations (e.g., service calls, status updates). The method's cyclomatic complexity is high due to the nested and sequential conditions.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'submit' exhibits multiple characteristics of a complex method: it contains numerous conditional checks (8+), handles various business rules (e.g., validation, order status checks, amount comparison), and performs multiple operations (e.g., service calls, status updates). The method's cyclomatic complexity is high due to the nested and sequential conditions.\"\n}\n```"
+    },
+    {
+      "sample_id": "2827:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.85,
+      "rationale": "The method contains nested loops and multiple operations (bit manipulation, string padding, and array initialization) that increase cognitive complexity. The logic for handling bit-to-byte conversion is not trivial and involves several steps, making the method harder to understand and maintain.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.85,\n  \"rationale\": \"The method contains nested loops and multiple operations (bit manipulation, string padding, and array initialization) that increase cognitive complexity. The logic for handling bit-to-byte conversion is not trivial and involves several steps, making the method harder to understand and maintain.\"\n}\n```"
+    },
+    {
+      "sample_id": "106161:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method contains multiple conditional branches (if-else ladder) and string concatenations, handling several distinct cases with varying logic, which increases cognitive complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method contains multiple conditional branches (if-else ladder) and string concatenations, handling several distinct cases with varying logic, which increases cognitive complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "70962:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'update' exhibits multiple indicators of complexity: it has 11 parameters, performs multiple distinct operations (concurrency control, time calculation, record creation, and several stat updates), and contains conditional logic with nested blocks. The method's length and variety of responsibilities suggest high cyclomatic complexity and poor cohesion.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'update' exhibits multiple indicators of complexity: it has 11 parameters, performs multiple distinct operations (concurrency control, time calculation, record creation, and several stat updates), and contains conditional logic with nested blocks. The method's length and variety of responsibilities suggest high cyclomatic complexity and poor cohesion.\"\n}\n```"
+    },
+    {
+      "sample_id": "47517:complex_method",
+      "smell": "complex_method",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method performs multiple tasks: parsing arguments, configuring CLI, handling exceptions, extracting multiple parameters, and applying conditional logic for context adjustments. It also has nested conditionals and a high number of responsibilities.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method performs multiple tasks: parsing arguments, configuring CLI, handling exceptions, extracting multiple parameters, and applying conditional logic for context adjustments. It also has nested conditionals and a high number of responsibilities.\"\n}\n```"
+    },
+    {
+      "sample_id": "99213:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'onScaleCharacter' has 4 parameters (event, entity, character, movement), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onScaleCharacter' has 4 parameters (event, entity, character, movement), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "73623:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "Multiple method overloads exhibit long parameter lists, particularly the methods with 5 or more parameters (e.g., `publishEvents` with parameters `translator, batchStartsAt, batchSize, arg0, arg1, arg2`).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"Multiple method overloads exhibit long parameter lists, particularly the methods with 5 or more parameters (e.g., `publishEvents` with parameters `translator, batchStartsAt, batchSize, arg0, arg1, arg2`).\"\n}\n```"
+    },
+    {
+      "sample_id": "47992:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'registerTraceAdviceListener' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'registerTraceAdviceListener' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "82093:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'AudioMediaSession' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'AudioMediaSession' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "97073:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'line' has 4 parameters, which is generally considered a long parameter list, especially when they are of the same type and logically related (coordinates).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'line' has 4 parameters, which is generally considered a long parameter list, especially when they are of the same type and logically related (coordinates).\"\n}\n```"
+    },
+    {
+      "sample_id": "93205:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The first method has 5 parameters, and the second has 5 parameters including a complex object (MigrateArgs). While the second method consolidates some parameters into an object, both methods exhibit long parameter lists, which is a characteristic of the 'long_parameter_list' code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The first method has 5 parameters, and the second has 5 parameters including a complex object (MigrateArgs). While the second method consolidates some parameters into an object, both methods exhibit long parameter lists, which is a characteristic of the 'long_parameter_list' code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "25044:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "23161:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 5 parameters (categoryId, nameKeyword, urlKeyword, pageSize, pageNum), which exceeds typical thresholds for a long parameter list code smell (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 5 parameters (categoryId, nameKeyword, urlKeyword, pageSize, pageNum), which exceeds typical thresholds for a long parameter list code smell (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "44507:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 5 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 5 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "102113:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'update' has four parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'update' has four parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "73586:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'parseNativePageSql' has 4 parameters (SQLStatement stmt, RouteResultset rrs, OracleSelectQueryBlock mysqlSelectQuery, SchemaConfig schema), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'parseNativePageSql' has 4 parameters (SQLStatement stmt, RouteResultset rrs, OracleSelectQueryBlock mysqlSelectQuery, SchemaConfig schema), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "48391:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'before' has 5 parameters, which is not excessively long for a method overriding an interface or abstract method, especially in instrumentation or AOP contexts where such parameter lists are common.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'before' has 5 parameters, which is not excessively long for a method overriding an interface or abstract method, especially in instrumentation or AOP contexts where such parameter lists are common.\"\n}\n```"
+    },
+    {
+      "sample_id": "85997:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'createResponses' has 4 parameters (protocol, sessionID, streamHostUsedVerification, socks5TestProxy), which is generally considered a long parameter list, especially when some parameters are complex types (e.g., Verification<Bytestream,Bytestream>).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'createResponses' has 4 parameters (protocol, sessionID, streamHostUsedVerification, socks5TestProxy), which is generally considered a long parameter list, especially when some parameters are complex types (e.g., Verification<Bytestream,Bytestream>).\"\n}\n```"
+    },
+    {
+      "sample_id": "96558:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The private `sort` methods for both `String[]` and `int[]` contain 5 parameters (`a`, `lo`, `hi`, `d`, `aux`), which is a relatively long parameter list for a method. This exceeds the typical threshold (often 3-4 parameters) for identifying a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The private `sort` methods for both `String[]` and `int[]` contain 5 parameters (`a`, `lo`, `hi`, `d`, `aux`), which is a relatively long parameter list for a method. This exceeds the typical threshold (often 3-4 parameters) for identifying a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "89078:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'evalshaReadOnly' has 4 explicit parameters (digest, type, keys, values) plus a variable arity parameter (values), which collectively form a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'evalshaReadOnly' has 4 explicit parameters (digest, type, keys, values) plus a variable arity parameter (values), which collectively form a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "26157:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "42292:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "101494:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getPreferredContentsHeight' has 4 parameters, which is generally considered a long parameter list in Java, especially when they are not grouped into a meaningful object.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getPreferredContentsHeight' has 4 parameters, which is generally considered a long parameter list in Java, especially when they are not grouped into a meaningful object.\"\n}\n```"
+    },
+    {
+      "sample_id": "74857:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'MongoResultSetMetaData' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'MongoResultSetMetaData' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "48019:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'atEnter' has 4 parameters, which is generally considered a long parameter list in Java, especially when some parameters could potentially be grouped or encapsulated.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'atEnter' has 4 parameters, which is generally considered a long parameter list in Java, especially when some parameters could potentially be grouped or encapsulated.\"\n}\n```"
+    },
+    {
+      "sample_id": "83005:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'newFinIQ' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'newFinIQ' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "96074:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'median3' has 4 parameters (Comparable[] a, int i, int j, int k), which is generally considered a long parameter list in Java, especially for a short method body.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'median3' has 4 parameters (Comparable[] a, int i, int j, int k), which is generally considered a long parameter list in Java, especially for a short method body.\"\n}\n```"
+    },
+    {
+      "sample_id": "94833:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'monitor' has 4 parameters (key, ip, port, quorum), which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'monitor' has 4 parameters (key, ip, port, quorum), which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "30788:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds (e.g., 5-7) for long parameter lists in Java. The parameters are also logically related to the constructor's purpose.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds (e.g., 5-7) for long parameter lists in Java. The parameters are also logically related to the constructor's purpose.\"\n}\n```"
+    },
+    {
+      "sample_id": "42297:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "99170:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'moveHorizontal' has 5 parameters (Vector3f horizMove, CharacterCollider collider, Vector3f position, float slopeFactor, float stepHeight), which exceeds the commonly recommended threshold of 3-4 parameters for a method, indicating a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'moveHorizontal' has 5 parameters (Vector3f horizMove, CharacterCollider collider, Vector3f position, float slopeFactor, float stepHeight), which exceeds the commonly recommended threshold of 3-4 parameters for a method, indicating a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "73614:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'parserBatchInsert' has 5 parameters (schema, rrs, partitionColumn, tableName, insertStmt), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'parserBatchInsert' has 5 parameters (schema, rrs, partitionColumn, tableName, insertStmt), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "83126:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'forSocks4Proxy' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'forSocks4Proxy' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "97248:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The public method 'put' has 2 parameters, and the private helper method 'put' has 4 parameters, which is below typical thresholds for a long parameter list smell (commonly 5+).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The public method 'put' has 2 parameters, and the private helper method 'put' has 4 parameters, which is below typical thresholds for a long parameter list smell (commonly 5+).\"\n}\n```"
+    },
+    {
+      "sample_id": "86080:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'connectStatefulAsync' has 5 parameters (connection, endpoint, redisURI, commandHandlerSupplier, plus generic types K,V,S), which exceeds typical thresholds for a long parameter list smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'connectStatefulAsync' has 5 parameters (connection, endpoint, redisURI, commandHandlerSupplier, plus generic types K,V,S), which exceeds typical thresholds for a long parameter list smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "36380:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "44510:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "101107:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The constructor has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "73387:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'copyRange' has 5 parameters, which exceeds typical thresholds (often 3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'copyRange' has 5 parameters, which exceeds typical thresholds (often 3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "47984:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'atExceptionExit' has 5 parameters (Class<?> clazz, String methodInfo, Object target, Object[] args, Throwable throwable), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'atExceptionExit' has 5 parameters (Class<?> clazz, String methodInfo, Object target, Object[] args, Throwable throwable), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "83295:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The second constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The second constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "96836:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'insertion' has 4 parameters (String[] a, int lo, int hi, int d), which is generally considered a long parameter list in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'insertion' has 4 parameters (String[] a, int lo, int hi, int d), which is generally considered a long parameter list in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "90914:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The constructor has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "37509:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'mylist' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'mylist' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "42317:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list code smell in Java (commonly 3 or more parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list code smell in Java (commonly 3 or more parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "101076:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'createChild' has 4 parameters (name, node, field, clazz), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'createChild' has 4 parameters (name, node, field, clazz), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "71600:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'fieldEofResponse' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell in many style guides).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'fieldEofResponse' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell in many style guides).\"\n}\n```"
+    },
+    {
+      "sample_id": "48224:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'invokeThrowTracing' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'invokeThrowTracing' has 5 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "81368:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'onReceiptReceived' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell in many style guides).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onReceiptReceived' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell in many style guides).\"\n}\n```"
+    },
+    {
+      "sample_id": "97150:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'insertion' has four parameters (String[] a, int lo, int hi, int d), which is generally considered a long parameter list in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'insertion' has four parameters (String[] a, int lo, int hi, int d), which is generally considered a long parameter list in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "92477:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'zrangestorebyscore' has four parameters (dstKey, srcKey, range, limit), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'zrangestorebyscore' has four parameters (dstKey, srcKey, range, limit), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "37513:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has four parameters (page, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has four parameters (page, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "42307:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "98847:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getExtraData' has four parameters (index, x, y, z), which exceeds the common threshold of 3 parameters for identifying a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getExtraData' has four parameters (index, x, y, z), which exceeds the common threshold of 3 parameters for identifying a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "69711:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'changeSql' has four parameters, which exceeds typical thresholds for a long parameter list smell (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'changeSql' has four parameters, which exceeds typical thresholds for a long parameter list smell (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "48209:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'afterReturning' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 4-5 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'afterReturning' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 4-5 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "77294:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The second constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The second constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "97634:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'arc' has 5 parameters (x, y, radius, angle1, angle2), which exceeds the commonly recommended threshold of 3-4 parameters for a method, indicating a long parameter list.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'arc' has 5 parameters (x, y, radius, angle1, angle2), which exceeds the commonly recommended threshold of 3-4 parameters for a method, indicating a long parameter list.\"\n}\n```"
+    },
+    {
+      "sample_id": "89031:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'zrevrange' has 4 parameters, which is a relatively long parameter list, especially considering the second overloaded version includes an additional parameter ('channel'), totaling 5 parameters.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'zrevrange' has 4 parameters, which is a relatively long parameter list, especially considering the second overloaded version includes an additional parameter ('channel'), totaling 5 parameters.\"\n}\n```"
+    },
+    {
+      "sample_id": "37271:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds for long parameter lists (typically 5+).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds for long parameter lists (typically 5+).\"\n}\n```"
+    },
+    {
+      "sample_id": "39062:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds (e.g., 5+) for a long parameter list smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds (e.g., 5+) for a long parameter list smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "103332:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "74283:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "48218:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method 'before' has 5 parameters, which is below common thresholds (e.g., 6-8) for a long parameter list smell in Java. The parameters are also contextually relevant for the method's purpose.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'before' has 5 parameters, which is below common thresholds (e.g., 6-8) for a long parameter list smell in Java. The parameters are also contextually relevant for the method's purpose.\"\n}\n```"
+    },
+    {
+      "sample_id": "79301:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "All six overloaded methods have 4-5 parameters, exceeding typical thresholds for long parameter lists (commonly 3-4 parameters). The repeated parameters (e.g., 'parser', 'outerXmlEnvironment') across methods further suggest the smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"All six overloaded methods have 4-5 parameters, exceeding typical thresholds for long parameter lists (commonly 3-4 parameters). The repeated parameters (e.g., 'parser', 'outerXmlEnvironment') across methods further suggest the smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "97451:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": true,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'update' has 4 parameters (v, from, to, value), which is generally considered a long parameter list, especially in Java where 3-4 parameters are often seen as a threshold for this smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'update' has 4 parameters (v, from, to, value), which is generally considered a long parameter list, especially in Java where 3-4 parameters are often seen as a threshold for this smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "100084:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4-5 parameters, which exceeds typical thresholds (3-4) for a long parameter list smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4-5 parameters, which exceeds typical thresholds (3-4) for a long parameter list smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "70276:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'lookup' has 3 and 4 parameters respectively, which is approaching or exceeding typical thresholds for a long parameter list (commonly 3-4 parameters). The overloaded method with 4 parameters further suggests potential design complexity.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'lookup' has 3 and 4 parameters respectively, which is approaching or exceeding typical thresholds for a long parameter list (commonly 3-4 parameters). The overloaded method with 4 parameters further suggests potential design complexity.\"\n}\n```"
+    },
+    {
+      "sample_id": "44787:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getJavaFileForOutput' has 4 parameters (location, className, kind, sibling), which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getJavaFileForOutput' has 4 parameters (location, className, kind, sibling), which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "83959:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'isStale' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters are considered a smell in many style guides).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'isStale' has 4 parameters, which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters are considered a smell in many style guides).\"\n}\n```"
+    },
+    {
+      "sample_id": "96504:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.95,
+      "rationale": "The method 'longestPrefixOf' has only one parameter ('String query'), and the private helper method has four parameters, which is not excessive for a recursive implementation. The target smell 'long_parameter_list' is not clearly present in the public API.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'longestPrefixOf' has only one parameter ('String query'), and the private helper method has four parameters, which is not excessive for a recursive implementation. The target smell 'long_parameter_list' is not clearly present in the public API.\"\n}\n```"
+    },
+    {
+      "sample_id": "94737:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'recordCommandLatency' has 5 parameters (local, remote, commandType, firstResponseLatency, completionLatency), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'recordCommandLatency' has 5 parameters (local, remote, commandType, firstResponseLatency, completionLatency), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "24828:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'querySelective' has 9 parameters, which exceeds common thresholds (typically 3-5) for a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'querySelective' has 9 parameters, which exceeds common thresholds (typically 3-5) for a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "6362:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'register' has four parameters (username, password, telephone, authCode), which exceeds typical thresholds for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'register' has four parameters (username, password, telephone, authCode), which exceeds typical thresholds for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "42140:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds (e.g., 5+) for 'long_parameter_list' in Java.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds (e.g., 5+) for 'long_parameter_list' in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "104425:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'generateIconMeshData' has 4 parameters (TextureRegion, int, boolean, Vector4f), which exceeds the commonly accepted threshold of 3 parameters for a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'generateIconMeshData' has 4 parameters (TextureRegion, int, boolean, Vector4f), which exceeds the commonly accepted threshold of 3 parameters for a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "73537:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'parseOrderAggGroupSqlServer' has 4 parameters, which exceeds typical thresholds for a long parameter list code smell in Java (commonly 3 or more parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'parseOrderAggGroupSqlServer' has 4 parameters, which exceeds typical thresholds for a long parameter list code smell in Java (commonly 3 or more parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "48206:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'afterThrowing' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'afterThrowing' has 6 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "84516:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell).\"\n}\n```"
+    },
+    {
+      "sample_id": "87609:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is not excessively long for a method signature in Java. The parameters are also logically grouped (source, destination, args, timeout).",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is not excessively long for a method signature in Java. The parameters are also logically grouped (source, destination, args, timeout).\"\n}\n```"
+    },
+    {
+      "sample_id": "25000:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'querySelective' has 7 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-5 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'querySelective' has 7 parameters, which exceeds typical thresholds for a long parameter list (commonly 3-5 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "6140:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'findByNameOrSubTitleOrKeywords' has 4 parameters, which is generally considered a long parameter list, especially when some parameters could potentially be grouped (e.g., search-related fields).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'findByNameOrSubTitleOrKeywords' has 4 parameters, which is generally considered a long parameter list, especially when some parameters could potentially be grouped (e.g., search-related fields).\"\n}\n```"
+    },
+    {
+      "sample_id": "42042:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters (driver, url, username, password), which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters (driver, url, username, password), which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "4248:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'realInvokeMethod' has 4 parameters (Object bus, Object arg, BusInfo busInfo, boolean sticky), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'realInvokeMethod' has 4 parameters (Object bus, Object arg, BusInfo busInfo, boolean sticky), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "101932:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which is generally considered a long parameter list in Java, especially when all parameters are of non-primitive types.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which is generally considered a long parameter list in Java, especially when all parameters are of non-primitive types.\"\n}\n```"
+    },
+    {
+      "sample_id": "75675:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'modifyTableConfigRules' has 4 parameters (transactionFinal, schemal, table, newDataNodes), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'modifyTableConfigRules' has 4 parameters (transactionFinal, schemal, table, newDataNodes), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "49118:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The primary constructor has 4 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list smell. Overloaded constructors mitigate this but do not eliminate the smell in the primary constructor.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The primary constructor has 4 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list smell. Overloaded constructors mitigate this but do not eliminate the smell in the primary constructor.\"\n}\n```"
+    },
+    {
+      "sample_id": "84168:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'TestMediaSession' has 5 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'TestMediaSession' has 5 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "97768:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method `keys(Key lo, Key hi)` has 2 parameters, which is below the typical threshold (4-5) for a long parameter list code smell. The private helper method `keys(Node x, Queue<Key> queue, Key lo, Key hi)` has 4 parameters, but it is a private method and not the primary focus for public API smells.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method `keys(Key lo, Key hi)` has 2 parameters, which is below the typical threshold (4-5) for a long parameter list code smell. The private helper method `keys(Node x, Queue<Key> queue, Key lo, Key hi)` has 4 parameters, but it is a private method and not the primary focus for public API smells.\"\n}\n```"
+    },
+    {
+      "sample_id": "88741:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method signatures show parameter lists of 2, 3, and 4 parameters, which are not excessively long for Java methods, especially when considering overloaded methods with incremental functionality.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method signatures show parameter lists of 2, 3, and 4 parameters, which are not excessively long for Java methods, especially when considering overloaded methods with incremental functionality.\"\n}\n```"
+    },
+    {
+      "sample_id": "36023:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "42123:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds (e.g., 5+) for 'long_parameter_list' in Java. The parameters are also framework-mandated (Spring MVC), not user-defined.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds (e.g., 5+) for 'long_parameter_list' in Java. The parameters are also framework-mandated (Spring MVC), not user-defined.\"\n}\n```"
+    },
+    {
+      "sample_id": "3225:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'onActivityResult' has four parameters, which exceeds typical thresholds for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onActivityResult' has four parameters, which exceeds typical thresholds for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "98275:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'onHeldItemActivated' has 4 parameters, which exceeds typical thresholds (3-4 parameters) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'onHeldItemActivated' has 4 parameters, which exceeds typical thresholds (3-4 parameters) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "73545:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'visitorParse' has 4 parameters (schema, rrs, stmt, visitor), which exceeds typical thresholds for a long parameter list code smell (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'visitorParse' has 4 parameters (schema, rrs, stmt, visitor), which exceeds typical thresholds for a long parameter list code smell (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "49187:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The constructor has 5 parameters, which exceeds common thresholds (typically 3-4) for a long parameter list code smell.\"\n}\n```"
+    },
+    {
+      "sample_id": "81188:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.95,
+      "rationale": "The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds the commonly accepted threshold of 3 parameters for a long parameter list smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.95,\n  \"rationale\": \"The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds the commonly accepted threshold of 3 parameters for a long parameter list smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "97670:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'rectangle' has 4 parameters, which is generally considered a long parameter list in Java, especially when all parameters are of the same type (double) and logically related.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'rectangle' has 4 parameters, which is generally considered a long parameter list in Java, especially when all parameters are of the same type (double) and logically related.\"\n}\n```"
+    },
+    {
+      "sample_id": "87632:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'lrange' has 4 parameters in both overrides, which exceeds typical thresholds for a long parameter list (commonly 3 or more).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'lrange' has 4 parameters in both overrides, which exceeds typical thresholds for a long parameter list (commonly 3 or more).\"\n}\n```"
+    },
+    {
+      "sample_id": "42302:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'list' has 4 parameters (offset, limit, sort, order), which exceeds typical thresholds for a long parameter list smell in Java (commonly 3-4 parameters).\"\n}\n```"
+    },
+    {
+      "sample_id": "3773:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'compareWithEventBus' has 4 parameters, which is generally considered a long parameter list in Java, especially when some parameters could potentially be grouped (e.g., 'sampleSize' and 'times' might belong to a configuration object).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'compareWithEventBus' has 4 parameters, which is generally considered a long parameter list in Java, especially when some parameters could potentially be grouped (e.g., 'sampleSize' and 'times' might belong to a configuration object).\"\n}\n```"
+    },
+    {
+      "sample_id": "98212:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The constructor has 4 parameters, which exceeds typical thresholds (3-4) for a long parameter list code smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "73381:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'getKeyPrefixArrayCounts' has 4 parameters (LongArray array, int numRecords, int startByteIndex, int endByteIndex), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters). The comment also hints at potential consolidation.",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'getKeyPrefixArrayCounts' has 4 parameters (LongArray array, int numRecords, int startByteIndex, int endByteIndex), which exceeds typical thresholds for a long parameter list (commonly 3-4 parameters). The comment also hints at potential consolidation.\"\n}\n```"
+    },
+    {
+      "sample_id": "44635:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": false,
+      "confidence": 0.9,
+      "rationale": "The method has 4 parameters, which is below common thresholds (e.g., 5+) for a 'long_parameter_list' smell in Java.",
+      "raw_response": "```json\n{\n  \"present\": false,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method has 4 parameters, which is below common thresholds (e.g., 5+) for a 'long_parameter_list' smell in Java.\"\n}\n```"
+    },
+    {
+      "sample_id": "82844:long_parameter_list",
+      "smell": "long_parameter_list",
+      "gold": false,
+      "predicted": true,
+      "confidence": 0.9,
+      "rationale": "The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell).",
+      "raw_response": "```json\n{\n  \"present\": true,\n  \"confidence\": 0.9,\n  \"rationale\": \"The method 'parse' has 4 parameters (XmlPullParser, int, IqData, XmlEnvironment), which exceeds typical thresholds for a long parameter list (commonly 3 or more parameters is considered a smell).\"\n}\n```"
+    }
+  ],
+  "metrics": {
+    "precision": 0.6763005780346821,
+    "recall": 0.8931297709923665,
+    "f1": 0.7697368421052632,
+    "accuracy": 0.65,
+    "kappa": 0.09525655938994454,
+    "f1_ci_lo": 0.7167235494880546,
+    "f1_ci_hi": 0.8178913738019169,
+    "kappa_ci_lo": -0.013837511987943552,
+    "kappa_ci_hi": 0.21656407386681592,
+    "tp": 117,
+    "fp": 56,
+    "fn": 14,
+    "tn": 13,
+    "samples": 200
+  },
+  "usage": {
+    "prompt_tokens": 76853,
+    "completion_tokens": 14516,
+    "total_tokens": 91369
+  },
+  "slot": "AZ8",
+  "prompt": "binary_oracle_baseline",
+  "dataset": "DACOS",
+  "run": 1,
+  "elapsed_s": 101.6
+}

@@ -15,6 +15,13 @@ Two result roots exist:
   `output/paper_results_annot/stallm_annotated_splits.json`
   (`python run_paper_experiments.py --rq splits` regenerates it).
 
+Models: span-level runs (RQ1–RQ2) cover AZ1–AZ4, AZ6, AZ7 (DeepSeek-V3.2) and
+AZ8 (Mistral-Large-3), with three runs each. RQ3 covers the hosted slots AZ1,
+AZ2, AZ3, AZ7 and AZ8 (15 configurations; AZ1, AZ7 and AZ8 have three runs,
+AZ2 and AZ3 one). AZ7 and AZ8 are Azure AI Foundry deployments called through
+the same `azure-openai` provider. Their MLCQ runs were produced with
+`run_paper_experiments.py --rq 3 --dacos-labels sample_table --rq3-datasets MLCQ`.
+
 ## Regenerate everything
 
 ```bash

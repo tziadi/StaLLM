@@ -463,7 +463,8 @@ def fig_rq4_conditions(stats_dir: Path, out_dir: Path, metric: str = "mrr") -> N
 
 RQ12_CONFIGS = [("AZ1", "baseline", "gpt-4o · Baseline"), ("AZ1", "hybrid", "gpt-4o · Hybrid"),
                 ("AZ1", "scanner", "gpt-4o · Scanner"), ("AZ2", "scanner", "gpt-4.1 · Scanner"),
-                ("AZ3", "scanner", "o3 · Scanner"), ("AZ4", "scanner", "qwen2.5-coder · Scanner"),
+                ("AZ3", "scanner", "o3 · Scanner"), ("AZ7", "scanner", "DeepSeek-V3.2 · Scanner"),
+                ("AZ8", "scanner", "Mistral-Large-3 · Scanner"), ("AZ4", "scanner", "qwen2.5-coder · Scanner"),
                 ("AZ6", "scanner", "deepseek-coder · Scanner")]
 
 
@@ -473,7 +474,7 @@ def fig_rq12_exact_lines(stats_dir: Path, out_dir: Path) -> None:
     rows = {(r["protocol"], r["slot"], r["prompt"]): r for r in _read_csv(stats_dir / "line_offsets.csv")}
     if not rows:
         return
-    fig, ax = plt.subplots(figsize=(3.4, 2.6))
+    fig, ax = plt.subplots(figsize=(3.4, 3.1))
     for k, (protocol, color, marker, label) in enumerate([("original", C2, "o", "Raw code"),
                                                           ("numbered", C1, "s", "Numbered lines")]):
         for i, (slot, prompt, _) in enumerate(RQ12_CONFIGS):

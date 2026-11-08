@@ -17,6 +17,12 @@ Paired bootstrap, 1000 resamples, seed 42, run 1 of each configuration.
 | DACOS | heuristic | AZ3/binary_oracle_baseline | 0.148 | 0.492 | 0.343 [0.191, 0.484] |
 | DACOS | heuristic | AZ3/conservative_evidence | 0.077 | 0.372 | 0.295 [0.13, 0.462] |
 | DACOS | heuristic | AZ3/definition_driven | 0.117 | 0.522 | 0.404 [0.253, 0.554] |
+| DACOS | heuristic | AZ7/binary_oracle_baseline | 0.07 | 0.084 | 0.014 [-0.152, 0.171] |
+| DACOS | heuristic | AZ7/conservative_evidence | 0.109 | 0.096 | -0.014 [-0.178, 0.152] |
+| DACOS | heuristic | AZ7/definition_driven | 0.115 | 0.126 | 0.011 [-0.157, 0.173] |
+| DACOS | heuristic | AZ8/binary_oracle_baseline | 0.095 | 0.062 | -0.033 [-0.151, 0.088] |
+| DACOS | heuristic | AZ8/conservative_evidence | 0.041 | 0.075 | 0.034 [-0.059, 0.133] |
+| DACOS | heuristic | AZ8/definition_driven | 0.016 | 0.065 | 0.05 [-0.076, 0.172] |
 | MLCQ | heuristic | AZ1/binary_oracle_baseline | 0.392 | 0.326 | -0.066 [-0.271, 0.144] |
 | MLCQ | heuristic | AZ1/conservative_evidence | 0.38 | 0.354 | -0.026 [-0.219, 0.157] |
 | MLCQ | heuristic | AZ1/definition_driven | 0.336 | 0.233 | -0.103 [-0.25, 0.039] |
@@ -26,6 +32,12 @@ Paired bootstrap, 1000 resamples, seed 42, run 1 of each configuration.
 | MLCQ | heuristic | AZ3/binary_oracle_baseline | 0.408 | 0.423 | 0.016 [-0.256, 0.246] |
 | MLCQ | heuristic | AZ3/conservative_evidence | 0.547 | 0.421 | -0.125 [-0.361, 0.121] |
 | MLCQ | heuristic | AZ3/definition_driven | 0.389 | 0.363 | -0.026 [-0.24, 0.201] |
+| MLCQ | heuristic | AZ7/binary_oracle_baseline | 0.158 | 0.169 | 0.011 [-0.241, 0.292] |
+| MLCQ | heuristic | AZ7/conservative_evidence | 0.147 | 0.154 | 0.008 [-0.241, 0.277] |
+| MLCQ | heuristic | AZ7/definition_driven | 0.211 | 0.148 | -0.064 [-0.272, 0.125] |
+| MLCQ | heuristic | AZ8/binary_oracle_baseline | 0.494 | 0.407 | -0.087 [-0.311, 0.137] |
+| MLCQ | heuristic | AZ8/conservative_evidence | 0.545 | 0.327 | -0.219 [-0.412, -0.038] |
+| MLCQ | heuristic | AZ8/definition_driven | 0.438 | 0.358 | -0.08 [-0.258, 0.115] |
 | DACOS | PMD | AZ1/binary_oracle_baseline | 0.028 | 0.037 | 0.009 [-0.112, 0.13] |
 | DACOS | PMD | AZ1/conservative_evidence | 0.046 | 0.045 | -0.001 [-0.114, 0.114] |
 | DACOS | PMD | AZ1/definition_driven | 0.054 | 0.003 | -0.052 [-0.126, 0.012] |
@@ -35,10 +47,16 @@ Paired bootstrap, 1000 resamples, seed 42, run 1 of each configuration.
 | DACOS | PMD | AZ3/binary_oracle_baseline | 0.148 | 0.209 | 0.06 [-0.106, 0.221] |
 | DACOS | PMD | AZ3/conservative_evidence | 0.077 | 0.225 | 0.147 [-0.004, 0.312] |
 | DACOS | PMD | AZ3/definition_driven | 0.117 | 0.315 | 0.198 [0.04, 0.358] |
+| DACOS | PMD | AZ7/binary_oracle_baseline | 0.07 | -0.014 | -0.084 [-0.243, 0.071] |
+| DACOS | PMD | AZ7/conservative_evidence | 0.109 | 0.035 | -0.074 [-0.234, 0.081] |
+| DACOS | PMD | AZ7/definition_driven | 0.115 | 0.07 | -0.045 [-0.206, 0.12] |
+| DACOS | PMD | AZ8/binary_oracle_baseline | 0.095 | 0.035 | -0.06 [-0.177, 0.057] |
+| DACOS | PMD | AZ8/conservative_evidence | 0.041 | 0.022 | -0.019 [-0.111, 0.073] |
+| DACOS | PMD | AZ8/definition_driven | 0.016 | 0.068 | 0.053 [-0.08, 0.176] |
 
-- DACOS / PMD: 1 of 9 configurations have Δκ > 0 with a CI excluding 0, 0 have Δκ < 0; median Δκ 0.044
-- DACOS / heuristic: 5 of 9 configurations have Δκ > 0 with a CI excluding 0, 0 have Δκ < 0; median Δκ 0.212
-- MLCQ / heuristic: 0 of 9 configurations have Δκ > 0 with a CI excluding 0, 0 have Δκ < 0; median Δκ -0.026
+- DACOS / PMD: 1 of 15 configurations have Δκ > 0 with a CI excluding 0, 0 have Δκ < 0; median Δκ -0.001
+- DACOS / heuristic: 5 of 15 configurations have Δκ > 0 with a CI excluding 0, 0 have Δκ < 0; median Δκ 0.045
+- MLCQ / heuristic: 0 of 15 configurations have Δκ > 0 with a CI excluding 0, 1 have Δκ < 0; median Δκ -0.026
 
 ## 2. Paired bootstrap of Δκ between prompts and configurations
 
@@ -61,17 +79,29 @@ Paired bootstrap, 1000 resamples, seed 42, run 1 of each configuration.
 | RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ2/definition_driven | 0.032 [-0.116, 0.181] |
 | RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ3/conservative_evidence | 0.071 [-0.041, 0.184] |
 | RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ3/definition_driven | 0.031 [-0.052, 0.119] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/binary_oracle_baseline | 0.154 [-0.002, 0.32] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/conservative_evidence | 0.167 [-0.016, 0.365] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/definition_driven | 0.211 [0.041, 0.373] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/binary_oracle_baseline | 0.396 [0.229, 0.57] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/conservative_evidence | 0.239 [0.038, 0.431] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/definition_driven | 0.17 [-0.004, 0.357] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ3/binary_oracle_baseline | 0.139 [-0.014, 0.296] |
-| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ3/definition_driven | 0.158 [0.012, 0.304] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ7/binary_oracle_baseline | 0.078 [-0.048, 0.206] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ7/conservative_evidence | 0.039 [-0.111, 0.192] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ7/definition_driven | 0.033 [-0.103, 0.183] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ8/binary_oracle_baseline | 0.053 [-0.09, 0.198] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ8/conservative_evidence | 0.107 [-0.019, 0.232] |
+| RQ3 best vs other | DACOS | AZ3/binary_oracle_baseline | AZ8/definition_driven | 0.133 [-0.007, 0.284] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/binary_oracle_baseline | 0.154 [-0.011, 0.327] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/conservative_evidence | 0.167 [-0.019, 0.35] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ1/definition_driven | 0.211 [0.035, 0.374] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/binary_oracle_baseline | 0.396 [0.232, 0.557] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/conservative_evidence | 0.239 [0.04, 0.46] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ2/definition_driven | 0.17 [-0.035, 0.362] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ3/binary_oracle_baseline | 0.139 [-0.006, 0.302] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ3/definition_driven | 0.158 [0.009, 0.305] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ7/binary_oracle_baseline | 0.388 [0.21, 0.573] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ7/conservative_evidence | 0.4 [0.224, 0.561] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ7/definition_driven | 0.335 [0.164, 0.506] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ8/binary_oracle_baseline | 0.053 [-0.133, 0.223] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ8/conservative_evidence | 0.001 [-0.18, 0.188] |
+| RQ3 best vs other | MLCQ | AZ3/conservative_evidence | AZ8/definition_driven | 0.109 [-0.068, 0.286] |
 
 - RQ5 selected vs manual: 0 of 9 intervals exclude 0
-- RQ3 best vs other: 4 of 16 intervals exclude 0
+- RQ3 best vs other: 7 of 28 intervals exclude 0
 
 ## 3. RQ5 — repeated stratified splits of the selection sample, selected by κ
 
@@ -107,7 +137,7 @@ Majority over all reviewers of the (fragment, smell) pair in the MLCQ export; ti
 - ties_kept_row_label: 3
 - positives_row_label: 36
 - positives_majority: 26
-- rho_rankings: 0.85
+- rho_rankings: 0.946
 - best_row_label: AZ3/conservative_evidence
 - best_majority: AZ3/conservative_evidence
 
@@ -122,6 +152,12 @@ Majority over all reviewers of the (fragment, smell) pair in the MLCQ export; ti
 | AZ3/binary_oracle_baseline | 0.408 | 0.488 |
 | AZ3/conservative_evidence | 0.547 | 0.558 |
 | AZ3/definition_driven | 0.389 | 0.419 |
+| AZ7/binary_oracle_baseline | 0.158 | 0.226 |
+| AZ7/conservative_evidence | 0.147 | 0.212 |
+| AZ7/definition_driven | 0.211 | 0.254 |
+| AZ8/binary_oracle_baseline | 0.494 | 0.452 |
+| AZ8/conservative_evidence | 0.545 | 0.46 |
+| AZ8/definition_driven | 0.438 | 0.45 |
 
 ## 6. DACOS inter-annotator agreement (samples selected for the smell, two or more annotators)
 

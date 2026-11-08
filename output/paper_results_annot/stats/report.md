@@ -13,6 +13,12 @@
 | DACOS | AZ3 | binary_oracle_baseline | 0.797 | 0.359 | 0.495 [0.402, 0.571] | 0.148 |
 | DACOS | AZ3 | conservative_evidence | 0.693 | 0.534 | 0.603 [0.522, 0.669] | 0.077 |
 | DACOS | AZ3 | definition_driven | 0.734 | 0.443 | 0.552 [0.467, 0.632] | 0.117 |
+| DACOS | AZ7 | binary_oracle_baseline | 0.698 | 0.458 | 0.553 [0.471, 0.627] | 0.07 |
+| DACOS | AZ7 | conservative_evidence | 0.697 | 0.649 | 0.672 [0.608, 0.737] | 0.109 |
+| DACOS | AZ7 | definition_driven | 0.695 | 0.695 | 0.695 [0.631, 0.756] | 0.115 |
+| DACOS | AZ8 | binary_oracle_baseline | 0.676 | 0.893 | 0.77 [0.717, 0.818] | 0.095 |
+| DACOS | AZ8 | conservative_evidence | 0.663 | 0.947 | 0.78 [0.726, 0.828] | 0.041 |
+| DACOS | AZ8 | definition_driven | 0.659 | 0.84 | 0.738 [0.678, 0.789] | 0.016 |
 | MLCQ | AZ1 | binary_oracle_baseline | 0.577 | 0.417 | 0.484 [0.32, 0.623] | 0.392 |
 | MLCQ | AZ1 | conservative_evidence | 0.486 | 0.5 | 0.493 [0.353, 0.624] | 0.38 |
 | MLCQ | AZ1 | definition_driven | 0.39 | 0.639 | 0.484 [0.353, 0.602] | 0.336 |
@@ -22,8 +28,14 @@
 | MLCQ | AZ3 | binary_oracle_baseline | 0.8 | 0.333 | 0.471 [0.275, 0.625] | 0.408 |
 | MLCQ | AZ3 | conservative_evidence | 0.783 | 0.5 | 0.61 [0.439, 0.746] | 0.547 |
 | MLCQ | AZ3 | definition_driven | 0.609 | 0.389 | 0.475 [0.304, 0.623] | 0.389 |
+| MLCQ | AZ7 | binary_oracle_baseline | 0.8 | 0.111 | 0.195 [0.045, 0.372] | 0.158 |
+| MLCQ | AZ7 | conservative_evidence | 0.667 | 0.111 | 0.19 [0.048, 0.356] | 0.147 |
+| MLCQ | AZ7 | definition_driven | 0.429 | 0.25 | 0.316 [0.145, 0.471] | 0.211 |
+| MLCQ | AZ8 | binary_oracle_baseline | 0.708 | 0.472 | 0.567 [0.4, 0.7] | 0.494 |
+| MLCQ | AZ8 | conservative_evidence | 0.6 | 0.667 | 0.632 [0.492, 0.75] | 0.545 |
+| MLCQ | AZ8 | definition_driven | 0.512 | 0.583 | 0.545 [0.4, 0.667] | 0.438 |
 
-**McNemar (Holm-adjusted within factor):** 0/36 pairwise comparisons significant at α=0.05.
+**McNemar (Holm-adjusted within factor):** 0/90 pairwise comparisons significant at α=0.05.
 
 
 **Run-to-run stability (temperature 0):**
@@ -36,10 +48,22 @@
 | AZ1 | conservative_evidence | MLCQ | 3 | 95.5% | 0.534 ± 0.038 |
 | AZ1 | definition_driven | DACOS | 3 | 99.0% | 0.795 ± 0.001 |
 | AZ1 | definition_driven | MLCQ | 3 | 94.0% | 0.5 ± 0.014 |
+| AZ7 | binary_oracle_baseline | DACOS | 3 | 94.0% | 0.559 ± 0.005 |
+| AZ7 | binary_oracle_baseline | MLCQ | 3 | 99.5% | 0.194 ± 0.003 |
+| AZ7 | conservative_evidence | DACOS | 3 | 90.5% | 0.663 ± 0.009 |
+| AZ7 | conservative_evidence | MLCQ | 3 | 99.0% | 0.175 ± 0.027 |
+| AZ7 | definition_driven | DACOS | 3 | 95.0% | 0.691 ± 0.004 |
+| AZ7 | definition_driven | MLCQ | 3 | 99.5% | 0.32 ± 0.003 |
+| AZ8 | binary_oracle_baseline | DACOS | 3 | 96.5% | 0.763 ± 0.01 |
+| AZ8 | binary_oracle_baseline | MLCQ | 3 | 96.0% | 0.542 ± 0.022 |
+| AZ8 | conservative_evidence | DACOS | 3 | 99.5% | 0.781 ± 0.002 |
+| AZ8 | conservative_evidence | MLCQ | 3 | 98.0% | 0.64 ± 0.015 |
+| AZ8 | definition_driven | DACOS | 3 | 97.0% | 0.74 ± 0.006 |
+| AZ8 | definition_driven | MLCQ | 3 | 97.0% | 0.551 ± 0.015 |
 
 ## RQ3 — oracle substitution (human labels vs. metric heuristic, same samples)
 
-**DACOS** (9 configurations): Spearman ρ(κ human, κ heuristic) = 0.65 (p=0.058); best vs human: AZ3/binary_oracle_baseline, best vs heuristic: AZ3/definition_driven
+**DACOS** (15 configurations): Spearman ρ(κ human, κ heuristic) = 0.511 (p=0.052); best vs human: AZ3/binary_oracle_baseline, best vs heuristic: AZ3/definition_driven
 
 | Slot | Prompt | F1 human | κ human | F1 heuristic | κ heuristic |
 |---|---|---|---|---|---|
@@ -52,8 +76,14 @@
 | AZ3 | binary_oracle_baseline | 0.495 | 0.148 | 0.656 | 0.492 |
 | AZ3 | conservative_evidence | 0.603 | 0.077 | 0.636 | 0.372 |
 | AZ3 | definition_driven | 0.552 | 0.117 | 0.702 | 0.522 |
+| AZ7 | binary_oracle_baseline | 0.553 | 0.07 | 0.443 | 0.084 |
+| AZ7 | conservative_evidence | 0.672 | 0.109 | 0.505 | 0.096 |
+| AZ7 | definition_driven | 0.695 | 0.115 | 0.532 | 0.126 |
+| AZ8 | binary_oracle_baseline | 0.77 | 0.095 | 0.539 | 0.062 |
+| AZ8 | conservative_evidence | 0.78 | 0.041 | 0.556 | 0.075 |
+| AZ8 | definition_driven | 0.738 | 0.016 | 0.536 | 0.065 |
 
-**MLCQ** (9 configurations): Spearman ρ(κ human, κ heuristic) = 0.583 (p=0.099); best vs human: AZ3/conservative_evidence, best vs heuristic: AZ3/binary_oracle_baseline
+**MLCQ** (15 configurations): Spearman ρ(κ human, κ heuristic) = 0.676 (p=0.006); best vs human: AZ3/conservative_evidence, best vs heuristic: AZ3/binary_oracle_baseline
 
 | Slot | Prompt | F1 human | κ human | F1 heuristic | κ heuristic |
 |---|---|---|---|---|---|
@@ -66,6 +96,12 @@
 | AZ3 | binary_oracle_baseline | 0.471 | 0.408 | 0.467 | 0.423 |
 | AZ3 | conservative_evidence | 0.61 | 0.547 | 0.474 | 0.421 |
 | AZ3 | definition_driven | 0.475 | 0.389 | 0.421 | 0.363 |
+| AZ7 | binary_oracle_baseline | 0.195 | 0.158 | 0.2 | 0.169 |
+| AZ7 | conservative_evidence | 0.19 | 0.147 | 0.19 | 0.154 |
+| AZ7 | definition_driven | 0.316 | 0.211 | 0.222 | 0.148 |
+| AZ8 | binary_oracle_baseline | 0.567 | 0.494 | 0.462 | 0.407 |
+| AZ8 | conservative_evidence | 0.632 | 0.545 | 0.4 | 0.327 |
+| AZ8 | definition_driven | 0.545 | 0.438 | 0.429 | 0.358 |
 
 ## RQ3 — non-LLM baselines
 
