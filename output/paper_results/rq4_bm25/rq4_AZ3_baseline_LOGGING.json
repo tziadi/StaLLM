@@ -4,98 +4,98 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 1,
-      "confidence": 0.29,
-      "rationale": "Main entry point; initializes system settings including Log4J configuration and therefore controls global debug/trace output.",
+      "confidence": 0.34,
+      "rationale": "Located in util.logging package; implements timing/trace utilities for debug logging, directly supporting detailed trace messages.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
       "rank": 2,
-      "confidence": 0.25,
-      "rationale": "Provides application-wide constants and helper methods; contains static Logger instances and flags that enable/disable debug tracing throughout ArgoUML.",
+      "confidence": 0.29,
+      "rationale": "Captures and logs uncaught AWT exceptions; central to application-wide debug logging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 3,
+      "confidence": 0.12,
+      "rationale": "Application entry point; typically initializes logging frameworks and sets debug/trace configuration.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Security-aware exception handler that integrates with logging to record unexpected errors.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
-      "rank": 3,
-      "confidence": 0.12,
-      "rationale": "Loads and applies configuration properties, including those that determine logging level and trace options.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
-      "rank": 4,
-      "confidence": 0.1,
-      "rationale": "Defines keys and defaults for configuration items; likely includes properties controlling debug log behaviour.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-model/src/org/argouml/model/ModelEventPump.java",
       "rank": 5,
-      "confidence": 0.07,
-      "rationale": "Central dispatcher for model events; emits numerous debug/trace messages to follow internal activity.",
+      "confidence": 0.05,
+      "rationale": "Manages configuration settings, likely including enabling/disabling debug and trace logging.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java",
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
       "rank": 6,
-      "confidence": 0.06,
-      "rationale": "MDR-specific implementation of event pump; contains detailed logging of low-level model events useful for tracing.",
+      "confidence": 0.035,
+      "rationale": "Developer support module; may expose or configure detailed debug/trace facilities.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
       "rank": 7,
-      "confidence": 0.04,
-      "rationale": "Collects and displays exceptions while also writing stack traces to the log, tying UI error reporting to logging subsystem.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
-      "rank": 8,
-      "confidence": 0.03,
-      "rationale": "Core cognitive engine class; uses Logger to trace reasoning steps and design decisions.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
-      "rank": 9,
-      "confidence": 0.02,
-      "rationale": "Utility class with helper methods that wrap or emit diagnostic logging for assorted operations.",
+      "confidence": 0.028,
+      "rationale": "Diagnostic panel for inspecting event pump; relies heavily on logging and tracing of events.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
+      "rank": 8,
+      "confidence": 0.021,
+      "rationale": "Startup component that may configure or start logging related to critic system events.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java",
+      "rank": 9,
+      "confidence": 0.017,
+      "rationale": "Utility class interacting with runtime; contains logging calls for diagnostic purposes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
       "rank": 10,
-      "confidence": 0.02,
-      "rationale": "Bootstraps critic subsystem and sets logging categories/levels for debugging analysis features.",
+      "confidence": 0.015,
+      "rationale": "Core cognitive component that logs internal reasoning processes; indicative of detailed debug traces.",
       "method": ""
     }
   ],
   "metrics": {
-    "hit@1": 1.0,
-    "recall@1": 0.004672897196261682,
+    "hit@1": 0.0,
+    "recall@1": 0.0,
     "hit@5": 1.0,
-    "recall@5": 0.018691588785046728,
+    "recall@5": 0.014018691588785047,
     "hit@10": 1.0,
-    "recall@10": 0.028037383177570093,
-    "mrr": 1.0,
-    "map": 0.02570093457943925
+    "recall@10": 0.014018691588785047,
+    "mrr": 0.5,
+    "map": 0.008255451713395638
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.29, \"rationale\": \"Main entry point; initializes system settings including Log4J configuration and therefore controls global debug/trace output.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\", \"confidence\": 0.25, \"rationale\": \"Provides application-wide constants and helper methods; contains static Logger instances and flags that enable/disable debug tracing throughout ArgoUML.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.12, \"rationale\": \"Loads and applies configuration properties, including those that determine logging level and trace options.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\", \"confidence\": 0.10, \"rationale\": \"Defines keys and defaults for configuration items; likely includes properties controlling debug log behaviour.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-core-model/src/org/argouml/model/ModelEventPump.java\", \"confidence\": 0.07, \"rationale\": \"Central dispatcher for model events; emits numerous debug/trace messages to follow internal activity.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\", \"confidence\": 0.06, \"rationale\": \"MDR-specific implementation of event pump; contains detailed logging of low-level model events useful for tracing.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.04, \"rationale\": \"Collects and displays exceptions while also writing stack traces to the log, tying UI error reporting to logging subsystem.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.03, \"rationale\": \"Core cognitive engine class; uses Logger to trace reasoning steps and design decisions.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\", \"confidence\": 0.02, \"rationale\": \"Utility class with helper methods that wrap or emit diagnostic logging for assorted operations.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\", \"confidence\": 0.02, \"rationale\": \"Bootstraps critic subsystem and sets logging categories/levels for debugging analysis features.\"}\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n    \"confidence\": 0.34,\n    \"rationale\": \"Located in util.logging package; implements timing/trace utilities for debug logging, directly supporting detailed trace messages.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n    \"confidence\": 0.29,\n    \"rationale\": \"Captures and logs uncaught AWT exceptions; central to application-wide debug logging.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Application entry point; typically initializes logging frameworks and sets debug/trace configuration.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Security-aware exception handler that integrates with logging to record unexpected errors.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Manages configuration settings, likely including enabling/disabling debug and trace logging.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.035,\n    \"rationale\": \"Developer support module; may expose or configure detailed debug/trace facilities.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.028,\n    \"rationale\": \"Diagnostic panel for inspecting event pump; relies heavily on logging and tracing of events.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.021,\n    \"rationale\": \"Startup component that may configure or start logging related to critic system events.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java\",\n    \"confidence\": 0.017,\n    \"rationale\": \"Utility class interacting with runtime; contains logging calls for diagnostic purposes.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.015,\n    \"rationale\": \"Core cognitive component that logs internal reasoning processes; indicative of detailed debug traces.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 13857,
-    "completion_tokens": 1781,
-    "total_tokens": 15638
+    "prompt_tokens": 13558,
+    "completion_tokens": 1675,
+    "total_tokens": 15233
   },
   "slot": "AZ3",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 122,
+  "gold_visible": 167,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 27.6
+  "elapsed_s": 14.5
 }

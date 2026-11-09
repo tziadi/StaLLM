@@ -7,70 +7,70 @@
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/UMLCollaborationDiagram.java",
       "rank": 1,
       "confidence": 0.95,
-      "rationale": "Primary class representing Collaboration Diagrams; central for creation, rendering and interaction.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java",
-      "rank": 2,
-      "confidence": 0.88,
-      "rationale": "Initializes Collaboration Diagram instances; ties the diagram type into the application.",
+      "rationale": "Primary class that defines the UML Collaboration Diagram type, its behavior, and integration with the diagram framework.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java",
-      "rank": 3,
-      "confidence": 0.86,
-      "rationale": "Graph model that stores nodes/edges for Collaboration Diagrams; core data structure for the feature.",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Graph model that manages the underlying semantic model elements and their connections specifically for collaboration diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java",
-      "rank": 4,
-      "confidence": 0.82,
-      "rationale": "Renders visual elements specific to Collaboration Diagrams; directly supports diagram display.",
+      "rank": 3,
+      "confidence": 0.87,
+      "rationale": "Responsible for visual rendering of collaboration diagram elements (objects, links, messages) onto the canvas.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/ActionAddClassifierRole.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java",
+      "rank": 4,
+      "confidence": 0.82,
+      "rationale": "Handles initialization/registration of collaboration diagram type within ArgoUML, crucial for feature availability.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/PropPanelUMLCollaborationDiagram.java",
       "rank": 5,
-      "confidence": 0.75,
-      "rationale": "User action for adding classifier-role elements to Collaboration Diagrams; UI interaction related to the feature.",
+      "confidence": 0.8,
+      "rationale": "Provides the property panel (UI) for collaboration diagrams, directly supporting user interaction with the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionCollaborationDiagram.java",
+      "rank": 6,
+      "confidence": 0.78,
+      "rationale": "UI action that creates a new collaboration diagram; key entry point for users to invoke the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
-      "rank": 6,
-      "confidence": 0.72,
-      "rationale": "Explorer navigation rule linking operations to Collaboration Diagrams; supports locating the diagram from model elements.",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "Explorer navigation rule that maps operations to collaboration diagrams, aiding users in locating related diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
+      "rank": 8,
+      "confidence": 0.68,
+      "rationale": "Explorer rule connecting projects to collaboration model elements/diagrams, facilitating access to the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
-      "rank": 7,
-      "confidence": 0.7,
-      "rationale": "Explorer rule that exposes Collaboration Diagrams under collaboration model elements; aids diagram access.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java",
-      "rank": 8,
-      "confidence": 0.68,
-      "rationale": "Provides selection handles/behaviour for classifier roles within Collaboration Diagrams; refines diagram interaction.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
       "rank": 9,
-      "confidence": 0.65,
-      "rationale": "Navigation rule mapping classifiers to their associated Collaboration Diagrams; supports locating diagrams.",
+      "confidence": 0.66,
+      "rationale": "Navigator rule that links collaboration model elements to their diagrams, directly supporting collaboration diagram usage.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java",
+      "file": "src/argouml-core-model/src/org/argouml/model/CollaborationDiagram.java",
       "rank": 10,
       "confidence": 0.6,
-      "rationale": "Factory creates various diagram types, including Collaboration Diagrams; indirectly supports diagram instantiation.",
+      "rationale": "Represents the meta-model or model-level abstraction of a collaboration diagram, foundational for the feature\u2019s data layer.",
       "method": ""
     }
   ],
@@ -80,22 +80,22 @@
     "hit@5": 1.0,
     "recall@5": 0.10416666666666667,
     "hit@10": 1.0,
-    "recall@10": 0.20833333333333334,
+    "recall@10": 0.1875,
     "mrr": 1.0,
-    "map": 0.20833333333333334
+    "map": 0.1875
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/UMLCollaborationDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary class representing Collaboration Diagrams; central for creation, rendering and interaction.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Initializes Collaboration Diagram instances; ties the diagram type into the application.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Graph model that stores nodes/edges for Collaboration Diagrams; core data structure for the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Renders visual elements specific to Collaboration Diagrams; directly supports diagram display.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/ActionAddClassifierRole.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"User action for adding classifier-role elements to Collaboration Diagrams; UI interaction related to the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Explorer navigation rule linking operations to Collaboration Diagrams; supports locating the diagram from model elements.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Explorer rule that exposes Collaboration Diagrams under collaboration model elements; aids diagram access.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Provides selection handles/behaviour for classifier roles within Collaboration Diagrams; refines diagram interaction.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Navigation rule mapping classifiers to their associated Collaboration Diagrams; supports locating diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Factory creates various diagram types, including Collaboration Diagrams; indirectly supports diagram instantiation.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/UMLCollaborationDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary class that defines the UML Collaboration Diagram type, its behavior, and integration with the diagram framework.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Graph model that manages the underlying semantic model elements and their connections specifically for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Responsible for visual rendering of collaboration diagram elements (objects, links, messages) onto the canvas.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Handles initialization/registration of collaboration diagram type within ArgoUML, crucial for feature availability.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/PropPanelUMLCollaborationDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Provides the property panel (UI) for collaboration diagrams, directly supporting user interaction with the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionCollaborationDiagram.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"UI action that creates a new collaboration diagram; key entry point for users to invoke the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Explorer navigation rule that maps operations to collaboration diagrams, aiding users in locating related diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Explorer rule connecting projects to collaboration model elements/diagrams, facilitating access to the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.66,\n    \"rationale\": \"Navigator rule that links collaboration model elements to their diagrams, directly supporting collaboration diagram usage.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/CollaborationDiagram.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Represents the meta-model or model-level abstraction of a collaboration diagram, foundational for the feature\u2019s data layer.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 14216,
-    "completion_tokens": 1312,
-    "total_tokens": 15528
+    "prompt_tokens": 13685,
+    "completion_tokens": 1907,
+    "total_tokens": 15592
   },
   "slot": "AZ3",
   "feature": "COLLABORATIONDIAGRAM",
   "gold_count": 48,
-  "gold_visible": 24,
+  "gold_visible": 33,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 18.5
+  "elapsed_s": 14.8
 }

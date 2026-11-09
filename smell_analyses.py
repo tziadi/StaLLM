@@ -51,12 +51,15 @@ def _kappa(gold: list[bool], pred: list[bool]) -> float:
 
 
 def _configs(dataset: str) -> dict[str, dict[str, tuple[bool, bool]]]:
+    """Majority vote over the runs of each configuration, as in Table 3."""
     root = ANNOT if dataset == "DACOS" else MAIN
-    out = {}
-    for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}.json")):
+    groups: dict[str, list] = defaultdict(list)
+    for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}*.json")):
         d = aps._load(f)
-        out[f"{d['slot']}/{d['prompt']}"] = _rows(f)
-    return out
+        if d.get("dataset") == dataset:
+            groups[f"{d['slot']}/{d['prompt']}"].append(d)
+    return {k: {str(r["sample_id"]): (bool(r["gold"]), bool(r["predicted"]))
+                for r in aps.majority_vote(v)["rows"]} for k, v in sorted(groups.items())}
 
 
 def _ci(xs: list[float]) -> tuple[float, float]:
@@ -102,7 +105,7 @@ def oracle_shift(md: list[str]) -> None:
                          "ci_excludes_0": lo > 0 or hi < 0})
     aps._write_csv(STATS / "smell_oracle_shift.csv", rows)
     md.append("## 1. Oracle shift per configuration: Δκ = κ(metric oracle) − κ(human labels)\n")
-    md.append(f"Paired bootstrap, {BOOT} resamples, seed 42, run 1 of each configuration.\n")
+    md.append(f"Paired bootstrap, {BOOT} resamples, seed 42, majority vote over the runs of each configuration.\n")
     md.append("| Dataset | Oracle | Configuration | κ human | κ metric | Δκ [95% CI] |\n|---|---|---|---|---|---|")
     for r in rows:
         md.append(f"| {r['dataset']} | {r['oracle']} | {r['config']} | {r['kappa_human']} | {r['kappa_metric']} "

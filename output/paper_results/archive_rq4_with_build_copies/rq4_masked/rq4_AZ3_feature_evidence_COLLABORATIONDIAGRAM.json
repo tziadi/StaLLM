@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-collaborationdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java",
+      "rank": 1,
+      "confidence": 0.28,
+      "rationale": "Defines the graph model specifically for Collaboration diagrams, holding the semantic objects (classifier roles, messages) that appear in the diagram. It is the core data structure behind the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java",
+      "rank": 2,
+      "confidence": 0.24,
+      "rationale": "Responsible for drawing Collaboration diagram elements (figures for messages, links, roles). Directly supports visualisation of the requested diagram type.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
+      "rank": 3,
+      "confidence": 0.18,
+      "rationale": "Explorer rule that navigates from a UML Collaboration model element to its diagram. Provides UI integration for the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java",
+      "rank": 4,
+      "confidence": 0.15,
+      "rationale": "Model helper offering creation/manipulation routines for collaborations, classifier roles and messages\u2014core domain objects used in Collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java",
+      "rank": 5,
+      "confidence": 0.13,
+      "rationale": "Concrete implementation of CollaborationsHelper for the MDR model backend; enables persistence and editing of collaboration-related model elements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java",
+      "rank": 6,
+      "confidence": 0.12,
+      "rationale": "Handles mouse selection and interactive editing of classifier roles on Collaboration diagrams, directly supporting user interaction with the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java",
+      "rank": 7,
+      "confidence": 0.11,
+      "rationale": "Factory that creates diagram instances, including Collaboration diagrams; pivotal for instantiating the feature within projects.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java",
+      "rank": 8,
+      "confidence": 0.1,
+      "rationale": "Generic explorer rule that links namespaces to their diagrams; contains explicit handling for Collaboration diagrams, aiding navigation to the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java",
+      "rank": 9,
+      "confidence": 0.09,
+      "rationale": "Base implementation class extended by specific diagram types, including Collaboration diagrams; provides fundamental behaviours utilised by the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java",
+      "rank": 10,
+      "confidence": 0.08,
+      "rationale": "Abstract superclass for all UML diagrams. Collaboration diagram subclasses inherit diagram settings and common functionality from here.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.020833333333333332,
+    "hit@5": 1.0,
+    "recall@5": 0.0625,
+    "hit@10": 1.0,
+    "recall@10": 0.10416666666666667,
+    "mrr": 1.0,
+    "map": 0.09126984126984128
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Defines the graph model specifically for Collaboration diagrams, holding the semantic objects (classifier roles, messages) that appear in the diagram. It is the core data structure behind the feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\",\n    \"confidence\": 0.24,\n    \"rationale\": \"Responsible for drawing Collaboration diagram elements (figures for messages, links, roles). Directly supports visualisation of the requested diagram type.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.18,\n    \"rationale\": \"Explorer rule that navigates from a UML Collaboration model element to its diagram. Provides UI integration for the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java\",\n    \"confidence\": 0.15,\n    \"rationale\": \"Model helper offering creation/manipulation routines for collaborations, classifier roles and messages\u2014core domain objects used in Collaboration diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java\",\n    \"confidence\": 0.13,\n    \"rationale\": \"Concrete implementation of CollaborationsHelper for the MDR model backend; enables persistence and editing of collaboration-related model elements.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Handles mouse selection and interactive editing of classifier roles on Collaboration diagrams, directly supporting user interaction with the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Factory that creates diagram instances, including Collaboration diagrams; pivotal for instantiating the feature within projects.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"Generic explorer rule that links namespaces to their diagrams; contains explicit handling for Collaboration diagrams, aiding navigation to the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Base implementation class extended by specific diagram types, including Collaboration diagrams; provides fundamental behaviours utilised by the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Abstract superclass for all UML diagrams. Collaboration diagram subclasses inherit diagram settings and common functionality from here.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 14062,
+    "completion_tokens": 3859,
+    "total_tokens": 17921
+  },
+  "slot": "AZ3",
+  "feature": "COLLABORATIONDIAGRAM",
+  "gold_count": 48,
+  "gold_visible": 13,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 53.9
+}

@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java",
-      "rank": 1,
-      "confidence": 0.95,
-      "rationale": "Central class representing Deployment diagrams in the main application package; core implementation of the diagram feature.",
-      "method": ""
-    },
-    {
       "file": "src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java",
-      "rank": 2,
+      "rank": 1,
       "confidence": 0.9,
-      "rationale": "UI action that lets the user create/open a Deployment diagram; directly triggers feature use.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java",
-      "rank": 3,
-      "confidence": 0.88,
-      "rationale": "Graph model defining the nodes/edges for Deployment diagrams; essential for runtime architecture representation.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramRenderer.java",
-      "rank": 4,
-      "confidence": 0.85,
-      "rationale": "Renderer responsible for visualizing nodes and artifacts on Deployment diagrams.",
+      "rationale": "Explicit action class whose sole purpose is to create/open a Deployment Diagram; direct entry point for the feature in the UI.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/InitDeploymentDiagram.java",
-      "rank": 5,
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Initialization class that registers the Deployment Diagram type, its renderer, graph model, etc.; central to enabling the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java",
+      "rank": 3,
+      "confidence": 0.83,
+      "rationale": "Main diagram class representing Deployment Diagrams; handles diagram-level behavior and appearance.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java",
+      "rank": 4,
       "confidence": 0.8,
-      "rationale": "Initialisation class that registers the Deployment diagram and its components with the application.",
+      "rationale": "Graph model that stores nodes/artifacts and their relationships for Deployment Diagrams; core data structure.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramRenderer.java",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Responsible for rendering Deployment Diagram elements (nodes, artifacts, links) on screen; essential for visualizing the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/PropPanelUMLDeploymentDiagram.java",
       "rank": 6,
-      "confidence": 0.78,
-      "rationale": "Property panel specific to Deployment diagrams; supports editing diagram-level properties.",
+      "confidence": 0.75,
+      "rationale": "Provides the property panel for Deployment Diagrams, allowing users to view/edit diagram-specific properties.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramPropPanelFactory.java",
+      "rank": 7,
+      "confidence": 0.72,
+      "rationale": "Factory that creates the property panel for Deployment Diagrams; directly tied to the UI support of the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/UMLDeploymentDiagram.java",
-      "rank": 7,
-      "confidence": 0.76,
-      "rationale": "Alternative/extended implementation of Deployment diagrams provided by the deployment2 module.",
+      "rank": 8,
+      "confidence": 0.7,
+      "rationale": "Alternative/extended implementation of the Deployment Diagram in the newer \u2018deployment2\u2019 module.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramFactory.java",
-      "rank": 8,
-      "confidence": 0.74,
-      "rationale": "Factory that creates Deployment diagram instances in the newer deployment2 subsystem.",
+      "rank": 9,
+      "confidence": 0.68,
+      "rationale": "Factory responsible for creating Deployment2 diagrams; crucial for instantiating the feature in the modular architecture.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramGraphModel.java",
-      "rank": 9,
-      "confidence": 0.72,
-      "rationale": "Graph model counterpart in the deployment2 module; defines runtime architecture elements.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/FigComponent.java",
       "rank": 10,
-      "confidence": 0.7,
-      "rationale": "Figure class for components on a Deployment diagram; directly supports visual representation of software artifacts.",
+      "confidence": 0.67,
+      "rationale": "Graph model for the newer Deployment2 diagrams, managing nodes and artifacts relationships.",
       "method": ""
     }
   ],
@@ -82,20 +82,20 @@
     "hit@10": 1.0,
     "recall@10": 0.21875,
     "mrr": 1.0,
-    "map": 0.209375
+    "map": 0.21875
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Central class representing Deployment diagrams in the main application package; core implementation of the diagram feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"UI action that lets the user create/open a Deployment diagram; directly triggers feature use.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Graph model defining the nodes/edges for Deployment diagrams; essential for runtime architecture representation.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramRenderer.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Renderer responsible for visualizing nodes and artifacts on Deployment diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/InitDeploymentDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Initialisation class that registers the Deployment diagram and its components with the application.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/PropPanelUMLDeploymentDiagram.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Property panel specific to Deployment diagrams; supports editing diagram-level properties.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/UMLDeploymentDiagram.java\",\n    \"confidence\": 0.76,\n    \"rationale\": \"Alternative/extended implementation of Deployment diagrams provided by the deployment2 module.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramFactory.java\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Factory that creates Deployment diagram instances in the newer deployment2 subsystem.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramGraphModel.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Graph model counterpart in the deployment2 module; defines runtime architecture elements.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/FigComponent.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Figure class for components on a Deployment diagram; directly supports visual representation of software artifacts.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Explicit action class whose sole purpose is to create/open a Deployment Diagram; direct entry point for the feature in the UI.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/InitDeploymentDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Initialization class that registers the Deployment Diagram type, its renderer, graph model, etc.; central to enabling the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Main diagram class representing Deployment Diagrams; handles diagram-level behavior and appearance.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Graph model that stores nodes/artifacts and their relationships for Deployment Diagrams; core data structure.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramRenderer.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Responsible for rendering Deployment Diagram elements (nodes, artifacts, links) on screen; essential for visualizing the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/PropPanelUMLDeploymentDiagram.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Provides the property panel for Deployment Diagrams, allowing users to view/edit diagram-specific properties.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/DeploymentDiagramPropPanelFactory.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Factory that creates the property panel for Deployment Diagrams; directly tied to the UI support of the feature.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/UMLDeploymentDiagram.java\",\n    \"confidence\": 0.70,\n    \"rationale\": \"Alternative/extended implementation of the Deployment Diagram in the newer \u2018deployment2\u2019 module.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramFactory.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Factory responsible for creating Deployment2 diagrams; crucial for instantiating the feature in the modular architecture.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-diagrams-deployment2/src/org/argouml/deployment2/diagram/DeploymentDiagramGraphModel.java\",\n    \"confidence\": 0.67,\n    \"rationale\": \"Graph model for the newer Deployment2 diagrams, managing nodes and artifacts relationships.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 13782,
-    "completion_tokens": 1551,
-    "total_tokens": 15333
+    "prompt_tokens": 13130,
+    "completion_tokens": 2048,
+    "total_tokens": 15178
   },
   "slot": "AZ3",
   "feature": "DEPLOYMENTDIAGRAM",
   "gold_count": 32,
-  "gold_visible": 27,
+  "gold_visible": 30,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 19.3
+  "elapsed_s": 15.5
 }

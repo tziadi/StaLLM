@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
-      "rank": 1,
-      "confidence": 0.28,
-      "rationale": "Explicitly relates operations to Collaboration Diagrams, likely central to locating or creating them.",
-      "method": ""
-    },
-    {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
+      "rank": 1,
+      "confidence": 0.34,
+      "rationale": "Directly maps Collaboration model elements to their diagrams; central to collaboration diagram feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
       "rank": 2,
-      "confidence": 0.22,
-      "rationale": "Provides navigation from a Collaboration element to its diagram representation.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaboration.java",
-      "rank": 3,
-      "confidence": 0.19,
-      "rationale": "Maps operations to Collaboration model elements, fundamental for building collaboration views.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
-      "rank": 4,
-      "confidence": 0.17,
-      "rationale": "Connects project\u2010level navigation to collaboration elements/diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
-      "rank": 5,
-      "confidence": 0.15,
-      "rationale": "Links classifiers (classes) to collaborations; important for deriving class responsibilities from collaboration diagrams.",
+      "confidence": 0.18,
+      "rationale": "Connects operations to collaboration diagrams, indicating detailed handling of collaboration diagram elements.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java",
-      "rank": 6,
-      "confidence": 0.13,
-      "rationale": "Bridges collaborations and their interactions, core to understanding object interactions in collaboration diagrams.",
+      "rank": 3,
+      "confidence": 0.12,
+      "rationale": "Handles navigation from Collaboration to Interaction, a key component of collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
+      "rank": 4,
+      "confidence": 0.08,
+      "rationale": "Associates classifiers with collaborations, relevant for displaying/organizing collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
+      "rank": 5,
+      "confidence": 0.06,
+      "rationale": "Links project root to collaboration elements; part of managing collaboration diagrams within projects.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
-      "rank": 7,
-      "confidence": 0.11,
-      "rationale": "Handles navigation from interactions to messages, a key element displayed in collaboration diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
-      "rank": 8,
-      "confidence": 0.09,
-      "rationale": "Sequence diagrams are closely related to collaboration diagrams; this rule may share infrastructure or logic.",
+      "rank": 6,
+      "confidence": 0.05,
+      "rationale": "Manages messages within interactions, which are central to collaboration diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
-      "rank": 9,
-      "confidence": 0.08,
-      "rationale": "Defines notation for messages, which appear on collaboration diagrams to show object interactions.",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Defines notation for messages shown in collaboration/sequence diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
+      "rank": 8,
+      "confidence": 0.04,
+      "rationale": "UML-specific message notation processing; impacts rendering of collaboration diagram messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Base class for UML message notation, used by collaboration diagram rendering.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
       "rank": 10,
-      "confidence": 0.07,
-      "rationale": "UML\u2010specific notation handler for messages displayed in collaboration diagrams.",
+      "confidence": 0.04,
+      "rationale": "Handles sequence diagram messages; often shared with collaboration diagrams for message representation.",
       "method": ""
     }
   ],
@@ -82,14 +82,14 @@
     "hit@10": 1.0,
     "recall@10": 0.125,
     "mrr": 1.0,
-    "map": 0.125
+    "map": 0.11805555555555557
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\", \"confidence\": 0.28, \"rationale\": \"Explicitly relates operations to Collaboration Diagrams, likely central to locating or creating them.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.22, \"rationale\": \"Provides navigation from a Collaboration element to its diagram representation.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaboration.java\", \"confidence\": 0.19, \"rationale\": \"Maps operations to Collaboration model elements, fundamental for building collaboration views.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\", \"confidence\": 0.17, \"rationale\": \"Connects project\u2010level navigation to collaboration elements/diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\", \"confidence\": 0.15, \"rationale\": \"Links classifiers (classes) to collaborations; important for deriving class responsibilities from collaboration diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\", \"confidence\": 0.13, \"rationale\": \"Bridges collaborations and their interactions, core to understanding object interactions in collaboration diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.11, \"rationale\": \"Handles navigation from interactions to messages, a key element displayed in collaboration diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.09, \"rationale\": \"Sequence diagrams are closely related to collaboration diagrams; this rule may share infrastructure or logic.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\", \"confidence\": 0.08, \"rationale\": \"Defines notation for messages, which appear on collaboration diagrams to show object interactions.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\", \"confidence\": 0.07, \"rationale\": \"UML\u2010specific notation handler for messages displayed in collaboration diagrams.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.34, \"rationale\": \"Directly maps Collaboration model elements to their diagrams; central to collaboration diagram feature.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\", \"confidence\": 0.18, \"rationale\": \"Connects operations to collaboration diagrams, indicating detailed handling of collaboration diagram elements.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\", \"confidence\": 0.12, \"rationale\": \"Handles navigation from Collaboration to Interaction, a key component of collaboration diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\", \"confidence\": 0.08, \"rationale\": \"Associates classifiers with collaborations, relevant for displaying/organizing collaboration diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\", \"confidence\": 0.06, \"rationale\": \"Links project root to collaboration elements; part of managing collaboration diagrams within projects.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\", \"confidence\": 0.05, \"rationale\": \"Manages messages within interactions, which are central to collaboration diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\", \"confidence\": 0.05, \"rationale\": \"Defines notation for messages shown in collaboration/sequence diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\", \"confidence\": 0.04, \"rationale\": \"UML-specific message notation processing; impacts rendering of collaboration diagram messages.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java\", \"confidence\": 0.04, \"rationale\": \"Base class for UML message notation, used by collaboration diagram rendering.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\", \"confidence\": 0.04, \"rationale\": \"Handles sequence diagram messages; often shared with collaboration diagrams for message representation.\"}\n]",
   "usage": {
     "prompt_tokens": 12435,
-    "completion_tokens": 1665,
-    "total_tokens": 14100
+    "completion_tokens": 1850,
+    "total_tokens": 14285
   },
   "slot": "AZ3",
   "feature": "COLLABORATIONDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 15,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 26.5
+  "elapsed_s": 15.5
 }

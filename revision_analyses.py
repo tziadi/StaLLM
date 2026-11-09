@@ -21,7 +21,7 @@ output/paper_results_annot/stats/ (smells): revision_*.csv and revision_analyses
    signature and at every line with `throw` or `catch`, scored with the lenient
    preset, and its own random-placement test.
 4. Matthews correlation coefficient and balanced accuracy for every RQ3
-   configuration (mean over runs), against the human labels.
+   configuration (majority vote over runs, as in Table 3), against the human labels.
 """
 from __future__ import annotations
 
@@ -197,18 +197,18 @@ def _mcc_bacc(gold: list[bool], pred: list[bool]) -> tuple[float, float]:
 def smell_mcc(md: list[str]) -> None:
     out = []
     for dataset, root in (("DACOS", Path("output/paper_results_annot")), ("MLCQ", aps.OUT)):
-        by = defaultdict(list)
-        for f in sorted((root / "rq3").glob(f"rq3_*_{dataset}*.json")):
+        groups = defaultdict(list)
+        for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}*.json")):
             d = aps._load(f)
-            rows = d["rows"]
-            by[(d["slot"], d["prompt"])].append(_mcc_bacc([bool(r["gold"]) for r in rows],
-                                                          [bool(r["predicted"]) for r in rows]))
-        for (slot, prompt), vals in sorted(by.items()):
-            out.append({"dataset": dataset, "slot": slot, "prompt": prompt, "runs": len(vals),
-                        "mcc": aps._r(statistics.mean(v[0] for v in vals)),
-                        "balanced_accuracy": aps._r(statistics.mean(v[1] for v in vals))})
+            if d.get("dataset") == dataset:
+                groups[(d["slot"], d["prompt"])].append(d)
+        for (slot, prompt), runs in sorted(groups.items()):
+            rows = aps.majority_vote(runs)["rows"]
+            mcc, bacc = _mcc_bacc([bool(r["gold"]) for r in rows], [bool(r["predicted"]) for r in rows])
+            out.append({"dataset": dataset, "slot": slot, "prompt": prompt, "runs": len(runs),
+                        "mcc": aps._r(mcc), "balanced_accuracy": aps._r(bacc)})
     aps._write_csv(SMELL_STATS / "revision_mcc.csv", out)
-    md.append("## 4. MCC and balanced accuracy of the RQ3 configurations (mean over runs)\n")
+    md.append("## 4. MCC and balanced accuracy of the RQ3 configurations (majority vote over runs)\n")
     md.append("| Dataset | Slot | Prompt | runs | MCC | balanced accuracy |\n|---|---|---|---|---|---|")
     for r in out:
         md.append(f"| {r['dataset']} | {r['slot']} | {r['prompt']} | {r['runs']} | {r['mcc']} | {r['balanced_accuracy']} |")

@@ -46,10 +46,31 @@
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/ActionCollaborationDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToDiagram.java",
       "rank": 7,
       "confidence": 0.4,
-      "rationale": "This file probably contains actions related to the Collaboration Diagram, making it relevant.",
+      "rationale": "This file might contain rules for navigating to diagrams from classifiers, which could include Collaboration Diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java",
+      "rank": 8,
+      "confidence": 0.4,
+      "rationale": "This file likely contains rules for navigating to contained diagrams from model elements, which could include Collaboration Diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
+      "rank": 9,
+      "confidence": 0.4,
+      "rationale": "This file might contain rules for navigating to Collaboration Diagrams from projects, indicating its relevance.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java",
+      "rank": 10,
+      "confidence": 0.4,
+      "rationale": "This file likely contains rules for navigating to diagrams from models, which could include Collaboration Diagrams.",
       "method": ""
     }
   ],
@@ -59,16 +80,16 @@
     "hit@5": 1.0,
     "recall@5": 0.10416666666666667,
     "hit@10": 1.0,
-    "recall@10": 0.125,
+    "recall@10": 0.14583333333333334,
     "mrr": 1.0,
-    "map": 0.125
+    "map": 0.1412037037037037
   },
   "prompt_style": "baseline",
-  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/UMLCollaborationDiagram.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"This file is directly related to the UML Collaboration Diagram, as indicated by its name and location.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/PropPanelUMLCollaborationDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"This file likely contains properties and panels specific to the UML Collaboration Diagram.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"This file probably initializes the Collaboration Diagram, making it relevant to its creation and management.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollaborationDiagramPropPanelFactory.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"This file likely creates property panels for the Collaboration Diagram, indicating its relevance.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"This file might contain rules for navigating to Collaboration Diagrams from classifiers, suggesting its relevance.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"This file likely contains rules for navigating to Collaboration Diagrams from operations, indicating its relevance.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/ActionCollaborationDiagram.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file probably contains actions related to the Collaboration Diagram, making it relevant.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/PropPanelUMLCollaborationDiagram.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file likely contains properties and panels specific to the UML Collaboration Diagram.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file probably initializes the Collaboration Diagram, making it relevant to its creation and management.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollaborationDiagramPropPanelFactory.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file likely creates property panels for the Collaboration Diagram, indicating its relevance.\"\n  }\n]\n```",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/UMLCollaborationDiagram.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"This file is directly related to the UML Collaboration Diagram, as indicated by its name and location.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/PropPanelUMLCollaborationDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"This file likely contains properties and panels specific to the UML Collaboration Diagram.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/InitCollaborationDiagram.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"This file probably initializes the Collaboration Diagram, making it relevant to its creation and management.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollaborationDiagramPropPanelFactory.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"This file likely creates property panels for the Collaboration Diagram, indicating its relevance.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"This file might contain rules for navigating to Collaboration Diagrams from classifiers, suggesting its relevance.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"This file likely contains rules for navigating to Collaboration Diagrams from operations, indicating its relevance.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToDiagram.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file might contain rules for navigating to diagrams from classifiers, which could include Collaboration Diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file likely contains rules for navigating to contained diagrams from model elements, which could include Collaboration Diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file might contain rules for navigating to Collaboration Diagrams from projects, indicating its relevance.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"This file likely contains rules for navigating to diagrams from models, which could include Collaboration Diagrams.\"\n  }\n]\n```",
   "usage": {
-    "prompt_tokens": 10826,
-    "completion_tokens": 697,
-    "total_tokens": 11523
+    "prompt_tokens": 10784,
+    "completion_tokens": 703,
+    "total_tokens": 11487
   },
   "slot": "AZ4",
   "feature": "COLLABORATIONDIAGRAM",
@@ -76,5 +97,5 @@
   "gold_visible": 20,
   "candidate_order": "keyword_sorted",
   "run": 1,
-  "elapsed_s": 376.0
+  "elapsed_s": 733.2
 }

@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
       "rank": 1,
-      "confidence": 0.35,
-      "rationale": "Explicitly handles navigation from a use case to its extension points, directly tied to use-case diagram elements",
+      "confidence": 0.37,
+      "rationale": "Directly relates to navigating from a Use Case element to its Extension Points, a specific feature of use-case diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java",
       "rank": 2,
-      "confidence": 0.22,
-      "rationale": "Provides notation (display text) for ExtensionPoint \u2013 a core concept shown on use-case diagrams",
+      "confidence": 0.19,
+      "rationale": "Provides notation (diagram label) handling for Extension Points, an element unique to use-case diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java",
       "rank": 3,
-      "confidence": 0.2,
-      "rationale": "UML-specific implementation of ExtensionPoint notation, used when rendering use-case diagrams",
+      "confidence": 0.15,
+      "rationale": "UML-specific notation logic for Extension Points, integral to rendering use-case diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java",
       "rank": 4,
-      "confidence": 0.1,
-      "rationale": "Navigator rule that gathers all diagrams of a model, including use-case diagrams",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java",
-      "rank": 5,
-      "confidence": 0.08,
-      "rationale": "Links a project to its diagrams; required to locate and open use-case diagrams from the project browser",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/NotationProviderFactory2.java",
-      "rank": 6,
-      "confidence": 0.06,
-      "rationale": "Factory that supplies notation providers such as ExtensionPointNotation used in use-case diagrams",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/Notation.java",
-      "rank": 7,
-      "confidence": 0.05,
-      "rationale": "Central registry/manager for all notations, including those for use-case diagram elements",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/NotationSettings.java",
-      "rank": 8,
-      "confidence": 0.04,
-      "rationale": "Holds notation settings that affect rendering of diagrams, impacting how use-case diagrams appear",
+      "confidence": 0.07,
+      "rationale": "Explorer rule that maps models to their diagrams, including use-case diagrams, thus involved in locating/displaying them.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/cmd/ActionGotoDiagram.java",
-      "rank": 9,
-      "confidence": 0.03,
-      "rationale": "User command to navigate to a specific diagram type; includes use-case diagrams in its targets",
+      "rank": 5,
+      "confidence": 0.05,
+      "rationale": "User action to navigate to a diagram; relevant for accessing specific diagrams such as use-case diagrams.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/notation/ui/SettingsTabNotation.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java",
+      "rank": 6,
+      "confidence": 0.04,
+      "rationale": "Explorer rule that lists diagrams under a project; affects visibility/selection of use-case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/DiagramMemberFilePersister.java",
+      "rank": 7,
+      "confidence": 0.03,
+      "rationale": "Handles saving/loading of diagram data, including use-case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/PGMLStackParser.java",
+      "rank": 8,
+      "confidence": 0.03,
+      "rationale": "Parses diagram graphics (PGML) for all diagram types, therefore impacts use-case diagram persistence.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToElements.java",
+      "rank": 9,
+      "confidence": 0.03,
+      "rationale": "Explorer rule that expands model elements (including use cases) within the tree, aiding their location.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/ExplorerTreeModel.java",
       "rank": 10,
       "confidence": 0.02,
-      "rationale": "UI for adjusting notation options that influence the display of use-case diagram elements",
+      "rationale": "Core model for the explorer tree which displays use-case diagram elements and supports their navigation.",
       "method": ""
     }
   ],
@@ -85,11 +85,11 @@
     "map": 0.00641025641025641
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\", \"confidence\": 0.35, \"rationale\": \"Explicitly handles navigation from a use case to its extension points, directly tied to use-case diagram elements\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java\", \"confidence\": 0.22, \"rationale\": \"Provides notation (display text) for ExtensionPoint \u2013 a core concept shown on use-case diagrams\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java\", \"confidence\": 0.20, \"rationale\": \"UML-specific implementation of ExtensionPoint notation, used when rendering use-case diagrams\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\", \"confidence\": 0.10, \"rationale\": \"Navigator rule that gathers all diagrams of a model, including use-case diagrams\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java\", \"confidence\": 0.08, \"rationale\": \"Links a project to its diagrams; required to locate and open use-case diagrams from the project browser\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/notation/NotationProviderFactory2.java\", \"confidence\": 0.06, \"rationale\": \"Factory that supplies notation providers such as ExtensionPointNotation used in use-case diagrams\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/notation/Notation.java\", \"confidence\": 0.05, \"rationale\": \"Central registry/manager for all notations, including those for use-case diagram elements\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/notation/NotationSettings.java\", \"confidence\": 0.04, \"rationale\": \"Holds notation settings that affect rendering of diagrams, impacting how use-case diagrams appear\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/cmd/ActionGotoDiagram.java\", \"confidence\": 0.03, \"rationale\": \"User command to navigate to a specific diagram type; includes use-case diagrams in its targets\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/notation/ui/SettingsTabNotation.java\", \"confidence\": 0.02, \"rationale\": \"UI for adjusting notation options that influence the display of use-case diagram elements\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\", \"confidence\": 0.37, \"rationale\": \"Directly relates to navigating from a Use Case element to its Extension Points, a specific feature of use-case diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java\", \"confidence\": 0.19, \"rationale\": \"Provides notation (diagram label) handling for Extension Points, an element unique to use-case diagrams.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java\", \"confidence\": 0.15, \"rationale\": \"UML-specific notation logic for Extension Points, integral to rendering use-case diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\", \"confidence\": 0.07, \"rationale\": \"Explorer rule that maps models to their diagrams, including use-case diagrams, thus involved in locating/displaying them.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/cmd/ActionGotoDiagram.java\", \"confidence\": 0.05, \"rationale\": \"User action to navigate to a diagram; relevant for accessing specific diagrams such as use-case diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java\", \"confidence\": 0.04, \"rationale\": \"Explorer rule that lists diagrams under a project; affects visibility/selection of use-case diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/persistence/DiagramMemberFilePersister.java\", \"confidence\": 0.03, \"rationale\": \"Handles saving/loading of diagram data, including use-case diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/persistence/PGMLStackParser.java\", \"confidence\": 0.03, \"rationale\": \"Parses diagram graphics (PGML) for all diagram types, therefore impacts use-case diagram persistence.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToElements.java\", \"confidence\": 0.03, \"rationale\": \"Explorer rule that expands model elements (including use cases) within the tree, aiding their location.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/ExplorerTreeModel.java\", \"confidence\": 0.02, \"rationale\": \"Core model for the explorer tree which displays use-case diagram elements and supports their navigation.\"}\n]",
   "usage": {
     "prompt_tokens": 12410,
-    "completion_tokens": 1926,
-    "total_tokens": 14336
+    "completion_tokens": 1891,
+    "total_tokens": 14301
   },
   "slot": "AZ3",
   "feature": "USECASEDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 6,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 29.1
+  "elapsed_s": 13.8
 }

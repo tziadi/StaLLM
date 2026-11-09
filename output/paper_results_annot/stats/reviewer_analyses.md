@@ -27,8 +27,8 @@ RQ3 on DACOS labeled by the annotators' majority (complex method, long parameter
 
 | Dataset | ρ(κ human, κ metric) observed | ρ κ human: resample vs original | ρ κ human: two resamples | ρ F1 human: resample vs original | ρ κ metric: resample vs original | ρ(κ human, κ metric) in resamples | same human-best (κ) | same human-best (F1) | same metric-best (κ) | human-best ≠ metric-best |
 |---|---|---|---|---|---|---|---|---|---|---|
-| DACOS | 0.511 | 0.657 [0.175, 0.875] | 0.425 [-0.189, 0.811] | 0.975 [0.932, 0.996] | 0.907 [0.743, 0.979] | 0.346 [-0.332, 0.771] | 32% | 88% | 69% | 81% |
-| MLCQ | 0.676 | 0.894 [0.693, 0.971] | 0.824 [0.554, 0.944] | 0.9 [0.706, 0.978] | 0.795 [0.408, 0.943] | 0.593 [-0.107, 0.896] | 47% | 52% | 24% | 88% |
+| DACOS | 0.489 | 0.661 [0.171, 0.896] | 0.432 [-0.157, 0.829] | 0.979 [0.936, 0.996] | 0.925 [0.8, 0.982] | 0.327 [-0.382, 0.782] | 32% | 89% | 69% | 81% |
+| MLCQ | 0.701 | 0.9 [0.696, 0.968] | 0.821 [0.55, 0.946] | 0.911 [0.718, 0.975] | 0.81 [0.397, 0.952] | 0.6 [-0.098, 0.889] | 47% | 53% | 24% | 88% |
 
 - DACOS: best by human κ = AZ3/binary_oracle_baseline, best by metric κ = AZ3/definition_driven.
 - MLCQ: best by human κ = AZ3/conservative_evidence, best by metric κ = AZ3/binary_oracle_baseline.

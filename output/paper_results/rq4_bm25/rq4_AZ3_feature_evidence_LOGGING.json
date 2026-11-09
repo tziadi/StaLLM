@@ -4,98 +4,98 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 1,
-      "confidence": 0.23,
-      "rationale": "Central class that reads and stores application-wide configuration keys; likely includes properties that enable/disable debug and trace output, making it the primary location where logging is configured.",
+      "confidence": 0.34,
+      "rationale": "Lives in the util.logging package and offers timing/trace facilities that are typically used to emit detailed debug-level performance messages, directly supporting the logging/trace feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
+      "rank": 2,
+      "confidence": 0.17,
+      "rationale": "Also in util.logging; installs a JVM-wide handler that logs uncaught AWT exceptions, providing developers with internal diagnostics \u2013 clearly part of the logging/trace infrastructure.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
-      "rank": 2,
-      "confidence": 0.21,
-      "rationale": "Implements low-level loading/saving of the configuration file; typically parses logging parameters and routes them to the logging subsystem.",
+      "rank": 3,
+      "confidence": 0.12,
+      "rationale": "Responsible for reading/writing configuration options; contains code paths to enable/disable or configure logging levels, thus refining the logging feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/Main.java",
-      "rank": 3,
-      "confidence": 0.19,
-      "rationale": "Entry-point of ArgoUML. Responsible for bootstrapping subsystems; frequently initializes the logging framework (sets log level, loads log properties, etc.).",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
       "rank": 4,
-      "confidence": 0.15,
-      "rationale": "Central dispatcher for application events. Debug/trace logs are often emitted here to follow internal activities, matching the feature\u2019s need to \"follow what is going on inside ArgoUML.\"",
+      "confidence": 0.08,
+      "rationale": "Application entry point; sets up global environment including initialization of logging (e.g., log4j or java.util.logging) based on command-line flags and configuration.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model/src/org/argouml/model/ModelEventPump.java",
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
       "rank": 5,
-      "confidence": 0.14,
-      "rationale": "Core model event pump; produces a high volume of fine-grained events. Implementations generally contain detailed debug statements for tracing model changes.",
+      "confidence": 0.06,
+      "rationale": "Defines keys and defaults for stored preferences; includes keys for log level and debug settings, thereby directly supporting runtime control of logging.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java",
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
       "rank": 6,
-      "confidence": 0.12,
-      "rationale": "Concrete MDR implementation of the event pump. Adds implementation-specific trace hooks useful for developers diagnosing model problems.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-model-euml/src/org/argouml/model/euml/ModelEventPumpEUMLImpl.java",
-      "rank": 7,
-      "confidence": 0.11,
-      "rationale": "EUML-based implementation of the event pump; mirrors the MDR version and similarly expected to contain logging code for event tracing.",
-      "method": ""
-    },
-    {
-      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
-      "rank": 8,
-      "confidence": 0.1,
-      "rationale": "Developer utility panel designed to inspect event traffic; tightly coupled with debug logging and provides a UI for viewing trace messages.",
+      "confidence": 0.05,
+      "rationale": "Specialised exception handler that captures uncaught exceptions and logs them, complementing the debug/trace mechanism.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
-      "rank": 9,
-      "confidence": 0.09,
-      "rationale": "Dialog that reports exceptions to the user; typically logs stack traces and debug information before displaying them.",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Presents logged exceptions to the user/developer; tightly coupled with the logging system to display collected trace information.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 8,
+      "confidence": 0.04,
+      "rationale": "Developer-oriented module; typically provides tools such as log viewers or toggles for verbose/debug output, thus assisting in focused problem tracing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 9,
+      "confidence": 0.04,
+      "rationale": "Central application API; contains constants and helpers for global facilities like logging, enabling other parts of ArgoUML to emit consistent debug messages.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
       "rank": 10,
-      "confidence": 0.07,
-      "rationale": "Core cognitive engine class; contains numerous status and progress messages that are usually output through the logging subsystem to aid debugging.",
+      "confidence": 0.03,
+      "rationale": "Core event dispatcher; often instrumented with trace statements to follow internal behaviour, therefore directly contributing to the logging mechanism.",
       "method": ""
     }
   ],
   "metrics": {
-    "hit@1": 1.0,
-    "recall@1": 0.004672897196261682,
+    "hit@1": 0.0,
+    "recall@1": 0.0,
     "hit@5": 1.0,
     "recall@5": 0.018691588785046728,
     "hit@10": 1.0,
     "recall@10": 0.028037383177570093,
-    "mrr": 1.0,
-    "map": 0.02659101023587005
+    "mrr": 0.5,
+    "map": 0.018094496365524404
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\",\n    \"confidence\": 0.23,\n    \"rationale\": \"Central class that reads and stores application-wide configuration keys; likely includes properties that enable/disable debug and trace output, making it the primary location where logging is configured.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.21,\n    \"rationale\": \"Implements low-level loading/saving of the configuration file; typically parses logging parameters and routes them to the logging subsystem.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.19,\n    \"rationale\": \"Entry-point of ArgoUML. Responsible for bootstrapping subsystems; frequently initializes the logging framework (sets log level, loads log properties, etc.).\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.15,\n    \"rationale\": \"Central dispatcher for application events. Debug/trace logs are often emitted here to follow internal activities, matching the feature\u2019s need to \\\"follow what is going on inside ArgoUML.\\\"\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/ModelEventPump.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Core model event pump; produces a high volume of fine-grained events. Implementations generally contain detailed debug statements for tracing model changes.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Concrete MDR implementation of the event pump. Adds implementation-specific trace hooks useful for developers diagnosing model problems.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-model-euml/src/org/argouml/model/euml/ModelEventPumpEUMLImpl.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"EUML-based implementation of the event pump; mirrors the MDR version and similarly expected to contain logging code for event tracing.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"Developer utility panel designed to inspect event traffic; tightly coupled with debug logging and provides a UI for viewing trace messages.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Dialog that reports exceptions to the user; typically logs stack traces and debug information before displaying them.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Core cognitive engine class; contains numerous status and progress messages that are usually output through the logging subsystem to aid debugging.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n    \"confidence\": 0.34,\n    \"rationale\": \"Lives in the util.logging package and offers timing/trace facilities that are typically used to emit detailed debug-level performance messages, directly supporting the logging/trace feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n    \"confidence\": 0.17,\n    \"rationale\": \"Also in util.logging; installs a JVM-wide handler that logs uncaught AWT exceptions, providing developers with internal diagnostics \u2013 clearly part of the logging/trace infrastructure.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Responsible for reading/writing configuration options; contains code paths to enable/disable or configure logging levels, thus refining the logging feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Application entry point; sets up global environment including initialization of logging (e.g., log4j or java.util.logging) based on command-line flags and configuration.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Defines keys and defaults for stored preferences; includes keys for log level and debug settings, thereby directly supporting runtime control of logging.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Specialised exception handler that captures uncaught exceptions and logs them, complementing the debug/trace mechanism.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Presents logged exceptions to the user/developer; tightly coupled with the logging system to display collected trace information.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Developer-oriented module; typically provides tools such as log viewers or toggles for verbose/debug output, thus assisting in focused problem tracing.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Central application API; contains constants and helpers for global facilities like logging, enabling other parts of ArgoUML to emit consistent debug messages.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.03,\n    \"rationale\": \"Core event dispatcher; often instrumented with trace statements to follow internal behaviour, therefore directly contributing to the logging mechanism.\"\n  }\n]\n",
   "usage": {
-    "prompt_tokens": 13881,
-    "completion_tokens": 1485,
-    "total_tokens": 15366
+    "prompt_tokens": 13582,
+    "completion_tokens": 1670,
+    "total_tokens": 15252
   },
   "slot": "AZ3",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 122,
+  "gold_visible": 167,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 21.0
+  "elapsed_s": 15.4
 }

@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java",
       "rank": 1,
-      "confidence": 0.97,
-      "rationale": "Central class representing an Activity Diagram within ArgoUML; name matches feature exactly and likely orchestrates model, renderer, and UI.",
+      "confidence": 0.9,
+      "rationale": "Central graph model representing elements and relationships in Activity Diagrams; core to implementing the feature\u2019s behavior.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java",
       "rank": 2,
-      "confidence": 0.93,
-      "rationale": "Defines the graph model (nodes/edges) used by activity diagrams; core logic for activity-workflow semantics.",
+      "confidence": 0.85,
+      "rationale": "Primary class for the Activity Diagram itself (inherits from UMLDiagram). Manages nodes/edges and user-visible diagram operations.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java",
       "rank": 3,
-      "confidence": 0.9,
-      "rationale": "Responsible for rendering activity diagram elements onto the canvas; directly supports visual aspect of the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java",
-      "rank": 4,
-      "confidence": 0.85,
-      "rationale": "Initialization class that registers the activity diagram within the tool; critical for enabling the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java",
-      "rank": 5,
       "confidence": 0.8,
-      "rationale": "Creates property panels specific to activity diagrams; directly supports editing of activity diagram elements.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/UMLActivityDiagram.java",
-      "rank": 6,
-      "confidence": 0.78,
-      "rationale": "Newer SPL module\u2019s main class for activity diagrams; alternate implementation of the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java",
-      "rank": 7,
-      "confidence": 0.76,
-      "rationale": "Graph model for the activity2 variant; mirrors functionality of original but in another module.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramRenderer.java",
-      "rank": 8,
-      "confidence": 0.74,
-      "rationale": "Renderer for activity2 diagrams; supports visual rendering of the feature in the new module.",
+      "rationale": "Responsible for painting Activity Diagram elements; directly supports visual representation of the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java",
-      "rank": 9,
-      "confidence": 0.7,
-      "rationale": "Handles automatic layout of activity diagram elements; enhances usability of the feature.",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Handles automatic layout of Activity Diagram nodes/edges, refining the diagram\u2019s appearance during editing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java",
+      "rank": 5,
+      "confidence": 0.72,
+      "rationale": "Initialisation class that registers the Activity Diagram with the application; critical for enabling the feature at startup.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java",
+      "rank": 6,
+      "confidence": 0.68,
+      "rationale": "Factory that provides property panels specific to Activity Diagrams, supporting user interaction and editing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/PropPanelUMLActivityDiagram.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Concrete property panel class for Activity Diagrams; offers UI for viewing/editing diagram properties.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/ui/ActionActivityDiagram.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "UI action that creates or opens an Activity Diagram; directly tied to user interaction for this feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/ActivityDiagram.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Part of the model subsystem defining Activity Diagram meta-model elements; foundational support for the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java",
       "rank": 10,
-      "confidence": 0.68,
-      "rationale": "UI action that creates or opens an activity diagram; gateway for users to invoke the feature.",
+      "confidence": 0.52,
+      "rationale": "Factory for creating Activity Diagram instances in the newer 'activity2' diagram module; supports alternative implementation.",
       "method": ""
     }
   ],
@@ -80,16 +80,16 @@
     "hit@5": 1.0,
     "recall@5": 0.05319148936170213,
     "hit@10": 1.0,
-    "recall@10": 0.07446808510638298,
+    "recall@10": 0.0851063829787234,
     "mrr": 1.0,
-    "map": 0.06773049645390071
+    "map": 0.0851063829787234
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\",\n    \"confidence\": 0.97,\n    \"rationale\": \"Central class representing an Activity Diagram within ArgoUML; name matches feature exactly and likely orchestrates model, renderer, and UI.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the graph model (nodes/edges) used by activity diagrams; core logic for activity-workflow semantics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Responsible for rendering activity diagram elements onto the canvas; directly supports visual aspect of the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Initialization class that registers the activity diagram within the tool; critical for enabling the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Creates property panels specific to activity diagrams; directly supports editing of activity diagram elements.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/UMLActivityDiagram.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Newer SPL module\u2019s main class for activity diagrams; alternate implementation of the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java\",\n    \"confidence\": 0.76,\n    \"rationale\": \"Graph model for the activity2 variant; mirrors functionality of original but in another module.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramRenderer.java\",\n    \"confidence\": 0.74,\n    \"rationale\": \"Renderer for activity2 diagrams; supports visual rendering of the feature in the new module.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles automatic layout of activity diagram elements; enhances usability of the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionActivityDiagram.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"UI action that creates or opens an activity diagram; gateway for users to invoke the feature.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Central graph model representing elements and relationships in Activity Diagrams; core to implementing the feature\u2019s behavior.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Primary class for the Activity Diagram itself (inherits from UMLDiagram). Manages nodes/edges and user-visible diagram operations.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Responsible for painting Activity Diagram elements; directly supports visual representation of the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Handles automatic layout of Activity Diagram nodes/edges, refining the diagram\u2019s appearance during editing.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Initialisation class that registers the Activity Diagram with the application; critical for enabling the feature at startup.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Factory that provides property panels specific to Activity Diagrams, supporting user interaction and editing.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/PropPanelUMLActivityDiagram.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Concrete property panel class for Activity Diagrams; offers UI for viewing/editing diagram properties.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionActivityDiagram.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"UI action that creates or opens an Activity Diagram; directly tied to user interaction for this feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/ActivityDiagram.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Part of the model subsystem defining Activity Diagram meta-model elements; foundational support for the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java\",\n    \"confidence\": 0.52,\n    \"rationale\": \"Factory for creating Activity Diagram instances in the newer 'activity2' diagram module; supports alternative implementation.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 12469,
-    "completion_tokens": 1191,
-    "total_tokens": 13660
+    "prompt_tokens": 12405,
+    "completion_tokens": 1190,
+    "total_tokens": 13595
   },
   "slot": "AZ3",
   "feature": "ACTIVITYDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 22,
   "candidate_order": "keyword_sorted",
   "run": 1,
-  "elapsed_s": 32.3
+  "elapsed_s": 8.8
 }

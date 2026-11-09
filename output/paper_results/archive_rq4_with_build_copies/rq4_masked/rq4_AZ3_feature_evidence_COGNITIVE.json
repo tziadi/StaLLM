@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-cognitive",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Agency.java",
+      "rank": 1,
+      "confidence": 0.33,
+      "rationale": "Central coordinator of the \"simple agents\"; controls background critique thread, schedules critics, and distributes findings to the rest of the cognitive subsystem.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Critic.java",
+      "rank": 2,
+      "confidence": 0.12,
+      "rationale": "Abstract definition of the individual agent (critic) that analyses the design and produces suggestions; key to implementing the feature\u2019s logic.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "rank": 3,
+      "confidence": 0.09,
+      "rationale": "Represents the active designer context and stores the current goals and decisions; many critics query it while producing advice.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
+      "rank": 4,
+      "confidence": 0.08,
+      "rationale": "Boot-straps and starts the background critique process when the application launches, ensuring agents run continuously.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ControlMech.java",
+      "rank": 5,
+      "confidence": 0.07,
+      "rationale": "Implements the control mechanism that decides which critics to invoke and when, directly supporting continuous background analysis.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/StandardCM.java",
+      "rank": 6,
+      "confidence": 0.07,
+      "rationale": "Concrete implementation of the control mechanism that schedules standard critics, refining how suggestions are generated.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java",
+      "rank": 7,
+      "confidence": 0.06,
+      "rationale": "Allows composition of several critics into a single agent, enhancing the sophistication of suggestions delivered to the designer.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ToDoList.java",
+      "rank": 8,
+      "confidence": 0.05,
+      "rationale": "Collects and manages the set of generated suggestions (to-do items) resulting from the background agents\u2019 analyses.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ToDoItem.java",
+      "rank": 9,
+      "confidence": 0.05,
+      "rationale": "Represents an individual suggestion or improvement identified by a critic; fundamental data structure exposed to the user.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrOperNameConflict.java",
+      "rank": 10,
+      "confidence": 0.08,
+      "rationale": "Concrete example of a critic detecting a specific design issue (operation name conflict), illustrating direct implementation of automatic advice.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004219409282700422,
+    "hit@5": 1.0,
+    "recall@5": 0.02109704641350211,
+    "hit@10": 1.0,
+    "recall@10": 0.04219409282700422,
+    "mrr": 1.0,
+    "map": 0.04219409282700422
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Agency.java\",\n    \"confidence\": 0.33,\n    \"rationale\": \"Central coordinator of the \\\"simple agents\\\"; controls background critique thread, schedules critics, and distributes findings to the rest of the cognitive subsystem.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Critic.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Abstract definition of the individual agent (critic) that analyses the design and produces suggestions; key to implementing the feature\u2019s logic.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Represents the active designer context and stores the current goals and decisions; many critics query it while producing advice.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Boot-straps and starts the background critique process when the application launches, ensuring agents run continuously.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ControlMech.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Implements the control mechanism that decides which critics to invoke and when, directly supporting continuous background analysis.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/StandardCM.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Concrete implementation of the control mechanism that schedules standard critics, refining how suggestions are generated.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Allows composition of several critics into a single agent, enhancing the sophistication of suggestions delivered to the designer.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoList.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Collects and manages the set of generated suggestions (to-do items) resulting from the background agents\u2019 analyses.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoItem.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Represents an individual suggestion or improvement identified by a critic; fundamental data structure exposed to the user.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrOperNameConflict.java\",\n    \"confidence\": 0.08,\n    \"rationale\": \"Concrete example of a critic detecting a specific design issue (operation name conflict), illustrating direct implementation of automatic advice.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 14073,
+    "completion_tokens": 1045,
+    "total_tokens": 15118
+  },
+  "slot": "AZ3",
+  "feature": "COGNITIVE",
+  "gold_count": 237,
+  "gold_visible": 134,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 21.9
+}

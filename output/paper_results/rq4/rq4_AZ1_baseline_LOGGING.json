@@ -7,61 +7,71 @@
       "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
       "rank": 1,
       "confidence": 0.9,
-      "rationale": "Centralized event handling likely includes logging mechanisms for debug and trace messages."
+      "rationale": "Centralized event handling and logging mechanism likely includes debug and trace functionality.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
       "rank": 2,
       "confidence": 0.85,
-      "rationale": "UndoManager may log actions for debugging purposes, especially during state changes."
+      "rationale": "UndoManager often involves logging changes for debugging purposes.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/Main.java",
       "rank": 3,
       "confidence": 0.8,
-      "rationale": "Main entry point of the application often includes initialization of logging systems."
+      "rationale": "Main entry point of the application, likely includes initialization of logging systems.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java",
       "rank": 4,
       "confidence": 0.75,
-      "rationale": "Resource loading may involve logging for debugging resource-related issues."
+      "rationale": "Resource loading often involves logging for debugging resource-related issues.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "file": "src/argouml-app/src/org/argouml/ui/HeapMonitor.java",
       "rank": 5,
       "confidence": 0.7,
-      "rationale": "Exception handling often includes logging for debugging purposes."
+      "rationale": "Heap monitoring may include debug logs for performance tracking.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/persistence/PersistenceManager.java",
       "rank": 6,
-      "confidence": 0.65,
-      "rationale": "Persistence operations may log events for debugging data storage and retrieval issues."
+      "confidence": 0.7,
+      "rationale": "Persistence operations often involve logging for debugging file and data handling.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/HeapMonitor.java",
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
       "rank": 7,
-      "confidence": 0.6,
-      "rationale": "Heap monitoring may include logging for performance and debugging purposes."
+      "confidence": 0.65,
+      "rationale": "Exception handling typically includes logging for debugging purposes.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
       "rank": 8,
-      "confidence": 0.55,
-      "rationale": "Project browsing may involve logging user actions and state changes for debugging."
+      "confidence": 0.6,
+      "rationale": "Project management interface may include logging for user actions and debugging.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
       "rank": 9,
-      "confidence": 0.5,
-      "rationale": "Configuration handling may log changes and errors for debugging purposes."
+      "confidence": 0.6,
+      "rationale": "Configuration changes are often logged for debugging and traceability.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ActionUndo.java",
+      "file": "src/argouml-app/src/org/argouml/ui/SettingsTabPreferences.java",
       "rank": 10,
-      "confidence": 0.45,
-      "rationale": "Undo actions may involve logging to track user operations and debug issues."
+      "confidence": 0.55,
+      "rationale": "Preferences settings may involve logging changes for debugging user configurations.",
+      "method": ""
     }
   ],
   "metrics": {
@@ -75,14 +85,17 @@
     "map": 0.011617341640706127
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.9, \"rationale\": \"Centralized event handling likely includes logging mechanisms for debug and trace messages.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.85, \"rationale\": \"UndoManager may log actions for debugging purposes, especially during state changes.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.8, \"rationale\": \"Main entry point of the application often includes initialization of logging systems.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java\", \"confidence\": 0.75, \"rationale\": \"Resource loading may involve logging for debugging resource-related issues.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.7, \"rationale\": \"Exception handling often includes logging for debugging purposes.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/persistence/PersistenceManager.java\", \"confidence\": 0.65, \"rationale\": \"Persistence operations may log events for debugging data storage and retrieval issues.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/HeapMonitor.java\", \"confidence\": 0.6, \"rationale\": \"Heap monitoring may include logging for performance and debugging purposes.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.55, \"rationale\": \"Project browsing may involve logging user actions and state changes for debugging.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.5, \"rationale\": \"Configuration handling may log changes and errors for debugging purposes.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/ActionUndo.java\", \"confidence\": 0.45, \"rationale\": \"Undo actions may involve logging to track user operations and debug issues.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.9, \"rationale\": \"Centralized event handling and logging mechanism likely includes debug and trace functionality.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.85, \"rationale\": \"UndoManager often involves logging changes for debugging purposes.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.8, \"rationale\": \"Main entry point of the application, likely includes initialization of logging systems.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java\", \"confidence\": 0.75, \"rationale\": \"Resource loading often involves logging for debugging resource-related issues.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/HeapMonitor.java\", \"confidence\": 0.7, \"rationale\": \"Heap monitoring may include debug logs for performance tracking.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/persistence/PersistenceManager.java\", \"confidence\": 0.7, \"rationale\": \"Persistence operations often involve logging for debugging file and data handling.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.65, \"rationale\": \"Exception handling typically includes logging for debugging purposes.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.6, \"rationale\": \"Project management interface may include logging for user actions and debugging.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.6, \"rationale\": \"Configuration changes are often logged for debugging and traceability.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/SettingsTabPreferences.java\", \"confidence\": 0.55, \"rationale\": \"Preferences settings may involve logging changes for debugging user configurations.\"}\n]",
   "usage": {
     "prompt_tokens": 12404,
-    "completion_tokens": 539,
-    "total_tokens": 12943
+    "completion_tokens": 531,
+    "total_tokens": 12935
   },
   "slot": "AZ1",
   "feature": "LOGGING",
   "gold_count": 214,
-  "elapsed_s": 9.0
+  "gold_visible": 81,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 4.7
 }

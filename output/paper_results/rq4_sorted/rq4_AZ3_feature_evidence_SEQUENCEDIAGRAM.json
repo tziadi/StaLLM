@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java",
       "rank": 1,
-      "confidence": 0.95,
-      "rationale": "Central class representing the Sequence Diagram itself, containing diagram behaviour and integration with the tool.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java",
-      "rank": 2,
-      "confidence": 0.9,
-      "rationale": "Factory that creates UMLSequenceDiagram instances; essential for constructing sequence diagrams from UI actions or loading.",
+      "confidence": 0.93,
+      "rationale": "Main concrete class representing a Sequence Diagram type inside the sequence2 diagram subsystem; central to creation, behaviour and persistence of sequence diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java",
-      "rank": 3,
-      "confidence": 0.85,
-      "rationale": "Defines the underlying graph model (objects, lifelines, messages) that backs the Sequence Diagram view.",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Provides the graph model (semantic backbone) for sequence diagrams, defining how UML interaction elements map to diagram nodes/edges.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java",
-      "rank": 4,
-      "confidence": 0.83,
-      "rationale": "Responsible for visual rendering of sequence diagram elements on screen; directly supports the feature\u2019s UI.",
+      "rank": 3,
+      "confidence": 0.88,
+      "rationale": "Responsible for rendering figures for sequence-diagram elements (objects, lifelines, messages), thus directly supports visual display.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java",
-      "rank": 5,
-      "confidence": 0.8,
-      "rationale": "UI action that allows the user to create/open a Sequence Diagram; entry point from menus/toolbars.",
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java",
+      "rank": 4,
+      "confidence": 0.85,
+      "rationale": "Factory that instantiates UMLSequenceDiagram objects and associated graph models/renderers; key to creating new sequence diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java",
+      "rank": 5,
+      "confidence": 0.82,
+      "rationale": "Module activator/registrar that integrates the sequence2 diagram implementation into ArgoUML; without it the feature is unavailable.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java",
       "rank": 6,
-      "confidence": 0.78,
-      "rationale": "Module descriptor that registers the sequence-diagram subsystem (factory, renderer) with ArgoUML.",
+      "confidence": 0.75,
+      "rationale": "Legacy or fa\u00e7ade class in core app package representing a sequence diagram; still relevant for compatibility and high-level operations.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramPropPanelFactory.java",
       "rank": 7,
-      "confidence": 0.72,
-      "rationale": "Supplies property panels for sequence diagram elements, refining user interaction with the diagram.",
+      "confidence": 0.7,
+      "rationale": "Creates property panels specific to sequence diagrams, allowing users to edit diagram properties; directly supports the feature\u2019s UI.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java",
       "rank": 8,
-      "confidence": 0.65,
-      "rationale": "Legacy/alternative sequence diagram class living in main app; still pertinent for feature support or backward compatibility.",
+      "confidence": 0.68,
+      "rationale": "UI action that the user invokes to create/open a sequence diagram; bridges menu/toolbar interaction with diagram creation logic.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
       "rank": 9,
-      "confidence": 0.55,
-      "rationale": "Explorer navigation rule linking classifiers to their sequence diagrams, facilitating access to the feature.",
+      "confidence": 0.6,
+      "rationale": "Explorer navigation rule exposing sequence diagrams under classifiers, enhancing usability and navigation for the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
       "rank": 10,
-      "confidence": 0.53,
-      "rationale": "Explorer rule that connects operations to relevant sequence diagrams, aiding feature integration in model navigation.",
+      "confidence": 0.58,
+      "rationale": "Explorer rule that links operations to sequence diagrams representing their behaviour, providing contextual access to the feature.",
       "method": ""
     }
   ],
@@ -82,14 +82,14 @@
     "hit@10": 1.0,
     "recall@10": 0.11392405063291139,
     "mrr": 1.0,
-    "map": 0.11125175808720114
+    "map": 0.107861161342174
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Central class representing the Sequence Diagram itself, containing diagram behaviour and integration with the tool.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Factory that creates UMLSequenceDiagram instances; essential for constructing sequence diagrams from UI actions or loading.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Defines the underlying graph model (objects, lifelines, messages) that backs the Sequence Diagram view.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Responsible for visual rendering of sequence diagram elements on screen; directly supports the feature\u2019s UI.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"UI action that allows the user to create/open a Sequence Diagram; entry point from menus/toolbars.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Module descriptor that registers the sequence-diagram subsystem (factory, renderer) with ArgoUML.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramPropPanelFactory.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Supplies property panels for sequence diagram elements, refining user interaction with the diagram.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Legacy/alternative sequence diagram class living in main app; still pertinent for feature support or backward compatibility.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Explorer navigation rule linking classifiers to their sequence diagrams, facilitating access to the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\",\n    \"confidence\": 0.53,\n    \"rationale\": \"Explorer rule that connects operations to relevant sequence diagrams, aiding feature integration in model navigation.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Main concrete class representing a Sequence Diagram type inside the sequence2 diagram subsystem; central to creation, behaviour and persistence of sequence diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Provides the graph model (semantic backbone) for sequence diagrams, defining how UML interaction elements map to diagram nodes/edges.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Responsible for rendering figures for sequence-diagram elements (objects, lifelines, messages), thus directly supports visual display.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Factory that instantiates UMLSequenceDiagram objects and associated graph models/renderers; key to creating new sequence diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramModule.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Module activator/registrar that integrates the sequence2 diagram implementation into ArgoUML; without it the feature is unavailable.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/SequenceDiagram.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Legacy or fa\u00e7ade class in core app package representing a sequence diagram; still relevant for compatibility and high-level operations.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/SequenceDiagramPropPanelFactory.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Creates property panels specific to sequence diagrams, allowing users to edit diagram properties; directly supports the feature\u2019s UI.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"UI action that the user invokes to create/open a sequence diagram; bridges menu/toolbar interaction with diagram creation logic.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Explorer navigation rule exposing sequence diagrams under classifiers, enhancing usability and navigation for the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\",\n    \"confidence\": 0.58,\n    \"rationale\": \"Explorer rule that links operations to sequence diagrams representing their behaviour, providing contextual access to the feature.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 12489,
-    "completion_tokens": 1264,
-    "total_tokens": 13753
+    "prompt_tokens": 12432,
+    "completion_tokens": 1306,
+    "total_tokens": 13738
   },
   "slot": "AZ3",
   "feature": "SEQUENCEDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 19,
   "candidate_order": "keyword_sorted",
   "run": 1,
-  "elapsed_s": 14.9
+  "elapsed_s": 9.5
 }

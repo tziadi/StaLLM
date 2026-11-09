@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 1,
       "confidence": 0.95,
-      "rationale": "File name and location suggest it is for developer tools, likely to contain debug and trace message mechanisms.",
+      "rationale": "Likely contains debug and trace message utilities based on its name and location in a util/logging package.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/Main.java",
       "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Main entry point; often configures debug and trace output for the application.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Utility class; may provide methods for debug and trace message output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java",
+      "rank": 4,
+      "confidence": 0.88,
+      "rationale": "Utility class for runtime operations; may include debug/trace message handling.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 5,
+      "confidence": 0.87,
+      "rationale": "API entry point; likely to expose debug and trace message configuration.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java",
+      "rank": 6,
       "confidence": 0.85,
-      "rationale": "Main entry point; often configures or initializes debug/trace output for the application.",
+      "rationale": "Helpers often include logging/debugging support for resource loading.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 7,
+      "confidence": 0.84,
+      "rationale": "Exception handler; likely to output debug and trace messages for errors.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "rank": 8,
+      "confidence": 0.82,
+      "rationale": "Status bar UI; may display debug/trace messages to users or developers.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 9,
+      "confidence": 0.8,
+      "rationale": "Central UI component; may provide debug/trace output for project events.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "Handles application events, likely to include debug/trace hooks for event flow.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
-      "rank": 4,
-      "confidence": 0.75,
-      "rationale": "Central cognitive component; may include debug/trace for design reasoning or problem areas.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java",
-      "rank": 5,
-      "confidence": 0.7,
-      "rationale": "Diagram rendering may include trace/debug for visual updates and issues.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/Notation.java",
-      "rank": 6,
-      "confidence": 0.65,
-      "rationale": "Notation processing can be a source of trace/debug output for parsing and rendering.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/util/UIUtils.java",
-      "rank": 7,
-      "confidence": 0.6,
-      "rationale": "Utility class for UI, often includes debug/trace helpers for UI events.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
-      "rank": 8,
-      "confidence": 0.55,
-      "rationale": "Handles configuration, possibly including debug/trace settings.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFigUtil.java",
-      "rank": 9,
-      "confidence": 0.5,
-      "rationale": "Utility for diagram figures, may include trace/debug for drawing issues.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/FigTrace.java",
       "rank": 10,
-      "confidence": 0.5,
-      "rationale": "Class name directly references 'Trace', likely related to trace messages or elements.",
+      "confidence": 0.78,
+      "rationale": "Event pump; likely to trace/debug events and message flows in the application.",
       "method": ""
     }
   ],
@@ -82,20 +82,20 @@
     "hit@10": 1.0,
     "recall@10": 0.02336448598130841,
     "mrr": 0.5,
-    "map": 0.014291277258566977
+    "map": 0.012668743509865006
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\", \"confidence\": 0.95, \"rationale\": \"File name and location suggest it is for developer tools, likely to contain debug and trace message mechanisms.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.85, \"rationale\": \"Main entry point; often configures or initializes debug/trace output for the application.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.8, \"rationale\": \"Handles application events, likely to include debug/trace hooks for event flow.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.75, \"rationale\": \"Central cognitive component; may include debug/trace for design reasoning or problem areas.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java\", \"confidence\": 0.7, \"rationale\": \"Diagram rendering may include trace/debug for visual updates and issues.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/notation/Notation.java\", \"confidence\": 0.65, \"rationale\": \"Notation processing can be a source of trace/debug output for parsing and rendering.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/util/UIUtils.java\", \"confidence\": 0.6, \"rationale\": \"Utility class for UI, often includes debug/trace helpers for UI events.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.55, \"rationale\": \"Handles configuration, possibly including debug/trace settings.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFigUtil.java\", \"confidence\": 0.5, \"rationale\": \"Utility for diagram figures, may include trace/debug for drawing issues.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/FigTrace.java\", \"confidence\": 0.5, \"rationale\": \"Class name directly references 'Trace', likely related to trace messages or elements.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.95, \"rationale\": \"Likely contains debug and trace message utilities based on its name and location in a util/logging package.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.92, \"rationale\": \"Main entry point; often configures debug and trace output for the application.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\", \"confidence\": 0.90, \"rationale\": \"Utility class; may provide methods for debug and trace message output.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java\", \"confidence\": 0.88, \"rationale\": \"Utility class for runtime operations; may include debug/trace message handling.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\", \"confidence\": 0.87, \"rationale\": \"API entry point; likely to expose debug and trace message configuration.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java\", \"confidence\": 0.85, \"rationale\": \"Helpers often include logging/debugging support for resource loading.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\", \"confidence\": 0.84, \"rationale\": \"Exception handler; likely to output debug and trace messages for errors.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\", \"confidence\": 0.82, \"rationale\": \"Status bar UI; may display debug/trace messages to users or developers.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.80, \"rationale\": \"Central UI component; may provide debug/trace output for project events.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.78, \"rationale\": \"Event pump; likely to trace/debug events and message flows in the application.\"}\n]",
   "usage": {
-    "prompt_tokens": 13898,
-    "completion_tokens": 571,
-    "total_tokens": 14469
+    "prompt_tokens": 13460,
+    "completion_tokens": 568,
+    "total_tokens": 14028
   },
   "slot": "AZ2",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 74,
+  "gold_visible": 111,
   "candidate_order": "bm25_masked",
   "run": 1,
-  "elapsed_s": 7.2
+  "elapsed_s": 4.8
 }

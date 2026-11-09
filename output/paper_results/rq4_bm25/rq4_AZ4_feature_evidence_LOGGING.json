@@ -4,98 +4,98 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/util/osdep/OSXAdapter.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 1,
-      "confidence": 0.8,
-      "rationale": "OSXAdapter might handle logging or debugging specific to macOS, which is relevant for a feature focused on debug log and trace messages.",
+      "confidence": 0.9,
+      "rationale": "This file is directly related to logging, as indicated by its package and class name.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
       "rank": 2,
-      "confidence": 0.7,
-      "rationale": "ProjectBrowser could be involved in logging user actions or project-related events, which are important for debugging.",
+      "confidence": 0.8,
+      "rationale": "This file is related to logging and exception handling, which is closely tied to logging for debugging purposes.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java",
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
       "rank": 3,
-      "confidence": 0.7,
-      "rationale": "ArgoDiagramImpl might log diagram-related events or changes, which are crucial for debugging the application's behavior.",
+      "confidence": 0.8,
+      "rationale": "This file is related to exception handling, which is often used in conjunction with logging for debugging.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionSaveGraphics.java",
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
       "rank": 4,
-      "confidence": 0.6,
-      "rationale": "ActionSaveGraphics could log actions related to saving graphics, which might be part of the debugging process.",
+      "confidence": 0.7,
+      "rationale": "This file is related to event handling, which can be used to log events for debugging purposes.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java",
+      "file": "src/argouml-app/src/org/argouml/kernel/ProjectImpl.java",
       "rank": 5,
-      "confidence": 0.6,
-      "rationale": "ModelEventPumpMDRImpl handles model events, which could include logging of model changes relevant for debugging.",
+      "confidence": 0.7,
+      "rationale": "This file is related to project management, which may include logging for debugging purposes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/ProjectManager.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "This file is related to project management, which may include logging for debugging purposes.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
-      "rank": 6,
-      "confidence": 0.6,
-      "rationale": "ExceptionDialog could log exceptions, which are a key part of debugging and tracing application behavior.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/persistence/ZipFilePersister.java",
       "rank": 7,
       "confidence": 0.6,
-      "rationale": "ZipFilePersister might log file operations, which could be relevant for debugging file handling issues.",
+      "rationale": "This file is related to exception handling, which is often used in conjunction with logging for debugging.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/ExplorerEventAdaptor.java",
+      "file": "src/argouml-app/src/org/argouml/ui/HelpListener.java",
       "rank": 8,
       "confidence": 0.6,
-      "rationale": "ExplorerEventAdaptor could log events related to the explorer, which might be useful for debugging user interactions.",
+      "rationale": "This file is related to help functionality, which may include logging for debugging purposes.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
+      "file": "src/argouml-app/src/org/argouml/ui/HelpBox.java",
       "rank": 9,
-      "confidence": 0.5,
-      "rationale": "ConfigurationProperties could log configuration changes, which might be relevant for debugging configuration issues.",
+      "confidence": 0.6,
+      "rationale": "This file is related to help functionality, which may include logging for debugging purposes.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/persistence/ModelMemberFilePersister.java",
+      "file": "src/argouml-app/src/org/argouml/ui/ArgoFrame.java",
       "rank": 10,
-      "confidence": 0.5,
-      "rationale": "ModelMemberFilePersister might log model member file operations, which could be relevant for debugging file handling issues.",
+      "confidence": 0.6,
+      "rationale": "This file is related to the main application frame, which may include logging for debugging purposes.",
       "method": ""
     }
   ],
   "metrics": {
-    "hit@1": 1.0,
-    "recall@1": 0.004672897196261682,
+    "hit@1": 0.0,
+    "recall@1": 0.0,
     "hit@5": 1.0,
-    "recall@5": 0.02336448598130841,
+    "recall@5": 0.014018691588785047,
     "hit@10": 1.0,
-    "recall@10": 0.04205607476635514,
-    "mrr": 1.0,
-    "map": 0.03981790535528853
+    "recall@10": 0.02336448598130841,
+    "mrr": 0.5,
+    "map": 0.013187954309449636
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "```json\n[\n    {\n        \"rank\": 1,\n        \"file\": \"src/argouml-app/src/org/argouml/util/osdep/OSXAdapter.java\",\n        \"confidence\": 0.8,\n        \"rationale\": \"OSXAdapter might handle logging or debugging specific to macOS, which is relevant for a feature focused on debug log and trace messages.\"\n    },\n    {\n        \"rank\": 2,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"ProjectBrowser could be involved in logging user actions or project-related events, which are important for debugging.\"\n    },\n    {\n        \"rank\": 3,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"ArgoDiagramImpl might log diagram-related events or changes, which are crucial for debugging the application's behavior.\"\n    },\n    {\n        \"rank\": 4,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionSaveGraphics.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"ActionSaveGraphics could log actions related to saving graphics, which might be part of the debugging process.\"\n    },\n    {\n        \"rank\": 5,\n        \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"ModelEventPumpMDRImpl handles model events, which could include logging of model changes relevant for debugging.\"\n    },\n    {\n        \"rank\": 6,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"ExceptionDialog could log exceptions, which are a key part of debugging and tracing application behavior.\"\n    },\n    {\n        \"rank\": 7,\n        \"file\": \"src/argouml-app/src/org/argouml/persistence/ZipFilePersister.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"ZipFilePersister might log file operations, which could be relevant for debugging file handling issues.\"\n    },\n    {\n        \"rank\": 8,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/ExplorerEventAdaptor.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"ExplorerEventAdaptor could log events related to the explorer, which might be useful for debugging user interactions.\"\n    },\n    {\n        \"rank\": 9,\n        \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\",\n        \"confidence\": 0.5,\n        \"rationale\": \"ConfigurationProperties could log configuration changes, which might be relevant for debugging configuration issues.\"\n    },\n    {\n        \"rank\": 10,\n        \"file\": \"src/argouml-app/src/org/argouml/persistence/ModelMemberFilePersister.java\",\n        \"confidence\": 0.5,\n        \"rationale\": \"ModelMemberFilePersister might log model member file operations, which could be relevant for debugging file handling issues.\"\n    }\n]\n```",
+  "raw_response": "```json\n[\n    {\n        \"rank\": 1,\n        \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n        \"confidence\": 0.9,\n        \"rationale\": \"This file is directly related to logging, as indicated by its package and class name.\"\n    },\n    {\n        \"rank\": 2,\n        \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n        \"confidence\": 0.8,\n        \"rationale\": \"This file is related to logging and exception handling, which is closely tied to logging for debugging purposes.\"\n    },\n    {\n        \"rank\": 3,\n        \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n        \"confidence\": 0.8,\n        \"rationale\": \"This file is related to exception handling, which is often used in conjunction with logging for debugging.\"\n    },\n    {\n        \"rank\": 4,\n        \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"This file is related to event handling, which can be used to log events for debugging purposes.\"\n    },\n    {\n        \"rank\": 5,\n        \"file\": \"src/argouml-app/src/org/argouml/kernel/ProjectImpl.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"This file is related to project management, which may include logging for debugging purposes.\"\n    },\n    {\n        \"rank\": 6,\n        \"file\": \"src/argouml-app/src/org/argouml/kernel/ProjectManager.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"This file is related to project management, which may include logging for debugging purposes.\"\n    },\n    {\n        \"rank\": 7,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file is related to exception handling, which is often used in conjunction with logging for debugging.\"\n    },\n    {\n        \"rank\": 8,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/HelpListener.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file is related to help functionality, which may include logging for debugging purposes.\"\n    },\n    {\n        \"rank\": 9,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/HelpBox.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file is related to help functionality, which may include logging for debugging purposes.\"\n    },\n    {\n        \"rank\": 10,\n        \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoFrame.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file is related to the main application frame, which may include logging for debugging purposes.\"\n    }\n]\n```",
   "usage": {
-    "prompt_tokens": 12217,
-    "completion_tokens": 714,
-    "total_tokens": 12931
+    "prompt_tokens": 11715,
+    "completion_tokens": 654,
+    "total_tokens": 12369
   },
   "slot": "AZ4",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 122,
+  "gold_visible": 167,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 4567.7
+  "elapsed_s": 1318.0
 }

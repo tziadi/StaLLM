@@ -7,70 +7,70 @@
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
       "rank": 1,
       "confidence": 1.0,
-      "rationale": "File name directly references 'SequenceDiagram', indicating it is likely responsible for navigation or representation of sequence diagrams in the explorer UI.",
+      "rationale": "File name directly references 'SequenceDiagram', strongly indicating it implements navigation or support for sequence diagrams in the explorer UI.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
       "rank": 2,
-      "confidence": 0.95,
-      "rationale": "File name explicitly mentions 'SequenceDiagram' and 'Operation', suggesting it handles navigation from operations to sequence diagrams, which is core to the feature.",
+      "confidence": 0.98,
+      "rationale": "File name explicitly mentions 'SequenceDiagram', suggesting it handles operations related to sequence diagrams, likely supporting feature navigation or linking.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/SDNotationSettings.java",
       "rank": 3,
-      "confidence": 0.9,
-      "rationale": "'SD' likely stands for 'Sequence Diagram'; this file probably manages notation settings specific to sequence diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
-      "rank": 4,
-      "confidence": 0.9,
-      "rationale": "File name includes 'SDMessage', indicating it handles message notation for sequence diagrams in UML.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
-      "rank": 5,
-      "confidence": 0.8,
-      "rationale": "Collaboration diagrams are closely related to sequence diagrams in UML; this file may support navigation relevant to sequence diagram features.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
-      "rank": 6,
-      "confidence": 0.8,
-      "rationale": "Handles navigation from collaborations to diagrams, which may include sequence diagrams as a type of interaction diagram.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
-      "rank": 7,
-      "confidence": 0.75,
-      "rationale": "Sequence diagrams model interactions and messages; this file likely supports message navigation within interaction diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
-      "rank": 8,
-      "confidence": 0.7,
-      "rationale": "Handles UML message notation, which is a core element of sequence diagrams.",
+      "confidence": 0.95,
+      "rationale": "SD likely stands for 'Sequence Diagram'; this file manages notation settings specific to sequence diagrams, directly supporting their rendering and configuration.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
-      "rank": 9,
-      "confidence": 0.7,
-      "rationale": "General message notation provider, likely used by sequence diagrams to render messages between objects.",
+      "rank": 4,
+      "confidence": 0.92,
+      "rationale": "Messages are core elements in sequence diagrams; this file likely handles their notation, which is essential for sequence diagram display and editing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
+      "rank": 5,
+      "confidence": 0.91,
+      "rationale": "SD prefix and 'Message' indicate this file deals with sequence diagram messages in UML notation, directly supporting sequence diagram semantics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Collaboration diagrams are closely related to sequence diagrams in UML; this file may support navigation or linking between these diagram types.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
+      "rank": 7,
+      "confidence": 0.83,
+      "rationale": "Collaboration is a key concept in interaction diagrams, including sequence diagrams; this file likely supports related navigation or linking.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java",
+      "rank": 8,
+      "confidence": 0.82,
+      "rationale": "Interactions are modeled in sequence diagrams; this file likely supports navigation from collaboration to interaction, relevant to the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
+      "rank": 9,
+      "confidence": 0.81,
+      "rationale": "Sequence diagrams model interactions via messages; this file likely supports navigation from interaction to messages, directly relevant.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
       "rank": 10,
-      "confidence": 0.7,
-      "rationale": "Supports navigation from collaborations to interactions, which are modeled by sequence diagrams.",
+      "confidence": 0.8,
+      "rationale": "Handles UML notation for messages, which are fundamental to sequence diagrams, supporting their display and editing.",
       "method": ""
     }
   ],
@@ -85,11 +85,11 @@
     "map": 0.02531645569620253
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 1.0,\n    \"rationale\": \"File name directly references 'SequenceDiagram', indicating it is likely responsible for navigation or representation of sequence diagrams in the explorer UI.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"File name explicitly mentions 'SequenceDiagram' and 'Operation', suggesting it handles navigation from operations to sequence diagrams, which is core to the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/SDNotationSettings.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"'SD' likely stands for 'Sequence Diagram'; this file probably manages notation settings specific to sequence diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"File name includes 'SDMessage', indicating it handles message notation for sequence diagrams in UML.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Collaboration diagrams are closely related to sequence diagrams in UML; this file may support navigation relevant to sequence diagram features.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles navigation from collaborations to diagrams, which may include sequence diagrams as a type of interaction diagram.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Sequence diagrams model interactions and messages; this file likely supports message navigation within interaction diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Handles UML message notation, which is a core element of sequence diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"General message notation provider, likely used by sequence diagrams to render messages between objects.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Supports navigation from collaborations to interactions, which are modeled by sequence diagrams.\"\n  }\n]\n```",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 1.0,\n    \"rationale\": \"File name directly references 'SequenceDiagram', strongly indicating it implements navigation or support for sequence diagrams in the explorer UI.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"File name explicitly mentions 'SequenceDiagram', suggesting it handles operations related to sequence diagrams, likely supporting feature navigation or linking.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/SDNotationSettings.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"SD likely stands for 'Sequence Diagram'; this file manages notation settings specific to sequence diagrams, directly supporting their rendering and configuration.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Messages are core elements in sequence diagrams; this file likely handles their notation, which is essential for sequence diagram display and editing.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"SD prefix and 'Message' indicate this file deals with sequence diagram messages in UML notation, directly supporting sequence diagram semantics.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Collaboration diagrams are closely related to sequence diagrams in UML; this file may support navigation or linking between these diagram types.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Collaboration is a key concept in interaction diagrams, including sequence diagrams; this file likely supports related navigation or linking.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Interactions are modeled in sequence diagrams; this file likely supports navigation from collaboration to interaction, relevant to the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.81,\n    \"rationale\": \"Sequence diagrams model interactions via messages; this file likely supports navigation from interaction to messages, directly relevant.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles UML notation for messages, which are fundamental to sequence diagrams, supporting their display and editing.\"\n  }\n]",
   "usage": {
     "prompt_tokens": 12438,
-    "completion_tokens": 729,
-    "total_tokens": 13167
+    "completion_tokens": 760,
+    "total_tokens": 13198
   },
   "slot": "AZ2",
   "feature": "SEQUENCEDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 12,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 11.2
+  "elapsed_s": 5.1
 }

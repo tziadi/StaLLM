@@ -91,12 +91,15 @@ class ChatModel:
                 raise ValueError("Azure key missing. Set AZURE_OPENAI_API_KEY or provide <SLOT>_API_KEY.")
             if not endpoint:
                 raise ValueError("Azure endpoint missing. Set AZURE_OPENAI_ENDPOINT or provide <SLOT>_API_BASE.")
-            self.client = AzureOpenAI(api_key=key, api_version=version or "2024-05-01-preview", azure_endpoint=endpoint)
+            # A request timeout keeps a dropped connection (e.g. after a sleep) from hanging a run.
+            self.client = AzureOpenAI(api_key=key, api_version=version or "2024-05-01-preview", azure_endpoint=endpoint,
+                                      timeout=float(os.getenv("STALLM_HTTP_TIMEOUT", "300")), max_retries=3)
 
         elif prov == "openai":
             self.client = OpenAI(
                 api_key=cfg.api_key or os.getenv("OPENAI_API_KEY"),
                 base_url=(cfg.api_base or os.getenv("OPENAI_BASE_URL") or None),
+                timeout=float(os.getenv("STALLM_HTTP_TIMEOUT", "300")), max_retries=3,
             )
 
         elif prov == "ollama":

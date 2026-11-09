@@ -1,0 +1,89 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "File is located in a logging-specific package and likely contains logging-related functionality."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "File is in the logging package and may involve timing-related logging or debugging."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Handles events in the application, which may include logging events."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Main entry point of the application, likely to include initialization of logging mechanisms."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Handles resource loading, which may include logging for debugging purposes."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Exception handler, likely to include logging for error tracking."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "Manages undo operations, which may involve logging changes for debugging."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Handles exceptions in the UI, likely to include logging for debugging purposes."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/taskmgmt/ProgressMonitor.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "Monitors progress, which may involve logging progress updates or issues."
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/PersistenceManager.java",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Manages persistence, which may include logging for tracking save/load operations."
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.014018691588785047,
+    "mrr": 1.0,
+    "map": 0.011292834890965732
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\", \"confidence\": 0.95, \"rationale\": \"File is located in a logging-specific package and likely contains logging-related functionality.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.9, \"rationale\": \"File is in the logging package and may involve timing-related logging or debugging.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.85, \"rationale\": \"Handles events in the application, which may include logging events.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.8, \"rationale\": \"Main entry point of the application, likely to include initialization of logging mechanisms.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/helpers/ResourceLoader.java\", \"confidence\": 0.75, \"rationale\": \"Handles resource loading, which may include logging for debugging purposes.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\", \"confidence\": 0.7, \"rationale\": \"Exception handler, likely to include logging for error tracking.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.65, \"rationale\": \"Manages undo operations, which may involve logging changes for debugging.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.6, \"rationale\": \"Handles exceptions in the UI, likely to include logging for debugging purposes.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/taskmgmt/ProgressMonitor.java\", \"confidence\": 0.55, \"rationale\": \"Monitors progress, which may involve logging progress updates or issues.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/persistence/PersistenceManager.java\", \"confidence\": 0.5, \"rationale\": \"Manages persistence, which may include logging for tracking save/load operations.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12383,
+    "completion_tokens": 562,
+    "total_tokens": 12945
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "candidate_order": "keyword_sorted",
+  "elapsed_s": 5.5
+}

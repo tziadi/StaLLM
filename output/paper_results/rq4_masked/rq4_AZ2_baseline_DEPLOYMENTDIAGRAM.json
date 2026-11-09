@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java",
       "rank": 1,
-      "confidence": 0.95,
-      "rationale": "File name directly references 'DeploymentDiagram', which matches the description of a diagram modeling run-time architecture and mapping software to hardware nodes.",
+      "confidence": 0.98,
+      "rationale": "File name and path directly reference 'DeploymentDiagram', which is the UML diagram type that models run-time architecture, nodes, and mapping of software artifacts.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java",
       "rank": 2,
+      "confidence": 0.92,
+      "rationale": "Handles the graph model for deployment diagrams, likely containing logic for nodes and artifact mapping.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java",
+      "rank": 3,
       "confidence": 0.85,
-      "rationale": "Central UML diagram class likely handles different diagram types, including deployment diagrams.",
+      "rationale": "Action class for creating or manipulating deployment diagrams, directly related to the query.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Factory for creating diagrams, likely includes deployment diagrams among others.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/UMLDiagram.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Base class for UML diagrams, may contain shared logic for deployment diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagram.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "Base diagram class; deployment diagrams may extend or be registered here.",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "General diagram class, possibly relevant for diagram types including deployment diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java",
-      "rank": 4,
-      "confidence": 0.75,
-      "rationale": "Implementation of the main diagram class, possibly containing logic for deployment diagrams.",
+      "rank": 7,
+      "confidence": 0.6,
+      "rationale": "Implementation of the general diagram class, may contain deployment diagram specifics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactoryInterface.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "Interface for diagram factories, likely includes deployment diagram creation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ProjectMemberDiagram.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Represents diagrams as project members, relevant for all diagram types including deployment.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramSettings.java",
-      "rank": 5,
-      "confidence": 0.7,
-      "rationale": "Diagram settings may include deployment diagram-specific options.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java",
-      "rank": 6,
-      "confidence": 0.65,
-      "rationale": "Handles appearance for diagrams, possibly including deployment diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/UmlDiagramRenderer.java",
-      "rank": 7,
-      "confidence": 0.6,
-      "rationale": "Responsible for rendering UML diagrams, including deployment diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/TabDiagram.java",
-      "rank": 8,
-      "confidence": 0.55,
-      "rationale": "UI tab for diagrams, likely includes deployment diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedContainer.java",
-      "rank": 9,
-      "confidence": 0.5,
-      "rationale": "Handles layout for diagram containers, relevant for node/artifact mapping in deployment diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedNode.java",
       "rank": 10,
       "confidence": 0.45,
-      "rationale": "Handles layout for nodes, which are central to deployment diagrams.",
+      "rationale": "Settings for diagrams, may include deployment diagram-specific options.",
       "method": ""
     }
   ],
@@ -78,24 +78,24 @@
     "hit@1": 1.0,
     "recall@1": 0.03125,
     "hit@5": 1.0,
-    "recall@5": 0.03125,
+    "recall@5": 0.125,
     "hit@10": 1.0,
-    "recall@10": 0.0625,
+    "recall@10": 0.125,
     "mrr": 1.0,
-    "map": 0.040178571428571425
+    "map": 0.125
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"File name directly references 'DeploymentDiagram', which matches the description of a diagram modeling run-time architecture and mapping software to hardware nodes.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Central UML diagram class likely handles different diagram types, including deployment diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Base diagram class; deployment diagrams may extend or be registered here.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Implementation of the main diagram class, possibly containing logic for deployment diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramSettings.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Diagram settings may include deployment diagram-specific options.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramAppearance.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Handles appearance for diagrams, possibly including deployment diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/UmlDiagramRenderer.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Responsible for rendering UML diagrams, including deployment diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/TabDiagram.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"UI tab for diagrams, likely includes deployment diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedContainer.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Handles layout for diagram containers, relevant for node/artifact mapping in deployment diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/layout/LayoutedNode.java\",\n    \"confidence\": 0.45,\n    \"rationale\": \"Handles layout for nodes, which are central to deployment diagrams.\"\n  }\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/ui/UMLDeploymentDiagram.java\", \"confidence\": 0.98, \"rationale\": \"File name and path directly reference 'DeploymentDiagram', which is the UML diagram type that models run-time architecture, nodes, and mapping of software artifacts.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/deployment/DeploymentDiagramGraphModel.java\", \"confidence\": 0.92, \"rationale\": \"Handles the graph model for deployment diagrams, likely containing logic for nodes and artifact mapping.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionDeploymentDiagram.java\", \"confidence\": 0.85, \"rationale\": \"Action class for creating or manipulating deployment diagrams, directly related to the query.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\", \"confidence\": 0.75, \"rationale\": \"Factory for creating diagrams, likely includes deployment diagrams among others.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/UMLDiagram.java\", \"confidence\": 0.7, \"rationale\": \"Base class for UML diagrams, may contain shared logic for deployment diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagram.java\", \"confidence\": 0.65, \"rationale\": \"General diagram class, possibly relevant for diagram types including deployment diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\", \"confidence\": 0.6, \"rationale\": \"Implementation of the general diagram class, may contain deployment diagram specifics.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactoryInterface.java\", \"confidence\": 0.55, \"rationale\": \"Interface for diagram factories, likely includes deployment diagram creation.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ProjectMemberDiagram.java\", \"confidence\": 0.5, \"rationale\": \"Represents diagrams as project members, relevant for all diagram types including deployment.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramSettings.java\", \"confidence\": 0.45, \"rationale\": \"Settings for diagrams, may include deployment diagram-specific options.\"}\n]",
   "usage": {
-    "prompt_tokens": 13639,
-    "completion_tokens": 644,
-    "total_tokens": 14283
+    "prompt_tokens": 13039,
+    "completion_tokens": 606,
+    "total_tokens": 13645
   },
   "slot": "AZ2",
   "feature": "DEPLOYMENTDIAGRAM",
   "gold_count": 32,
-  "gold_visible": 6,
+  "gold_visible": 11,
   "candidate_order": "bm25_masked",
   "run": 1,
-  "elapsed_s": 9.4
+  "elapsed_s": 5.8
 }

@@ -79,9 +79,12 @@ def rq3_stability(md: list[str]) -> None:
         # (b) Paired bootstrap over samples.
         heur = {r["sample_id"]: bool(r["predicted"])
                 for r in aps._load(base / f"rq3b_metric_heuristic_{ds}.json")["rows"]}
-        ids = [r["sample_id"] for r in run1[0]["rows"]]
-        gold = {r["sample_id"]: bool(r["gold"]) for r in run1[0]["rows"]}
-        preds = [{r["sample_id"]: bool(r["predicted"]) for r in d["rows"]} for d in run1]
+        # Majority vote over the runs of each configuration, as in Table 3.
+        voted = sorted(aps.rq3_voted(runs), key=lambda d: (d["slot"], d["prompt"]))
+        assert [f"{d['slot']}/{d['prompt']}" for d in voted] == names
+        ids = [r["sample_id"] for r in voted[0]["rows"]]
+        gold = {r["sample_id"]: bool(r["gold"]) for r in voted[0]["rows"]}
+        preds = [{r["sample_id"]: bool(r["predicted"]) for r in d["rows"]} for d in voted]
 
         def score_all(sample: list[str], oracle: dict[str, bool]) -> tuple[list[float], list[float]]:
             g = [oracle[i] for i in sample]

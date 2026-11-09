@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-activitydiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Central class representing the Activity Diagram type; name directly matches the feature and likely coordinates model, view, and controller aspects.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java",
+      "rank": 2,
+      "confidence": 0.8,
+      "rationale": "Renderer responsible for drawing Activity diagram elements; critical visual support for the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java",
+      "rank": 3,
+      "confidence": 0.75,
+      "rationale": "Provides automatic layout for Activity diagrams; directly refines the feature\u2019s presentation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/CreateDiagramElementAction.java",
+      "rank": 4,
+      "confidence": 0.6,
+      "rationale": "Action class specific to the activity2 module that creates diagram elements, clearly supporting Activity diagram editing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/DiagramElementBuilder.java",
+      "rank": 5,
+      "confidence": 0.55,
+      "rationale": "Builder for Activity diagram elements in the new activity2 module; supports constructing the workflow representation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ModePlaceDiagramElement.java",
+      "rank": 6,
+      "confidence": 0.52,
+      "rationale": "Interaction mode used when placing Activity diagram nodes; directly tied to editing the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java",
+      "rank": 7,
+      "confidence": 0.5,
+      "rationale": "Handles selection behaviour for Action-State figures which are core nodes in Activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/FigBaseNode.java",
+      "rank": 8,
+      "confidence": 0.48,
+      "rationale": "Base figure class for nodes in the activity2 diagrams; underpins visual representation of activities.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/FigNamedRRect.java",
+      "rank": 9,
+      "confidence": 0.46,
+      "rationale": "Concrete figure used to draw rounded-rectangle nodes (typical for activities); supports Activity diagram visuals.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/behavior/activity_graphs/ActionAddEventAsTrigger.java",
+      "rank": 10,
+      "confidence": 0.42,
+      "rationale": "UI action under activity_graphs package that adds triggers to actions; functionally linked to defining workflow behaviour in Activity diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.010638297872340425,
+    "hit@5": 1.0,
+    "recall@5": 0.031914893617021274,
+    "hit@10": 1.0,
+    "recall@10": 0.05319148936170213,
+    "mrr": 1.0,
+    "map": 0.04331306990881459
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Central class representing the Activity Diagram type; name directly matches the feature and likely coordinates model, view, and controller aspects.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Renderer responsible for drawing Activity diagram elements; critical visual support for the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Provides automatic layout for Activity diagrams; directly refines the feature\u2019s presentation.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/CreateDiagramElementAction.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Action class specific to the activity2 module that creates diagram elements, clearly supporting Activity diagram editing.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/DiagramElementBuilder.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Builder for Activity diagram elements in the new activity2 module; supports constructing the workflow representation.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ModePlaceDiagramElement.java\",\n    \"confidence\": 0.52,\n    \"rationale\": \"Interaction mode used when placing Activity diagram nodes; directly tied to editing the feature.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Handles selection behaviour for Action-State figures which are core nodes in Activity diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/FigBaseNode.java\",\n    \"confidence\": 0.48,\n    \"rationale\": \"Base figure class for nodes in the activity2 diagrams; underpins visual representation of activities.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/FigNamedRRect.java\",\n    \"confidence\": 0.46,\n    \"rationale\": \"Concrete figure used to draw rounded-rectangle nodes (typical for activities); supports Activity diagram visuals.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/behavior/activity_graphs/ActionAddEventAsTrigger.java\",\n    \"confidence\": 0.42,\n    \"rationale\": \"UI action under activity_graphs package that adds triggers to actions; functionally linked to defining workflow behaviour in Activity diagrams.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 14738,
+    "completion_tokens": 1717,
+    "total_tokens": 16455
+  },
+  "slot": "AZ3",
+  "feature": "ACTIVITYDIAGRAM",
+  "gold_count": 94,
+  "gold_visible": 45,
+  "candidate_order": "bm25_masked",
+  "run": 1,
+  "elapsed_s": 25.8
+}

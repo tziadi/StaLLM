@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-cognitive",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrUML.java",
+      "rank": 1,
+      "confidence": 0.98,
+      "rationale": "Central critic class for UML, likely core to the design critics feature as it aggregates and manages UML-related critiques.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/Wizard.java",
+      "rank": 2,
+      "confidence": 0.93,
+      "rationale": "Implements the wizard mechanism for critics, which guides users through resolving design issues, directly supporting the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrClassMustBeAbstract.java",
+      "rank": 3,
+      "confidence": 0.91,
+      "rationale": "Example of a specific critic agent, representing the type of automated design analysis described in the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrTooManyClasses.java",
+      "rank": 4,
+      "confidence": 0.9,
+      "rationale": "Another concrete critic, showing how the system checks for design issues and suggests improvements.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrNameConflict.java",
+      "rank": 5,
+      "confidence": 0.89,
+      "rationale": "Represents a critic that detects naming conflicts, a typical design issue, illustrating the critic agent pattern.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/CrCircularInheritance.java",
+      "rank": 6,
+      "confidence": 0.88,
+      "rationale": "A critic for a classic design error, showing the system's ability to analyze and suggest corrections in real time.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/InitCognitiveCritics.java",
+      "rank": 7,
+      "confidence": 0.87,
+      "rationale": "Responsible for initializing and registering critics, essential for the background operation of design critics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Agency.java",
+      "rank": 8,
+      "confidence": 0.86,
+      "rationale": "Manages the set of critics (agents), likely orchestrating their execution and interaction with the design.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/WizardItem.java",
+      "rank": 9,
+      "confidence": 0.85,
+      "rationale": "Supports the wizard mechanism for critics, helping guide users through issue resolution.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/critics/SnoozeOrder.java",
+      "rank": 10,
+      "confidence": 0.83,
+      "rationale": "Handles snoozing (temporarily disabling) critics, a feature relevant to managing continuous background agents.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.004219409282700422,
+    "hit@10": 1.0,
+    "recall@10": 0.02109704641350211,
+    "mrr": 0.5,
+    "map": 0.008882526287589579
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrUML.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Central critic class for UML, likely core to the design critics feature as it aggregates and manages UML-related critiques.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/Wizard.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Implements the wizard mechanism for critics, which guides users through resolving design issues, directly supporting the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrClassMustBeAbstract.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Example of a specific critic agent, representing the type of automated design analysis described in the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrTooManyClasses.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Another concrete critic, showing how the system checks for design issues and suggests improvements.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrNameConflict.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Represents a critic that detects naming conflicts, a typical design issue, illustrating the critic agent pattern.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/CrCircularInheritance.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"A critic for a classic design error, showing the system's ability to analyze and suggest corrections in real time.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/InitCognitiveCritics.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Responsible for initializing and registering critics, essential for the background operation of design critics.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Agency.java\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Manages the set of critics (agents), likely orchestrating their execution and interaction with the design.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/WizardItem.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Supports the wizard mechanism for critics, helping guide users through issue resolution.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/critics/SnoozeOrder.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Handles snoozing (temporarily disabling) critics, a feature relevant to managing continuous background agents.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 14053,
+    "completion_tokens": 711,
+    "total_tokens": 14764
+  },
+  "slot": "AZ2",
+  "feature": "COGNITIVE",
+  "gold_count": 237,
+  "gold_visible": 191,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 11.9
+}

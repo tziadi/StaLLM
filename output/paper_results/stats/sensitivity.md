@@ -161,12 +161,12 @@ The default setting reproduces the recorded heuristic exactly. Lenient and stric
 
 | Dataset | Thresholds | flagged | κ heuristic vs human | ρ (n configs) | p | best vs human | best vs metric |
 |---|---|---|---|---|---|---|---|
-| DACOS | lenient | 16 | 0.524 | 0.633 (9) | 0.067 | AZ2/conservative_evidence | AZ3/definition_driven |
-| DACOS | default | 10 | 0.401 | 0.567 (9) | 0.112 | AZ2/conservative_evidence | AZ3/definition_driven |
-| DACOS | strict | 3 | 0.114 | 0.483 (9) | 0.187 | AZ2/conservative_evidence | AZ2/binary_oracle_baseline |
-| MLCQ | lenient | 22 | 0.401 | 0.794 (15) | 0.0 | AZ3/conservative_evidence | AZ8/definition_driven |
-| MLCQ | default | 15 | 0.408 | 0.676 (15) | 0.006 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
-| MLCQ | strict | 8 | 0.27 | 0.432 (15) | 0.108 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
+| DACOS | lenient | 16 | 0.524 | 0.683 (9) | 0.042 | AZ2/conservative_evidence | AZ3/definition_driven |
+| DACOS | default | 10 | 0.401 | 0.65 (9) | 0.058 | AZ2/conservative_evidence | AZ3/definition_driven |
+| DACOS | strict | 3 | 0.114 | 0.533 (9) | 0.139 | AZ2/conservative_evidence | AZ2/binary_oracle_baseline |
+| MLCQ | lenient | 22 | 0.401 | 0.842 (15) | 0.0 | AZ3/conservative_evidence | AZ8/definition_driven |
+| MLCQ | default | 15 | 0.408 | 0.701 (15) | 0.004 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
+| MLCQ | strict | 8 | 0.27 | 0.4 (15) | 0.139 | AZ3/conservative_evidence | AZ3/binary_oracle_baseline |
 
 ## 3. RQ4 — candidate recall before the model and P@10 relative to visible gold
 
@@ -174,10 +174,10 @@ Candidate recall = share of gold files in the candidate list given to the model 
 
 | System | Ordering | candidate recall | P@10 ceiling | gpt-4o rel. | gpt-4.1 rel. | o3 rel. |
 |---|---|---|---|---|---|---|
-| argouml | alphabetical | 0.256 | 0.875 | 0.388 | 0.388 | 0.396 |
-| argouml | keyword_sorted | 0.373 | 1.0 | 0.7 | 0.662 | 0.725 |
-| argouml | bm25_sorted | 0.546 | 1.0 | 0.8 | 0.819 | 0.794 |
-| argouml | bm25_masked | 0.316 | 0.95 | 0.53 | 0.654 | 0.65 |
+| argouml | alphabetical | 0.256 | 0.875 | 0.401 | 0.406 | 0.398 |
+| argouml | keyword_sorted | 0.386 | 1.0 | 0.694 | 0.675 | 0.681 |
+| argouml | bm25_sorted | 0.711 | 1.0 | 0.664 | 0.731 | 0.756 |
+| argouml | bm25_masked | 0.432 | 1.0 | 0.542 | 0.625 | 0.606 |
 | eshop | alphabetical | 1.0 | 0.98 | 0.915 | 0.946 | 0.924 |
 | eshop | keyword_sorted | 1.0 | 0.98 | 0.883 | 0.889 | 0.892 |
 | eshop | bm25_sorted | 1.0 | 0.98 | 0.901 | 0.89 | 0.923 |

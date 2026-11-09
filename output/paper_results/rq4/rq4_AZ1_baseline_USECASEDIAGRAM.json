@@ -4,64 +4,74 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/uml/ProjectMemberModel.java",
+      "file": "src/argouml-app/src/org/argouml/uml/ActionCreateContainedModelElement.java",
       "rank": 1,
       "confidence": 0.9,
-      "rationale": "This file likely handles UML models, which include use case diagrams."
+      "rationale": "This file likely contains logic for creating model elements, which is relevant to use case diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/ActionCreateEdgeModelElement.java",
       "rank": 2,
       "confidence": 0.85,
-      "rationale": "This file suggests functionality for creating model elements, which could include use case diagram components."
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "This file directly references use cases and their extension points, which are part of use case diagrams."
+      "rationale": "This file likely handles the creation of relationships, which are a key part of use case diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "Extension points are a key concept in use case diagrams, and this file appears to handle their notation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/UseCaseToExtensionPoint.java",
       "rank": 4,
-      "confidence": 0.75,
-      "rationale": "This file deals with UML notation for extension points, a key concept in use case diagrams."
+      "confidence": 0.78,
+      "rationale": "This file likely deals with the relationship between use cases and extension points, which is central to use case diagrams.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/UseCaseNotationUml.java",
+      "file": "src/argouml-app/src/org/argouml/uml/ProjectMemberModel.java",
       "rank": 5,
-      "confidence": 0.7,
-      "rationale": "This file likely handles UML notation for use cases, which are central to use case diagrams."
+      "confidence": 0.75,
+      "rationale": "This file may manage UML models, including use case diagrams, as part of a project.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
       "rank": 6,
-      "confidence": 0.65,
-      "rationale": "This file may involve navigating to diagrams, including use case diagrams."
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCrossNamespaceAssoc.java",
-      "rank": 7,
-      "confidence": 0.6,
-      "rationale": "This file might address issues related to associations, which are relevant to use case diagrams."
+      "confidence": 0.73,
+      "rationale": "This file likely defines navigation rules between use cases and extension points, which are part of use case diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ModelElementNameNotationUml.java",
+      "rank": 7,
+      "confidence": 0.7,
+      "rationale": "This file may handle the naming of model elements, including use cases and actors.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ChildGenRelated.java",
       "rank": 8,
-      "confidence": 0.55,
-      "rationale": "This file deals with naming UML model elements, which could include use cases and actors."
+      "confidence": 0.68,
+      "rationale": "This file might generate relationships between UML elements, relevant for use case diagrams.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToBehavioralFeature.java",
+      "file": "src/argouml-app/src/org/argouml/uml/CommentEdge.java",
       "rank": 9,
-      "confidence": 0.5,
-      "rationale": "This file might involve navigating to behavioral features, which could relate to use case diagrams."
+      "confidence": 0.65,
+      "rationale": "This file may handle edges or relationships, which are important in use case diagrams.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ActionCreateContainedModelElement.java",
+      "file": "src/argouml-app/src/org/argouml/uml/StereotypeUtility.java",
       "rank": 10,
-      "confidence": 0.45,
-      "rationale": "This file suggests functionality for creating contained model elements, which could include use case diagram elements."
+      "confidence": 0.6,
+      "rationale": "This file might manage stereotypes, which can be applied to use cases and actors in diagrams.",
+      "method": ""
     }
   ],
   "metrics": {
@@ -71,11 +81,11 @@
     "recall@5": 0.019230769230769232,
     "hit@10": 1.0,
     "recall@10": 0.019230769230769232,
-    "mrr": 0.25,
-    "map": 0.004807692307692308
+    "mrr": 0.3333333333333333,
+    "map": 0.00641025641025641
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/ProjectMemberModel.java\", \"confidence\": 0.9, \"rationale\": \"This file likely handles UML models, which include use case diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/ActionCreateEdgeModelElement.java\", \"confidence\": 0.85, \"rationale\": \"This file suggests functionality for creating model elements, which could include use case diagram components.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\", \"confidence\": 0.8, \"rationale\": \"This file directly references use cases and their extension points, which are part of use case diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java\", \"confidence\": 0.75, \"rationale\": \"This file deals with UML notation for extension points, a key concept in use case diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/UseCaseNotationUml.java\", \"confidence\": 0.7, \"rationale\": \"This file likely handles UML notation for use cases, which are central to use case diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelElementToContainedDiagrams.java\", \"confidence\": 0.65, \"rationale\": \"This file may involve navigating to diagrams, including use case diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/CrCrossNamespaceAssoc.java\", \"confidence\": 0.6, \"rationale\": \"This file might address issues related to associations, which are relevant to use case diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ModelElementNameNotationUml.java\", \"confidence\": 0.55, \"rationale\": \"This file deals with naming UML model elements, which could include use cases and actors.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToBehavioralFeature.java\", \"confidence\": 0.5, \"rationale\": \"This file might involve navigating to behavioral features, which could relate to use case diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/ActionCreateContainedModelElement.java\", \"confidence\": 0.45, \"rationale\": \"This file suggests functionality for creating contained model elements, which could include use case diagram elements.\"}\n]",
+  "raw_response": "```json\n[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/ActionCreateContainedModelElement.java\", \"confidence\": 0.9, \"rationale\": \"This file likely contains logic for creating model elements, which is relevant to use case diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/ActionCreateEdgeModelElement.java\", \"confidence\": 0.85, \"rationale\": \"This file likely handles the creation of relationships, which are a key part of use case diagrams.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java\", \"confidence\": 0.8, \"rationale\": \"Extension points are a key concept in use case diagrams, and this file appears to handle their notation.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/UseCaseToExtensionPoint.java\", \"confidence\": 0.78, \"rationale\": \"This file likely deals with the relationship between use cases and extension points, which is central to use case diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/uml/ProjectMemberModel.java\", \"confidence\": 0.75, \"rationale\": \"This file may manage UML models, including use case diagrams, as part of a project.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\", \"confidence\": 0.73, \"rationale\": \"This file likely defines navigation rules between use cases and extension points, which are part of use case diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ModelElementNameNotationUml.java\", \"confidence\": 0.7, \"rationale\": \"This file may handle the naming of model elements, including use cases and actors.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/uml/ChildGenRelated.java\", \"confidence\": 0.68, \"rationale\": \"This file might generate relationships between UML elements, relevant for use case diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/uml/CommentEdge.java\", \"confidence\": 0.65, \"rationale\": \"This file may handle edges or relationships, which are important in use case diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/StereotypeUtility.java\", \"confidence\": 0.6, \"rationale\": \"This file might manage stereotypes, which can be applied to use cases and actors in diagrams.\"}\n]\n```",
   "usage": {
     "prompt_tokens": 12411,
     "completion_tokens": 644,
@@ -84,5 +94,8 @@
   "slot": "AZ1",
   "feature": "USECASEDIAGRAM",
   "gold_count": 52,
-  "elapsed_s": 6.4
+  "gold_visible": 6,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 5.2
 }

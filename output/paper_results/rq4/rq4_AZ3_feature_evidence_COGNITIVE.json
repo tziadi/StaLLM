@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/Critic.java",
       "rank": 1,
-      "confidence": 0.9,
-      "rationale": "Defines the Critic agent abstraction itself, including trigger, predicate, and suggestion generation logic\u2014core of Design Critics feature.",
+      "confidence": 0.93,
+      "rationale": "Defines the core \"Critic\" agent abstraction, including triggering, evaluation logic and message generation \u2013 fundamental to implementing design critics.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/Agency.java",
       "rank": 2,
-      "confidence": 0.83,
-      "rationale": "Maintains the registry of Critic objects and manages their life-cycle and execution, i.e., the \u2018simple agents that continuously execute\u2019.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/cognitive/StandardCM.java",
-      "rank": 3,
-      "confidence": 0.78,
-      "rationale": "Implements the standard control mechanism that schedules/dispatches critics over the model in the background thread.",
+      "confidence": 0.9,
+      "rationale": "Central manager that holds the collection of Critic agents and coordinates their execution; likely oversees background processing of design critics.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/ControlMech.java",
-      "rank": 4,
-      "confidence": 0.72,
-      "rationale": "Base class/interface for control mechanisms; defines how critics are invoked and filtered during automated analysis.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java",
-      "rank": 5,
-      "confidence": 0.7,
-      "rationale": "Provides a composite critic that groups several critics together, supporting more complex analysis suggestions.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
-      "rank": 6,
-      "confidence": 0.65,
-      "rationale": "Represents the current designer context passed to critics for evaluation, enabling personalized critique.",
+      "rank": 3,
+      "confidence": 0.84,
+      "rationale": "Implements the control mechanism that schedules and fires critics during editing sessions, directly supporting continuous analysis.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
-      "rank": 7,
-      "confidence": 0.63,
-      "rationale": "Subsystem initializer that boots the critic infrastructure at application start, wiring the background thread.",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Application-level class that starts the critic subsystem, probably launching the background thread that runs the Agency.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/ToDoItem.java",
-      "rank": 8,
-      "confidence": 0.6,
-      "rationale": "Encapsulates individual critic findings (suggestions/errors) shown to the user, directly supporting feedback delivery.",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Represents individual design improvement suggestions produced by critics; core data structure for critic results.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/ToDoList.java",
-      "rank": 9,
-      "confidence": 0.57,
-      "rationale": "Aggregates ToDoItems, managing the list of active critiques that the designer must address.",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Aggregates ToDoItem instances, providing storage and access to all active critic findings for the designer.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ResolvedCritic.java",
+      "rank": 7,
+      "confidence": 0.66,
+      "rationale": "Tracks critics whose suggestions have been addressed, supporting management of critic lifecycle and reminders.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java",
+      "rank": 8,
+      "confidence": 0.62,
+      "rationale": "Allows composition of multiple simple critics into complex ones, refining critic behavior and extending feature capabilities.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/ui/ActionAutoCritique.java",
+      "rank": 9,
+      "confidence": 0.58,
+      "rationale": "UI action that toggles automatic critique processing, directly supporting user control over background critic execution.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/StandardCM.java",
       "rank": 10,
-      "confidence": 0.52,
-      "rationale": "UI action that toggles automatic critique execution, linking user control to the background critic thread.",
+      "confidence": 0.55,
+      "rationale": "Provides the default implementation of the control mechanism used by the critic subsystem, integrating critics with the rest of the cognitive framework.",
       "method": ""
     }
   ],
@@ -85,11 +85,11 @@
     "map": 0.04219409282700422
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Critic.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the Critic agent abstraction itself, including trigger, predicate, and suggestion generation logic\u2014core of Design Critics feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Agency.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Maintains the registry of Critic objects and manages their life-cycle and execution, i.e., the \u2018simple agents that continuously execute\u2019.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/StandardCM.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Implements the standard control mechanism that schedules/dispatches critics over the model in the background thread.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ControlMech.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Base class/interface for control mechanisms; defines how critics are invoked and filtered during automated analysis.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Provides a composite critic that groups several critics together, supporting more complex analysis suggestions.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Represents the current designer context passed to critics for evaluation, enabling personalized critique.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.63,\n    \"rationale\": \"Subsystem initializer that boots the critic infrastructure at application start, wiring the background thread.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoItem.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Encapsulates individual critic findings (suggestions/errors) shown to the user, directly supporting feedback delivery.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoList.java\",\n    \"confidence\": 0.57,\n    \"rationale\": \"Aggregates ToDoItems, managing the list of active critiques that the designer must address.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ui/ActionAutoCritique.java\",\n    \"confidence\": 0.52,\n    \"rationale\": \"UI action that toggles automatic critique execution, linking user control to the background critic thread.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Critic.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Defines the core \\\"Critic\\\" agent abstraction, including triggering, evaluation logic and message generation \u2013 fundamental to implementing design critics.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Agency.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Central manager that holds the collection of Critic agents and coordinates their execution; likely oversees background processing of design critics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ControlMech.java\",\n    \"confidence\": 0.84,\n    \"rationale\": \"Implements the control mechanism that schedules and fires critics during editing sessions, directly supporting continuous analysis.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Application-level class that starts the critic subsystem, probably launching the background thread that runs the Agency.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoItem.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Represents individual design improvement suggestions produced by critics; core data structure for critic results.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoList.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Aggregates ToDoItem instances, providing storage and access to all active critic findings for the designer.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ResolvedCritic.java\",\n    \"confidence\": 0.66,\n    \"rationale\": \"Tracks critics whose suggestions have been addressed, supporting management of critic lifecycle and reminders.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java\",\n    \"confidence\": 0.62,\n    \"rationale\": \"Allows composition of multiple simple critics into complex ones, refining critic behavior and extending feature capabilities.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ui/ActionAutoCritique.java\",\n    \"confidence\": 0.58,\n    \"rationale\": \"UI action that toggles automatic critique processing, directly supporting user control over background critic execution.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/StandardCM.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Provides the default implementation of the control mechanism used by the critic subsystem, integrating critics with the rest of the cognitive framework.\"\n  }\n]",
   "usage": {
     "prompt_tokens": 12445,
-    "completion_tokens": 1404,
-    "total_tokens": 13849
+    "completion_tokens": 1410,
+    "total_tokens": 13855
   },
   "slot": "AZ3",
   "feature": "COGNITIVE",
@@ -97,5 +97,5 @@
   "gold_visible": 138,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 33.1
+  "elapsed_s": 12.8
 }

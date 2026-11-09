@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_checklist",
+    "template": "You are an expert in code quality assessment.\n\nTarget smell: {smell}\nLanguage: {language}\n\nReview the following code snippet against a diagnostic checklist. Assess if the target smell is present by checking for multiple symptoms:\n1. Are there indications of excessive complexity/bloat specific to {smell}?\n2. Does the structure or logic of the code align with the typical description of {smell}?\n3. Is there clear evidence of this smell, or is the evidence ambiguous?\n\nRespond in strict JSON format:\n{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one short evidence sentence\"}\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_certainty",
+    "template": "You are analyzing a code sample for a specific smell.\n\nSmell: {smell}\nProgramming Language: {language}\n\nCarefully examine the code snippet provided. For this task:\n1. Decide whether the target smell is present or absent.\n2. Explicitly estimate your level of confidence in the decision (low, medium, or high certainty) and map it to a confidence score within 0.0-1.0.\n\nOutput only in JSON format:\n{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one short evidence sentence\"}\n\nCode:\n{code}"
+  },
+  {
+    "name": "contrastive_analysis",
+    "template": "You are a code quality expert comparing smells against non-smells.\n\nTarget smell: {smell}\nLanguage: {language}\n\nAnalyze the given code snippet. Compare its characteristics against those that are NOT associated with the target smell. Determine whether the evidence aligns more strongly with the smell being present or absent. Provide a concise rationale based on this comparison.\n\nRespond strictly in JSON format:\n{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one short evidence sentence\"}\n\nCode:\n{code}"
+  },
+  {
+    "name": "threshold_guided",
+    "template": "You are assessing code smells using measurable attributes.\n\nSmell to analyze: {smell}\nProgramming language: {language}\n\nDecision guidance: Use the specific thresholds below to verify the presence of the smell. If you lack sufficient evidence to make a determination, choose the more conservative option (absence).\n- complex_method: excessive nesting > 3 levels, branching or mixed responsibilities.\n- long_method: method length > 50 lines or does many tasks.\n- long_parameter_list: > 5 parameters per method/constructor.\n- multifaceted_abstraction: multiple cohesive responsibilities intertwined.\n- god_class: contains > 10 methods and centralizes too much functionality.\n- data_class: lacks behavior methods and is only used to hold data.\n- feature_envy: accesses another class's data excessively.\n\nReturn JSON only:\n{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one short evidence sentence\"}\n\nCode:\n{code}"
+  },
+  {
+    "name": "diagnostic_questions",
+    "template": "You are a developer specializing in detecting code smells.\n\nSmell: {smell}\nLanguage: {language}\n\nEvaluate the provided code snippet by answering the following diagnostic questions internally:\n1. Does the code exhibit structural or logic patterns typical of {smell}?\n2. Can the characteristics of this smell be seen explicitly in the code (e.g., long methods, excessive responsibilities)?\n3. Is the code snippet ambiguous in relation to this smell, or is there clear evidence?\n\nBased on your analysis, respond in JSON format only:\n{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one short evidence sentence\"}\n\nCode:\n{code}"
+  }
+]

@@ -4,64 +4,74 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
       "rank": 1,
       "confidence": 0.95,
-      "rationale": "The file name explicitly mentions 'Collaboration', which is directly related to the feature query."
+      "rationale": "The file name explicitly mentions 'Collaboration' and 'Diagram', directly aligning with the feature query.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java",
       "rank": 2,
-      "confidence": 0.92,
-      "rationale": "The file name indicates a direct relationship between 'Collaboration' and 'Diagram', aligning closely with the feature."
+      "confidence": 0.9,
+      "rationale": "The file name includes 'Classifier' and 'Collaboration', suggesting relevance to the feature's focus on object interactions in collaboration diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
       "rank": 3,
-      "confidence": 0.9,
-      "rationale": "The file name explicitly references 'Collaboration Diagram', which is the exact feature being queried."
+      "confidence": 0.88,
+      "rationale": "The file name explicitly mentions 'CollaborationDiagram', indicating a strong connection to the feature.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
       "rank": 4,
       "confidence": 0.85,
-      "rationale": "Collaboration diagrams often involve messages, and this file appears to handle message notation in UML."
+      "rationale": "The file name includes 'Message', which is a key concept in collaboration diagrams for object interactions.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
       "rank": 5,
       "confidence": 0.83,
-      "rationale": "Interactions and messages are key components of collaboration diagrams, making this file relevant."
+      "rationale": "The file name mentions 'Interaction' and 'Messages', both of which are central to collaboration diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
       "rank": 6,
       "confidence": 0.8,
-      "rationale": "This file deals with sequence diagram messages, which are closely related to collaboration diagrams."
+      "rationale": "The file name includes 'SDMessage', which could relate to sequence diagrams and collaboration diagrams.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java",
       "rank": 7,
       "confidence": 0.78,
-      "rationale": "Sequence diagrams are closely related to collaboration diagrams, and this file references both concepts."
+      "rationale": "The file name mentions 'Model' and 'Collaboration', indicating potential relevance to collaboration diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java",
       "rank": 8,
       "confidence": 0.75,
-      "rationale": "The file name suggests a connection between collaborations and interactions, which are central to the feature."
+      "rationale": "The file name includes 'Collaboration' and 'Interaction', which are key aspects of collaboration diagrams.",
+      "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
       "rank": 9,
       "confidence": 0.72,
-      "rationale": "Messages are a fundamental part of collaboration diagrams, and this file appears to handle their notation."
+      "rationale": "The file name mentions 'Message', a core concept in collaboration diagrams for object communication.",
+      "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
       "rank": 10,
       "confidence": 0.7,
-      "rationale": "The file name indicates a relationship between models and collaborations, which is relevant to the feature."
+      "rationale": "The file name includes 'Project' and 'Collaboration', suggesting a broader but still relevant connection to collaboration diagrams.",
+      "method": ""
     }
   ],
   "metrics": {
@@ -70,19 +80,22 @@
     "hit@5": 1.0,
     "recall@5": 0.0625,
     "hit@10": 1.0,
-    "recall@10": 0.10416666666666667,
+    "recall@10": 0.125,
     "mrr": 1.0,
-    "map": 0.08333333333333333
+    "map": 0.09992559523809524
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"The file name explicitly mentions 'Collaboration', which is directly related to the feature query.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"The file name indicates a direct relationship between 'Collaboration' and 'Diagram', aligning closely with the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"The file name explicitly references 'Collaboration Diagram', which is the exact feature being queried.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Collaboration diagrams often involve messages, and this file appears to handle message notation in UML.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Interactions and messages are key components of collaboration diagrams, making this file relevant.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"This file deals with sequence diagram messages, which are closely related to collaboration diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Sequence diagrams are closely related to collaboration diagrams, and this file references both concepts.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"The file name suggests a connection between collaborations and interactions, which are central to the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Messages are a fundamental part of collaboration diagrams, and this file appears to handle their notation.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java\",\n    \"confidence\": 0.70,\n    \"rationale\": \"The file name indicates a relationship between models and collaborations, which is relevant to the feature.\"\n  }\n]\n```",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"The file name explicitly mentions 'Collaboration' and 'Diagram', directly aligning with the feature query.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"The file name includes 'Classifier' and 'Collaboration', suggesting relevance to the feature's focus on object interactions in collaboration diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"The file name explicitly mentions 'CollaborationDiagram', indicating a strong connection to the feature.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"The file name includes 'Message', which is a key concept in collaboration diagrams for object interactions.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"The file name mentions 'Interaction' and 'Messages', both of which are central to collaboration diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"The file name includes 'SDMessage', which could relate to sequence diagrams and collaboration diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"The file name mentions 'Model' and 'Collaboration', indicating potential relevance to collaboration diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"The file name includes 'Collaboration' and 'Interaction', which are key aspects of collaboration diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"The file name mentions 'Message', a core concept in collaboration diagrams for object communication.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"The file name includes 'Project' and 'Collaboration', suggesting a broader but still relevant connection to collaboration diagrams.\"\n  }\n]\n```",
   "usage": {
     "prompt_tokens": 12460,
-    "completion_tokens": 718,
-    "total_tokens": 13178
+    "completion_tokens": 740,
+    "total_tokens": 13200
   },
   "slot": "AZ1",
   "feature": "COLLABORATIONDIAGRAM",
   "gold_count": 48,
-  "elapsed_s": 10.0
+  "gold_visible": 15,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 5.4
 }

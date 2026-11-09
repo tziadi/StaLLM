@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_checklist",
+    "template": "You are an expert in code quality analysis.\n\nTask: Determine if the following code snippet exhibits the smell \"{smell}\" in {language}.\n\nUse this diagnostic checklist:\n1. Does the snippet show signs or patterns explicitly matching the {smell} description?\n2. Is there tangible evidence in the provided snippet to justify your decision?\n3. Are there no significant ambiguities about whether this qualifies as the smell?\n\nBased on the checklist, return JSON in the format:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"one evidence sentence\"}. No additional output is allowed.\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_confidence",
+    "template": "You are analyzing a code snippet for explicit smells.\n\nSmell: {smell}\nLanguage: {language}\n\nYour task is to decide if the snippet contains the smell with calibrated certainty:\n1. Fully present (confidence: 1.0) if clear and strong evidence exists.\n2. Likely present (confidence: 0.7 to 0.9) if there is moderate evidence but some ambiguity.\n3. Likely absent (confidence: 0.3 to 0.6) if there is evidence that weakly contradicts the smell.\n4. Fully absent (confidence: 0.0) only if strong evidence confirms the opposite of the smell.\n\nReturn JSON only:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"short evidence-based sentence\"}.\n\nCode:\n{code}"
+  },
+  {
+    "name": "contrastive_reasoning",
+    "template": "You are reviewing a piece of code for the targeted smell.\n\nSmell to detect: {smell}\nLanguage: {language}\n\nStep 1: Identify evidence in the snippet that supports the presence of {smell}.\nStep 2: Consider plausible characteristics that would argue the code does NOT contain {smell}.\nStep 3: Weigh the evidence from both steps and make a conservative conclusion only based on clearly visible characteristics in the code.\n\nReturn JSON strictly:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"a concise sentence of support evidence\"}.\n\nCode:\n{code}"
+  },
+  {
+    "name": "threshold_definitions",
+    "template": "You are evaluating a code smell with quantitative and qualitative thresholds.\n\nSmell: {smell}\nLanguage: {language}\n\nRefer to these thresholds to decide:\n- complex_method: extensive nesting (\u22653 levels), branching logic (>2 branches), or mixed responsibilities visible.\n- long_method: exceeding ~20 lines or performing >1 logical responsibility.\n- long_parameter_list: \u22655 parameters at once in a method/constructor.\n- multifaceted_abstraction: Should mix multiple unrelated concerns or abstractions.\n- god_class: Centralizes >2 key responsibilities.\n- data_class: Contains only fields, getters/setters, and no notable logic.\n- feature_envy: Frequently uses fields or logic from unrelated classes.\n\nUse these criteria to decide conservatively, and return JSON:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"short evidence sentence\"}.\n\nCode:\n{code}"
+  },
+  {
+    "name": "diagnostic_questions",
+    "template": "You are an experienced software reviewer.\n\nTask: Verify whether the following code snippets contain the smell \"{smell}\" in {language}.\n\nAnswer these internal questions to diagnose:\n1. Are there obvious structural/code patterns present that directly indicate the smell?\n2. Does the absence of certain qualities/correct structures confirm the smell?\n3. Are the considerations only verified clearly per the provided snippet alone?\n\nBased on your internal responses to these questions, make your final decision conservatively.\nReturn strictly JSON:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"short evident rationales\"}.\n\nCode:\n{code}"
+  }
+]

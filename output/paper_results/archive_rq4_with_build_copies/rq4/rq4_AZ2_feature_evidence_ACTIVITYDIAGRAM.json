@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-activitydiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "File name directly references 'Activity' and 'State', which are core concepts in Activity Diagrams. Likely handles navigation or relationships between states and activities in diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java",
+      "rank": 2,
+      "confidence": 0.92,
+      "rationale": "References 'Statemachine' and 'Diagram', both central to Activity Diagrams. Likely manages the connection between state machines and their diagram representations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java",
+      "rank": 3,
+      "confidence": 0.9,
+      "rationale": "Handles navigation from a state machine to its states, which is fundamental for both state and activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTransition.java",
+      "rank": 4,
+      "confidence": 0.89,
+      "rationale": "Transitions are key elements in activity diagrams. This file likely manages the relationship between state machines and their transitions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToInternalTrans.java",
+      "rank": 5,
+      "confidence": 0.87,
+      "rationale": "Internal transitions within states are relevant for modeling workflows in activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java",
+      "rank": 6,
+      "confidence": 0.86,
+      "rationale": "Outgoing transitions from states are essential for representing the flow in activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToIncomingTrans.java",
+      "rank": 7,
+      "confidence": 0.85,
+      "rationale": "Incoming transitions are also crucial for activity diagram semantics, indicating possible entry points to activities.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java",
+      "rank": 8,
+      "confidence": 0.83,
+      "rationale": "Directly references 'StateDiagram', which is closely related to activity diagrams. May handle navigation or relationships relevant to activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToGuard.java",
+      "rank": 9,
+      "confidence": 0.81,
+      "rationale": "Guards are conditions on transitions, a key concept in activity diagrams for controlling workflow.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToSource.java",
+      "rank": 10,
+      "confidence": 0.8,
+      "rationale": "Handles the source of transitions, which is important for modeling the flow of activities in diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToDoActivity.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"File name directly references 'Activity' and 'State', which are core concepts in Activity Diagrams. Likely handles navigation or relationships between states and activities in diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"References 'Statemachine' and 'Diagram', both central to Activity Diagrams. Likely manages the connection between state machines and their diagram representations.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java\",\n    \"confidence\": 0.90,\n    \"rationale\": \"Handles navigation from a state machine to its states, which is fundamental for both state and activity diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTransition.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Transitions are key elements in activity diagrams. This file likely manages the relationship between state machines and their transitions.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToInternalTrans.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Internal transitions within states are relevant for modeling workflows in activity diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToOutgoingTrans.java\",\n    \"confidence\": 0.86,\n    \"rationale\": \"Outgoing transitions from states are essential for representing the flow in activity diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateToIncomingTrans.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Incoming transitions are also crucial for activity diagram semantics, indicating possible entry points to activities.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Directly references 'StateDiagram', which is closely related to activity diagrams. May handle navigation or relationships relevant to activity diagrams.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToGuard.java\",\n    \"confidence\": 0.81,\n    \"rationale\": \"Guards are conditions on transitions, a key concept in activity diagrams for controlling workflow.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToSource.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"Handles the source of transitions, which is important for modeling the flow of activities in diagrams.\"\n  }\n]\n```",
+  "usage": {
+    "prompt_tokens": 12428,
+    "completion_tokens": 755,
+    "total_tokens": 13183
+  },
+  "slot": "AZ2",
+  "feature": "ACTIVITYDIAGRAM",
+  "gold_count": 94,
+  "gold_visible": 14,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 10.9
+}

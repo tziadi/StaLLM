@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_diagnostic_checklist",
+    "template": "You are a software code smell analyst.\n\nEvaluate the presence of the following smell using this structured checklist:\n1. Define the smell \"{smell}\" based on its standard characteristics.\n2. Examine the provided code snippet.\n3. Confirm if there is evidence for each defining characteristic of the smell in the context of {language}.\n4. If key characteristics are confirmed, the smell is present.\n\nSmell: {smell}\nLanguage: {language}\nCode:\n{code}\n\nOnly return strict JSON:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}"
+  },
+  {
+    "name": "contrastive_analysis",
+    "template": "You are a trained code smell evaluator.\n\nTask: Determine whether the given code snippet in {language} represents the smell \"{smell}\" by comparing its characteristics against examples of what is NOT the smell.\n1. Describe characteristics typical of the smell \"{smell}\".\n2. Identify characteristics typical of code that DOES NOT have the smell.\n3. Compare the provided snippet against these two sets of characteristics.\n\nFocus strictly on the given code and smell.\nCode:\n{code}\n\nReturn only strict JSON:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}"
+  },
+  {
+    "name": "calibrated_certainty",
+    "template": "You are a professional code quality evaluator.\n\nTask: Analyze the provided {language} code for the smell \"{smell}\" using calibrated certainty levels.\n1. Review the definition of the smell \"{smell}\".\n2. Check the code snippet for visible evidence specific to the smell using these tiers of certainty:\n   - High certainty: Strong, clear alignment with the smell characteristics.\n   - Medium certainty: Some alignment but with ambiguous evidence.\n   - Low certainty: Little to no alignment, insufficient evidence.\nAssign a confidence score based on these certainty levels.\n\nCode:\n{code}\n\nReturn JSON only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}"
+  },
+  {
+    "name": "threshold_anchored",
+    "template": "You are a code smell detection expert.\n\nTask: Evaluate whether the code in {language} meets quantifiable thresholds for the smell \"{smell}\".\nUse measurable parameters specific to the smell such as:\n- Branches, nesting levels, and statements (for complexity-related smells).\n- Number of methods, lines, or responsibilities (for class-level smells).\nUse the thresholds as evidence and clearly justify whether the smell is present.\n\nSmell: {smell}\nCode:\n{code}\n\nReturn only strict JSON:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}"
+  },
+  {
+    "name": "diagnostic_questions",
+    "template": "You are evaluating a code smell in software maintenance.\n\nUse the following diagnostic questions to decide if the smell \"{smell}\" is present in this {language} code snippet:\n1. Does the code exhibit patterns or structures typically associated with the smell?\n2. Are there any elements that contradict the presence of the smell?\n3. Is the evidence strong enough to confidently decide?\n\nAnswer these questions internally, then summarize your decision strictly in JSON format:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"one evidence sentence\"}}.\n\nCode:\n{code}"
+  }
+]

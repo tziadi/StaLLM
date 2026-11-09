@@ -155,11 +155,7 @@ def pmd_labels(pmd: str, samples: list) -> tuple[dict[str, bool], dict[str, int]
 
 def configs(dataset: str) -> dict[str, dict[str, bool]]:
     root = ANNOT if dataset == "DACOS" else MAIN
-    out = {}
-    for f in sorted((root / "rq3").glob(f"rq3_AZ[12378]_*_{dataset}.json")):
-        d = aps._load(f)
-        out[f"{d['slot']}/{d['prompt']}"] = {r["sample_id"]: bool(r["predicted"]) for r in d["rows"]}
-    return out
+    return aps.rq3_voted_files(root, dataset)   # majority vote over runs, as in Table 3
 
 
 def main() -> None:

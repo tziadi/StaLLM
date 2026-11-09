@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_diagnostic_checklist",
+    "template": "You are an expert in identifying specific code smells based on structured diagnostic criteria.\n\nYour task: determine whether the following code snippet exhibits this code smell: {smell}.\nLanguage: {language}\n\nFollow this structured checklist to form your judgment:\n1. Identify any visible indicators specific to the {smell}.\n2. Examine the snippet for evidence against the characteristics of the smell.\n3. Make a binary decision and rate your confidence accordingly.\n\nReturn a response in strict JSON format, containing:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"extracted single key evidence\"}.\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_confidence",
+    "template": "You are analyzing code smells in a benchmark dataset to provide calibrated decisions.\n\nTarget smell: {smell}\nLanguage: {language}\n\nFor each decision:\n1. Evaluate how strongly the smell's characteristics are present in the given code.\n2. Rate your confidence level explicitly on a 0.0-1.0 scale.\n3. Summarize your decision with one concise evidence sentence.\n\nRespond only with strict JSON following this schema:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"single evidence sentence\"}.\n\nCode snippet:\n{code}"
+  },
+  {
+    "name": "contrastive_analysis",
+    "template": "You are tasked with identifying smells by comparing the provided code to samples without the smell.\n\nFocus: {smell}\nLanguage: {language}\n\nProcess:\n1. Identify characteristics that define the {smell}.\n2. Contrast the code snippet against typical cases without the smell.\n3. Determine the presence of the smell based on the comparison.\n\nYour response format must strictly be:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"concise evidence drawn from comparison\"}.\n\nCode snippet:\n{code}"
+  },
+  {
+    "name": "threshold_anchored",
+    "template": "You are an expert in identifying code smells using measurable thresholds.\n\nTarget smell: {smell}\nLanguage: {language}\n\nFor this smell, use these measurable thresholds where applicable:\n- complex_method: exceptional branching, deeply nested logic, or hard-to-read control flow.\n- long_method: line count or operations exceeding readability limits.\n- long_parameter_list: more parameters than typical methods (e.g., >4).\n- multifaceted_abstraction: evident mixed responsibilities or overly broad abstraction in a single class.\n- god_class: disproportionate class centrality or excessive, unrelated responsibilities.\n\nAssess whether the smell meets the threshold.\nReturn a strict JSON response:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"short evidence supporting decision\"}.\n\nCode snippet:\n{code}"
+  },
+  {
+    "name": "diagnostic_questions",
+    "template": "You are evaluating a code snippet for a specific code smell.\n\nTarget smell: {smell}\nLanguage: {language}\n\nAnswer these diagnostic questions internally before making a decision:\n1. Does the code exhibit features typical of the {smell}?\n2. Are there any counterexamples or mitigating factors?\n3. How confident are you based on the evidence in the snippet alone?\n\nReturn only your decision in strict JSON format:\n{\"present\": true|false, \"confidence\": 0.0-1.0, \"rationale\": \"concise, evidence-based sentence\"}.\n\nCode:\n{code}"
+  }
+]

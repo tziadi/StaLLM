@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-sequencediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java",
+      "rank": 1,
+      "confidence": 0.9,
+      "rationale": "Special-purpose notation provider for Sequence Diagram messages (\"SD\" prefix). Directly involved in rendering/formatting message elements in sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/SDNotationSettings.java",
+      "rank": 2,
+      "confidence": 0.82,
+      "rationale": "Holds notation settings for Sequence Diagrams (\"SD\" stands for Sequence Diagram). Core configuration object used while drawing sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "Abstract base for UML message notation; sequence-diagram messages are concrete subclasses. Provides shared behavior used in sequence diagram rendering.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java",
+      "rank": 4,
+      "confidence": 0.78,
+      "rationale": "Concrete UML message notation class. Messages are the primary elements shown on sequence diagrams, so this class directly supports the feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Generic (tool-independent) message notation provider. Supplies cross-diagram support but heavily used by sequence diagrams for message text.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "Explorer navigation rule that links classifiers to their sequence diagrams. Indicates explicit knowledge of sequence diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
+      "rank": 7,
+      "confidence": 0.62,
+      "rationale": "Explorer rule connecting operations to sequence diagrams, enabling navigation and discovery of interaction behavior.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "Relates interactions (core of sequence diagrams) to their messages in the model explorer, directly supporting sequence diagram structure.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoAssocRoleToMessages.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Explorer rule showing messages attached to an association role; such messages appear on sequence diagrams, aiding diagram navigation.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/MessageNodeBuilder.java",
+      "rank": 10,
+      "confidence": 0.35,
+      "rationale": "Developer tool for building message nodes; although in dev module, it manipulates message elements relevant to sequence diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.012658227848101266,
+    "hit@10": 1.0,
+    "recall@10": 0.0379746835443038,
+    "mrr": 0.3333333333333333,
+    "map": 0.013863773357444242
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/SDMessageNotationUml.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Special-purpose notation provider for Sequence Diagram messages (\\\"SD\\\" prefix). Directly involved in rendering/formatting message elements in sequence diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/SDNotationSettings.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Holds notation settings for Sequence Diagrams (\\\"SD\\\" stands for Sequence Diagram). Core configuration object used while drawing sequence diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/AbstractMessageNotationUml.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Abstract base for UML message notation; sequence-diagram messages are concrete subclasses. Provides shared behavior used in sequence diagram rendering.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/MessageNotationUml.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Concrete UML message notation class. Messages are the primary elements shown on sequence diagrams, so this class directly supports the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/MessageNotation.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Generic (tool-independent) message notation provider. Supplies cross-diagram support but heavily used by sequence diagrams for message text.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Explorer navigation rule that links classifiers to their sequence diagrams. Indicates explicit knowledge of sequence diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\",\n    \"confidence\": 0.62,\n    \"rationale\": \"Explorer rule connecting operations to sequence diagrams, enabling navigation and discovery of interaction behavior.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Relates interactions (core of sequence diagrams) to their messages in the model explorer, directly supporting sequence diagram structure.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoAssocRoleToMessages.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Explorer rule showing messages attached to an association role; such messages appear on sequence diagrams, aiding diagram navigation.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"modules/dev/src/org/argouml/dev/MessageNodeBuilder.java\",\n    \"confidence\": 0.35,\n    \"rationale\": \"Developer tool for building message nodes; although in dev module, it manipulates message elements relevant to sequence diagrams.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12437,
+    "completion_tokens": 1664,
+    "total_tokens": 14101
+  },
+  "slot": "AZ3",
+  "feature": "SEQUENCEDIAGRAM",
+  "gold_count": 79,
+  "gold_visible": 12,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 23.7
+}

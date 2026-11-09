@@ -14,7 +14,7 @@
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
       "rank": 2,
       "confidence": 0.93,
-      "rationale": "Explicitly connects 'Collaboration' to 'Diagram', suggesting it manages or locates collaboration diagrams.",
+      "rationale": "Explicitly connects 'Collaboration' to 'Diagram', suggesting a direct role in collaboration diagram feature.",
       "method": ""
     },
     {
@@ -25,45 +25,45 @@
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
       "rank": 4,
       "confidence": 0.88,
-      "rationale": "Directly references 'CollaborationDiagram', likely responsible for linking operations to collaboration diagrams.",
+      "rationale": "Connects project-level elements to collaborations, relevant for diagram context.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaboration.java",
       "rank": 5,
-      "confidence": 0.87,
-      "rationale": "Handles navigation from project to collaboration, relevant for diagram context.",
+      "confidence": 0.85,
+      "rationale": "Links operations to collaborations, which is central to collaboration diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java",
       "rank": 6,
-      "confidence": 0.85,
-      "rationale": "Links collaboration to interaction, which is central to collaboration diagrams.",
+      "confidence": 0.83,
+      "rationale": "Handles navigation from collaboration to interaction, a key aspect of collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Directly references 'CollaborationDiagram', likely involved in diagram instantiation or navigation.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java",
-      "rank": 7,
-      "confidence": 0.8,
-      "rationale": "Handles sequence diagrams, which are closely related to collaboration diagrams and may share code or navigation.",
+      "rank": 8,
+      "confidence": 0.75,
+      "rationale": "Handles sequence diagrams, which are closely related to collaboration diagrams and may share code.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java",
-      "rank": 8,
-      "confidence": 0.78,
-      "rationale": "Handles sequence diagrams from operations, relevant due to the close relationship with collaboration diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToInstance.java",
       "rank": 9,
-      "confidence": 0.75,
-      "rationale": "Instances are key elements in collaboration diagrams, so this file may be involved in their representation.",
+      "confidence": 0.73,
+      "rationale": "Handles sequence diagrams from operations, relevant due to the close relationship with collaboration diagrams.",
       "method": ""
     },
     {
@@ -80,16 +80,16 @@
     "hit@5": 1.0,
     "recall@5": 0.10416666666666667,
     "hit@10": 1.0,
-    "recall@10": 0.125,
+    "recall@10": 0.14583333333333334,
     "mrr": 1.0,
-    "map": 0.125
+    "map": 0.14583333333333334
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\", \"confidence\": 0.95, \"rationale\": \"Directly references 'Collaboration' in the context of navigation/exploration, likely handling collaboration diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.93, \"rationale\": \"Explicitly connects 'Collaboration' to 'Diagram', suggesting it manages or locates collaboration diagrams.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java\", \"confidence\": 0.90, \"rationale\": \"Handles navigation from model to collaboration, likely involved in diagram creation or management.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\", \"confidence\": 0.88, \"rationale\": \"Directly references 'CollaborationDiagram', likely responsible for linking operations to collaboration diagrams.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\", \"confidence\": 0.87, \"rationale\": \"Handles navigation from project to collaboration, relevant for diagram context.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\", \"confidence\": 0.85, \"rationale\": \"Links collaboration to interaction, which is central to collaboration diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.80, \"rationale\": \"Handles sequence diagrams, which are closely related to collaboration diagrams and may share code or navigation.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\", \"confidence\": 0.78, \"rationale\": \"Handles sequence diagrams from operations, relevant due to the close relationship with collaboration diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToInstance.java\", \"confidence\": 0.75, \"rationale\": \"Instances are key elements in collaboration diagrams, so this file may be involved in their representation.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\", \"confidence\": 0.70, \"rationale\": \"General navigation from model to diagrams, likely includes collaboration diagrams among others.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToCollaboration.java\", \"confidence\": 0.95, \"rationale\": \"Directly references 'Collaboration' in the context of navigation/exploration, likely handling collaboration diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\", \"confidence\": 0.93, \"rationale\": \"Explicitly connects 'Collaboration' to 'Diagram', suggesting a direct role in collaboration diagram feature.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToCollaboration.java\", \"confidence\": 0.90, \"rationale\": \"Handles navigation from model to collaboration, likely involved in diagram creation or management.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToCollaboration.java\", \"confidence\": 0.88, \"rationale\": \"Connects project-level elements to collaborations, relevant for diagram context.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaboration.java\", \"confidence\": 0.85, \"rationale\": \"Links operations to collaborations, which is central to collaboration diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToInteraction.java\", \"confidence\": 0.83, \"rationale\": \"Handles navigation from collaboration to interaction, a key aspect of collaboration diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToCollaborationDiagram.java\", \"confidence\": 0.80, \"rationale\": \"Directly references 'CollaborationDiagram', likely involved in diagram instantiation or navigation.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToSequenceDiagram.java\", \"confidence\": 0.75, \"rationale\": \"Handles sequence diagrams, which are closely related to collaboration diagrams and may share code.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoOperationToSequenceDiagram.java\", \"confidence\": 0.73, \"rationale\": \"Handles sequence diagrams from operations, relevant due to the close relationship with collaboration diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\", \"confidence\": 0.70, \"rationale\": \"General navigation from model to diagrams, likely includes collaboration diagrams among others.\"}\n]",
   "usage": {
     "prompt_tokens": 12436,
-    "completion_tokens": 645,
-    "total_tokens": 13081
+    "completion_tokens": 641,
+    "total_tokens": 13077
   },
   "slot": "AZ2",
   "feature": "COLLABORATIONDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 15,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 6.8
+  "elapsed_s": 6.2
 }

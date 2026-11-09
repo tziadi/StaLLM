@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/tziadi/RESEARCH/LLM-StaLLM/StaLLM -name \"*.tex\" 2>/dev/null; find /Users/tziadi/RESEARCH -name \"*.tex\" -maxdepth 5 2>/dev/null | head -20)",
+      "Read(//Users/tziadi/RESEARCH/**)",
+      "Bash(pdflatex -interaction=nonstopmode 00main.tex)",
+      "Read(//usr/local/**)",
+      "Read(//Library/**)",
+      "Bash(find /usr/local/texlive /usr/share/texmf /opt/homebrew/opt /Applications -name \"pdflatex\" 2>/dev/null | head -5; ls /usr/local/bin/pdflatex 2>/dev/null || echo \"not in /usr/local/bin\")",
+      "Read(//usr/share/**)",
+      "Bash(tectonic --version)",
+      "Bash(tectonic 00main.tex)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -m pip install javalang)",
+      "Bash(python3 run_paper_experiments.py --rq 5 --dry)",
+      "Bash(python3 run_paper_experiments.py --rq 5)"
+    ]
+  }
+}

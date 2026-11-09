@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 1,
+      "confidence": 0.29,
+      "rationale": "Main entry point; initializes system settings including Log4J configuration and therefore controls global debug/trace output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 2,
+      "confidence": 0.25,
+      "rationale": "Provides application-wide constants and helper methods; contains static Logger instances and flags that enable/disable debug tracing throughout ArgoUML.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 3,
+      "confidence": 0.12,
+      "rationale": "Loads and applies configuration properties, including those that determine logging level and trace options.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
+      "rank": 4,
+      "confidence": 0.1,
+      "rationale": "Defines keys and defaults for configuration items; likely includes properties controlling debug log behaviour.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/ModelEventPump.java",
+      "rank": 5,
+      "confidence": 0.07,
+      "rationale": "Central dispatcher for model events; emits numerous debug/trace messages to follow internal activity.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java",
+      "rank": 6,
+      "confidence": 0.06,
+      "rationale": "MDR-specific implementation of event pump; contains detailed logging of low-level model events useful for tracing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 7,
+      "confidence": 0.04,
+      "rationale": "Collects and displays exceptions while also writing stack traces to the log, tying UI error reporting to logging subsystem.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "rank": 8,
+      "confidence": 0.03,
+      "rationale": "Core cognitive engine class; uses Logger to trace reasoning steps and design decisions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
+      "rank": 9,
+      "confidence": 0.02,
+      "rationale": "Utility class with helper methods that wrap or emit diagnostic logging for assorted operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
+      "rank": 10,
+      "confidence": 0.02,
+      "rationale": "Bootstraps critic subsystem and sets logging categories/levels for debugging analysis features.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.018691588785046728,
+    "hit@10": 1.0,
+    "recall@10": 0.028037383177570093,
+    "mrr": 1.0,
+    "map": 0.02570093457943925
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.29, \"rationale\": \"Main entry point; initializes system settings including Log4J configuration and therefore controls global debug/trace output.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\", \"confidence\": 0.25, \"rationale\": \"Provides application-wide constants and helper methods; contains static Logger instances and flags that enable/disable debug tracing throughout ArgoUML.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.12, \"rationale\": \"Loads and applies configuration properties, including those that determine logging level and trace options.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\", \"confidence\": 0.10, \"rationale\": \"Defines keys and defaults for configuration items; likely includes properties controlling debug log behaviour.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-core-model/src/org/argouml/model/ModelEventPump.java\", \"confidence\": 0.07, \"rationale\": \"Central dispatcher for model events; emits numerous debug/trace messages to follow internal activity.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\", \"confidence\": 0.06, \"rationale\": \"MDR-specific implementation of event pump; contains detailed logging of low-level model events useful for tracing.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.04, \"rationale\": \"Collects and displays exceptions while also writing stack traces to the log, tying UI error reporting to logging subsystem.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.03, \"rationale\": \"Core cognitive engine class; uses Logger to trace reasoning steps and design decisions.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\", \"confidence\": 0.02, \"rationale\": \"Utility class with helper methods that wrap or emit diagnostic logging for assorted operations.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\", \"confidence\": 0.02, \"rationale\": \"Bootstraps critic subsystem and sets logging categories/levels for debugging analysis features.\"}\n]",
+  "usage": {
+    "prompt_tokens": 13857,
+    "completion_tokens": 1781,
+    "total_tokens": 15638
+  },
+  "slot": "AZ3",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 122,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 27.6
+}

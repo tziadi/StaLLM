@@ -4,92 +4,92 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java",
-      "rank": 1,
-      "confidence": 0.28,
-      "rationale": "Provides notation handling for Extension Points, an element unique to Use-Case diagrams, indicating direct support for the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java",
-      "rank": 2,
-      "confidence": 0.26,
-      "rationale": "UML-specific renderer/parser for Extension Points; tightly coupled to Use-Case diagram semantics.",
-      "method": ""
-    },
-    {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
-      "rank": 3,
-      "confidence": 0.24,
-      "rationale": "Explorer navigation rule that links a Use Case to its Extension Points, directly reflecting Use-Case diagram structure.",
+      "rank": 1,
+      "confidence": 0.58,
+      "rationale": "Only candidate whose name explicitly references \"UseCase\". Implements navigation rule from a Use Case to its Extension Points in the Explorer, directly supporting the structure of Use Case diagrams.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java",
-      "rank": 4,
-      "confidence": 0.12,
-      "rationale": "General rule mapping namespaces to diagrams; includes Use-Case diagrams among others, giving indirect support.",
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java",
+      "rank": 2,
+      "confidence": 0.46,
+      "rationale": "Provides notation (textual rendering) for UML Extension Points, one of the core elements that appear on Use Case diagrams, thus directly supporting their visual representation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java",
+      "rank": 3,
+      "confidence": 0.32,
+      "rationale": "Defines explorer rule that maps a UML model to its diagrams, including Use Case diagrams, facilitating navigation and management of those diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java",
-      "rank": 5,
-      "confidence": 0.11,
-      "rationale": "Connects a project node to all its diagrams (including Use-Case), facilitating access and management.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java",
-      "rank": 6,
-      "confidence": 0.09,
-      "rationale": "Maps any diagram, such as a Use-Case diagram, to its child nodes in the explorer tree.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToEdge.java",
-      "rank": 7,
-      "confidence": 0.09,
-      "rationale": "Provides explorer navigation from a diagram (including Use-Case) to its edges (relationships).",
+      "rank": 4,
+      "confidence": 0.3,
+      "rationale": "Supports listing of all diagrams (Use Case diagrams among them) under a project node in the Explorer, thereby aiding access to the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEvent.java",
-      "rank": 8,
-      "confidence": 0.07,
-      "rationale": "Event fired on diagram appearance changes; affects Use-Case diagram rendering alongside others.",
+      "rank": 5,
+      "confidence": 0.28,
+      "rationale": "Generic diagram-appearance event used by all diagram types, including Use Case diagrams, to notify listeners of visual style changes.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEventListener.java",
-      "rank": 9,
-      "confidence": 0.06,
-      "rationale": "Listener for diagram appearance events; participates in updating Use-Case diagrams when styles change.",
+      "rank": 6,
+      "confidence": 0.24,
+      "rationale": "Listener interface paired with ArgoDiagramAppearanceEvent; components specific to Use Case diagrams rely on these callbacks for appearance updates.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventTypes.java",
+      "file": "src/argouml-app/src/org/argouml/notation/InitNotation.java",
+      "rank": 7,
+      "confidence": 0.23,
+      "rationale": "Initialises the notation subsystem that supplies textual rendering for all UML diagrams, including Use Case diagram elements such as actors and use cases.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java",
+      "rank": 8,
+      "confidence": 0.22,
+      "rationale": "Explorer rule that reveals diagrams (including Use Case diagrams) owned by a namespace, enabling users to locate and open them.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoNotationEvent.java",
+      "rank": 9,
+      "confidence": 0.2,
+      "rationale": "Event representing notation changes; affects how use cases and actors are displayed textually within Use Case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotationUml.java",
       "rank": 10,
-      "confidence": 0.05,
-      "rationale": "Defines constants for diagram-related events, including those relevant to Use-Case diagrams.",
+      "confidence": 0.19,
+      "rationale": "UML-specific implementation of Extension Point notation provider, ensuring correct display of this Use Case-related element in diagrams.",
       "method": ""
     }
   ],
   "metrics": {
     "hit@1": 0.0,
     "recall@1": 0.0,
-    "hit@5": 1.0,
-    "recall@5": 0.019230769230769232,
-    "hit@10": 1.0,
-    "recall@10": 0.019230769230769232,
-    "mrr": 0.5,
-    "map": 0.009615384615384616
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Provides notation handling for Extension Points, an element unique to Use-Case diagrams, indicating direct support for the feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ExtensionPointNotationUml.java\",\n    \"confidence\": 0.26,\n    \"rationale\": \"UML-specific renderer/parser for Extension Points; tightly coupled to Use-Case diagram semantics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\",\n    \"confidence\": 0.24,\n    \"rationale\": \"Explorer navigation rule that links a Use Case to its Extension Points, directly reflecting Use-Case diagram structure.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"General rule mapping namespaces to diagrams; includes Use-Case diagrams among others, giving indirect support.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Connects a project node to all its diagrams (including Use-Case), facilitating access and management.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Maps any diagram, such as a Use-Case diagram, to its child nodes in the explorer tree.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToEdge.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Provides explorer navigation from a diagram (including Use-Case) to its edges (relationships).\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEvent.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Event fired on diagram appearance changes; affects Use-Case diagram rendering alongside others.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEventListener.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Listener for diagram appearance events; participates in updating Use-Case diagrams when styles change.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventTypes.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Defines constants for diagram-related events, including those relevant to Use-Case diagrams.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\",\n    \"confidence\": 0.58,\n    \"rationale\": \"Only candidate whose name explicitly references \\\"UseCase\\\". Implements navigation rule from a Use Case to its Extension Points in the Explorer, directly supporting the structure of Use Case diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotation.java\",\n    \"confidence\": 0.46,\n    \"rationale\": \"Provides notation (textual rendering) for UML Extension Points, one of the core elements that appear on Use Case diagrams, thus directly supporting their visual representation.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToDiagrams.java\",\n    \"confidence\": 0.32,\n    \"rationale\": \"Defines explorer rule that maps a UML model to its diagrams, including Use Case diagrams, facilitating navigation and management of those diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoProjectToDiagram.java\",\n    \"confidence\": 0.30,\n    \"rationale\": \"Supports listing of all diagrams (Use Case diagrams among them) under a project node in the Explorer, thereby aiding access to the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEvent.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Generic diagram-appearance event used by all diagram types, including Use Case diagrams, to notify listeners of visual style changes.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoDiagramAppearanceEventListener.java\",\n    \"confidence\": 0.24,\n    \"rationale\": \"Listener interface paired with ArgoDiagramAppearanceEvent; components specific to Use Case diagrams rely on these callbacks for appearance updates.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/InitNotation.java\",\n    \"confidence\": 0.23,\n    \"rationale\": \"Initialises the notation subsystem that supplies textual rendering for all UML diagrams, including Use Case diagram elements such as actors and use cases.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNamespaceToDiagram.java\",\n    \"confidence\": 0.22,\n    \"rationale\": \"Explorer rule that reveals diagrams (including Use Case diagrams) owned by a namespace, enabling users to locate and open them.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoNotationEvent.java\",\n    \"confidence\": 0.20,\n    \"rationale\": \"Event representing notation changes; affects how use cases and actors are displayed textually within Use Case diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ExtensionPointNotationUml.java\",\n    \"confidence\": 0.19,\n    \"rationale\": \"UML-specific implementation of Extension Point notation provider, ensuring correct display of this Use Case-related element in diagrams.\"\n  }\n]",
   "usage": {
     "prompt_tokens": 12434,
-    "completion_tokens": 1632,
-    "total_tokens": 14066
+    "completion_tokens": 2284,
+    "total_tokens": 14718
   },
   "slot": "AZ3",
   "feature": "USECASEDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 6,
   "candidate_order": "alphabetical",
   "run": 1,
-  "elapsed_s": 21.2
+  "elapsed_s": 22.1
 }

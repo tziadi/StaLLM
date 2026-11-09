@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-usecasediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/UseCaseDiagramGraphModel.java",
+      "rank": 1,
+      "confidence": 0.26,
+      "rationale": "Central graph model specific to use-case diagrams; maintains actors, use cases, and their relationships.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UMLUseCaseDiagram.java",
+      "rank": 2,
+      "confidence": 0.22,
+      "rationale": "Main class representing a Use-Case diagram within the UI; ties together model, renderer and figs.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramRenderer.java",
+      "rank": 3,
+      "confidence": 0.2,
+      "rationale": "Renderer that creates the visual figures (actors, use cases, associations) for use-case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigUseCase.java",
+      "rank": 4,
+      "confidence": 0.17,
+      "rationale": "Figure class drawing a single Use Case node; core visual element of a use-case diagram.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigActor.java",
+      "rank": 5,
+      "confidence": 0.16,
+      "rationale": "Figure class drawing an Actor node; complements FigUseCase in the diagram.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigExtend.java",
+      "rank": 6,
+      "confidence": 0.14,
+      "rationale": "Visual representation of \u00abextend\u00bb relationships unique to use-case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigInclude.java",
+      "rank": 7,
+      "confidence": 0.13,
+      "rationale": "Figure for \u00abinclude\u00bb relationships between use cases; specific to use-case diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/behavior/use_cases/ActionNewUseCase.java",
+      "rank": 8,
+      "confidence": 0.11,
+      "rationale": "UI action that allows users to create new Use Case elements on the diagram.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/behavior/use_cases/ActionNewActor.java",
+      "rank": 9,
+      "confidence": 0.1,
+      "rationale": "UI action enabling creation of Actor elements; directly supports use-case diagram editing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model/src/org/argouml/model/UseCasesHelper.java",
+      "rank": 10,
+      "confidence": 0.09,
+      "rationale": "Model-level helper offering operations on use-case constructs; underpins diagram elements\u2019 semantics.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.019230769230769232,
+    "hit@5": 1.0,
+    "recall@5": 0.09615384615384616,
+    "hit@10": 1.0,
+    "recall@10": 0.17307692307692307,
+    "mrr": 1.0,
+    "map": 0.17307692307692307
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/UseCaseDiagramGraphModel.java\",\n    \"confidence\": 0.26,\n    \"rationale\": \"Central graph model specific to use-case diagrams; maintains actors, use cases, and their relationships.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UMLUseCaseDiagram.java\",\n    \"confidence\": 0.22,\n    \"rationale\": \"Main class representing a Use-Case diagram within the UI; ties together model, renderer and figs.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramRenderer.java\",\n    \"confidence\": 0.20,\n    \"rationale\": \"Renderer that creates the visual figures (actors, use cases, associations) for use-case diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigUseCase.java\",\n    \"confidence\": 0.17,\n    \"rationale\": \"Figure class drawing a single Use Case node; core visual element of a use-case diagram.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigActor.java\",\n    \"confidence\": 0.16,\n    \"rationale\": \"Figure class drawing an Actor node; complements FigUseCase in the diagram.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigExtend.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Visual representation of \u00abextend\u00bb relationships unique to use-case diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/FigInclude.java\",\n    \"confidence\": 0.13,\n    \"rationale\": \"Figure for \u00abinclude\u00bb relationships between use cases; specific to use-case diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/behavior/use_cases/ActionNewUseCase.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"UI action that allows users to create new Use Case elements on the diagram.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/behavior/use_cases/ActionNewActor.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"UI action enabling creation of Actor elements; directly supports use-case diagram editing.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/UseCasesHelper.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Model-level helper offering operations on use-case constructs; underpins diagram elements\u2019 semantics.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 13845,
+    "completion_tokens": 1115,
+    "total_tokens": 14960
+  },
+  "slot": "AZ3",
+  "feature": "USECASEDIAGRAM",
+  "gold_count": 52,
+  "gold_visible": 24,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 15.1
+}

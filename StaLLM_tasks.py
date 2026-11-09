@@ -392,6 +392,8 @@ def list_repo_candidates(
     the list is pre-sorted so that paths whose basename or parent directory
     contains the lowercased keyword appear first, improving budget coverage
     for features whose implementation lies in lexicographically-late packages.
+    Copies of source files under Maven `target/classes/` and `target/test-classes/`
+    directories are excluded.
     """
 
     allowed = tuple(ext.lower() for ext in allowed_exts or [])
@@ -404,6 +406,9 @@ def list_repo_candidates(
             if base.startswith("."):
                 continue
             if allowed and not name.lower().endswith(allowed):
+                continue
+            if "/target/classes/" in f"/{name}" or "/target/test-classes/" in f"/{name}":
+                # Maven build output: copies of the source files, not candidates.
                 continue
             candidates.append(name)
     candidates.sort()

@@ -127,7 +127,7 @@ def rq3_threshold_sensitivity(md: list[str]) -> None:
         "DACOS": rpe.load_dacos("selection"),
         "MLCQ": rpe.load_mlcq_smell_samples(str(rpe.MLCQ_CSV), limit=rpe.MAX_SAMPLES),
     }
-    results = [d for d in aps.load_rq3() if d["run"] == 1]
+    results = aps.rq3_voted(aps.load_rq3())
     rows = []
     for ds, sset in samples.items():
         recorded = {r["sample_id"]: r["predicted"]

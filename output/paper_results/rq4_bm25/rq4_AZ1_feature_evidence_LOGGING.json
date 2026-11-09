@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 1,
-      "confidence": 0.9,
-      "rationale": "The file name and location suggest it is related to the user interface and status updates, which are often used for logging and displaying debug information.",
+      "confidence": 0.95,
+      "rationale": "The file is located in a package related to logging and contains 'logging' in its path, which directly aligns with the feature query.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
       "rank": 2,
+      "confidence": 0.9,
+      "rationale": "The file is in the 'logging' package and appears to handle exceptions, which is closely related to logging and debugging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/osdep/OsUtil.java",
+      "rank": 3,
       "confidence": 0.85,
-      "rationale": "Main entry point of the application, likely to include initialization of logging mechanisms or debug configurations.",
+      "rationale": "The file is in a utility package and may provide OS-dependent logging or debugging utilities.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "Handles exceptions, which are often logged for debugging purposes.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
       "rank": 4,
-      "confidence": 0.75,
-      "rationale": "Manages configuration settings, potentially including logging configurations.",
+      "confidence": 0.8,
+      "rationale": "This file is likely responsible for handling and displaying exceptions, which is relevant to debugging and logging.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
       "rank": 5,
-      "confidence": 0.7,
-      "rationale": "Utility class that may include methods for logging or debugging tools.",
+      "confidence": 0.75,
+      "rationale": "The file name suggests it handles exceptions, which is a key aspect of logging and debugging.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/taskmgmt/ProgressMonitor.java",
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
       "rank": 6,
-      "confidence": 0.65,
-      "rationale": "Monitors progress, which may involve logging progress updates or debug information.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/DetailsPane.java",
-      "rank": 7,
-      "confidence": 0.6,
-      "rationale": "UI component that might display detailed information, potentially including logs or debug messages.",
+      "confidence": 0.7,
+      "rationale": "The file appears to handle events, which could include logging or tracing application events.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/persistence/ArgoParser.java",
-      "rank": 8,
-      "confidence": 0.55,
-      "rationale": "Handles parsing, which often involves logging errors or debug information during the process.",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "The file is related to parsing, which may involve logging or debugging information during the parsing process.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
-      "rank": 9,
-      "confidence": 0.5,
-      "rationale": "UI component for browsing projects, which may include logging user actions or errors.",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "The ProjectBrowser may include logging or tracing features to track user interactions or project-related events.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "file": "src/argouml-app/src/org/argouml/kernel/ProjectManager.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "The ProjectManager may include logging mechanisms to track project-related activities and debugging information.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/HelpListener.java",
       "rank": 10,
-      "confidence": 0.45,
-      "rationale": "Core application API, likely to include foundational logging or debugging mechanisms.",
+      "confidence": 0.5,
+      "rationale": "The HelpListener may log or trace user interactions with the help system, which could be relevant to debugging.",
       "method": ""
     }
   ],
@@ -78,24 +78,24 @@
     "hit@1": 0.0,
     "recall@1": 0.0,
     "hit@5": 1.0,
-    "recall@5": 0.014018691588785047,
+    "recall@5": 0.004672897196261682,
     "hit@10": 1.0,
-    "recall@10": 0.03271028037383177,
+    "recall@10": 0.02336448598130841,
     "mrr": 0.5,
-    "map": 0.019453716065865597
+    "map": 0.010829253819908024
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ArgoStatusBar.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"The file name and location suggest it is related to the user interface and status updates, which are often used for logging and displaying debug information.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Main entry point of the application, likely to include initialization of logging mechanisms or debug configurations.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Handles exceptions, which are often logged for debugging purposes.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Manages configuration settings, potentially including logging configurations.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Utility class that may include methods for logging or debugging tools.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/taskmgmt/ProgressMonitor.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Monitors progress, which may involve logging progress updates or debug information.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/DetailsPane.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"UI component that might display detailed information, potentially including logs or debug messages.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/persistence/ArgoParser.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"Handles parsing, which often involves logging errors or debug information during the process.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"UI component for browsing projects, which may include logging user actions or errors.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\",\n    \"confidence\": 0.45,\n    \"rationale\": \"Core application API, likely to include foundational logging or debugging mechanisms.\"\n  }\n]\n```",
+  "raw_response": "```json\n[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"The file is located in a package related to logging and contains 'logging' in its path, which directly aligns with the feature query.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"The file is in the 'logging' package and appears to handle exceptions, which is closely related to logging and debugging.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/util/osdep/OsUtil.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"The file is in a utility package and may provide OS-dependent logging or debugging utilities.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"This file is likely responsible for handling and displaying exceptions, which is relevant to debugging and logging.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"The file name suggests it handles exceptions, which is a key aspect of logging and debugging.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"The file appears to handle events, which could include logging or tracing application events.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/persistence/ArgoParser.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"The file is related to parsing, which may involve logging or debugging information during the parsing process.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"The ProjectBrowser may include logging or tracing features to track user interactions or project-related events.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/kernel/ProjectManager.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"The ProjectManager may include logging mechanisms to track project-related activities and debugging information.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/HelpListener.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"The HelpListener may log or trace user interactions with the help system, which could be relevant to debugging.\"\n  }\n]\n```",
   "usage": {
-    "prompt_tokens": 13882,
-    "completion_tokens": 632,
-    "total_tokens": 14514
+    "prompt_tokens": 13583,
+    "completion_tokens": 688,
+    "total_tokens": 14271
   },
   "slot": "AZ1",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 122,
+  "gold_visible": 167,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 4.2
+  "elapsed_s": 5.8
 }

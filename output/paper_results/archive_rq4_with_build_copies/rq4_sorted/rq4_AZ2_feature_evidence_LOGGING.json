@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
+      "rank": 1,
+      "confidence": 1.0,
+      "rationale": "Located in the 'logging' package and named 'ExceptionHandler', this file likely handles logging of exceptions and debug messages, directly supporting the Logging feature.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
+      "rank": 2,
+      "confidence": 0.9,
+      "rationale": "Also in the 'logging' package, 'SimpleTimer' is likely used for timing and tracing events, which is a common aspect of debug logging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Handles exceptions in the application, which often involves logging errors and trace messages for debugging purposes.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoLogPanel.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "The name 'UndoLogPanel' suggests it displays or manages logs related to undo actions, which may include debug or trace messages.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/UndoManagerWrapper.java",
+      "rank": 5,
+      "confidence": 0.75,
+      "rationale": "Likely wraps undo management and may include logging of undo/redo operations for debugging and traceability.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "Inspector panels often provide trace and debug information about events, which is relevant to logging.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/DevActionFactory.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "A factory for developer actions may include debug and trace logging for development and troubleshooting.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
+      "rank": 8,
+      "confidence": 0.6,
+      "rationale": "Developer modules often provide tools for debugging, which may include logging and trace message support.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/MessageNodeBuilder.java",
+      "rank": 9,
+      "confidence": 0.55,
+      "rationale": "The term 'Message' in the name suggests it may be involved in constructing or handling log or trace messages.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java",
+      "rank": 10,
+      "confidence": 0.5,
+      "rationale": "Caller lists are often used in debugging and tracing, possibly supporting logging by tracking call stacks or events.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.004672897196261682,
+    "hit@10": 1.0,
+    "recall@10": 0.004672897196261682,
+    "mrr": 1.0,
+    "map": 0.004672897196261682
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\",\n    \"confidence\": 1.0,\n    \"rationale\": \"Located in the 'logging' package and named 'ExceptionHandler', this file likely handles logging of exceptions and debug messages, directly supporting the Logging feature.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Also in the 'logging' package, 'SimpleTimer' is likely used for timing and tracing events, which is a common aspect of debug logging.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles exceptions in the application, which often involves logging errors and trace messages for debugging purposes.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoLogPanel.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"The name 'UndoLogPanel' suggests it displays or manages logs related to undo actions, which may include debug or trace messages.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"modules/dev/src/org/argouml/dev/UndoManagerWrapper.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Likely wraps undo management and may include logging of undo/redo operations for debugging and traceability.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Inspector panels often provide trace and debug information about events, which is relevant to logging.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"modules/dev/src/org/argouml/dev/DevActionFactory.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"A factory for developer actions may include debug and trace logging for development and troubleshooting.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Developer modules often provide tools for debugging, which may include logging and trace message support.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"modules/dev/src/org/argouml/dev/MessageNodeBuilder.java\",\n    \"confidence\": 0.55,\n    \"rationale\": \"The term 'Message' in the name suggests it may be involved in constructing or handling log or trace messages.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"modules/dev/src/org/argouml/dev/CallerListNodeBuilder.java\",\n    \"confidence\": 0.5,\n    \"rationale\": \"Caller lists are often used in debugging and tracing, possibly supporting logging by tracking call stacks or events.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 12407,
+    "completion_tokens": 684,
+    "total_tokens": 13091
+  },
+  "slot": "AZ2",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 82,
+  "candidate_order": "keyword_sorted",
+  "run": 1,
+  "elapsed_s": 5.9
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "structured_diagnostic_checklist",
+    "template": "You are a static code analysis assistant tasked with detecting specific code smells using internal diagnostic checks.\n\nSmell to detect: {smell}\nLanguage: {language}\n\nFollow this structured analysis for the given smell:\n- Does the snippet exhibit traits commonly associated with {smell}?\n- Are there multiple instances of this behavior, indicating a pattern?\n- Is any ambiguity or conflicting evidence present?\n\nFinal task: synthesize your findings into JSON format and return whether the smell is present. JSON format only:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "calibrated_confidence_assessment",
+    "template": "You are evaluating a potential instance of a code smell in a snippet.\n\nTarget smell: {smell}\nLanguage: {language}\n\nUse a calibrated-confidence approach to assess:\n1. Rate confidence in your final decision from 0.0 to 1.0 based on evidence solidity.\n2. Provide a brief rationale explaining your decision.\n3. Default to a conservative judgment when unsure.\n\nReturn JSON only, strictly formatted as:\n{{\"present\": true|false, \"confidence\": confidence (0.0-1.0), \"rationale\": \"short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "contrastive_reasoning",
+    "template": "You are a code quality expert. Your task is to decide whether the target smell is present in the snippet by contrasting it with what is NOT the smell.\n\nSmell: {smell}\nLanguage: {language}\n\nPerform contrastive reasoning:\n- Identify characteristics of the target smell in the code.\n- Compare them with features that would definitively exclude the smell.\nFocus only on available evidence.\n\nConclude and return JSON:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "threshold_anchored_guidance",
+    "template": "You are a code smell detection assistant using threshold-based guidelines to make your decision.\n\nSmell to check: {smell}\nLanguage: {language}\n\nDecision rules:\n- Use concrete measurable thresholds to decide if {smell} traits are present (e.g., number of lines, nesting depth, parameter count).\n- If threshold information is not directly visible, default to conservative decision-making.\n\nReport only JSON formatted strictly as:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"short evidence sentence\"}}\n\nCode:\n{code}"
+  },
+  {
+    "name": "diagnostic_questions_guidance",
+    "template": "You are a diagnostic assistant for code smell detection.\n\nSmell to evaluate: {smell}\nLanguage: {language}\n\nAnswer these key diagnostic questions:\n- Does the snippet clearly exhibit one or more characteristics of {smell}?\n- Are there contextual factors supporting or weakening the presence of the smell?\n- Is the evidence strong enough to justify a high-confidence assessment?\n\nBased on your answers, return only the following JSON schema:\n{{\"present\": true|false, \"confidence\": 0.0, \"rationale\": \"short evidence sentence\"}}\n\nCode:\n{code}"
+  }
+]

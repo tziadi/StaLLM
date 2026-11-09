@@ -27,8 +27,8 @@ Computed from stored outputs, no model call.
 
 | Dataset | ρ(κ human, κ metric) observed | ρ κ human: resample vs original | ρ κ human: two resamples | ρ F1 human: resample vs original | ρ κ metric: resample vs original | ρ(κ human, κ metric) in resamples | same human-best (κ) | same human-best (F1) | same metric-best (κ) | human-best ≠ metric-best |
 |---|---|---|---|---|---|---|---|---|---|---|
-| DACOS | 0.567 | 0.783 [0.367, 0.967] | 0.633 [0.033, 0.933] | 0.8 [0.3, 0.967] | 0.783 [-0.067, 0.967] | 0.5 [-0.25, 0.917] | 50% | 46% | 22% | 70% |
-| MLCQ | 0.676 | 0.894 [0.693, 0.971] | 0.824 [0.554, 0.944] | 0.9 [0.706, 0.978] | 0.795 [0.408, 0.943] | 0.593 [-0.107, 0.896] | 47% | 52% | 24% | 88% |
+| DACOS | 0.65 | 0.783 [0.3, 0.967] | 0.617 [-0.05, 0.933] | 0.783 [0.2, 0.983] | 0.768 [-0.067, 0.967] | 0.502 [-0.317, 0.933] | 53% | 52% | 22% | 68% |
+| MLCQ | 0.701 | 0.9 [0.696, 0.968] | 0.821 [0.55, 0.946] | 0.911 [0.718, 0.975] | 0.81 [0.397, 0.952] | 0.6 [-0.098, 0.889] | 47% | 53% | 24% | 88% |
 
 - DACOS: best by human κ = AZ2/conservative_evidence, best by metric κ = AZ3/definition_driven.
 - MLCQ: best by human κ = AZ3/conservative_evidence, best by metric κ = AZ3/binary_oracle_baseline.
@@ -65,9 +65,9 @@ Computed from stored outputs, no model call.
 | System | Condition | candidates | gold in list (mean) | E[P@10] | E[MRR] |
 |---|---|---|---|---|---|
 | argouml | alphabetical | 600 | 36.6 | 0.061 | 0.134 |
-| argouml | keyword_sorted | 600 | 77.4 | 0.129 | 0.224 |
-| argouml | bm25_sorted | 600 | 116.1 | 0.194 | 0.351 |
-| argouml | bm25_masked | 600 | 80.8 | 0.135 | 0.254 |
+| argouml | keyword_sorted | 600 | 51.6 | 0.086 | 0.174 |
+| argouml | bm25_sorted | 600 | 77.9 | 0.130 | 0.263 |
+| argouml | bm25_masked | 600 | 54.2 | 0.090 | 0.193 |
 | eshop | alphabetical | 523 | 79.8 | 0.152 | 0.294 |
 | eshop | keyword_sorted | 523 | 79.8 | 0.152 | 0.294 |
 | eshop | bm25_sorted | 523 | 79.8 | 0.152 | 0.294 |

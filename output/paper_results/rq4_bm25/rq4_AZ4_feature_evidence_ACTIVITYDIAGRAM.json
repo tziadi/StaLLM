@@ -25,52 +25,52 @@
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java",
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/UMLActivityDiagram.java",
       "rank": 4,
       "confidence": 0.8,
-      "rationale": "This file provides the graph model for activity diagrams, which is essential for managing the diagram's structure.",
+      "rationale": "This file is part of the activity diagram implementation in the activity2 module, which is likely an updated or extended version.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/PropPanelUMLActivityDiagram.java",
       "rank": 5,
       "confidence": 0.75,
-      "rationale": "This file is responsible for the property panel of activity diagrams, allowing users to configure diagram properties.",
+      "rationale": "This file provides the property panel for activity diagrams, allowing users to configure diagram properties.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java",
+      "rank": 6,
+      "confidence": 0.7,
+      "rationale": "This file is responsible for creating the property panel factory for activity diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java",
+      "rank": 7,
+      "confidence": 0.65,
+      "rationale": "This file defines the graph model for activity diagrams, which is essential for managing the diagram's structure.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java",
-      "rank": 6,
-      "confidence": 0.7,
+      "rank": 8,
+      "confidence": 0.6,
       "rationale": "This file initializes activity diagrams, setting up the initial state and configuration.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigActionState.java",
-      "rank": 7,
-      "confidence": 0.65,
-      "rationale": "This file deals with the visual representation of action states in activity diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigSubactivityState.java",
-      "rank": 8,
-      "confidence": 0.6,
-      "rationale": "This file handles the visual representation of subactivity states in activity diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigObjectFlowState.java",
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java",
       "rank": 9,
       "confidence": 0.55,
-      "rationale": "This file deals with the visual representation of object flow states in activity diagrams.",
+      "rationale": "This file is responsible for creating instances of activity diagrams, which is part of the diagram factory.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigObjectFlow.java",
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java",
       "rank": 10,
       "confidence": 0.5,
-      "rationale": "This file handles the visual representation of object flows in activity diagrams.",
+      "rationale": "This file handles the selection of action states within activity diagrams, which is important for user interaction.",
       "method": ""
     }
   ],
@@ -78,24 +78,24 @@
     "hit@1": 1.0,
     "recall@1": 0.010638297872340425,
     "hit@5": 1.0,
-    "recall@5": 0.05319148936170213,
+    "recall@5": 0.0425531914893617,
     "hit@10": 1.0,
-    "recall@10": 0.09574468085106383,
+    "recall@10": 0.07446808510638298,
     "mrr": 1.0,
-    "map": 0.09574468085106383
+    "map": 0.06471631205673758
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "```json\n[\n    {\n        \"rank\": 1,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\",\n        \"confidence\": 0.95,\n        \"rationale\": \"This file directly implements the UMLActivityDiagram, which is the core class for activity diagrams in ArgoUML.\"\n    },\n    {\n        \"rank\": 2,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\",\n        \"confidence\": 0.9,\n        \"rationale\": \"This file is responsible for the layout of activity diagrams, which is a crucial aspect of their implementation.\"\n    },\n    {\n        \"rank\": 3,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\",\n        \"confidence\": 0.85,\n        \"rationale\": \"This file handles the rendering of activity diagrams, ensuring they are visually represented correctly.\"\n    },\n    {\n        \"rank\": 4,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ActivityDiagramGraphModel.java\",\n        \"confidence\": 0.8,\n        \"rationale\": \"This file provides the graph model for activity diagrams, which is essential for managing the diagram's structure.\"\n    },\n    {\n        \"rank\": 5,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/PropPanelUMLActivityDiagram.java\",\n        \"confidence\": 0.75,\n        \"rationale\": \"This file is responsible for the property panel of activity diagrams, allowing users to configure diagram properties.\"\n    },\n    {\n        \"rank\": 6,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"This file initializes activity diagrams, setting up the initial state and configuration.\"\n    },\n    {\n        \"rank\": 7,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigActionState.java\",\n        \"confidence\": 0.65,\n        \"rationale\": \"This file deals with the visual representation of action states in activity diagrams.\"\n    },\n    {\n        \"rank\": 8,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigSubactivityState.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file handles the visual representation of subactivity states in activity diagrams.\"\n    },\n    {\n        \"rank\": 9,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigObjectFlowState.java\",\n        \"confidence\": 0.55,\n        \"rationale\": \"This file deals with the visual representation of object flow states in activity diagrams.\"\n    },\n    {\n        \"rank\": 10,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/FigObjectFlow.java\",\n        \"confidence\": 0.5,\n        \"rationale\": \"This file handles the visual representation of object flows in activity diagrams.\"\n    }\n]\n```",
+  "raw_response": "```json\n[\n    {\n        \"rank\": 1,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\",\n        \"confidence\": 0.95,\n        \"rationale\": \"This file directly implements the UMLActivityDiagram, which is the core class for activity diagrams in ArgoUML.\"\n    },\n    {\n        \"rank\": 2,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\",\n        \"confidence\": 0.9,\n        \"rationale\": \"This file is responsible for the layout of activity diagrams, which is a crucial aspect of their implementation.\"\n    },\n    {\n        \"rank\": 3,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\",\n        \"confidence\": 0.85,\n        \"rationale\": \"This file handles the rendering of activity diagrams, ensuring they are visually represented correctly.\"\n    },\n    {\n        \"rank\": 4,\n        \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/UMLActivityDiagram.java\",\n        \"confidence\": 0.8,\n        \"rationale\": \"This file is part of the activity diagram implementation in the activity2 module, which is likely an updated or extended version.\"\n    },\n    {\n        \"rank\": 5,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/PropPanelUMLActivityDiagram.java\",\n        \"confidence\": 0.75,\n        \"rationale\": \"This file provides the property panel for activity diagrams, allowing users to configure diagram properties.\"\n    },\n    {\n        \"rank\": 6,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramPropPanelFactory.java\",\n        \"confidence\": 0.7,\n        \"rationale\": \"This file is responsible for creating the property panel factory for activity diagrams.\"\n    },\n    {\n        \"rank\": 7,\n        \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java\",\n        \"confidence\": 0.65,\n        \"rationale\": \"This file defines the graph model for activity diagrams, which is essential for managing the diagram's structure.\"\n    },\n    {\n        \"rank\": 8,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/InitActivityDiagram.java\",\n        \"confidence\": 0.6,\n        \"rationale\": \"This file initializes activity diagrams, setting up the initial state and configuration.\"\n    },\n    {\n        \"rank\": 9,\n        \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java\",\n        \"confidence\": 0.55,\n        \"rationale\": \"This file is responsible for creating instances of activity diagrams, which is part of the diagram factory.\"\n    },\n    {\n        \"rank\": 10,\n        \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java\",\n        \"confidence\": 0.5,\n        \"rationale\": \"This file handles the selection of action states within activity diagrams, which is important for user interaction.\"\n    }\n]\n```",
   "usage": {
-    "prompt_tokens": 13335,
-    "completion_tokens": 712,
-    "total_tokens": 14047
+    "prompt_tokens": 12215,
+    "completion_tokens": 751,
+    "total_tokens": 12966
   },
   "slot": "AZ4",
   "feature": "ACTIVITYDIAGRAM",
   "gold_count": 94,
-  "gold_visible": 53,
+  "gold_visible": 67,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 550.5
+  "elapsed_s": 508.4
 }

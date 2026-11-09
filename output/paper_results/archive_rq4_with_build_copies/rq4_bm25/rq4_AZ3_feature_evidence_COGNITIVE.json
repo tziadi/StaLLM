@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-cognitive",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Critic.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Defines the core abstraction \"Critic\" representing the design\u2010analysis agents; central to creating, running and evaluating design critics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java",
+      "rank": 2,
+      "confidence": 0.87,
+      "rationale": "Provides a composite implementation of multiple Critic objects, showing advanced critic behaviour and reuse; essential to critic functionality.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "rank": 3,
+      "confidence": 0.85,
+      "rationale": "Represents the \"designer\" agent that coordinates model analysis and invokes critics during background processing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Agency.java",
+      "rank": 4,
+      "confidence": 0.8,
+      "rationale": "Manages registration and scheduling of Critic instances; acts as the agency that lets them run continuously.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
+      "rank": 5,
+      "confidence": 0.78,
+      "rationale": "Bootstraps and launches the background critic thread when ArgoUML starts, directly supporting live critique.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ToDoList.java",
+      "rank": 6,
+      "confidence": 0.75,
+      "rationale": "Holds the collection of suggested improvements produced by critics, forming the user-visible feedback list.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ToDoItem.java",
+      "rank": 7,
+      "confidence": 0.73,
+      "rationale": "Represents individual critic findings (issues) shown to the user; tightly coupled to critic output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/cognitive/critics/InitCognitiveCritics.java",
+      "rank": 8,
+      "confidence": 0.72,
+      "rationale": "Initialises and registers the large set of UML-specific critic subclasses with the Agency at startup.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/ControlMech.java",
+      "rank": 9,
+      "confidence": 0.68,
+      "rationale": "Abstracts the control mechanism that decides when critics fire, directly influencing continuous background analysis.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/StandardCM.java",
+      "rank": 10,
+      "confidence": 0.65,
+      "rationale": "Default implementation of ControlMech that schedules critics; essential for normal operation of design critics.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004219409282700422,
+    "hit@5": 1.0,
+    "recall@5": 0.02109704641350211,
+    "hit@10": 1.0,
+    "recall@10": 0.04219409282700422,
+    "mrr": 1.0,
+    "map": 0.04219409282700422
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Critic.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Defines the core abstraction \\\"Critic\\\" representing the design\u2010analysis agents; central to creating, running and evaluating design critics.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/CompoundCritic.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Provides a composite implementation of multiple Critic objects, showing advanced critic behaviour and reuse; essential to critic functionality.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Represents the \\\"designer\\\" agent that coordinates model analysis and invokes critics during background processing.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/Agency.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Manages registration and scheduling of Critic instances; acts as the agency that lets them run continuously.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\",\n    \"confidence\": 0.78,\n    \"rationale\": \"Bootstraps and launches the background critic thread when ArgoUML starts, directly supporting live critique.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoList.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Holds the collection of suggested improvements produced by critics, forming the user-visible feedback list.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ToDoItem.java\",\n    \"confidence\": 0.73,\n    \"rationale\": \"Represents individual critic findings (issues) shown to the user; tightly coupled to critic output.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/cognitive/critics/InitCognitiveCritics.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Initialises and registers the large set of UML-specific critic subclasses with the Agency at startup.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/ControlMech.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"Abstracts the control mechanism that decides when critics fire, directly influencing continuous background analysis.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/cognitive/StandardCM.java\",\n    \"confidence\": 0.65,\n    \"rationale\": \"Default implementation of ControlMech that schedules critics; essential for normal operation of design critics.\"\n  }\n]",
+  "usage": {
+    "prompt_tokens": 14300,
+    "completion_tokens": 1219,
+    "total_tokens": 15519
+  },
+  "slot": "AZ3",
+  "feature": "COGNITIVE",
+  "gold_count": 237,
+  "gold_visible": 143,
+  "candidate_order": "bm25_sorted",
+  "run": 1,
+  "elapsed_s": 23.5
+}

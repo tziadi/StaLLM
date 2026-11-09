@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java",
       "rank": 1,
-      "confidence": 0.98,
-      "rationale": "The file name directly references 'CollabDiagram', which matches the feature description of diagrams showing object interactions (collaboration diagrams). Likely contains the core graph model for collaboration diagrams.",
+      "confidence": 1.0,
+      "rationale": "The file name directly references 'Collaboration Diagram', which matches the [MASKED] feature description. It likely implements the core graph model for collaboration diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java",
       "rank": 2,
-      "confidence": 0.96,
-      "rationale": "Renderer for 'CollabDiagram', indicating direct support for rendering collaboration diagrams, which are the focus of the feature.",
+      "confidence": 0.98,
+      "rationale": "Renderer for collaboration diagrams; essential for displaying and interacting with these diagrams in the UI.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java",
+      "rank": 3,
+      "confidence": 0.92,
+      "rationale": "Although named for sequence diagrams, this file likely handles actions related to both sequence and collaboration diagrams, as they are closely related in UML.",
       "method": ""
     },
     {
       "file": "src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java",
-      "rank": 3,
-      "confidence": 0.93,
-      "rationale": "Contains 'CollaborationsHelper', suggesting it provides model-level support for collaboration diagrams, which are used to show object interactions.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java",
       "rank": 4,
       "confidence": 0.91,
-      "rationale": "Implementation of 'CollaborationsHelper' for MDR, likely providing backend/model support for collaboration diagrams.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
-      "rank": 5,
-      "confidence": 0.89,
-      "rationale": "UI navigation rule for going from a collaboration to its diagram, indicating direct support for collaboration diagrams in the UI.",
+      "rationale": "Provides helper methods for the 'Collaborations' UML concept, which underpins collaboration diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java",
-      "rank": 6,
-      "confidence": 0.87,
-      "rationale": "Handles selection of classifier roles in collaboration diagrams, which are central to showing object interactions.",
+      "rank": 5,
+      "confidence": 0.89,
+      "rationale": "Handles selection logic for classifier roles, a key element in collaboration diagrams.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model/src/org/argouml/model/Facade.java",
+      "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java",
+      "rank": 6,
+      "confidence": 0.87,
+      "rationale": "MDR implementation of CollaborationsHelper, supporting the model layer for collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-model-euml/src/org/argouml/model/euml/CollaborationsHelperEUMLImpl.java",
       "rank": 7,
+      "confidence": 0.86,
+      "rationale": "EUML implementation of CollaborationsHelper, supporting alternative model backends for collaboration diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/tests/org/argouml/uml/diagram/collaboration/ui/TestUMLCollaborationDiagram.java",
+      "rank": 8,
       "confidence": 0.85,
-      "rationale": "Facade for the model, likely exposes collaboration diagram elements and their relationships, supporting the feature at the API level.",
+      "rationale": "Test file for UML Collaboration Diagram, indicating direct support and implementation for the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java",
-      "rank": 8,
-      "confidence": 0.83,
-      "rationale": "Factory for creating diagrams, including collaboration diagrams, thus directly supports the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java",
       "rank": 9,
-      "confidence": 0.81,
-      "rationale": "Base class for UML diagrams, likely includes collaboration diagrams and provides shared functionality.",
+      "confidence": 0.82,
+      "rationale": "Factory for creating diagrams, likely includes logic for instantiating collaboration diagrams.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-model/src/org/argouml/model/MetaTypes.java",
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java",
       "rank": 10,
       "confidence": 0.8,
-      "rationale": "Defines UML metatypes, including those for collaborations and classifier roles, which are essential for collaboration diagrams.",
+      "rationale": "UI navigation rule connecting collaboration model elements to their diagrams, directly supporting the feature.",
       "method": ""
     }
   ],
@@ -82,19 +82,19 @@
     "hit@10": 1.0,
     "recall@10": 0.10416666666666667,
     "mrr": 1.0,
-    "map": 0.08107638888888889
+    "map": 0.07384259259259258
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"The file name directly references 'CollabDiagram', which matches the feature description of diagrams showing object interactions (collaboration diagrams). Likely contains the core graph model for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\",\n    \"confidence\": 0.96,\n    \"rationale\": \"Renderer for 'CollabDiagram', indicating direct support for rendering collaboration diagrams, which are the focus of the feature.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java\",\n    \"confidence\": 0.93,\n    \"rationale\": \"Contains 'CollaborationsHelper', suggesting it provides model-level support for collaboration diagrams, which are used to show object interactions.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Implementation of 'CollaborationsHelper' for MDR, likely providing backend/model support for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"UI navigation rule for going from a collaboration to its diagram, indicating direct support for collaboration diagrams in the UI.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"Handles selection of classifier roles in collaboration diagrams, which are central to showing object interactions.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/Facade.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Facade for the model, likely exposes collaboration diagram elements and their relationships, supporting the feature at the API level.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Factory for creating diagrams, including collaboration diagrams, thus directly supports the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java\",\n    \"confidence\": 0.81,\n    \"rationale\": \"Base class for UML diagrams, likely includes collaboration diagrams and provides shared functionality.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/MetaTypes.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Defines UML metatypes, including those for collaborations and classifier roles, which are essential for collaboration diagrams.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/CollabDiagramGraphModel.java\",\n    \"confidence\": 1.0,\n    \"rationale\": \"The file name directly references 'Collaboration Diagram', which matches the [MASKED] feature description. It likely implements the core graph model for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/CollabDiagramRenderer.java\",\n    \"confidence\": 0.98,\n    \"rationale\": \"Renderer for collaboration diagrams; essential for displaying and interacting with these diagrams in the UI.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionSequenceDiagram.java\",\n    \"confidence\": 0.92,\n    \"rationale\": \"Although named for sequence diagrams, this file likely handles actions related to both sequence and collaboration diagrams, as they are closely related in UML.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/CollaborationsHelper.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Provides helper methods for the 'Collaborations' UML concept, which underpins collaboration diagrams.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/collaboration/ui/SelectionClassifierRole.java\",\n    \"confidence\": 0.89,\n    \"rationale\": \"Handles selection logic for classifier roles, a key element in collaboration diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/CollaborationsHelperMDRImpl.java\",\n    \"confidence\": 0.87,\n    \"rationale\": \"MDR implementation of CollaborationsHelper, supporting the model layer for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-model-euml/src/org/argouml/model/euml/CollaborationsHelperEUMLImpl.java\",\n    \"confidence\": 0.86,\n    \"rationale\": \"EUML implementation of CollaborationsHelper, supporting alternative model backends for collaboration diagrams.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/tests/org/argouml/uml/diagram/collaboration/ui/TestUMLCollaborationDiagram.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Test file for UML Collaboration Diagram, indicating direct support and implementation for the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramFactory.java\",\n    \"confidence\": 0.82,\n    \"rationale\": \"Factory for creating diagrams, likely includes logic for instantiating collaboration diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoCollaborationToDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"UI navigation rule connecting collaboration model elements to their diagrams, directly supporting the feature.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 14063,
-    "completion_tokens": 737,
-    "total_tokens": 14800
+    "prompt_tokens": 13465,
+    "completion_tokens": 728,
+    "total_tokens": 14193
   },
   "slot": "AZ2",
   "feature": "COLLABORATIONDIAGRAM",
   "gold_count": 48,
-  "gold_visible": 13,
+  "gold_visible": 15,
   "candidate_order": "bm25_masked",
   "run": 1,
   "elapsed_s": 11.0

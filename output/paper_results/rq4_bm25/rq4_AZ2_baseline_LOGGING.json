@@ -4,73 +4,73 @@
   "project": "ArgoUML",
   "predictions": [
     {
-      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
       "rank": 1,
       "confidence": 0.95,
-      "rationale": "Main entry point; likely to initialize or configure logging and debug output.",
+      "rationale": "File is in a logging-specific package and likely handles logging of exceptions, which is central to debug and trace messages.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 2,
       "confidence": 0.9,
-      "rationale": "Central class for cognitive support; known to contain debug and trace logging for ArgoUML.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/util/ToolBarUtility.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "Utility classes often contain logging helpers or debug output methods.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
-      "rank": 4,
-      "confidence": 0.8,
-      "rationale": "Main UI class; likely to emit debug/trace logs for user actions and events.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
-      "rank": 5,
-      "confidence": 0.75,
-      "rationale": "Startup logic for critics; may include debug logging for initialization and event tracing.",
+      "rationale": "Located in a logging package, likely provides timing/logging utilities for debug and trace output.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/util/ArgoFrame.java",
-      "rank": 6,
+      "rank": 3,
       "confidence": 0.7,
-      "rationale": "Core UI frame; may include debug/trace messages for window and event handling.",
+      "rationale": "Core utility class, may include logging hooks or debug output for the main application frame.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java",
-      "rank": 7,
-      "confidence": 0.7,
-      "rationale": "Diagram implementation; likely to log diagram events and actions for debugging.",
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 4,
+      "confidence": 0.65,
+      "rationale": "Main entry point of the application, often initializes logging and debug facilities.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 5,
+      "confidence": 0.6,
+      "rationale": "Handles exceptions, likely to include logging or debug message output for errors.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java",
+      "rank": 6,
+      "confidence": 0.55,
+      "rationale": "Utility class for Java runtime, may include logging or debug output for environment issues.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 7,
+      "confidence": 0.5,
+      "rationale": "Central UI component, may include debug or trace logging for user actions or state changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
       "rank": 8,
-      "confidence": 0.65,
-      "rationale": "Handles exceptions; often logs errors and debug information for traceability.",
+      "confidence": 0.45,
+      "rationale": "Core cognitive component, may include debug logging for design decisions or events.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/util/FileFilters.java",
+      "file": "src/argouml-app/src/org/argouml/util/Tools.java",
       "rank": 9,
-      "confidence": 0.6,
-      "rationale": "Utility for file handling; may include debug output for file operations.",
+      "confidence": 0.4,
+      "rationale": "General utility class, may provide logging or debug helper methods.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/DiagramUtils.java",
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
       "rank": 10,
-      "confidence": 0.6,
-      "rationale": "Diagram utilities; may provide debug/trace logging for diagram-related operations.",
+      "confidence": 0.4,
+      "rationale": "Handles AWT exceptions, likely to log or trace UI-related errors for debugging.",
       "method": ""
     }
   ],
@@ -80,22 +80,22 @@
     "hit@5": 1.0,
     "recall@5": 0.014018691588785047,
     "hit@10": 1.0,
-    "recall@10": 0.03271028037383177,
+    "recall@10": 0.02336448598130841,
     "mrr": 1.0,
-    "map": 0.024132176234979975
+    "map": 0.01655911585818128
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.95, \"rationale\": \"Main entry point; likely to initialize or configure logging and debug output.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.9, \"rationale\": \"Central class for cognitive support; known to contain debug and trace logging for ArgoUML.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/util/ToolBarUtility.java\", \"confidence\": 0.8, \"rationale\": \"Utility classes often contain logging helpers or debug output methods.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.8, \"rationale\": \"Main UI class; likely to emit debug/trace logs for user actions and events.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\", \"confidence\": 0.75, \"rationale\": \"Startup logic for critics; may include debug logging for initialization and event tracing.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/util/ArgoFrame.java\", \"confidence\": 0.7, \"rationale\": \"Core UI frame; may include debug/trace messages for window and event handling.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ArgoDiagramImpl.java\", \"confidence\": 0.7, \"rationale\": \"Diagram implementation; likely to log diagram events and actions for debugging.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.65, \"rationale\": \"Handles exceptions; often logs errors and debug information for traceability.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/util/FileFilters.java\", \"confidence\": 0.6, \"rationale\": \"Utility for file handling; may include debug output for file operations.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/DiagramUtils.java\", \"confidence\": 0.6, \"rationale\": \"Diagram utilities; may provide debug/trace logging for diagram-related operations.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\", \"confidence\": 0.95, \"rationale\": \"File is in a logging-specific package and likely handles logging of exceptions, which is central to debug and trace messages.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.9, \"rationale\": \"Located in a logging package, likely provides timing/logging utilities for debug and trace output.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/util/ArgoFrame.java\", \"confidence\": 0.7, \"rationale\": \"Core utility class, may include logging hooks or debug output for the main application frame.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.65, \"rationale\": \"Main entry point of the application, often initializes logging and debug facilities.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.6, \"rationale\": \"Handles exceptions, likely to include logging or debug message output for errors.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/util/JavaRuntimeUtility.java\", \"confidence\": 0.55, \"rationale\": \"Utility class for Java runtime, may include logging or debug output for environment issues.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.5, \"rationale\": \"Central UI component, may include debug or trace logging for user actions or state changes.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.45, \"rationale\": \"Core cognitive component, may include debug logging for design decisions or events.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/util/Tools.java\", \"confidence\": 0.4, \"rationale\": \"General utility class, may provide logging or debug helper methods.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\", \"confidence\": 0.4, \"rationale\": \"Handles AWT exceptions, likely to log or trace UI-related errors for debugging.\"}\n]",
   "usage": {
-    "prompt_tokens": 13858,
-    "completion_tokens": 565,
-    "total_tokens": 14423
+    "prompt_tokens": 13559,
+    "completion_tokens": 582,
+    "total_tokens": 14141
   },
   "slot": "AZ2",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 122,
+  "gold_visible": 167,
   "candidate_order": "bm25_sorted",
   "run": 1,
-  "elapsed_s": 9.4
+  "elapsed_s": 6.0
 }

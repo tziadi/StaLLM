@@ -7,70 +7,70 @@
       "file": "src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java",
       "rank": 1,
       "confidence": 0.95,
-      "rationale": "File is in a logging-specific package and likely handles exceptions and logging output, directly related to debug and trace messages.",
+      "rationale": "Located in the logging package; likely handles logging of exceptions and debug messages.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
       "rank": 2,
       "confidence": 0.85,
-      "rationale": "Located in the logging package, likely used for timing and possibly logging performance or trace events.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
-      "rank": 3,
-      "confidence": 0.8,
-      "rationale": "Handles exceptions at the application level, which often includes logging of errors and debug information.",
+      "rationale": "In logging package; may provide timing for log events or performance tracing.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/Main.java",
-      "rank": 4,
-      "confidence": 0.7,
-      "rationale": "Main entry point of the application, often initializes logging and may contain debug or trace message setup.",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "Main entry point; often initializes logging and debug output for the application.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/ArgoVersion.java",
-      "rank": 5,
-      "confidence": 0.5,
-      "rationale": "May log version information at startup, which is a common debug trace.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
-      "rank": 6,
-      "confidence": 0.45,
-      "rationale": "Startup class that may include debug or trace logging for initialization routines.",
+      "rank": 4,
+      "confidence": 0.7,
+      "rationale": "Version info is often logged at startup; may contain debug log statements.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/SubsystemUtility.java",
+      "rank": 5,
+      "confidence": 0.65,
+      "rationale": "Utility classes often include debug logging for subsystem initialization and tracing.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java",
+      "rank": 6,
+      "confidence": 0.6,
+      "rationale": "Handles exceptions; likely logs errors and debug information.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/StartCritics.java",
       "rank": 7,
-      "confidence": 0.4,
-      "rationale": "Utility class for subsystems, may include logging for subsystem initialization or errors.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
-      "rank": 8,
-      "confidence": 0.35,
-      "rationale": "Handles exception dialogs, which often involves logging exceptions for debugging.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/ui/HeapMonitor.java",
-      "rank": 9,
-      "confidence": 0.3,
-      "rationale": "Monitors heap usage, may log memory usage or related debug information.",
+      "confidence": 0.55,
+      "rationale": "Startup routines often include debug logging for initialization steps.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/application/api/CommandLineInterface.java",
+      "rank": 8,
+      "confidence": 0.5,
+      "rationale": "Command line interfaces frequently log input, output, and errors for debugging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 9,
+      "confidence": 0.45,
+      "rationale": "Central application class; likely to include debug and trace logging.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/InitSubsystem.java",
       "rank": 10,
-      "confidence": 0.25,
-      "rationale": "Command line interface may include debug or trace logging for command execution and errors.",
+      "confidence": 0.4,
+      "rationale": "Subsystem initialization often includes debug log messages for tracing startup issues.",
       "method": ""
     }
   ],
@@ -80,16 +80,16 @@
     "hit@5": 1.0,
     "recall@5": 0.009345794392523364,
     "hit@10": 1.0,
-    "recall@10": 0.009345794392523364,
+    "recall@10": 0.014018691588785047,
     "mrr": 1.0,
-    "map": 0.007009345794392523
+    "map": 0.009345794392523364
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\", \"confidence\": 0.95, \"rationale\": \"File is in a logging-specific package and likely handles exceptions and logging output, directly related to debug and trace messages.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.85, \"rationale\": \"Located in the logging package, likely used for timing and possibly logging performance or trace events.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\", \"confidence\": 0.8, \"rationale\": \"Handles exceptions at the application level, which often includes logging of errors and debug information.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.7, \"rationale\": \"Main entry point of the application, often initializes logging and may contain debug or trace message setup.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/ArgoVersion.java\", \"confidence\": 0.5, \"rationale\": \"May log version information at startup, which is a common debug trace.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\", \"confidence\": 0.45, \"rationale\": \"Startup class that may include debug or trace logging for initialization routines.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/application/SubsystemUtility.java\", \"confidence\": 0.4, \"rationale\": \"Utility class for subsystems, may include logging for subsystem initialization or errors.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.35, \"rationale\": \"Handles exception dialogs, which often involves logging exceptions for debugging.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/HeapMonitor.java\", \"confidence\": 0.3, \"rationale\": \"Monitors heap usage, may log memory usage or related debug information.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/api/CommandLineInterface.java\", \"confidence\": 0.25, \"rationale\": \"Command line interface may include debug or trace logging for command execution and errors.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/util/logging/AwtExceptionHandler.java\", \"confidence\": 0.95, \"rationale\": \"Located in the logging package; likely handles logging of exceptions and debug messages.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.85, \"rationale\": \"In logging package; may provide timing for log events or performance tracing.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.80, \"rationale\": \"Main entry point; often initializes logging and debug output for the application.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/application/ArgoVersion.java\", \"confidence\": 0.70, \"rationale\": \"Version info is often logged at startup; may contain debug log statements.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/SubsystemUtility.java\", \"confidence\": 0.65, \"rationale\": \"Utility classes often include debug logging for subsystem initialization and tracing.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/application/security/ArgoAwtExceptionHandler.java\", \"confidence\": 0.60, \"rationale\": \"Handles exceptions; likely logs errors and debug information.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/application/StartCritics.java\", \"confidence\": 0.55, \"rationale\": \"Startup routines often include debug logging for initialization steps.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/application/api/CommandLineInterface.java\", \"confidence\": 0.50, \"rationale\": \"Command line interfaces frequently log input, output, and errors for debugging.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\", \"confidence\": 0.45, \"rationale\": \"Central application class; likely to include debug and trace logging.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/api/InitSubsystem.java\", \"confidence\": 0.40, \"rationale\": \"Subsystem initialization often includes debug log messages for tracing startup issues.\"}\n]",
   "usage": {
-    "prompt_tokens": 12383,
-    "completion_tokens": 584,
-    "total_tokens": 12967
+    "prompt_tokens": 12389,
+    "completion_tokens": 553,
+    "total_tokens": 12942
   },
   "slot": "AZ2",
   "feature": "LOGGING",
@@ -97,5 +97,5 @@
   "gold_visible": 82,
   "candidate_order": "keyword_sorted",
   "run": 1,
-  "elapsed_s": 5.2
+  "elapsed_s": 4.3
 }

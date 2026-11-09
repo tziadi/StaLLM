@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-statediagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java",
+      "rank": 1,
+      "confidence": 0.43,
+      "rationale": "Provides the notation rendering for the body of a UML State element, directly affecting how states appear in state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ActionStateNotation.java",
+      "rank": 2,
+      "confidence": 0.4,
+      "rationale": "Handles notation for Action-States, a key graphical element specific to state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/CallStateNotation.java",
+      "rank": 3,
+      "confidence": 0.37,
+      "rationale": "Implements the textual/graphical notation for Call-States which are used only in state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java",
+      "rank": 4,
+      "confidence": 0.34,
+      "rationale": "Explorer rule that explicitly navigates from a model element to its owning State Diagram, indicating knowledge of the diagram type.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java",
+      "rank": 5,
+      "confidence": 0.32,
+      "rationale": "Maps a UML StateMachine to its associated diagram, strongly tying the file to state-diagram infrastructure.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToStateMachine.java",
+      "rank": 6,
+      "confidence": 0.29,
+      "rationale": "Provides navigation from a classifier to its state machine, an essential model element underlying state diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/TransitionNotation.java",
+      "rank": 7,
+      "confidence": 0.28,
+      "rationale": "Defines notation for Transitions, the arcs between states that are central to state-diagram semantics.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java",
+      "rank": 8,
+      "confidence": 0.26,
+      "rationale": "Explorer rule that expands a state machine into its contained States, reflecting the diagram\u2019s structural hierarchy.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToGuard.java",
+      "rank": 9,
+      "confidence": 0.23,
+      "rationale": "Focuses on the guard condition of a Transition within a state machine/diagram, showing close coupling to state-diagram concepts.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTop.java",
+      "rank": 10,
+      "confidence": 0.21,
+      "rationale": "Navigates from a state machine to its top-level composite state, part of browsing and editing state diagrams.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 1.0,
+    "recall@5": 0.02040816326530612,
+    "hit@10": 1.0,
+    "recall@10": 0.05102040816326531,
+    "mrr": 0.25,
+    "map": 0.02193877551020408
+  },
+  "prompt_style": "feature_evidence",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/StateBodyNotation.java\",\n    \"confidence\": 0.43,\n    \"rationale\": \"Provides the notation rendering for the body of a UML State element, directly affecting how states appear in state diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ActionStateNotation.java\",\n    \"confidence\": 0.4,\n    \"rationale\": \"Handles notation for Action-States, a key graphical element specific to state diagrams.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/CallStateNotation.java\",\n    \"confidence\": 0.37,\n    \"rationale\": \"Implements the textual/graphical notation for Call-States which are used only in state diagrams.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoBehavioralFeatureToStateDiagram.java\",\n    \"confidence\": 0.34,\n    \"rationale\": \"Explorer rule that explicitly navigates from a model element to its owning State Diagram, indicating knowledge of the diagram type.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStatemachineToDiagram.java\",\n    \"confidence\": 0.32,\n    \"rationale\": \"Maps a UML StateMachine to its associated diagram, strongly tying the file to state-diagram infrastructure.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoClassifierToStateMachine.java\",\n    \"confidence\": 0.29,\n    \"rationale\": \"Provides navigation from a classifier to its state machine, an essential model element underlying state diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/notation/providers/TransitionNotation.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Defines notation for Transitions, the arcs between states that are central to state-diagram semantics.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToState.java\",\n    \"confidence\": 0.26,\n    \"rationale\": \"Explorer rule that expands a state machine into its contained States, reflecting the diagram\u2019s structural hierarchy.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoTransitionToGuard.java\",\n    \"confidence\": 0.23,\n    \"rationale\": \"Focuses on the guard condition of a Transition within a state machine/diagram, showing close coupling to state-diagram concepts.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoStateMachineToTop.java\",\n    \"confidence\": 0.21,\n    \"rationale\": \"Navigates from a state machine to its top-level composite state, part of browsing and editing state diagrams.\"\n  }\n]\n",
+  "usage": {
+    "prompt_tokens": 12434,
+    "completion_tokens": 1581,
+    "total_tokens": 14015
+  },
+  "slot": "AZ3",
+  "feature": "STATEDIAGRAM",
+  "gold_count": 98,
+  "gold_visible": 23,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 33.0
+}

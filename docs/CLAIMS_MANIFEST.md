@@ -89,3 +89,11 @@ python generate_paper_figures.py
 | Structural heuristic (signatures, throw, catch): F1 0.390, 128 predictions | `output/paper_results/stats/revision_structural_baseline.csv` |
 | MCC ≤ 0.19 on DACOS, mean over runs | `output/paper_results_annot/stats/revision_mcc.csv` |
 | 199 of the 200 DACOS selection samples have two concordant votes | `output/paper_results_annot/stallm_annotated_splits.json` (`yes`/`no` fields) |
+
+## Fifth review round
+| Claim | Output | Script |
+|---|---|---|
+| RQ3 Table 3 and MCC use the majority vote over runs | `output/paper_results_annot/stats/rq3_oracle_swap.csv`, `revision_mcc.csv` | `analyze_paper_stats.py`, `revision_analyses.py` |
+| RQ4 on deduplicated ArgoUML lists (no `target/classes` copies, 1,884 Java files): keyword-only P@10 0.70, BM25-only 0.41, masked 0.33; models 0.66–0.86 on BM25, 42 of 56 model–feature pairs improve, no Holm-significant test | `output/paper_results/stats/rq4_conditions.csv`, `rq4_wilcoxon.csv`, `sensitivity_rq4_retrieval.csv`, `rq4_rerankers.csv` | `run_paper_experiments.py --rq 4`, then the analyses above |
+| Earlier RQ4 runs with build copies | `output/paper_results/archive_rq4_with_build_copies/` | — |
+| RQ5 on MLCQ: 5 searches × 5 candidates, held-out split of 200 distinct code samples; mean winner optimism 0.139, Spearman selection vs held-out 0.153 (p=0.44) | `output/paper_results/rq5_mlcq/`, `output/paper_results/stats/rq5_mlcq_searches.csv`, `rq5_mlcq_summary.json` | `rq5_mlcq_searches.py`, `rq5_mlcq_searches.py --analyze` |

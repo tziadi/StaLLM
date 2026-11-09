@@ -13,64 +13,64 @@
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java",
       "rank": 2,
-      "confidence": 0.9,
-      "rationale": "Handles layout for activity diagrams, relevant to sequence and workflow representation.",
+      "confidence": 0.85,
+      "rationale": "Handles layout for activity diagrams, relevant to their structure and sequence.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java",
       "rank": 3,
-      "confidence": 0.85,
-      "rationale": "Responsible for rendering activity diagrams, which are central to the query.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/UMLStateDiagram.java",
-      "rank": 4,
       "confidence": 0.8,
-      "rationale": "State diagrams are similar to activity diagrams, as both describe states and transitions.",
+      "rationale": "Responsible for rendering activity diagrams, closely tied to their visual representation.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/StateDiagramRenderer.java",
-      "rank": 5,
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java",
+      "rank": 4,
       "confidence": 0.75,
-      "rationale": "Handles rendering for state diagrams, which share similarities with activity diagrams.",
+      "rationale": "Defines the graph model for activity diagrams, essential for their behavior representation.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/StateDiagramGraphModel.java",
-      "rank": 6,
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java",
+      "rank": 5,
       "confidence": 0.7,
-      "rationale": "Manages graph models for state diagrams, relevant due to state and sequence representation.",
+      "rationale": "Factory class for creating activity diagrams, relevant to their instantiation.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-diagrams-state2/src/org/argouml/state2/diagram/StateDiagramGraphModel.java",
-      "rank": 7,
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/CreateDiagramElementAction.java",
+      "rank": 6,
       "confidence": 0.65,
-      "rationale": "Another implementation of state diagram graph models, relevant to the query.",
+      "rationale": "Handles creation of elements within activity diagrams, relevant to their sequence of actions.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java",
-      "rank": 8,
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/DiagramElementBuilder.java",
+      "rank": 7,
       "confidence": 0.6,
-      "rationale": "General UML diagram handling, potentially relevant for activity and state diagrams.",
+      "rationale": "Builds elements for activity diagrams, contributing to their workflow representation.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigStateVertex.java",
-      "rank": 9,
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ModePlaceDiagramElement.java",
+      "rank": 8,
       "confidence": 0.55,
-      "rationale": "Handles state vertices, which are part of state and activity diagrams.",
+      "rationale": "Handles placement of elements in activity diagrams, relevant to their sequence and state.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramModule.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "Module for activity diagrams, likely contains relevant functionality for their behavior.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java",
       "rank": 10,
-      "confidence": 0.5,
-      "rationale": "Handles selection of action states, relevant to activity diagram workflows.",
+      "confidence": 0.45,
+      "rationale": "Handles selection of action states in activity diagrams, relevant to their workflow behavior.",
       "method": ""
     }
   ],
@@ -78,24 +78,24 @@
     "hit@1": 1.0,
     "recall@1": 0.010638297872340425,
     "hit@5": 1.0,
-    "recall@5": 0.0425531914893617,
+    "recall@5": 0.031914893617021274,
     "hit@10": 1.0,
-    "recall@10": 0.07446808510638298,
+    "recall@10": 0.0425531914893617,
     "mrr": 1.0,
-    "map": 0.06382978723404255
+    "map": 0.036170212765957444
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\", \"confidence\": 0.95, \"rationale\": \"Directly related to activity diagrams, which describe workflow behavior.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\", \"confidence\": 0.90, \"rationale\": \"Handles layout for activity diagrams, relevant to sequence and workflow representation.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\", \"confidence\": 0.85, \"rationale\": \"Responsible for rendering activity diagrams, which are central to the query.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/UMLStateDiagram.java\", \"confidence\": 0.80, \"rationale\": \"State diagrams are similar to activity diagrams, as both describe states and transitions.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/StateDiagramRenderer.java\", \"confidence\": 0.75, \"rationale\": \"Handles rendering for state diagrams, which share similarities with activity diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/StateDiagramGraphModel.java\", \"confidence\": 0.70, \"rationale\": \"Manages graph models for state diagrams, relevant due to state and sequence representation.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-core-diagrams-state2/src/org/argouml/state2/diagram/StateDiagramGraphModel.java\", \"confidence\": 0.65, \"rationale\": \"Another implementation of state diagram graph models, relevant to the query.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/UMLDiagram.java\", \"confidence\": 0.60, \"rationale\": \"General UML diagram handling, potentially relevant for activity and state diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/state/ui/FigStateVertex.java\", \"confidence\": 0.55, \"rationale\": \"Handles state vertices, which are part of state and activity diagrams.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java\", \"confidence\": 0.50, \"rationale\": \"Handles selection of action states, relevant to activity diagram workflows.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/UMLActivityDiagram.java\", \"confidence\": 0.95, \"rationale\": \"Directly related to activity diagrams, which describe workflow behavior.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/layout/ActivityDiagramLayouter.java\", \"confidence\": 0.85, \"rationale\": \"Handles layout for activity diagrams, relevant to their structure and sequence.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/ActivityDiagramRenderer.java\", \"confidence\": 0.80, \"rationale\": \"Responsible for rendering activity diagrams, closely tied to their visual representation.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramGraphModel.java\", \"confidence\": 0.75, \"rationale\": \"Defines the graph model for activity diagrams, essential for their behavior representation.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramFactory.java\", \"confidence\": 0.70, \"rationale\": \"Factory class for creating activity diagrams, relevant to their instantiation.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/CreateDiagramElementAction.java\", \"confidence\": 0.65, \"rationale\": \"Handles creation of elements within activity diagrams, relevant to their sequence of actions.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/DiagramElementBuilder.java\", \"confidence\": 0.60, \"rationale\": \"Builds elements for activity diagrams, contributing to their workflow representation.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ModePlaceDiagramElement.java\", \"confidence\": 0.55, \"rationale\": \"Handles placement of elements in activity diagrams, relevant to their sequence and state.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-core-diagrams-activity2/src/org/argouml/activity2/diagram/ActivityDiagramModule.java\", \"confidence\": 0.50, \"rationale\": \"Module for activity diagrams, likely contains relevant functionality for their behavior.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/activity/ui/SelectionActionState.java\", \"confidence\": 0.45, \"rationale\": \"Handles selection of action states in activity diagrams, relevant to their workflow behavior.\"}\n]",
   "usage": {
-    "prompt_tokens": 14715,
-    "completion_tokens": 607,
-    "total_tokens": 15322
+    "prompt_tokens": 13727,
+    "completion_tokens": 629,
+    "total_tokens": 14356
   },
   "slot": "AZ1",
   "feature": "ACTIVITYDIAGRAM",
   "gold_count": 94,
-  "gold_visible": 45,
+  "gold_visible": 50,
   "candidate_order": "bm25_masked",
   "run": 2,
-  "elapsed_s": 7.9
+  "elapsed_s": 4.3
 }

@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-deploymentdiagram",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Directly references 'Node' elements in the model, which are central to deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoNodeToResidentComponent.java",
+      "rank": 2,
+      "confidence": 0.93,
+      "rationale": "Handles the relationship between nodes and components, a key aspect of deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java",
+      "rank": 3,
+      "confidence": 0.91,
+      "rationale": "Provides notation for node instances, which are visualized in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java",
+      "rank": 4,
+      "confidence": 0.9,
+      "rationale": "Handles UML-specific notation for node instances, relevant for deployment diagram rendering.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java",
+      "rank": 5,
+      "confidence": 0.88,
+      "rationale": "Manages the connection between diagrams and node elements, likely used in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/cmd/CmdCreateNode.java",
+      "rank": 6,
+      "confidence": 0.85,
+      "rationale": "Command for creating node elements, which are essential in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/profile/FigNodeStrategy.java",
+      "rank": 7,
+      "confidence": 0.8,
+      "rationale": "Strategy for node figures, which are graphical representations in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java",
+      "rank": 8,
+      "confidence": 0.78,
+      "rationale": "Handles notation for component instances, which are mapped onto nodes in deployment diagrams.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java",
+      "rank": 9,
+      "confidence": 0.77,
+      "rationale": "UML-specific notation for component instances, relevant for deployment diagram artifacts.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoComponentToResidentModelElement.java",
+      "rank": 10,
+      "confidence": 0.75,
+      "rationale": "Manages the relationship between components and their resident model elements, important for deployment mapping.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 0.0,
+    "recall@1": 0.0,
+    "hit@5": 0.0,
+    "recall@5": 0.0,
+    "hit@10": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0,
+    "map": 0.0
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoModelToNode.java\", \"confidence\": 0.95, \"rationale\": \"Directly references 'Node' elements in the model, which are central to deployment diagrams.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoNodeToResidentComponent.java\", \"confidence\": 0.93, \"rationale\": \"Handles the relationship between nodes and components, a key aspect of deployment diagrams.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/NodeInstanceNotation.java\", \"confidence\": 0.91, \"rationale\": \"Provides notation for node instances, which are visualized in deployment diagrams.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/NodeInstanceNotationUml.java\", \"confidence\": 0.90, \"rationale\": \"Handles UML-specific notation for node instances, relevant for deployment diagram rendering.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoDiagramToNode.java\", \"confidence\": 0.88, \"rationale\": \"Manages the connection between diagrams and node elements, likely used in deployment diagrams.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/ui/cmd/CmdCreateNode.java\", \"confidence\": 0.85, \"rationale\": \"Command for creating node elements, which are essential in deployment diagrams.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/profile/FigNodeStrategy.java\", \"confidence\": 0.80, \"rationale\": \"Strategy for node figures, which are graphical representations in deployment diagrams.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/ComponentInstanceNotation.java\", \"confidence\": 0.78, \"rationale\": \"Handles notation for component instances, which are mapped onto nodes in deployment diagrams.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/notation/providers/uml/ComponentInstanceNotationUml.java\", \"confidence\": 0.77, \"rationale\": \"UML-specific notation for component instances, relevant for deployment diagram artifacts.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoComponentToResidentModelElement.java\", \"confidence\": 0.75, \"rationale\": \"Manages the relationship between components and their resident model elements, important for deployment mapping.\"}\n]",
+  "usage": {
+    "prompt_tokens": 12399,
+    "completion_tokens": 612,
+    "total_tokens": 13011
+  },
+  "slot": "AZ2",
+  "feature": "DEPLOYMENTDIAGRAM",
+  "gold_count": 32,
+  "gold_visible": 4,
+  "candidate_order": "alphabetical",
+  "run": 1,
+  "elapsed_s": 7.0
+}

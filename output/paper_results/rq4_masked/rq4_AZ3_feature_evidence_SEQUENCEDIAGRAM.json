@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java",
       "rank": 1,
-      "confidence": 0.33,
-      "rationale": "Central class that defines the Sequence Diagram type itself; matches feature description of diagram showing object interactions over time.",
+      "confidence": 0.35,
+      "rationale": "Represents the Sequence Diagram itself (class name matches feature). Central class controlling creation, persistence, and high-level behavior of interaction/time-ordered diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java",
       "rank": 2,
-      "confidence": 0.28,
-      "rationale": "Provides the graph/data model behind Sequence Diagrams, directly supporting their behaviour and contents.",
+      "confidence": 0.14,
+      "rationale": "Graph model for sequence diagrams; manages the objects (lifelines) and messages laid out on horizontal/vertical axes, directly implementing core semantics.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java",
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java",
       "rank": 3,
-      "confidence": 0.22,
-      "rationale": "Implements creation mode for messages between lifelines, a key interaction element displayed along the time axis.",
+      "confidence": 0.12,
+      "rationale": "Responsible for drawing sequence-diagram elements (lifelines, messages, time ordering), aligning with the visual time/object dimensions described.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java",
+      "rank": 4,
+      "confidence": 0.09,
+      "rationale": "Factory that builds sequence diagrams; key for creating and initializing the diagram type requested by the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessage.java",
-      "rank": 4,
-      "confidence": 0.2,
-      "rationale": "Graphical figure that renders a Message in the Sequence Diagram, directly tied to interaction representation.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java",
       "rank": 5,
-      "confidence": 0.18,
-      "rationale": "Figure for the lifeline/object box (classifier role) across the horizontal axis, essential to sequence diagrams.",
+      "confidence": 0.07,
+      "rationale": "Figure class for messages in a sequence diagram, representing interactions along the time axis; essential visual element for the feature.",
       "method": ""
     },
     {
       "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigActivation.java",
       "rank": 6,
-      "confidence": 0.16,
-      "rationale": "Draws activation bars along the vertical (time) dimension, visualizing object activity during interactions.",
+      "confidence": 0.06,
+      "rationale": "Handles activation bars that show object life-time along the vertical (time) dimension of sequence diagrams.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigHead.java",
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java",
       "rank": 7,
-      "confidence": 0.14,
-      "rationale": "Represents the head of a lifeline (object symbol) which anchors the horizontal dimension of the Sequence Diagram.",
+      "confidence": 0.05,
+      "rationale": "Represents lifeline/object boxes (horizontal dimension) in sequence diagrams, directly supporting the interaction view.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessageSpline.java",
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java",
       "rank": 8,
-      "confidence": 0.13,
-      "rationale": "Specialised figure for curved/async message lines; supports rendering of varied interaction flows over time.",
+      "confidence": 0.04,
+      "rationale": "Tool mode enabling users to add messages (time-ordered interactions) in sequence diagrams; supports constructing the feature.",
       "method": ""
     },
     {
-      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SelectionClassifierRole.java",
+      "file": "src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SelectionMessage.java",
       "rank": 9,
-      "confidence": 0.11,
-      "rationale": "Handles user interaction/selection on lifeline figures, refining editing behaviour of sequence diagrams.",
+      "confidence": 0.04,
+      "rationale": "Provides selection handles/behaviors for message figures in sequence diagrams, refining user interaction with time-ordered elements.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java",
       "rank": 10,
-      "confidence": 0.1,
-      "rationale": "Explorer rule linking an Interaction to its Messages, providing navigation support related to sequence diagrams.",
+      "confidence": 0.04,
+      "rationale": "Explorer rule linking Interaction elements to their Messages; directly relates to navigating the components of an interaction (sequence) diagram.",
       "method": ""
     }
   ],
@@ -85,17 +85,17 @@
     "map": 0.11392405063291139
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\",\n    \"confidence\": 0.33,\n    \"rationale\": \"Central class that defines the Sequence Diagram type itself; matches feature description of diagram showing object interactions over time.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java\",\n    \"confidence\": 0.28,\n    \"rationale\": \"Provides the graph/data model behind Sequence Diagrams, directly supporting their behaviour and contents.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java\",\n    \"confidence\": 0.22,\n    \"rationale\": \"Implements creation mode for messages between lifelines, a key interaction element displayed along the time axis.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessage.java\",\n    \"confidence\": 0.20,\n    \"rationale\": \"Graphical figure that renders a Message in the Sequence Diagram, directly tied to interaction representation.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java\",\n    \"confidence\": 0.18,\n    \"rationale\": \"Figure for the lifeline/object box (classifier role) across the horizontal axis, essential to sequence diagrams.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigActivation.java\",\n    \"confidence\": 0.16,\n    \"rationale\": \"Draws activation bars along the vertical (time) dimension, visualizing object activity during interactions.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigHead.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Represents the head of a lifeline (object symbol) which anchors the horizontal dimension of the Sequence Diagram.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessageSpline.java\",\n    \"confidence\": 0.13,\n    \"rationale\": \"Specialised figure for curved/async message lines; supports rendering of varied interaction flows over time.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SelectionClassifierRole.java\",\n    \"confidence\": 0.11,\n    \"rationale\": \"Handles user interaction/selection on lifeline figures, refining editing behaviour of sequence diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.10,\n    \"rationale\": \"Explorer rule linking an Interaction to its Messages, providing navigation support related to sequence diagrams.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/UMLSequenceDiagram.java\",\n    \"confidence\": 0.35,\n    \"rationale\": \"Represents the Sequence Diagram itself (class name matches feature). Central class controlling creation, persistence, and high-level behavior of interaction/time-ordered diagrams.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramGraphModel.java\",\n    \"confidence\": 0.14,\n    \"rationale\": \"Graph model for sequence diagrams; manages the objects (lifelines) and messages laid out on horizontal/vertical axes, directly implementing core semantics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramRenderer.java\",\n    \"confidence\": 0.12,\n    \"rationale\": \"Responsible for drawing sequence-diagram elements (lifelines, messages, time ordering), aligning with the visual time/object dimensions described.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SequenceDiagramFactory.java\",\n    \"confidence\": 0.09,\n    \"rationale\": \"Factory that builds sequence diagrams; key for creating and initializing the diagram type requested by the feature.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigMessage.java\",\n    \"confidence\": 0.07,\n    \"rationale\": \"Figure class for messages in a sequence diagram, representing interactions along the time axis; essential visual element for the feature.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigActivation.java\",\n    \"confidence\": 0.06,\n    \"rationale\": \"Handles activation bars that show object life-time along the vertical (time) dimension of sequence diagrams.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/FigClassifierRole.java\",\n    \"confidence\": 0.05,\n    \"rationale\": \"Represents lifeline/object boxes (horizontal dimension) in sequence diagrams, directly supporting the interaction view.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/ModeCreateMessage.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Tool mode enabling users to add messages (time-ordered interactions) in sequence diagrams; supports constructing the feature.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-core-diagrams-sequence2/src/org/argouml/sequence2/diagram/SelectionMessage.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Provides selection handles/behaviors for message figures in sequence diagrams, refining user interaction with time-ordered elements.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoInteractionToMessages.java\",\n    \"confidence\": 0.04,\n    \"rationale\": \"Explorer rule linking Interaction elements to their Messages; directly relates to navigating the components of an interaction (sequence) diagram.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 14116,
-    "completion_tokens": 1223,
-    "total_tokens": 15339
+    "prompt_tokens": 13863,
+    "completion_tokens": 1521,
+    "total_tokens": 15384
   },
   "slot": "AZ3",
   "feature": "SEQUENCEDIAGRAM",
   "gold_count": 79,
-  "gold_visible": 16,
+  "gold_visible": 30,
   "candidate_order": "bm25_masked",
   "run": 1,
-  "elapsed_s": 17.4
+  "elapsed_s": 9.6
 }

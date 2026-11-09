@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UMLUseCaseDiagram.java",
       "rank": 1,
-      "confidence": 0.95,
-      "rationale": "Primary class representing a Use Case diagram; central for creation, behavior, and interaction with the rest of ArgoUML.",
+      "confidence": 0.94,
+      "rationale": "Central class representing the Use Case Diagram itself; manages diagram behavior, figures, and interactions.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/UseCaseDiagramGraphModel.java",
       "rank": 2,
-      "confidence": 0.9,
-      "rationale": "Defines the underlying graph model (nodes/edges) specific to Use Case diagrams, directly supporting their semantics.",
+      "confidence": 0.91,
+      "rationale": "Graph model that holds the semantic elements (actors, use cases, relationships) shown in a Use Case Diagram.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramRenderer.java",
       "rank": 3,
-      "confidence": 0.85,
-      "rationale": "Handles visual rendering of actors and use-case figures in the diagram; essential for displaying the diagram.",
+      "confidence": 0.88,
+      "rationale": "Responsible for painting/rendering nodes and edges (actors, use cases, associations) on the Use Case Diagram.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/InitUseCaseDiagram.java",
       "rank": 4,
-      "confidence": 0.8,
-      "rationale": "Subsystem initializer that registers the Use Case diagram type, connecting actions, renderers, and factories.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/PropPanelUMLUseCaseDiagram.java",
-      "rank": 5,
-      "confidence": 0.75,
-      "rationale": "Property panel shown when a Use Case diagram is selected; refines and supports editing diagram-level attributes.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramPropPanelFactory.java",
-      "rank": 6,
-      "confidence": 0.7,
-      "rationale": "Factory that supplies property panels for Use Case diagrams, tying the diagram type to its UI components.",
+      "confidence": 0.83,
+      "rationale": "Initializes the Use Case Diagram subsystem; registers factories, actions, and settings specific to this diagram type.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/uml/ui/ActionUseCaseDiagram.java",
+      "rank": 5,
+      "confidence": 0.8,
+      "rationale": "UI action that creates or opens a Use Case Diagram, directly invoked from menus/toolbars.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/PropPanelUMLUseCaseDiagram.java",
+      "rank": 6,
+      "confidence": 0.72,
+      "rationale": "Property panel shown when a Use Case Diagram is selected, allowing users to view/edit its properties.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramPropPanelFactory.java",
       "rank": 7,
-      "confidence": 0.68,
-      "rationale": "UI action that allows users to create or open a new Use Case diagram within a project.",
+      "confidence": 0.64,
+      "rationale": "Factory that creates the property panel for Use Case Diagrams; ties diagram type to its UI configuration.",
       "method": ""
     },
     {
       "file": "src/argouml-core-model/src/org/argouml/model/UseCaseDiagram.java",
       "rank": 8,
-      "confidence": 0.6,
-      "rationale": "Model-layer representation of a Use Case diagram; used for persistence and tool-independent data handling.",
+      "confidence": 0.57,
+      "rationale": "Model\u2013layer interface or helper representing Use Case Diagrams within the core model; supports persistence and manipulation.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java",
+      "rank": 9,
+      "confidence": 0.44,
+      "rationale": "Explorer rule that navigates from a use case to its extension points; supports browsing elements used in Use Case Diagrams.",
       "method": ""
     },
     {
       "file": "src/argouml-app/tests/org/argouml/uml/diagram/use_case/ui/TestUMLUseCaseDiagram.java",
-      "rank": 9,
-      "confidence": 0.3,
-      "rationale": "Unit tests verifying behavior of UMLUseCaseDiagram; indirectly supports maintenance of the feature.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/tests/org/argouml/uml/ui/TestActionUseCaseDiagram.java",
       "rank": 10,
-      "confidence": 0.25,
-      "rationale": "Tests for the action that creates Use Case diagrams; provides regression coverage for the feature.",
+      "confidence": 0.3,
+      "rationale": "Unit tests for UMLUseCaseDiagram; while not part of runtime, it directly targets the diagram\u2019s functionality.",
       "method": ""
     }
   ],
@@ -85,11 +85,11 @@
     "map": 0.1346153846153846
   },
   "prompt_style": "feature_evidence",
-  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UMLUseCaseDiagram.java\",\n    \"confidence\": 0.95,\n    \"rationale\": \"Primary class representing a Use Case diagram; central for creation, behavior, and interaction with the rest of ArgoUML.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/UseCaseDiagramGraphModel.java\",\n    \"confidence\": 0.9,\n    \"rationale\": \"Defines the underlying graph model (nodes/edges) specific to Use Case diagrams, directly supporting their semantics.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramRenderer.java\",\n    \"confidence\": 0.85,\n    \"rationale\": \"Handles visual rendering of actors and use-case figures in the diagram; essential for displaying the diagram.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/InitUseCaseDiagram.java\",\n    \"confidence\": 0.8,\n    \"rationale\": \"Subsystem initializer that registers the Use Case diagram type, connecting actions, renderers, and factories.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/PropPanelUMLUseCaseDiagram.java\",\n    \"confidence\": 0.75,\n    \"rationale\": \"Property panel shown when a Use Case diagram is selected; refines and supports editing diagram-level attributes.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramPropPanelFactory.java\",\n    \"confidence\": 0.7,\n    \"rationale\": \"Factory that supplies property panels for Use Case diagrams, tying the diagram type to its UI components.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionUseCaseDiagram.java\",\n    \"confidence\": 0.68,\n    \"rationale\": \"UI action that allows users to create or open a new Use Case diagram within a project.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/UseCaseDiagram.java\",\n    \"confidence\": 0.6,\n    \"rationale\": \"Model-layer representation of a Use Case diagram; used for persistence and tool-independent data handling.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/tests/org/argouml/uml/diagram/use_case/ui/TestUMLUseCaseDiagram.java\",\n    \"confidence\": 0.3,\n    \"rationale\": \"Unit tests verifying behavior of UMLUseCaseDiagram; indirectly supports maintenance of the feature.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/tests/org/argouml/uml/ui/TestActionUseCaseDiagram.java\",\n    \"confidence\": 0.25,\n    \"rationale\": \"Tests for the action that creates Use Case diagrams; provides regression coverage for the feature.\"\n  }\n]",
+  "raw_response": "[\n  {\n    \"rank\": 1,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UMLUseCaseDiagram.java\",\n    \"confidence\": 0.94,\n    \"rationale\": \"Central class representing the Use Case Diagram itself; manages diagram behavior, figures, and interactions.\"\n  },\n  {\n    \"rank\": 2,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/UseCaseDiagramGraphModel.java\",\n    \"confidence\": 0.91,\n    \"rationale\": \"Graph model that holds the semantic elements (actors, use cases, relationships) shown in a Use Case Diagram.\"\n  },\n  {\n    \"rank\": 3,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramRenderer.java\",\n    \"confidence\": 0.88,\n    \"rationale\": \"Responsible for painting/rendering nodes and edges (actors, use cases, associations) on the Use Case Diagram.\"\n  },\n  {\n    \"rank\": 4,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/InitUseCaseDiagram.java\",\n    \"confidence\": 0.83,\n    \"rationale\": \"Initializes the Use Case Diagram subsystem; registers factories, actions, and settings specific to this diagram type.\"\n  },\n  {\n    \"rank\": 5,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/ui/ActionUseCaseDiagram.java\",\n    \"confidence\": 0.80,\n    \"rationale\": \"UI action that creates or opens a Use Case Diagram, directly invoked from menus/toolbars.\"\n  },\n  {\n    \"rank\": 6,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/PropPanelUMLUseCaseDiagram.java\",\n    \"confidence\": 0.72,\n    \"rationale\": \"Property panel shown when a Use Case Diagram is selected, allowing users to view/edit its properties.\"\n  },\n  {\n    \"rank\": 7,\n    \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/use_case/ui/UseCaseDiagramPropPanelFactory.java\",\n    \"confidence\": 0.64,\n    \"rationale\": \"Factory that creates the property panel for Use Case Diagrams; ties diagram type to its UI configuration.\"\n  },\n  {\n    \"rank\": 8,\n    \"file\": \"src/argouml-core-model/src/org/argouml/model/UseCaseDiagram.java\",\n    \"confidence\": 0.57,\n    \"rationale\": \"Model\u2013layer interface or helper representing Use Case Diagrams within the core model; supports persistence and manipulation.\"\n  },\n  {\n    \"rank\": 9,\n    \"file\": \"src/argouml-app/src/org/argouml/ui/explorer/rules/GoUseCaseToExtensionPoint.java\",\n    \"confidence\": 0.44,\n    \"rationale\": \"Explorer rule that navigates from a use case to its extension points; supports browsing elements used in Use Case Diagrams.\"\n  },\n  {\n    \"rank\": 10,\n    \"file\": \"src/argouml-app/tests/org/argouml/uml/diagram/use_case/ui/TestUMLUseCaseDiagram.java\",\n    \"confidence\": 0.30,\n    \"rationale\": \"Unit tests for UMLUseCaseDiagram; while not part of runtime, it directly targets the diagram\u2019s functionality.\"\n  }\n]",
   "usage": {
-    "prompt_tokens": 12437,
-    "completion_tokens": 1528,
-    "total_tokens": 13965
+    "prompt_tokens": 12418,
+    "completion_tokens": 1541,
+    "total_tokens": 13959
   },
   "slot": "AZ3",
   "feature": "USECASEDIAGRAM",
@@ -97,5 +97,5 @@
   "gold_visible": 13,
   "candidate_order": "keyword_sorted",
   "run": 1,
-  "elapsed_s": 18.6
+  "elapsed_s": 9.7
 }

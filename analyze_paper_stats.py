@@ -114,8 +114,47 @@ def load_rq3() -> list[dict[str, Any]]:
     return res
 
 
+def majority_vote(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    """One prediction per sample: the majority over the runs of a configuration
+    (three runs for gpt-4o, DeepSeek-V3.2 and Mistral-Large-3, one otherwise).
+    Metrics are recomputed on the voted predictions."""
+    from StaLLM_benchmarks import _binary_metrics
+    runs = sorted(runs, key=lambda d: d.get("run", 1))
+    votes: dict[str, list[bool]] = defaultdict(list)
+    for d in runs:
+        for r in d["rows"]:
+            votes[str(r["sample_id"])].append(r.get("predicted") is True)
+    rows = []
+    for r in runs[0]["rows"]:
+        v = votes[str(r["sample_id"])]
+        rows.append(dict(r, predicted=2 * sum(v) > len(v)))
+    out = dict(runs[0], rows=rows, run=1, runs_voted=len(runs))
+    out["metrics"] = _binary_metrics(rows)
+    return out
+
+
+def rq3_voted(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Majority-vote result of every RQ3 configuration (slot, prompt, dataset)."""
+    groups: dict[tuple, list] = defaultdict(list)
+    for d in results:
+        groups[(d["slot"], d["prompt"], d["dataset"])].append(d)
+    return [majority_vote(v) for _, v in sorted(groups.items())]
+
+
+def rq3_voted_files(root: Path, dataset: str, slots: str = "[12378]") -> dict[str, dict[str, bool]]:
+    """{slot/prompt: {sample_id: voted prediction}} read from the run files of a dataset."""
+    groups: dict[tuple, list] = defaultdict(list)
+    for f in sorted((root / "rq3").glob(f"rq3_AZ{slots}_*_{dataset}*.json")):
+        d = _load(f)
+        if d.get("dataset") != dataset:
+            continue
+        groups[(d["slot"], d["prompt"])].append(d)
+    return {f"{s}/{p}": {r["sample_id"]: bool(r["predicted"]) for r in majority_vote(v)["rows"]}
+            for (s, p), v in sorted(groups.items())}
+
+
 def analyze_rq3(results: list[dict[str, Any]], md: list[str]) -> None:
-    run1 = [d for d in results if d["run"] == 1]
+    run1 = rq3_voted(results)
     by_slot = [{
         "slot": d["slot"], "prompt": d["prompt"], "dataset": d["dataset"],
         "precision": _r(d["metrics"]["precision"]), "recall": _r(d["metrics"]["recall"]),
@@ -337,7 +376,7 @@ def analyze_rq3_oracle_swap(results: list[dict[str, Any]], md: list[str]) -> Non
         for smell, (tp, fp, fn, tn) in sorted(counts.items()):
             by_smell.append({"dataset": split, "smell": smell, "tp": tp, "fp": fp, "fn": fn, "tn": tn})
         heur = {r["sample_id"]: bool(r["predicted"]) for r in hrows}
-        configs = [d for d in results if d["run"] == 1 and d["dataset"] == split
+        configs = [d for d in rq3_voted(results) if d["dataset"] == split
                    and {r["sample_id"] for r in d["rows"]} == set(heur)]
         if len(configs) < 3:
             continue

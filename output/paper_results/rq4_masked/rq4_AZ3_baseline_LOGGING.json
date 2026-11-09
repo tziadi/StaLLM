@@ -6,71 +6,71 @@
     {
       "file": "src/argouml-app/src/org/argouml/application/Main.java",
       "rank": 1,
-      "confidence": 0.22,
-      "rationale": "Main entry point; parses command-line options and initialises logging/debug facilities, likely where global debug and trace message mechanism is enabled.",
-      "method": ""
-    },
-    {
-      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
-      "rank": 2,
-      "confidence": 0.18,
-      "rationale": "Developer-oriented module; expected to expose switches or UI for enabling developer debug/trace output.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
-      "rank": 3,
-      "confidence": 0.11,
-      "rationale": "Central event dispatch component; often instrumented with trace logs to follow internal events.",
-      "method": ""
-    },
-    {
-      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
-      "rank": 4,
-      "confidence": 0.09,
-      "rationale": "Developer inspection tool for event pump; likely relies on or controls detailed trace/debug messages.",
-      "method": ""
-    },
-    {
-      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
-      "rank": 5,
-      "confidence": 0.08,
-      "rationale": "Configuration subsystem; probably contains settings to enable/disable debug and trace message output.",
+      "confidence": 0.19,
+      "rationale": "Main entry point; likely sets up global logging/debug and command-line flags for debug/trace messages.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java",
-      "rank": 6,
+      "rank": 2,
+      "confidence": 0.13,
+      "rationale": "Centralized configuration handling; probably contains properties enabling or disabling debug/trace output.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/api/Argo.java",
+      "rank": 3,
+      "confidence": 0.11,
+      "rationale": "Top-level API class that often exposes global switches such as debug and trace flags.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java",
+      "rank": 4,
+      "confidence": 0.08,
+      "rationale": "Located in util.logging; part of the logging utilities used for diagnostic timing in debug/trace contexts.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 5,
       "confidence": 0.07,
-      "rationale": "Holds property definitions, possibly including keys for debug/trace message activation.",
+      "rationale": "Publishes events; event pumps commonly emit trace/debug output to help follow internal activity.",
       "method": ""
     },
     {
       "file": "src/argouml-core-model/src/org/argouml/model/ModelEventPump.java",
-      "rank": 7,
+      "rank": 6,
       "confidence": 0.06,
-      "rationale": "Model event dispatcher; small debug/trace statements likely used to follow model change propagation.",
+      "rationale": "Model-level event pump; likely instrumented with trace logging to observe model changes.",
+      "method": ""
+    },
+    {
+      "file": "modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java",
+      "rank": 7,
+      "confidence": 0.05,
+      "rationale": "Development helper panel to inspect event pump; tightly related to debugging and tracing event flows.",
       "method": ""
     },
     {
       "file": "src/argouml-app/src/org/argouml/cognitive/Designer.java",
       "rank": 8,
       "confidence": 0.05,
-      "rationale": "Central cognitive component; contains conditional logging that may be categorised as debug/trace for problem-area focus.",
+      "rationale": "Key cognitive subsystem controller; known to include verbose debug/trace statements for reasoning processes.",
       "method": ""
     },
     {
       "file": "src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java",
       "rank": 9,
       "confidence": 0.04,
-      "rationale": "MDR implementation of event pump; likely mirrors debug/trace logic for model events.",
+      "rationale": "Specific implementation of event pump; may include detailed trace output for MDR events.",
       "method": ""
     },
     {
-      "file": "src/argouml-app/src/org/argouml/application/events/ArgoStatusEventListener.java",
+      "file": "modules/dev/src/org/argouml/dev/DeveloperModule.java",
       "rank": 10,
-      "confidence": 0.03,
-      "rationale": "Listens to status events; may output diagnostic trace messages to help follow internal state changes.",
+      "confidence": 0.04,
+      "rationale": "Developer-oriented module likely provides facilities to turn on/off debug and trace messages globally.",
       "method": ""
     }
   ],
@@ -78,24 +78,24 @@
     "hit@1": 1.0,
     "recall@1": 0.004672897196261682,
     "hit@5": 1.0,
-    "recall@5": 0.014018691588785047,
+    "recall@5": 0.018691588785046728,
     "hit@10": 1.0,
     "recall@10": 0.02336448598130841,
     "mrr": 1.0,
-    "map": 0.016303219106957426
+    "map": 0.020353063343717552
   },
   "prompt_style": "baseline",
-  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.22, \"rationale\": \"Main entry point; parses command-line options and initialises logging/debug facilities, likely where global debug and trace message mechanism is enabled.\"},\n  {\"rank\": 2, \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\", \"confidence\": 0.18, \"rationale\": \"Developer-oriented module; expected to expose switches or UI for enabling developer debug/trace output.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.11, \"rationale\": \"Central event dispatch component; often instrumented with trace logs to follow internal events.\"},\n  {\"rank\": 4, \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\", \"confidence\": 0.09, \"rationale\": \"Developer inspection tool for event pump; likely relies on or controls detailed trace/debug messages.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.08, \"rationale\": \"Configuration subsystem; probably contains settings to enable/disable debug and trace message output.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\", \"confidence\": 0.07, \"rationale\": \"Holds property definitions, possibly including keys for debug/trace message activation.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-core-model/src/org/argouml/model/ModelEventPump.java\", \"confidence\": 0.06, \"rationale\": \"Model event dispatcher; small debug/trace statements likely used to follow model change propagation.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.05, \"rationale\": \"Central cognitive component; contains conditional logging that may be categorised as debug/trace for problem-area focus.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\", \"confidence\": 0.04, \"rationale\": \"MDR implementation of event pump; likely mirrors debug/trace logic for model events.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoStatusEventListener.java\", \"confidence\": 0.03, \"rationale\": \"Listens to status events; may output diagnostic trace messages to help follow internal state changes.\"}\n]",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.19, \"rationale\": \"Main entry point; likely sets up global logging/debug and command-line flags for debug/trace messages.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationProperties.java\", \"confidence\": 0.13, \"rationale\": \"Centralized configuration handling; probably contains properties enabling or disabling debug/trace output.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/application/api/Argo.java\", \"confidence\": 0.11, \"rationale\": \"Top-level API class that often exposes global switches such as debug and trace flags.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/util/logging/SimpleTimer.java\", \"confidence\": 0.08, \"rationale\": \"Located in util.logging; part of the logging utilities used for diagnostic timing in debug/trace contexts.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.07, \"rationale\": \"Publishes events; event pumps commonly emit trace/debug output to help follow internal activity.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-core-model/src/org/argouml/model/ModelEventPump.java\", \"confidence\": 0.06, \"rationale\": \"Model-level event pump; likely instrumented with trace logging to observe model changes.\"},\n  {\"rank\": 7, \"file\": \"modules/dev/src/org/argouml/dev/EventPumpInspectorPanel.java\", \"confidence\": 0.05, \"rationale\": \"Development helper panel to inspect event pump; tightly related to debugging and tracing event flows.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/cognitive/Designer.java\", \"confidence\": 0.05, \"rationale\": \"Key cognitive subsystem controller; known to include verbose debug/trace statements for reasoning processes.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-core-model-mdr/src/org/argouml/model/mdr/ModelEventPumpMDRImpl.java\", \"confidence\": 0.04, \"rationale\": \"Specific implementation of event pump; may include detailed trace output for MDR events.\"},\n  {\"rank\": 10, \"file\": \"modules/dev/src/org/argouml/dev/DeveloperModule.java\", \"confidence\": 0.04, \"rationale\": \"Developer-oriented module likely provides facilities to turn on/off debug and trace messages globally.\"}\n]",
   "usage": {
-    "prompt_tokens": 13897,
-    "completion_tokens": 1396,
-    "total_tokens": 15293
+    "prompt_tokens": 13459,
+    "completion_tokens": 1768,
+    "total_tokens": 15227
   },
   "slot": "AZ3",
   "feature": "LOGGING",
   "gold_count": 214,
-  "gold_visible": 74,
+  "gold_visible": 111,
   "candidate_order": "bm25_masked",
   "run": 1,
-  "elapsed_s": 60.0
+  "elapsed_s": 16.9
 }

@@ -1,0 +1,101 @@
+{
+  "task_id": "argouml-feature-logging",
+  "task_type": "feature_location",
+  "project": "ArgoUML",
+  "predictions": [
+    {
+      "file": "src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java",
+      "rank": 1,
+      "confidence": 0.95,
+      "rationale": "Central class for handling events, likely includes debug and trace mechanisms.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/kernel/UndoManager.java",
+      "rank": 2,
+      "confidence": 0.85,
+      "rationale": "Manages undo operations, often involves debug messages for tracking changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ExceptionDialog.java",
+      "rank": 3,
+      "confidence": 0.8,
+      "rationale": "Handles exceptions, likely includes debug and trace messages for error tracking.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/ProjectBrowser.java",
+      "rank": 4,
+      "confidence": 0.75,
+      "rationale": "Main UI component, likely includes debug messages for user interactions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/application/Main.java",
+      "rank": 5,
+      "confidence": 0.7,
+      "rationale": "Entry point of the application, likely includes debug messages for initialization.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/persistence/ModelMemberFilePersister.java",
+      "rank": 6,
+      "confidence": 0.65,
+      "rationale": "Handles file persistence, likely includes debug messages for file operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFig.java",
+      "rank": 7,
+      "confidence": 0.6,
+      "rationale": "Diagram-related class, likely includes debug messages for graphical operations.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java",
+      "rank": 8,
+      "confidence": 0.55,
+      "rationale": "Manages configuration settings, likely includes debug messages for tracking changes.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/ui/FindDialog.java",
+      "rank": 9,
+      "confidence": 0.5,
+      "rationale": "UI component for searching, likely includes debug messages for user actions.",
+      "method": ""
+    },
+    {
+      "file": "src/argouml-app/src/org/argouml/uml/ui/SourcePathController.java",
+      "rank": 10,
+      "confidence": 0.45,
+      "rationale": "Manages source paths, likely includes debug messages for path resolution.",
+      "method": ""
+    }
+  ],
+  "metrics": {
+    "hit@1": 1.0,
+    "recall@1": 0.004672897196261682,
+    "hit@5": 1.0,
+    "recall@5": 0.014018691588785047,
+    "hit@10": 1.0,
+    "recall@10": 0.02336448598130841,
+    "mrr": 1.0,
+    "map": 0.015848909657320873
+  },
+  "prompt_style": "baseline",
+  "raw_response": "[\n  {\"rank\": 1, \"file\": \"src/argouml-app/src/org/argouml/application/events/ArgoEventPump.java\", \"confidence\": 0.95, \"rationale\": \"Central class for handling events, likely includes debug and trace mechanisms.\"},\n  {\"rank\": 2, \"file\": \"src/argouml-app/src/org/argouml/kernel/UndoManager.java\", \"confidence\": 0.85, \"rationale\": \"Manages undo operations, often involves debug messages for tracking changes.\"},\n  {\"rank\": 3, \"file\": \"src/argouml-app/src/org/argouml/ui/ExceptionDialog.java\", \"confidence\": 0.8, \"rationale\": \"Handles exceptions, likely includes debug and trace messages for error tracking.\"},\n  {\"rank\": 4, \"file\": \"src/argouml-app/src/org/argouml/ui/ProjectBrowser.java\", \"confidence\": 0.75, \"rationale\": \"Main UI component, likely includes debug messages for user interactions.\"},\n  {\"rank\": 5, \"file\": \"src/argouml-app/src/org/argouml/application/Main.java\", \"confidence\": 0.7, \"rationale\": \"Entry point of the application, likely includes debug messages for initialization.\"},\n  {\"rank\": 6, \"file\": \"src/argouml-app/src/org/argouml/persistence/ModelMemberFilePersister.java\", \"confidence\": 0.65, \"rationale\": \"Handles file persistence, likely includes debug messages for file operations.\"},\n  {\"rank\": 7, \"file\": \"src/argouml-app/src/org/argouml/uml/diagram/ui/ArgoFig.java\", \"confidence\": 0.6, \"rationale\": \"Diagram-related class, likely includes debug messages for graphical operations.\"},\n  {\"rank\": 8, \"file\": \"src/argouml-app/src/org/argouml/configuration/ConfigurationHandler.java\", \"confidence\": 0.55, \"rationale\": \"Manages configuration settings, likely includes debug messages for tracking changes.\"},\n  {\"rank\": 9, \"file\": \"src/argouml-app/src/org/argouml/ui/FindDialog.java\", \"confidence\": 0.5, \"rationale\": \"UI component for searching, likely includes debug messages for user actions.\"},\n  {\"rank\": 10, \"file\": \"src/argouml-app/src/org/argouml/uml/ui/SourcePathController.java\", \"confidence\": 0.45, \"rationale\": \"Manages source paths, likely includes debug messages for path resolution.\"}\n]",
+  "usage": {
+    "prompt_tokens": 13898,
+    "completion_tokens": 553,
+    "total_tokens": 14451
+  },
+  "slot": "AZ1",
+  "feature": "LOGGING",
+  "gold_count": 214,
+  "gold_visible": 74,
+  "candidate_order": "bm25_masked",
+  "run": 3,
+  "elapsed_s": 9.1
+}
